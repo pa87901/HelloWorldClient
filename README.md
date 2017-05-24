@@ -4,10 +4,10 @@ The project description
 
 ## Team
 
-- teamMember
-- teamMember
-- teamMember
-- teamMember
+- Andrew Bedford-Hart
+- Charles Kim
+- Alexander Liang
+- Preda Wen
 
 ## Roadmap
 
