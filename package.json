@@ -7,8 +7,6 @@
     "test": "jest"
   },
   "dependencies": {
-    "install": "^0.10.1",
-    "npm": "^4.6.1",
     "react": "16.0.0-alpha.6",
     "react-native": "0.44.0",
     "react-redux": "^5.0.5",
