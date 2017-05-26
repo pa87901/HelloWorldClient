@@ -1,24 +1,9 @@
 //placeholder for actions
-export function fetchUser() {
+export function fetchProfileResults() {
   return {
-    type: "FETCH_USER_FULFILLED",
+    type: 'FETCH_PROFILE_RESULTS',
     payload: {
-      name: "Will",
-      age: 35,
+      profileResults: [], //Data from axios response
     }
-  }
-}
-
-export function setUserName(name) {
-  return {
-    type: 'SET_USER_NAME',
-    payload: name,
-  }
-}
-
-export function setUserAge(age) {
-  return {
-    type: 'SET_USER_AGE',
-    payload: age,
   }
 }

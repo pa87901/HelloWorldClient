@@ -1,24 +1,14 @@
 //placeholder for actions
-export function fetchUser() {
+export function fetchMessages() {
   return {
-    type: "FETCH_USER_FULFILLED",
-    payload: {
-      name: "Will",
-      age: 35,
-    }
+    type: 'FETCH_MESSAGES',
+    payload: [] //Data from axios response
   }
 }
-
-export function setUserName(name) {
-  return {
-    type: 'SET_USER_NAME',
-    payload: name,
-  }
-}
-
-export function setUserAge(age) {
-  return {
-    type: 'SET_USER_AGE',
-    payload: age,
-  }
-}
+// This won't happen here, it will happen in component?
+// export function postMessage(message) {
+//   return {
+//     type: 'POST_MESSAGE',
+//     payload: ,
+//   }
+// }
