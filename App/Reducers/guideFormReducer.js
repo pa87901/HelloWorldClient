@@ -1,9 +1,16 @@
 export default function reducer(state = {
-  rateMin: 0,
-  rateMax: 0,
-  ratingMin: 0,
-  ratingMax: 5,
+  rate: 0,
+  intro: '',
+  location: '',
+  suggestedDay: '',
   hasCar: false,
+  maxGuests: 1,
+  availability: {
+    startHour: 9, 
+    endHour: 17, 
+    startDate: Date.now(), 
+    endDate: Date.now() + 1
+  },
   languages: {
     English: false, 
     Spanish: false, 

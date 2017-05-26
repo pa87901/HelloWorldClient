@@ -1,6 +1,5 @@
 export default function reducer(state = {
-  userName: null,
-  profilePic: '',
+ profileResults: []
   // error: null,
 }, action) {
   if (action.type === 'FETCH_TWEETS') {

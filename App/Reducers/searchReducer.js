@@ -1,6 +1,11 @@
 export default function reducer(state = {
   searchLocation: '',
-  Date: {startHour: 9, endHour: 17, startDate: Date.now(), endDate: Date.now() + 1},
+  Date: {
+    startHour: 9, 
+    endHour: 17, 
+    startDate: Date.now(), 
+    endDate: Date.now() + 1
+  },
   numGuests: 1
   // error: null,
 }, action) {
