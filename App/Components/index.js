@@ -1,18 +1,22 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { StyleSheet, Text, View } from 'react-native';
+import QuestionnaireNavigator from './QuestionnaireNavigator';
 // import OnboardingNavigator from './navigationOnboarding'
 // import MainNavigator from './navigationMain'
 // import SigningUpNavigator from './navigationSigning'
 
 class Navigator extends React.Component {
   render() {
-    // console.log('GIVE ME THE PROPS', this.props);
+    console.log('GIVE ME THE PROPS', this.props);
     return (
-      <View style={styles.container}>
-        <Text>FIRST PAGE OF HELLO WORLD APP</Text>
-      </View>
+      <QuestionnaireNavigator />
     )
+    // return (
+    //   <View style={styles.container}>
+    //     <Text>FIRST PAGE OF HELLO WORLD APP</Text>
+    //   </View>
+    // )
   }
 }
 
@@ -38,3 +42,4 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
 });
+
