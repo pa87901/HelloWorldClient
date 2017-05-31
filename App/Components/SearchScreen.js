@@ -1,6 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, Picker, Item} from 'react-native';
-import { FormLabel, FormInput, FormValidationMessage } from 'react-native-elements'
+import { StyleSheet, Text, View, Picker, Item, Keyboard, TextInput } from 'react-native';
+import { FormLabel, FormInput, FormValidationMessage, Button } from 'react-native-elements'
 
 export default class SearchScreen extends React.Component {
   constructor(props){
@@ -15,6 +15,24 @@ export default class SearchScreen extends React.Component {
     // this.handleWhenInput = this.handleWhenInput.bind(this);
     // this.handleWhereInput = this.handleWhereInput.bind(this);
     // this.handleGuestsInput = this.handleGuestsInput.bind(this);
+  }
+
+  componentWillMount () {
+    this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow);
+    this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide);
+  }
+
+  componentWillUnmount () {
+    this.keyboardDidShowListener.remove();
+    this.keyboardDidHideListener.remove();
+  }
+
+  _keyboardDidShow () {
+    console.log('Hey from the keyboard')
+  }
+
+  _keyboardDidHide () {
+    console.log('Keyboard Hidden');
   }
 
   // handleWhenInput(event) {
@@ -44,9 +62,9 @@ export default class SearchScreen extends React.Component {
       <View style={styles.container}>
         <Text style = {styles.header}>Where are you headed?</Text>
         <FormLabel>When?</FormLabel>
-        <FormInput id="when" value={this.state.when} placeholder="Where do you want to go?" onChangeText={(text) => this.setState({when: text})}/>
+        <FormInput id="when" value={this.state.when} placeholder="Where do you want to go?" onChangeText={(text) => this.setState({when: text})} />
         <FormLabel>Where?</FormLabel>
-        <FormInput id="where" value={this.state.where} placeholder="When do you want to go?" onChangeText={(text) => this.setState({where: text})}/>
+        <FormInput id="where" value={this.state.where} placeholder="When do you want to go?" onChangeText={(text) => this.setState({where: text})} />
         <FormLabel>How many travelers?</FormLabel>
         <Picker
           style={styles.picker}
@@ -58,10 +76,15 @@ export default class SearchScreen extends React.Component {
           <Picker.Item label="3" value= {3} />
           <Picker.Item label="4" value= {4} />
         </Picker>
-        <Button 
-          onPress={() => this.props.navigation.navigate('Explore')}
-          title='Explore'
-        />
+        <View style={{position: 'absolute', left: 0, right: 0, bottom: 0}}>
+            <Button
+            large
+            raised
+            backgroundColor='#FF8C00'
+            title='EXPLORE'
+            onPress={() => this.props.navigation.navigate('Explore')} 
+          />
+        </View>
       </View>
     )
   }
@@ -69,13 +92,18 @@ export default class SearchScreen extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
+    position: 'absolute', 
+    top: 0, 
+    bottom: 0, 
+    left: 0, 
+    right: 0,
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },
   picker: {
-    width: 200,
+    width: 350,
   },
   header: {
     fontSize: 25,
