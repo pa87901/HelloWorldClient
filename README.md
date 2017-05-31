@@ -89,3 +89,6 @@ To run tests: `yarn run test`
 To run your redis server for the session store `redis-server`
 
 To link login: 'react-native link react-native-lock'
+
+npm i react-native-vector-icons --save && react-native link react-native-vector-icons
+yarn add react-native-elements
