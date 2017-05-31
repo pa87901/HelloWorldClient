@@ -7,6 +7,6 @@ export default class InboxScreen extends React.Component {
       <View>
         <Text> INBOX </Text>
       </View> 
-    )
+    );
   }
 }

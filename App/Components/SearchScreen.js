@@ -1,9 +1,9 @@
 import React from 'react';
 import { StyleSheet, Text, View, Picker, Item, Keyboard, TextInput } from 'react-native';
-import { FormLabel, FormInput, FormValidationMessage, Button } from 'react-native-elements'
+import { FormLabel, FormInput, FormValidationMessage, Button } from 'react-native-elements';
 
 export default class SearchScreen extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
 
     this.state = {
@@ -28,7 +28,7 @@ export default class SearchScreen extends React.Component {
   }
 
   _keyboardDidShow () {
-    console.log('Hey from the keyboard')
+    console.log('Hey from the keyboard');
   }
 
   _keyboardDidHide () {
@@ -58,6 +58,27 @@ export default class SearchScreen extends React.Component {
   // }
 
   render() {
+    console.log('PROPS', this.props);
+    const styles = StyleSheet.create({
+      container: {
+        position: 'absolute', 
+        top: 0, 
+        bottom: 0, 
+        left: 0, 
+        right: 0,
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#F5FCFF',
+      },
+      picker: {
+        width: 350,
+      },
+      header: {
+        fontSize: 25,
+      }
+    });
+
     return (
       <View style={styles.container}>
         <Text style = {styles.header}>Where are you headed?</Text>
@@ -69,7 +90,7 @@ export default class SearchScreen extends React.Component {
         <Picker
           style={styles.picker}
           selectedValue={this.state.guests}
-          onValueChange={this.onValueChange=(number) => this.setState({guests: number})}
+          onValueChange={this.onValueChange = (number) => this.setState({guests: number})}
           mode="dropdown">
           <Picker.Item label="1" value= {1} />
           <Picker.Item label="2" value= {2} />
@@ -86,26 +107,6 @@ export default class SearchScreen extends React.Component {
           />
         </View>
       </View>
-    )
+    );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    position: 'absolute', 
-    top: 0, 
-    bottom: 0, 
-    left: 0, 
-    right: 0,
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  picker: {
-    width: 350,
-  },
-  header: {
-    fontSize: 25,
-  }
-});

@@ -1,31 +1,37 @@
 import React from 'react';
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
-import { Card, Button, Rating } from 'react-native-elements'
+import { Card, Button, Rating } from 'react-native-elements';
 
 export default class ExploreScreenEntry extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
 
     //Test Data
     this.state = {
       guides: [{
-          guide: 'Jon Snow',
-          image: require('./JONSNOW.png'),
-          msg: 'You know nothing, Jon Snow!'},
-          {
-          guide: 'Jon Snow',
-          image: require('./JONSNOW.png'),
-          msg: 'You know nothing, Jon Snow!'},
-          {
-          guide: 'Jon Snow',
-          image: require('./JONSNOW.png'),
-          msg: 'You know nothing, Jon Snow!'}]
-   }
-  };
+        guide: 'Jon Snow',
+        image: require('./JONSNOW.png'),
+        msg: 'You know nothing, Jon Snow!'},
+      {
+        guide: 'Jon Snow',
+        image: require('./JONSNOW.png'),
+        msg: 'You know nothing, Jon Snow!'},
+      {
+        guide: 'Jon Snow',
+        image: require('./JONSNOW.png'),
+        msg: 'You know nothing, Jon Snow!'}]
+    };
+
+    this.seeGuideProfile = this.seeGuideProfile.bind(this);
+  }
 
   ratingCompleted(rating) {
-    console.log("Rating is: " + rating)
-  };
+    console.log('Rating is: ' + rating);
+  }
+
+  seeGuideProfile() {
+    this.props.navigation.navigate('GuideProfile');
+  }
 
   render() {
     return (
@@ -52,12 +58,13 @@ export default class ExploreScreenEntry extends React.Component {
             raised
             icon={{name: 'flight-takeoff'}}
             backgroundColor='#FF8C00'
-            title='Book a trip with me!' 
+            title='Book a trip with me!'
+            onPress={() => this.props.navigation.navigate('GuideProfile')}
           />
         </Card>
-        )
+        );
       })}
       </ScrollView> 
-    )
-  };
+    );
+  }
 }

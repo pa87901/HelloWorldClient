@@ -7,7 +7,7 @@ import {
   View,
   TouchableOpacity
 } from 'react-native';
-import axios from 'axios'
+import axios from 'axios';
 
 //Auth0
 var Auth0Lock = require('react-native-lock');
@@ -19,32 +19,32 @@ axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded
 
 
 export default class MyApp extends Component {
-  constructor(){
-    super()
+  constructor() {
+    super();
     this.state = {
-      name:'',
+      name: '',
       profile: {}
-    }
+    };
     this._fbAuth.bind(this);
     this._logOut.bind(this);
   }
 
-  componentDidMount(){
+  componentDidMount() {
     var context = this;
     AsyncStorage.getItem('authToken', (err, data) => {
-      if(data){
-        context.setState({data: JSON.parse(data)})
-        axios.defaults.headers.common['Authorization'] = JSON.parse(data).idToken
+      if (data) {
+        context.setState({data: JSON.parse(data)});
+        axios.defaults.headers.common['Authorization'] = JSON.parse(data).idToken;
       }
-    })
+    });
     AsyncStorage.getItem('profile', (err, data) =>{
-      if(data){
-        context.setState({profile: JSON.parse(data)})
+      if (data) {
+        context.setState({profile: JSON.parse(data)});
       }
-    })
+    });
 
   }
-  _fbAuth(){
+  _fbAuth() {
     lock.show({}, (err, profile, token) => {
       if (err) {
         console.log(err);
@@ -53,10 +53,10 @@ export default class MyApp extends Component {
       // Authentication worked!
       this.setState({
         profile: profile
-      })
-      AsyncStorage.setItem('profile', JSON.stringify(profile))
-      AsyncStorage.setItem('authToken', JSON.stringify(token))
-      axios.defaults.headers.common['Authorization'] = token.idToken
+      });
+      AsyncStorage.setItem('profile', JSON.stringify(profile));
+      AsyncStorage.setItem('authToken', JSON.stringify(token));
+      axios.defaults.headers.common['Authorization'] = token.idToken;
       axios.post('/', {
         firstName: 'Fred',
         lastName: 'Flintstone'
@@ -67,20 +67,40 @@ export default class MyApp extends Component {
       .catch(function (error) {
         console.log(error);
       });
-      console.log(this.state)
+      console.log(this.state);
     });
   }
 
-  _logOut(){
-      AsyncStorage.setItem('profile', '')
-      AsyncStorage.setItem('authToken', '')
-      this.setState({
-        profile: {}
-      })
+  _logOut() {
+    AsyncStorage.setItem('profile', '');
+    AsyncStorage.setItem('authToken', '');
+    this.setState({
+      profile: {}
+    });
   }
 
   render() {
-    console.log('loaded')
+    console.log('loaded');
+    
+    const styles = StyleSheet.create({
+      container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#F5FCFF',
+      },
+      welcome: {
+        fontSize: 20,
+        textAlign: 'center',
+        margin: 10,
+      },
+      instructions: {
+        textAlign: 'center',
+        color: '#333333',
+        marginBottom: 5,
+      },
+    });
+    
     return (
       <View style={styles.container}>
         <Text>Welcome {this.state.profile.name ? this.state.profile.name : 'Traveler'}!</Text>
@@ -100,23 +120,5 @@ export default class MyApp extends Component {
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
 
 AppRegistry.registerComponent('MyApp', () => MyApp);
