@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { DrawerNavigator } from 'react-navigation';
-// import ExploreNavigator from './ExploreNavigator';
 import ExploreScreenEntry from './ExploreScreenEntry';
 import GuideProfileScreen from './GuideProfileScreen';
 
