@@ -7,7 +7,7 @@ import LoginScreen from './LoginScreen';
 const SearchNavigator = StackNavigator({
   //Login: {screen: LoginScreen},
   Search: {screen: SearchScreen},
-  Explore: {screen: ExploreNavigator}
+  Explore: {screen: ExploreNavigator},
 });
 
 export default SearchNavigator;
