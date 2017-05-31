@@ -5,8 +5,8 @@ export default class Tab4Screen extends React.Component {
 	render() {
 		return (
       <View>
-      <Text> TAB 4 SCREEN </Text>
+        <Text> TAB 4 SCREEN </Text>
       </View> 
-      )
+    )
 	}
 }
