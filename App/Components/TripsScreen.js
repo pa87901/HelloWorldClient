@@ -7,6 +7,6 @@ export default class TripsScreen extends React.Component {
       <View>
         <Text> TRIPS </Text>
       </View> 
-    )
+    );
   }
 }

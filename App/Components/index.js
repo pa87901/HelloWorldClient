@@ -11,18 +11,13 @@ class Navigator extends React.Component {
     console.log('GIVE ME THE PROPS', this.props);
     return (
       <SearchNavigator />
-    )
-    // return (
-    //   <View style={styles.container}>
-    //     <Text>FIRST PAGE OF HELLO WORLD APP</Text>
-    //   </View>
-    // )
+    );
   }
 }
 
-const mapStateToProps = state => (state)
+const mapStateToProps = state => (state);
 
-export default connect(mapStateToProps, {})(Navigator)
+export default connect(mapStateToProps, {})(Navigator);
 
 const styles = StyleSheet.create({
   container: {
