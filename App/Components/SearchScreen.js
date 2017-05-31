@@ -42,7 +42,7 @@ export default class SearchScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>The Search screen</Text>
+        <Text style = {styles.header}>Where are you headed?</Text>
         <FormLabel>When?</FormLabel>
         <FormInput id="when" value={this.state.when} placeholder="Where do you want to go?" onChangeText={(text) => this.setState({when: text})}/>
         <FormLabel>Where?</FormLabel>
@@ -75,6 +75,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5FCFF',
   },
   picker: {
-    width: 100,
+    width: 200,
+  },
+  header: {
+    fontSize: 25,
   }
 });

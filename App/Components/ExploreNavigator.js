@@ -1,9 +1,9 @@
 import React from 'react';
 import { DrawerNavigator, StackNavigator, TabNavigator } from 'react-navigation';
 import ExploreScreen from './ExploreScreen';
-import Tab2Screen from './Tab2Screen';
-import Tab3Screen from './Tab3Screen';
-import Tab4Screen from './Tab4Screen';
+import TripsScreen from './TripsScreen';
+import InboxScreen from './InboxScreen';
+import ProfileScreen from './ProfileScreen';
 import { Icon } from 'react-native-elements';
 
 const SearchNavigator = TabNavigator({
@@ -11,28 +11,28 @@ const SearchNavigator = TabNavigator({
     screen: ExploreScreen,
     navigationOptions: {
         tabBarLabel: 'Explore',
-        tabBarIcon: ({ tintColor }) => <Icon name="explore" size={35}/>
+        tabBarIcon: ({ tintColor }) => <Icon name="location-city" size={25} color={"dimgray"}/>
       }
     },
   Trips: {
-    screen: Tab2Screen,
+    screen: TripsScreen,
     navigationOptions: {
         tabBarLabel: 'Trips',
-        tabBarIcon: ({ tintColor }) => <Icon name="flight" size={35}/>
+        tabBarIcon: ({ tintColor }) => <Icon name="flight" size={25} color={"dimgray"}/>
       }
   },
   Inbox: {
-    screen: Tab3Screen,
+    screen: InboxScreen,
     navigationOptions: {
         tabBarLabel: 'Inbox',
-        tabBarIcon: ({ tintColor }) => <Icon name="email" size={35}/>
+        tabBarIcon: ({ tintColor }) => <Icon name="mail" size={25} color={"dimgray"}/>
       }
     },
   Profile: {
-    screen: Tab4Screen,
+    screen: ProfileScreen,
     navigationOptions: {
         tabBarLabel: 'Profile',
-        tabBarIcon: ({ tintColor }) => <Icon name="person" size={35}/>
+        tabBarIcon: ({ tintColor }) => <Icon name="person" size={25} color={"dimgray"}/>
       }
     }
 });
