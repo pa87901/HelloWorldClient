@@ -11,6 +11,10 @@ export default class InboxScreen extends React.Component {
     return (
       <View>
         <Text> INBOX </Text>
+        <Button
+          title='testChat'
+          onPress={() => {this.props.navigation.navigate('Chat')}}
+        />
       </View> 
     );
   }
