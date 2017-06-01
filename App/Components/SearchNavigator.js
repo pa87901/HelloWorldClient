@@ -8,6 +8,7 @@ import BecomeAGuideQuestions1 from './BecomeAGuideQuestions1';
 import BecomeAGuideQuestions2 from './BecomeAGuideQuestions2';
 import BecomeAGuideQuestions3 from './BecomeAGuideQuestions3';
 import BecomeAGuideQuestions4 from './BecomeAGuideQuestions4';
+import BecomeAGuideQuestions5 from './BecomeAGuideQuestions5';
 import ChatScreen from './ChatScreen';
 
 const SearchNavigator = StackNavigator({
@@ -18,6 +19,7 @@ const SearchNavigator = StackNavigator({
   GuideQuestions2: {screen: BecomeAGuideQuestions2},
   GuideQuestions3: {screen: BecomeAGuideQuestions3},
   GuideQuestions4: {screen: BecomeAGuideQuestions4},
+  GuideQuestions5: {screen: BecomeAGuideQuestions5},
   Chat: {screen: ChatScreen},
 });
 

@@ -2,33 +2,38 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Button, FormLabel, FormInput } from 'react-native-elements';
 
-export default class BecomeAGuideQuestions4 extends React.Component {
+export default class BecomeAGuideQuestions5 extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      hourlyRate: '',
+      intro: '',
     };
 
-    this.setHourlyRate = this.setHourlyRate.bind(this);
+    this.setIntro = this.setIntro.bind(this);
     this.navigateToNext = this.navigateToNext.bind(this);
   }
 
-  setHourlyRate(rate) {
+  setIntro(intro) {
     this.setState({
-      hourlyRate: rate
+      intro: intro
     });
   } 
 
   navigateToNext() {
-    this.props.navigation.navigate('GuideQuestions5');
+    // this.props.navigation.navigate('GuideQuestions3');
   }
 
   render() {
     return (
-      <View style={{marginTop: 100}}>
-        <FormLabel>How much is your time worth?</FormLabel>
-        <FormLabel>Hourly Rate (USD)</FormLabel>
-        <FormInput id="rate" placeholder="example: input '10' for $10 / hour" onChangeText={(text) => { this.setHourlyRate(text); }} />
+      <View style={{marginTop: 100, flexDirection: 'column'}}>
+        <FormLabel>Introduce Yourself</FormLabel>
+        <FormLabel>Provide a brief introduction to our tourists!</FormLabel>
+        <FormInput
+          id="intro"
+          placeholder="Hello, my name is Localize..."
+          onChangeText={(text) => { this.setIntro(text); }}
+          inputStyle={{flexGrow: 1}}
+        />
         <View style={{marginTop: 10}}>
           <Button
             small
