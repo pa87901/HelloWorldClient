@@ -1,18 +1,18 @@
 //placeholder for actions
-export function updateCity(city) {
-  return function(dispatch) {
-    dispatch({
-      type: 'UPDATE_CITY_FULFILLED',
-      payload: city
-    });
-  };
-}
-
 export function updateDate(date) {
   return function(dispatch) {
     dispatch({
       type: 'UPDATE_DATE_FULFILLED',
       payload: date
+    });
+  };
+}
+
+export function updateCity(city) {
+  return function(dispatch) {
+    dispatch({
+      type: 'UPDATE_CITY_FULFILLED',
+      payload: city
     });
   };
 }
