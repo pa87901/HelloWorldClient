@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { AsyncStorage, StyleSheet, Text, View } from 'react-native';
 import SearchNavigator from './SearchNavigator';
 import { authenticate } from "../Actions/authActions";
+import { setUserProfile } from "../Actions/userProfileActions"
 import LoginScreen from './LoginScreen'
 
 //Auth0
@@ -19,7 +20,7 @@ class Navigator extends React.Component {
   }
 
   componentDidMount(){
-    console.log('YAY I MOUNTED')
+    //console.log('YAY I MOUNTED')
     var context = this;
     AsyncStorage.getItem('authToken', (err, data) => {
       if (data) {
@@ -30,9 +31,11 @@ class Navigator extends React.Component {
       }
     });
     AsyncStorage.getItem('profile', (err, data) =>{
-      // if (data) {
-      //   context.setState({profile: JSON.parse(data)});
-      // }
+      if(data){
+        context.props.dispatch(setUserProfile(true, JSON.parse(data)))
+      } else {
+        context.props.dispatch(setUserProfile(false))
+      }
     });
     // console.log("!this.props.auth", this.props.auth.auth)
     // if(!this.props.auth.auth){

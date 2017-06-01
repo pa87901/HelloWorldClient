@@ -5,18 +5,20 @@ import {
 } from 'react-native-elements';
 import { connect } from "react-redux";
 import { authenticate } from "../Actions/authActions"; 
+import { setUserProfile } from "../Actions/userProfileActions"
 
 class ProfileScreen extends React.Component {
   constructor(props) {
     super(props);
     this.navigateToGuideQuestions1 = this.navigateToGuideQuestions1.bind(this);
-    this.logout = this.logout.bind(this)
+    this.logout = this.logout.bind(this);
   }
 
   logout(){
     AsyncStorage.setItem('profile', '');
     AsyncStorage.setItem('authToken', '');
     this.props.dispatch(authenticate(false));
+    this.props.dispatch(setUserProfile(false));
   }
 
   navigateToGuideQuestions1() {
@@ -24,10 +26,11 @@ class ProfileScreen extends React.Component {
   }
 
   render() {
+    //console.log('ProfileScreenState', this.props.userProfile)
     return (
       <ScrollView>
         <Card
-          title='Full Name'
+          title={this.props.userProfile.profile.name}
           image={require('./JONSNOW.png')}
         >
           <Text style={{textAlign: 'center'}}>

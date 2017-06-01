@@ -1,7 +1,6 @@
 import React from 'react';
 import { DrawerNavigator, StackNavigator, TabNavigator } from 'react-navigation';
 import ExploreScreen from './ExploreScreen';
-import LoginScreen from './LoginScreen';
 import TripsScreen from './TripsScreen';
 import InboxScreen from './InboxScreen';
 import ProfileScreen from './ProfileScreen';
@@ -12,18 +11,10 @@ const SearchNavigator = TabNavigator({
   Explore: {
     screen: GuideNavigator,
     navigationOptions: {
-
         tabBarLabel: 'Explore',
         tabBarIcon: ({ tintColor }) => <Icon name="location-city" size={25} color={"dimgray"}/>
       }
     }, 
-   Login: {
-    screen: LoginScreen,
-    navigationOptions: {
-        tabBarLabel: 'LoginScreen',
-        tabBarIcon: ({ tintColor }) => <Icon name="location-city" size={25} color={"dimgray"}/>
-      }
-    },
   Trips: {
     screen: TripsScreen,
     navigationOptions: {

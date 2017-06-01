@@ -1,5 +1,5 @@
 export function authenticate(authComplete, authData) {
-  console.log(authComplete, authData)
+  //console.log(authComplete, authData)
   return function(dispatch){
     if(authComplete){
       dispatch({

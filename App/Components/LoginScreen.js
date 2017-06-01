@@ -10,6 +10,7 @@ import {
 
 import { authenticate } from "../Actions/authActions";
 import { connect } from "react-redux";
+import { setUserProfile } from "../Actions/userProfileActions"
 
 
 import axios from '../axios.js'
@@ -50,12 +51,11 @@ class LoginScreen extends Component {
         return;
       }
       // Authentication worked!
-      this.setState({
-        profile: profile
-      });
+      console.log('profile from insde lock', profile)
       AsyncStorage.setItem('profile', JSON.stringify(profile));
       AsyncStorage.setItem('authToken', JSON.stringify(token));
       context.props.dispatch(authenticate(true, token));
+      context.props.dispatch(setUserProfile(true, profile));
       axios.defaults.headers.common['Authorization'] = token.idToken;
       axios.post('/auth', {
         firstName: 'Fred',
@@ -106,7 +106,7 @@ class LoginScreen extends Component {
     
     return (
       <View style={styles.container}>
-        <Text>Welcome {this.state.profile.name ? this.state.profile.name : 'Traveler'}!</Text>
+        {/*<Text>Welcome {this.state.profile.name ? this.state.profile.name : 'Traveler'}!</Text>
         <Text>Your email is: {this.state.profile.email}</Text>
         <TouchableOpacity onPress = {this._fbAuth.bind(this)}>
           <Text>
@@ -122,7 +122,7 @@ class LoginScreen extends Component {
           <Text>
             {JSON.stringify(this.props.auth)}
           </Text>
-        </TouchableOpacity>
+        </TouchableOpacity>*/}
       </View>
     );
   }
