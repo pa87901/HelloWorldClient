@@ -4,14 +4,13 @@ import SearchScreen from './SearchScreen';
 import ExploreNavigator from './ExploreNavigator';
 import GuideProfileScreen from './GuideProfileScreen';
 import LoginScreen from './LoginScreen';
-import ChatScreen from './ChatScreen';
+import BecomeAGuideQuestions from './BecomeAGuideQuestions';
 
 const SearchNavigator = StackNavigator({
   //Login: {screen: LoginScreen},
   Search: {screen: SearchScreen},
-  Explore: {screen: ExploreNavigator}
-  // GuideProfile: {screen: GuideProfileScreen}
-  Chat: {screen: ChatScreen}
+  Explore: {screen: ExploreNavigator},
+  GuideQuestions: {screen: BecomeAGuideQuestions}
 });
 
 export default SearchNavigator;
