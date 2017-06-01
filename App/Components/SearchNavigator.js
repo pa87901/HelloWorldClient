@@ -6,6 +6,7 @@ import GuideProfileScreen from './GuideProfileScreen';
 import LoginScreen from './LoginScreen';
 import BecomeAGuideQuestions1 from './BecomeAGuideQuestions1';
 import BecomeAGuideQuestions2 from './BecomeAGuideQuestions2';
+import BecomeAGuideQuestions3 from './BecomeAGuideQuestions3';
 import ChatScreen from './ChatScreen';
 
 const SearchNavigator = StackNavigator({
@@ -14,6 +15,7 @@ const SearchNavigator = StackNavigator({
   Explore: {screen: ExploreNavigator},
   GuideQuestions1: {screen: BecomeAGuideQuestions1},
   GuideQuestions2: {screen: BecomeAGuideQuestions2},
+  GuideQuestions3: {screen: BecomeAGuideQuestions3},
   Chat: {screen: ChatScreen},
 });
 
