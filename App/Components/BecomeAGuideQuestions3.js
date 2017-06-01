@@ -1,11 +1,7 @@
 //guide questions here
 import React from 'react';
 import { StyleSheet, Text, View, Picker } from 'react-native';
-<<<<<<< HEAD
 import { Button, FormLabel, FormInput, CheckBox } from 'react-native-elements';
-=======
-import { Button, FormLabel, FormInput, } from 'react-native-elements';
->>>>>>> (component) Add becomeAGuide screen 3
 
 export default class BecomeAGuideQuestions3 extends React.Component {
   constructor(props) {
