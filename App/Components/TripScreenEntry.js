@@ -10,14 +10,24 @@ export default class TripScreenEntry extends React.Component {
       
       list:[
         {
-          name: 'San Francisco',
+          city: 'San Francisco',
           avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-          subtitle: 'Amy Farha'
+          guide: 'Amy Farha'
         },
         {
-          name: 'Berkeley',
+          city: 'Berkeley',
           avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
-          subtitle: 'Chris Jackson'
+          guide: 'Chris Jackson'
+        },
+         {
+          city: 'San Francisco',
+          avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
+          guide: 'Amy Farha'
+        },
+        {
+          city: 'Berkeley',
+          avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
+          guide: 'Chris Jackson'
         }
       ]
     }
@@ -34,9 +44,11 @@ export default class TripScreenEntry extends React.Component {
               roundAvatar
               avatar={{uri:l.avatar_url}}
               key={i}
-              title={l.name}
-              subtitle={l.subtitle}
-            />
+              title={l.city}
+              subtitle={l.guide}
+              onPress={()=>{console.log('Button pressed!')}}
+            >
+            </ListItem>
           ))
         }
       </List>
