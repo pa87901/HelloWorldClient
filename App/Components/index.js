@@ -1,3 +1,5 @@
+//cleanup
+
 import React from 'react';
 import { connect } from 'react-redux';
 import { AsyncStorage, StyleSheet, Text, View } from 'react-native';
