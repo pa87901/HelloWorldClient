@@ -86,7 +86,7 @@ export default class MyApp extends Component {
   }
 
   _test(){
-    console.log(store)
+    console.log(store.getState())
   }
 
 
