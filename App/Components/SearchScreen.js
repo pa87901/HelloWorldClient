@@ -1,8 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { updateCity, updateDate, updateTravelers } from '../Actions/searchActions.js';
-import { StyleSheet, Text, View, Picker, Item, Keyboard, TextInput } from 'react-native';
-import { FormLabel, FormInput, FormValidationMessage, Button } from 'react-native-elements';
+import {
+  updateCity, updateDate, updateTravelers, updateSearchResult
+} from '../Actions/searchActions.js';
+import {
+  StyleSheet, Text, View, Picker, Item, Keyboard, TextInput
+} from 'react-native';
+import {
+  FormLabel, FormInput, FormValidationMessage, Button
+} from 'react-native-elements';
 
 class SearchScreen extends React.Component {
   constructor(props) {
@@ -29,6 +35,69 @@ class SearchScreen extends React.Component {
 
   handleTravelerUpdate(number) {
     this.props.dispatch(updateTravelers(number));
+  }
+
+  handleSearchSubmit() {
+
+    const sampleData = [
+  {
+    "id": 1,
+    "user_id": 1,
+    "city": "SF",
+    "hourly_rate": "45.00",
+    "intro": "Hello, my name is Charles",
+    "statement": "I like food",
+    "avg_rating": "0.00",
+    "img_url": null,
+    "created_at": "2017-05-30T23:09:54.534Z",
+    "updated_at": "2017-05-30T23:09:54.534Z",
+    "availabilities": [
+      {
+        "id": 1,
+        "guide_id": 1,
+        "start_hr": 9,
+        "end_hr": 17,
+        "date": "2017-05-24T07:00:00.000Z",
+        "created_at": "2017-05-30T23:34:59.547Z",
+        "updated_at": "2017-05-30T23:34:59.547Z"
+      }
+    ],
+    "guideSpecialties": [
+      {
+        "id": 3,
+        "guide_id": 1,
+        "specialty_id": 3,
+        "created_at": "2017-05-30T23:20:42.645Z",
+        "updated_at": "2017-05-30T23:20:42.645Z",
+        "specialty": {
+          "id": 3,
+          "specialty": "nightlife",
+          "created_at": "2017-05-30T23:12:48.482Z",
+          "updated_at": "2017-05-30T23:12:48.482Z"
+        }
+      },
+      {
+        "id": 4,
+        "guide_id": 1,
+        "specialty_id": 5,
+        "created_at": "2017-05-30T23:20:46.861Z",
+        "updated_at": "2017-05-30T23:20:46.861Z",
+        "specialty": {
+          "id": 5,
+          "specialty": "food",
+          "created_at": "2017-05-30T23:12:55.335Z",
+          "updated_at": "2017-05-30T23:12:55.335Z"
+        }
+      }
+    ]
+  }
+]
+
+    // Need to replace below with axios call
+    this.props.dispatch(updateSearchResult(sampleData));
+    
+
+    this.props.navigation.navigate('Explore');
   }
 
   _keyboardDidShow () {
@@ -67,7 +136,7 @@ class SearchScreen extends React.Component {
             raised
             backgroundColor='#FF8C00'
             title='EXPLORE'
-            onPress={() => this.props.navigation.navigate('Explore')} 
+            onPress={() => this.handleSearchSubmit()} 
           />
         </View>
       </View>

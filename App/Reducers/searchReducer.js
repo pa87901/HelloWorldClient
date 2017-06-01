@@ -1,7 +1,8 @@
 export default function reducer(state = {
   city: '',
   date: '',
-  numTravelers: 1
+  numTravelers: 1,
+  result: [],
 }, action) {
   if (action.type === 'UPDATE_CITY_FULFILLED') {
     return {...state, city: action.payload}
@@ -9,6 +10,8 @@ export default function reducer(state = {
     return {...state, date: action.payload}
   } else if (action.type === 'UPDATE_TRAVELERS_FULFILLED') {
     return {...state, numTravelers: action.payload}
+  } else if (action.type === 'UPDATE_SEARCH_RESULTS_FULFILLED') {
+    return {...state, result: action.payload}
   }
   return state;
 }

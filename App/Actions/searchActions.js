@@ -25,3 +25,12 @@ export function updateTravelers(number) {
     });
   };
 }
+
+export function updateSearchResult(result) {
+  return function(dispatch) {
+    dispatch({
+      type: 'UPDATE_SEARCH_RESULTS_FULFILLED',
+      payload: result
+    });
+  };
+}
