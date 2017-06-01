@@ -3,6 +3,7 @@ import { Text, ScrollView } from 'react-native';
 import {
   Card, Button, Icon, Grid, Row, Divider
 } from 'react-native-elements';
+import { NavigationActions } from 'react-navigation';
 
 export default class BookingConfirmationScreen extends React.Component {
   constructor(props) {
@@ -11,7 +12,15 @@ export default class BookingConfirmationScreen extends React.Component {
   }
 
   navigateToExplore() {
-    this.props.navigation.navigate('ExploreScreenEntry');
+    const resetAction = NavigationActions.reset({
+      index: 1,
+      actions: [
+        NavigationActions.navigate({ routeName: 'Search' }),
+        NavigationActions.navigate({ routeName: 'Explore' }),
+      ]
+    });
+
+    this.props.navigation.dispatch(resetAction);
   }
 
   render() {

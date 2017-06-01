@@ -1,9 +1,11 @@
 import React from 'react';
-import { DrawerNavigator, StackNavigator, TabNavigator } from 'react-navigation';
+import { StackNavigator } from 'react-navigation';
 import SearchScreen from './SearchScreen';
 import ExploreNavigator from './ExploreNavigator';
 import GuideProfileScreen from './GuideProfileScreen';
 import LoginScreen from './LoginScreen';
+import BookingPolicyScreen from './BookingPolicyScreen';
+import BookingConfirmationScreen from './BookingConfirmationScreen';
 import BecomeAGuideQuestions1 from './BecomeAGuideQuestions1';
 import BecomeAGuideQuestions2 from './BecomeAGuideQuestions2';
 import BecomeAGuideQuestions3 from './BecomeAGuideQuestions3';
@@ -18,6 +20,9 @@ const SearchNavigator = StackNavigator({
   //Login: {screen: LoginScreen},
   Search: {screen: SearchScreen},
   Explore: {screen: ExploreNavigator},
+  GuideProfile: {screen: GuideProfileScreen},
+  BookingPolicy: {screen: BookingPolicyScreen},
+  BookingConfirmation: {screen: BookingConfirmationScreen},
   GuideQuestions1: {screen: BecomeAGuideQuestions1},
   GuideQuestions2: {screen: BecomeAGuideQuestions2},
   GuideQuestions3: {screen: BecomeAGuideQuestions3},

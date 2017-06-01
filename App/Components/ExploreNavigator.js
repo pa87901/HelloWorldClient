@@ -1,15 +1,15 @@
 import React from 'react';
 import { DrawerNavigator, StackNavigator, TabNavigator } from 'react-navigation';
+import { Icon } from 'react-native-elements';
 import ExploreScreen from './ExploreScreen';
+import ExploreScreenEntry from './ExploreScreenEntry';
 import TripsScreen from './TripsScreen';
 import InboxScreen from './InboxScreen';
 import ProfileScreen from './ProfileScreen';
-import { Icon } from 'react-native-elements';
-import GuideNavigator from './GuideNavigator';
 
 const SearchNavigator = TabNavigator({
   Explore: {
-    screen: GuideNavigator,
+    screen: ExploreScreenEntry,
     navigationOptions: {
         tabBarLabel: 'Explore',
         tabBarIcon: ({ tintColor }) => <Icon name="location-city" size={25} color={"dimgray"}/>
