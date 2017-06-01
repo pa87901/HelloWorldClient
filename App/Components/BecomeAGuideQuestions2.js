@@ -1,4 +1,3 @@
-//guide questions here
 import React from 'react';
 import { StyleSheet, Text, Picker, View, ScrollView } from 'react-native';
 import { Button, FormLabel, FormInput, } from 'react-native-elements';
@@ -13,6 +12,8 @@ export default class BecomeAGuideQuestions2 extends React.Component {
     };
 
     this.setDate = this.setDate.bind(this);
+    this.setStartTime = this.setStartTime.bind(this);
+    this.setEndTime = this.setEndTime.bind(this);
     this.navigateToNext = this.navigateToNext.bind(this);
   }
 

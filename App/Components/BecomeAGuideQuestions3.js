@@ -1,4 +1,3 @@
-//guide questions here
 import React from 'react';
 import { StyleSheet, Text, View, Picker } from 'react-native';
 import { Button, FormLabel, FormInput, CheckBox } from 'react-native-elements';
@@ -7,45 +6,82 @@ export default class BecomeAGuideQuestions3 extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      specialty1: false,
-      specialty2: false,
-      specialty3: false,
-      specialty4: false
+      sightseeing: false,
+      museum: false,
+      food: false,
+      nightlife: false,
+      sports: false,
+      music: false,
+      history: false,
+      politics: false,
     };
 
-    this.setSpecialty1 = this.setSpecialty1.bind(this);
-    this.setSpecialty2 = this.setSpecialty2.bind(this);
-    this.setSpecialty3 = this.setSpecialty3.bind(this);
-    this.setSpecialty4 = this.setSpecialty4.bind(this);
+    this.setSightseeing = this.setSightseeing.bind(this);
+    this.setMuseum = this.setMuseum.bind(this);
+    this.setFood = this.setFood.bind(this);
+    this.setNightlife = this.setNightlife.bind(this);
+    this.setSports = this.setSports.bind(this);
+    this.setMusic = this.setMusic.bind(this);
+    this.setHistory = this.setHistory.bind(this);
+    this.setPolitics = this.setPolitics.bind(this);
+    this.navigateToNext = this.navigateToNext.bind(this);
   }
 
-  setSpecialty1() {
+  setSightseeing() {
     this.setState({
-      specialty1: !this.state.specialty1
+      sightseeing: !this.state.sightseeing
     });
   }
 
-  setSpecialty2() {
+  setMuseum() {
     this.setState({
-      specialty2: !this.state.specialty2
+      museum: !this.state.museum
     });
   }
 
-  setSpecialty3() {
+  setFood() {
     this.setState({
-      specialty3: !this.state.specialty3
+      food: !this.state.food
     });
   }
 
-  setSpecialty4() {
+  setNightlife() {
     this.setState({
-      specialty4: !this.state.specialty4
+      nightlife: !this.state.nightlife
     });
+  }
+
+  setSports() {
+    this.setState({
+      sports: !this.state.sports
+    });
+  }
+
+  setMusic() {
+    this.setState({
+      music: !this.state.music
+    });
+  }
+
+  setHistory() {
+    this.setState({
+      history: !this.state.history
+    });
+  }
+
+  setPolitics() {
+    this.setState({
+      politics: !this.state.politics
+    });
+  }
+
+  navigateToNext() {
+    this.props.navigation.navigate('GuideQuestions4');
   }
 
   render() {
     return (
-      <View style={{marginTop: 100}}>
+      <View style={{marginTop: 10}}>
         <FormLabel>What are your specialties?</FormLabel>
         <View style={{marginTop: 10}}>
           <CheckBox
@@ -53,35 +89,76 @@ export default class BecomeAGuideQuestions3 extends React.Component {
             checkedColor='#FF8C00'
             checkedIcon='check-square-o'
             uncheckedIcon='square-o'
-            checked={this.state.specialty1}
-            onPress={this.setSpecialty1}
+            checked={this.state.sightseeing}
+            onPress={this.setSightseeing}
           />
           <CheckBox
             title='Museums'
             checkedColor='#FF8C00'
             checkedIcon='check-square-o'
             uncheckedIcon='square-o'
-            checked={this.state.specialty2}
-            onPress={this.setSpecialty2}
+            checked={this.state.museum}
+            onPress={this.setMuseum}
           />
           <CheckBox
             title='Food'
             checkedColor='#FF8C00'
             checkedIcon='check-square-o'
             uncheckedIcon='square-o'
-            checked={this.state.specialty3}
-            onPress={this.setSpecialty3}
+            checked={this.state.food}
+            onPress={this.setFood}
           />
           <CheckBox
             title='Nightlife'
             checkedColor='#FF8C00'
             checkedIcon='check-square-o'
             uncheckedIcon='square-o'
-            checked={this.state.specialty4}
-            onPress={this.setSpecialty4}
+            checked={this.state.nightlife}
+            onPress={this.setNightlife}
+          />
+          <CheckBox
+            title='Sports'
+            checkedColor='#FF8C00'
+            checkedIcon='check-square-o'
+            uncheckedIcon='square-o'
+            checked={this.state.sports}
+            onPress={this.setSports}
+          />
+          <CheckBox
+            title='Music'
+            checkedColor='#FF8C00'
+            checkedIcon='check-square-o'
+            uncheckedIcon='square-o'
+            checked={this.state.music}
+            onPress={this.setMusic}
+          />
+          <CheckBox
+            title='History'
+            checkedColor='#FF8C00'
+            checkedIcon='check-square-o'
+            uncheckedIcon='square-o'
+            checked={this.state.history}
+            onPress={this.setHistory}
+          />
+          <CheckBox
+            title='Politics'
+            checkedColor='#FF8C00'
+            checkedIcon='check-square-o'
+            uncheckedIcon='square-o'
+            checked={this.state.politics}
+            onPress={this.setPolitics}
           />
         </View>
-      </View> 
+        <View style={{marginTop: 10}}>
+          <Button
+            small
+            raised
+            backgroundColor='#FF8C00'
+            title='Next'
+            onPress={this.navigateToNext}
+          />
+        </View>
+      </View>
     );
   }
 }
