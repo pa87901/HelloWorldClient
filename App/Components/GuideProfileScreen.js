@@ -7,8 +7,13 @@ import {
 export default class GuideProfileScreen extends React.Component {
   constructor(props) {
     super(props);
+    this.navigateToPolicy = this.navigateToPolicy.bind(this);
   }
 
+  navigateToPolicy() {
+    this.props.navigation.navigate('BookingPolicy');
+  }
+  
   render() {
     const styles = {
       subheader: {
@@ -38,12 +43,21 @@ export default class GuideProfileScreen extends React.Component {
         <Card
           title='Guide Name'
         >
+          <Text>
+            Selected Date: May 30, 2017
+          </Text>
+          <Text>
+            Start / End Time: 9AM / 5pm
+          </Text>
+          <Text style={{marginBottom: 10}}>
+            City: SF
+          </Text>
+          <Divider/>
           <ListItem 
             roundAvatar
             avatar={require('./JONSNOW.png')}
             hideChevron={true}
-            title='City: SF'
-            subtitle='Rating: 4.5/5.0'
+            title='Rating: 4.5/5.0'
           />
           <Text style={styles.subheader}>
             Who am I?
@@ -116,6 +130,7 @@ export default class GuideProfileScreen extends React.Component {
             backgroundColor='#FF8C00'
             title='Book a trip with me!'
             buttonStyle={{marginTop: 10}}
+            onPress={this.navigateToPolicy}
           />
         </Card>
       </ScrollView>
