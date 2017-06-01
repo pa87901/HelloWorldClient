@@ -9,7 +9,7 @@ import auth from "./authReducer"
 
 export default combineReducers({
   filter,
-  login,
+  loginProfile,
   search,
   profileResults,
   chat,
