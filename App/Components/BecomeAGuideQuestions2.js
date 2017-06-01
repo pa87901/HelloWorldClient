@@ -28,7 +28,7 @@ export default class BecomeAGuideQuestions2 extends React.Component {
     return (
       <View style={{marginTop: 100}}>
         <FormLabel>When will you be giving a tour?</FormLabel>
-        <FormInput id="question1" placeholder="YYYY-MM-DD" onChangeText={(text) => { this.setAnswer1(text); }} />
+        <FormInput id="question2" placeholder="YYYY-MM-DD" onChangeText={(text) => { this.setAnswer2(text); }} />
         <View style={{marginTop: 10}}>
           <Button
             small
