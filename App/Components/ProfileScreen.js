@@ -1,49 +1,49 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { Card, Divider, Icon, List, ListItem, Button } from 'react-native-elements';
+import { StyleSheet, Text, ScrollView } from 'react-native';
+import {
+  Card, Button, List, ListItem
+} from 'react-native-elements';
 
 export default class ProfileScreen extends React.Component {
   constructor(props) {
     super(props);
+    this.navigateToGuideQuestions1 = this.navigateToGuideQuestions1.bind(this);
+  }
 
-    this.state = {
-      
-      usersInfo:
-        {
-          name: 'GuideName Here',
-        } 
-    } 
- 
+  navigateToGuideQuestions1() {
+    this.props.navigation.navigate('GuideQuestions1');
   }
 
   render() {
     return (
-      <View>
+      <ScrollView>
         <Card
-          title={this.state.usersInfo.name}
+          title='Full Name'
           image={require('./JONSNOW.png')}
         >
-        <Button
-            small
-            raised
-            icon={{name:'directions-walk'}}
-            backgroundColor='#FF8C00'
-            onPress={() => this.props.navigation.navigate('GuideQuestions')}
-            title='Become A Guide!' 
+          <Text style={{textAlign: 'center'}}>
+            How Are You Feeling Today?
+          </Text>
+        </Card>  
+        <List>
+          <ListItem
+            hideChevron={true}
+            leftIcon={{name: 'directions-walk'}}
+            title="Become a Guide"
+            onPress={this.navigateToGuideQuestions1}
           />
-        </Card>
-      </View> 
+          <ListItem
+            hideChevron={true}
+            leftIcon={{name: 'help-outline'}}
+            title="Help & Support"
+          />
+          <ListItem
+            hideChevron={true}
+            leftIcon={{name: 'feedback'}}
+            title="Provide Feedback"
+          />
+        </List>
+      </ScrollView> 
     );
   }
 }
-        // <List>
-        //   {
-        //     this.state.usersInfo.map((user, i) => (
-        //       <ListItem
-        //         key={i}
-        //         title={user.title}
-        //         leftIcon={{name: user.icon}}
-        //       />
-        //     ))
-        //   }
-        // </List>

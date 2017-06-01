@@ -7,6 +7,11 @@ import {
 export default class BookingConfirmationScreen extends React.Component {
   constructor(props) {
     super(props);
+    this.navigateToExplore = this.navigateToExplore.bind(this);
+  }
+
+  navigateToExplore() {
+    this.props.navigation.navigate('ExploreScreenEntry');
   }
 
   render() {
@@ -54,7 +59,7 @@ export default class BookingConfirmationScreen extends React.Component {
             title='Sounds Good! Take Me Back to Explore'
             fontSize={14}
             buttonStyle={{marginTop: 10}}
-            onPress={this.navigateToPolicy}
+            onPress={this.navigateToExplore}
           />
         </Card>
       </ScrollView>
