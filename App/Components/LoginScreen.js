@@ -7,25 +7,25 @@ import {
   View,
   TouchableOpacity
 } from 'react-native';
+
+import { authenticate } from "../Actions/authActions";
+import { connect } from "react-redux";
+
+
 import axios from '../axios.js'
-import store from '../store.js'
-//import axios from 'axios'
+//import store from '../store.js'
+ 
+
+//Redux
 
 //Auth0
 var Auth0Lock = require('react-native-lock');
 var lock = new Auth0Lock({clientId: 'Mu8OfgbOlJYH4AnyOP9Efu8sMk2Sb3sa', domain: 'lightningladles.auth0.com'});
 
-axios.post('/specialties', {"specialty":"climbing"})
-.then(function (response) {
-  console.log(response);
-})
-.catch(function (error) {
-  console.log(error);
-});
 
-export default class MyApp extends Component {
-  constructor() {
-    super();
+class LoginScreen extends Component {
+  constructor(props) {
+    super(props);
     this.state = {
       name: '',
       profile: {}
@@ -37,20 +37,13 @@ export default class MyApp extends Component {
 
   componentDidMount() {
     var context = this;
-    AsyncStorage.getItem('authToken', (err, data) => {
-      if (data) {
-        context.setState({data: JSON.parse(data)});
-        axios.defaults.headers.common['Authorization'] = JSON.parse(data).idToken;
-      }
-    });
-    AsyncStorage.getItem('profile', (err, data) =>{
-      if (data) {
-        context.setState({profile: JSON.parse(data)});
-      }
-    });
+    if(!this.props.auth.auth){
+      this._fbAuth()
+    }
 
   }
   _fbAuth() {
+    var context = this;
     lock.show({}, (err, profile, token) => {
       if (err) {
         console.log(err);
@@ -62,8 +55,9 @@ export default class MyApp extends Component {
       });
       AsyncStorage.setItem('profile', JSON.stringify(profile));
       AsyncStorage.setItem('authToken', JSON.stringify(token));
+      context.props.dispatch(authenticate(true, token));
       axios.defaults.headers.common['Authorization'] = token.idToken;
-      axios.post('/', {
+      axios.post('/auth', {
         firstName: 'Fred',
         lastName: 'Flintstone'
       })
@@ -80,13 +74,11 @@ export default class MyApp extends Component {
   _logOut() {
     AsyncStorage.setItem('profile', '');
     AsyncStorage.setItem('authToken', '');
-    this.setState({
-      profile: {}
-    });
+    this.props.dispatch(authenticate(false));
   }
 
   _test(){
-    console.log(store.getState())
+    console.log('props', this.props)
   }
 
 
@@ -128,7 +120,7 @@ export default class MyApp extends Component {
         </TouchableOpacity>
         <TouchableOpacity onPress = {this._test.bind(this)}>
           <Text>
-            Test Button
+            {JSON.stringify(this.props.auth)}
           </Text>
         </TouchableOpacity>
       </View>
@@ -137,7 +129,19 @@ export default class MyApp extends Component {
 }
 
 
-AppRegistry.registerComponent('MyApp', () => MyApp);
+const mapStateToProps = state =>(state);
+
+export default connect(mapStateToProps)(LoginScreen); 
+
+//AppRegistry.registerComponent('LoginScreen', () => LoginScreen);
+
+// axios.post('/specialties', {"specialty":"climbing"})
+// .then(function (response) {
+//   console.log(response);
+// })
+// .catch(function (error) {
+//   console.log(error);
+// });
 
 // axios.defaults.headers.common['Content-Type'] = 'application/json';
 // //axios.defaults.headers.get['access-control-allow-origin'] = 'Access-Control-Allow-Origin';
