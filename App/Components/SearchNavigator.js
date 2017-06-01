@@ -7,7 +7,10 @@ import LoginScreen from './LoginScreen';
 
 const SearchNavigator = StackNavigator({
   //Login: {screen: LoginScreen},
-  Search: {screen: SearchScreen},
+  Search: {screen: SearchScreen,
+  navigationOptions: {
+      header: null,
+    }},
   Explore: {screen: ExploreNavigator}
   // GuideProfile: {screen: GuideProfileScreen}
 });

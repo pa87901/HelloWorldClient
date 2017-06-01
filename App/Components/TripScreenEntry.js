@@ -1,25 +1,166 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, Dimensions } from 'react-native';
-import { Card } from 'react-native-elements';
+import { StyleSheet, Text, View, ScrollView, Button, Dimensions } from 'react-native';
+import { Card, List, ListItem, Avatar } from 'react-native-elements';
 
 export default class TripScreenEntry extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state ={
+      
+      list:[
+        {
+          name: 'San Francisco',
+          avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
+          subtitle: 'Amy Farha'
+        },
+        {
+          name: 'Berkeley',
+          avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
+          subtitle: 'Chris Jackson'
+        }
+      ]
+    }
+
+  }
+
   render() {
     return (
-      <View style={{flex: 1, flexDirection: 'column'}}>
-        <View style={styles.list} />
-      </View> 
+     <ScrollView> 
+     <List containerStyle={{marginBottom: 20}}>
+        {
+          this.state.list.map((l, i) => (
+            <ListItem
+              roundAvatar
+              avatar={{uri:l.avatar_url}}
+              key={i}
+              title={l.name}
+              subtitle={l.subtitle}
+            />
+          ))
+        }
+      </List>
+      </ScrollView> 
     )
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: 'column'
+  // listContainer: {
+  //  flex: 1, 
+  //  flexDirection: 'column', 
+  //  alignSelf: 'stretch',
+  // },
+  // list: {
+  //   width: Dimensions.get('window').width, 
+  //   height: 75, 
+  // },
+  item: {
+    height: 25,
   },
-  list: {
-    width: Dimensions.get('window').width, 
-    height: 75, 
-    backgroundColor: 'powderblue',
+  Guide: {
+    flex: 5,
+    flexDirection: 'row',
+    paddingLeft: 8,
+    paddingRight: 8
+  },
+  GuideAvatar: {
+    width: 50,
+    height: 50,
+    marginRight: 8,
+    marginTop: 2,
+  },
+  TextBold: {
+    fontWeight: 'bold'
+  },
+  TripDate: {
+    justifyContent: 'space-between'
   }
 });
+        // <View style={styles.listContainer}>
+        //   <View style={styles.list}>
+        //     <Card>
+        //       <ListItem
+        //         style={styles.item}
+        //         roundAvatar
+        //         avatar={require('./JONSNOW.png')}
+        //         title='San Francisco'
+        //         subtitle='Jon Snow'
+        //         hideChevron={true}
+        //       >
+        //       </ListItem>
+        //     </Card>
+        //   </View>
+        //   <View style={styles.list}>
+        //     <Card>
+        //       <ListItem
+        //         style={styles.item}
+        //         roundAvatar
+        //         avatar={require('./JONSNOW.png')}
+        //         title='San Francisco'
+        //         subtitle='Jon Snow'
+        //         hideChevron={true}
+        //       >
+        //       </ListItem>
+        //     </Card>
+        //   </View>
+        //   <View style={styles.list}>
+        //     <Card>
+        //       <ListItem
+        //         style={styles.item}
+        //         roundAvatar
+        //         avatar={require('./JONSNOW.png')}
+        //         title='San Francisco'
+        //         subtitle='Jon Snow'
+        //         hideChevron={true}
+        //       >
+        //       </ListItem>
+        //     </Card>
+        //   </View>
+        // </View>
+        
+        // <View style={styles.Guide}>
+        //   <View style={styles.GuideAvatar}>
+        //     <Avatar
+        //       medium
+        //       rounded
+        //       source={{uri: "https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg"}}
+        //     />
+        //   </View>
+        //   <View style={styles.GuideContainer}>
+        //     <Text>
+        //       <Text style={styles.TextBold}>San Francisco</Text>
+        //     </Text>
+        //     <Text>Guide Name</Text>
+        //   </View>
+        // </View>
+        // <View style={styles.Guide}>
+        //   <View style={styles.GuideAvatar}>
+        //     <Avatar
+        //       medium
+        //       rounded
+        //       source={{uri: "https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg"}}
+        //     />
+        //   </View>
+        //   <View style={styles.GuideContainer}>
+        //     <Text>
+        //       <Text style={styles.TextBold}>San Francisco</Text>
+        //     </Text>
+        //     <Text>Guide Name</Text>
+        //   </View>
+        // </View>
+        // <View style={styles.Guide}>
+        //   <View style={styles.GuideAvatar}>
+        //     <Avatar
+        //       medium
+        //       rounded
+        //       source={{uri: "https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg"}}
+        //     />
+        //   </View>
+        //   <View style={styles.GuideContainer}>
+        //     <Text>
+        //       <Text style={styles.TextBold}>San Francisco</Text>
+        //     </Text>
+        //     <Text>Guide Name</Text>
+        //   </View>
+        // </View>

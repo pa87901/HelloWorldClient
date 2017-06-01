@@ -59,25 +59,6 @@ export default class SearchScreen extends React.Component {
 
   render() {
     console.log('PROPS', this.props);
-    const styles = StyleSheet.create({
-      container: {
-        position: 'absolute', 
-        top: 0, 
-        bottom: 0, 
-        left: 0, 
-        right: 0,
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#F5FCFF',
-      },
-      picker: {
-        width: 350,
-      },
-      header: {
-        fontSize: 25,
-      }
-    });
 
     return (
       <View style={styles.container}>
@@ -110,3 +91,22 @@ export default class SearchScreen extends React.Component {
     );
   }
 }
+    const styles = StyleSheet.create({
+      container: {
+        position: 'absolute', 
+        top: 0, 
+        bottom: 0, 
+        left: 0, 
+        right: 0,
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#F5FCFF',
+      },
+      picker: {
+        width: 350,
+      },
+      header: {
+        fontSize: 25,
+      }
+    });
