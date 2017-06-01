@@ -4,6 +4,7 @@ import SearchScreen from './SearchScreen';
 import ExploreNavigator from './ExploreNavigator';
 import GuideProfileScreen from './GuideProfileScreen';
 import LoginScreen from './LoginScreen';
+import BecomeAGuideQuestions from './BecomeAGuideQuestions'
 
 const SearchNavigator = StackNavigator({
   //Login: {screen: LoginScreen},
@@ -11,7 +12,8 @@ const SearchNavigator = StackNavigator({
   navigationOptions: {
       header: null,
     }},
-  Explore: {screen: ExploreNavigator}
+  Explore: {screen: ExploreNavigator},
+  GuideQuestions: {screen: BecomeAGuideQuestions}
   // GuideProfile: {screen: GuideProfileScreen}
 });
 
