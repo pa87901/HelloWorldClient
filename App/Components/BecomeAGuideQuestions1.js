@@ -7,16 +7,16 @@ export default class BecomeAGuideQuestions1 extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      answer1: '',
+      city: '',
     };
 
-    this.setAnswer1 = this.setAnswer1.bind(this);
+    this.setCity = this.setCity.bind(this);
     this.navigateToNext = this.navigateToNext.bind(this);
   }
 
-  setAnswer1(city) {
+  setCity(city) {
     this.setState({
-      answer1: city
+      city: city
     });
   }
 
@@ -28,7 +28,7 @@ export default class BecomeAGuideQuestions1 extends React.Component {
     return (
       <View style={{marginTop: 100}}>
         <FormLabel>What city will you be giving a tour at?</FormLabel>
-        <FormInput id="question1" placeholder="City" onChangeText={(text) => { this.setAnswer1(text); }} />
+        <FormInput id="question1" placeholder="City" onChangeText={(text) => { this.setCity(text); }} />
         <View style={{marginTop: 10}}>
           <Button
             small

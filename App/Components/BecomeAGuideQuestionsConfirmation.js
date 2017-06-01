@@ -5,7 +5,7 @@ import {
 } from 'react-native-elements';
 import { NavigationActions } from 'react-navigation';
 
-export default class BookingConfirmationScreen extends React.Component {
+export default class BecomeAGuideQuestionsConfirmation extends React.Component {
   constructor(props) {
     super(props);
     this.navigateToExplore = this.navigateToExplore.bind(this);
@@ -34,14 +34,14 @@ export default class BookingConfirmationScreen extends React.Component {
     return (
       <ScrollView>
         <Card
-          title='We Contacted the Guide!'
+          title='You have been posted!'
         >
         <Text style={{marginBottom: 10}}>
-          Please wait up to 24 hours for the Guide to review and acknowledge your request. We will send you a confirmation message as soon as the guide accepts or declines your request.
+          Your profile has been posted on Localize! We will notify you when tourist(s) reach out to you via chat and/or request to have a tour with you.
         </Text>
         <Divider />
           <Text style={styles.subheader}>
-            Guide
+            Name
           </Text>
           <Text>
             Guide Name
@@ -58,8 +58,32 @@ export default class BookingConfirmationScreen extends React.Component {
           <Text>
             May 30, 2017
           </Text>
-          <Text style={{marginBottom: 10}}>
+          <Text>
             9AM / 5PM
+          </Text>
+          <Text style={styles.subheader}>
+            Specialties
+          </Text>
+          <Text>
+            Nightlife, Sports, Food
+          </Text>
+          <Text style={styles.subheader}>
+            Hourly Rate
+          </Text>
+          <Text>
+            $45.00
+          </Text>
+          <Text style={styles.subheader}>
+            Introduction
+          </Text>
+          <Text>
+            Hello, my name is Guide! I will be glad to show you a good time around SF.
+          </Text>
+          <Text style={styles.subheader}>
+            Other Info
+          </Text>
+          <Text style={{marginBottom: 10}}>
+            I like coding.
           </Text>
           <Button
             small
