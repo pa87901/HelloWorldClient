@@ -17,7 +17,7 @@ import BecomeAGuideQuestionsConfirmation from './BecomeAGuideQuestionsConfirmati
 import ChatScreen from './ChatScreen';
 
 const SearchNavigator = StackNavigator({
-  //Login: {screen: LoginScreen},
+  // Login: {screen: LoginScreen},
   Search: {screen: SearchScreen},
   Explore: {screen: ExploreNavigator},
   GuideProfile: {screen: GuideProfileScreen},

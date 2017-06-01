@@ -3,9 +3,9 @@ import { AsyncStorage, StyleSheet, Text, ScrollView, Image } from 'react-native'
 import {
   Card, Button, List, ListItem
 } from 'react-native-elements';
-import { connect } from "react-redux";
-import { authenticate } from "../Actions/authActions"; 
-import { setUserProfile } from "../Actions/userProfileActions"
+import { connect } from 'react-redux';
+import { authenticate } from '../Actions/authActions'; 
+import { setUserProfile } from '../Actions/userProfileActions';
 
 class ProfileScreen extends React.Component {
   constructor(props) {
@@ -14,7 +14,7 @@ class ProfileScreen extends React.Component {
     this.logout = this.logout.bind(this);
   }
 
-  logout(){
+  logout() {
     AsyncStorage.setItem('profile', '');
     AsyncStorage.setItem('authToken', '');
     this.props.dispatch(authenticate(false));

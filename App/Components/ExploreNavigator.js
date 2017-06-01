@@ -11,10 +11,10 @@ const SearchNavigator = TabNavigator({
   Explore: {
     screen: ExploreScreenEntry,
     navigationOptions: {
-        tabBarLabel: 'Explore',
-        tabBarIcon: ({ tintColor }) => <Icon name="location-city" size={25} color={"dimgray"}/>
-      }
-    }, 
+      tabBarLabel: 'Explore',
+      tabBarIcon: ({ tintColor }) => <Icon name="location-city" size={25} color={'dimgray'}/>
+    }
+  }, 
   Trips: {
     screen: TripsScreen,
     navigationOptions: {
