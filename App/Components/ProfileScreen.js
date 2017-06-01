@@ -7,40 +7,43 @@ import {
 export default class ProfileScreen extends React.Component {
   constructor(props) {
     super(props);
+    this.navigateToGuideQuestions = this.navigateToGuideQuestions.bind(this);
+  }
+
+  navigateToGuideQuestions() {
+    this.props.navigation.navigate('GuideQuestions');
   }
 
   render() {
     return (
       <ScrollView>
-        <ListItem
-          title="Guide Name"
-        />
-
-        <Tile
-         imageSrc={require('./JONSNOW.png')}
-         title="Guide Name"
-         caption="How are you feeling today?"
-        />
-        <Button
-            small
-            raised
-            icon={{name: 'directions-walk'}}
-            backgroundColor='#FF8C00'
-            onPress={() => this.props.navigation.navigate('GuideQuestions')}
-            title='Become A Guide!' 
+        <Card
+          title='Full Name'
+          image={require('./JONSNOW.png')}
+        >
+          <Text style={{textAlign: 'center'}}>
+            How Are You Feeling Today?
+          </Text>
+        </Card>  
+        <List>
+          <ListItem
+            hideChevron={true}
+            leftIcon={{name: 'directions-walk'}}
+            title="Become a Guide"
+            onPress={this.navigateToGuideQuestions}
           />
+          <ListItem
+            hideChevron={true}
+            leftIcon={{name: 'help-outline'}}
+            title="Help & Support"
+          />
+          <ListItem
+            hideChevron={true}
+            leftIcon={{name: 'feedback'}}
+            title="Provide Feedback"
+          />
+        </List>
       </ScrollView> 
     );
   }
 }
-        // <List>
-        //   {
-        //     this.state.usersInfo.map((user, i) => (
-        //       <ListItem
-        //         key={i}
-        //         title={user.title}
-        //         leftIcon={{name: user.icon}}
-        //       />
-        //     ))
-        //   }
-        // </List>
