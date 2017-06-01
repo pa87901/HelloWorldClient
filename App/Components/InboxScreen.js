@@ -9,18 +9,9 @@ export default class InboxScreen extends React.Component {
 
   render() {
     return (
-      <ScrollView>
+      <View>
         <Text> INBOX </Text>
-<<<<<<< HEAD
       </View> 
     );
-=======
-        <Button
-          title="testChat"
-          onPress={() => this.props.navigation.navigate('Chat')}>
-        </Button>
-      </ScrollView> 
-    )
->>>>>>> Integrated basic chat feature.
   }
 }
