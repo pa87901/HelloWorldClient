@@ -2,35 +2,35 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Button, FormLabel, FormInput } from 'react-native-elements';
 
-export default class BecomeAGuideQuestions5 extends React.Component {
+export default class BecomeAGuideQuestions6 extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      intro: '',
+      statement: '',
     };
 
-    this.setIntro = this.setIntro.bind(this);
+    this.setStatement = this.setStatement.bind(this);
     this.navigateToNext = this.navigateToNext.bind(this);
   }
 
-  setIntro(intro) {
+  setStatement(statement) {
     this.setState({
-      intro: intro
+      statement: statement
     });
   } 
 
   navigateToNext() {
-    this.props.navigation.navigate('GuideQuestions6');
+    this.props.navigation.navigate('GuideQuestionsPolicies');
   }
 
   render() {
     return (
       <View style={{marginTop: 100}}>
-        <FormLabel>Introduce Yourself</FormLabel>
-        <FormLabel>Provide a brief introduction to our tourists!</FormLabel>
+        <FormLabel>Any Extra Sauce?</FormLabel>
+        <FormLabel>Feel free to provide any other information here!</FormLabel>
         <FormInput
-          id="intro"
-          placeholder="Hello, my name is Localize..."
+          id="statement"
+          placeholder="Your blogs, past tours, profiles, etc"
           onChangeText={(text) => { this.setIntro(text); }}
         />
         <View style={{marginTop: 10}}>
