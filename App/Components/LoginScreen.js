@@ -7,16 +7,21 @@ import {
   View,
   TouchableOpacity
 } from 'react-native';
-import axios from 'axios';
+import axios from '../axios.js'
+import store from '../store.js'
+//import axios from 'axios'
 
 //Auth0
 var Auth0Lock = require('react-native-lock');
 var lock = new Auth0Lock({clientId: 'Mu8OfgbOlJYH4AnyOP9Efu8sMk2Sb3sa', domain: 'lightningladles.auth0.com'});
 
-//Axios
-axios.defaults.baseURL = 'http://localhost:3000/';
-axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
-
+axios.post('/specialties', {"specialty":"climbing"})
+.then(function (response) {
+  console.log(response);
+})
+.catch(function (error) {
+  console.log(error);
+});
 
 export default class MyApp extends Component {
   constructor() {
@@ -27,6 +32,7 @@ export default class MyApp extends Component {
     };
     this._fbAuth.bind(this);
     this._logOut.bind(this);
+    this._test.bind(this);
   }
 
   componentDidMount() {
@@ -79,6 +85,11 @@ export default class MyApp extends Component {
     });
   }
 
+  _test(){
+    console.log(store)
+  }
+
+
   render() {
     console.log('loaded');
     
@@ -115,6 +126,11 @@ export default class MyApp extends Component {
             Logout
           </Text>
         </TouchableOpacity>
+        <TouchableOpacity onPress = {this._test.bind(this)}>
+          <Text>
+            Test Button
+          </Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -122,3 +138,26 @@ export default class MyApp extends Component {
 
 
 AppRegistry.registerComponent('MyApp', () => MyApp);
+
+// axios.defaults.headers.common['Content-Type'] = 'application/json';
+// //axios.defaults.headers.get['access-control-allow-origin'] = 'Access-Control-Allow-Origin';
+// axios.defaults.headers.common['access-control-allow-origin'] = '*';
+// //'access-control-allow-origin': '*'
+// axios.defaults.headers.common['header_name'] = "API_KEY1"
+
+// var instanceAPI = axios.create({
+//   baseURL: 'http:/localhost:3000/api/',
+//   timeout: 1000,
+//   headers: {
+//     'access-control-allow-origin': '*'
+//   }
+// });
+//Auth0
+//"X-Requested-With": "XMLHttpRequest"
+//axios.get('http://ec2-35-167-135-24.us-west-2.compute.amazonaws.com:3000/', {
+// axios.get('http://localhost:3000/api/', {
+//   "headers" : {
+//     'access-control-allow-origin': '*'
+//   },
+//   "specialty":"Climbing"
+// })

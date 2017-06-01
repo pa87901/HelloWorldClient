@@ -1,6 +1,13 @@
-export function verify() {
-  return {
-    type: 'AUTHORIZATION_COMPLETED',
-    payload: [] //Data from axios response
+export function verify(authComplete, authData) {
+  if(authComplete){
+    return {
+      type: 'AUTHORIZATION_COMPLETED',
+      payload: authData
+    };
+  } else {
+    return {
+      type: 'AUTHORIZATION_FAILED',
+      payload: null
+    };
   }
 }
