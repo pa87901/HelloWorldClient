@@ -7,11 +7,11 @@ import {
 export default class ProfileScreen extends React.Component {
   constructor(props) {
     super(props);
-    this.navigateToGuideQuestions = this.navigateToGuideQuestions.bind(this);
+    this.navigateToGuideQuestions1 = this.navigateToGuideQuestions1.bind(this);
   }
 
-  navigateToGuideQuestions() {
-    this.props.navigation.navigate('GuideQuestions');
+  navigateToGuideQuestions1() {
+    this.props.navigation.navigate('GuideQuestions1');
   }
 
   render() {
@@ -30,7 +30,7 @@ export default class ProfileScreen extends React.Component {
             hideChevron={true}
             leftIcon={{name: 'directions-walk'}}
             title="Become a Guide"
-            onPress={this.navigateToGuideQuestions}
+            onPress={this.navigateToGuideQuestions1}
           />
           <ListItem
             hideChevron={true}
