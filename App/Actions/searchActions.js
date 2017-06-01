@@ -1,24 +1,27 @@
 //placeholder for actions
-export function fetchUser() {
-  return {
-    type: "FETCH_USER_FULFILLED",
-    payload: {
-      name: "Will",
-      age: 35,
-    }
-  }
+export function updateCity(city) {
+  return function(dispatch) {
+    dispatch({
+      type: 'UPDATE_CITY_FULFILLED',
+      payload: city
+    });
+  };
 }
 
-export function setUserName(name) {
-  return {
-    type: 'SET_USER_NAME',
-    payload: name,
-  }
+export function updateDate(date) {
+  return function(dispatch) {
+    dispatch({
+      type: 'UPDATE_DATE_FULFILLED',
+      payload: date
+    });
+  };
 }
 
-export function setUserAge(age) {
-  return {
-    type: 'SET_USER_AGE',
-    payload: age,
-  }
+export function updateTravelers(number) {
+  return function(dispatch) {
+    dispatch({
+      type: 'UPDATE_TRAVELERS_FULFILLED',
+      payload: number
+    });
+  };
 }

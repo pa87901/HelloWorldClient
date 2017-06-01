@@ -1,8 +1,10 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { updateCity, updateDate, updateTravelers } from '../Actions/searchActions.js';
 import { StyleSheet, Text, View, Picker, Item, Keyboard, TextInput } from 'react-native';
 import { FormLabel, FormInput, FormValidationMessage, Button } from 'react-native-elements';
 
-export default class SearchScreen extends React.Component {
+class SearchScreen extends React.Component {
   constructor(props) {
     super(props);
 
@@ -64,7 +66,7 @@ export default class SearchScreen extends React.Component {
       <View style={styles.container}>
         <Text style = {styles.header}>Where are you headed?</Text>
         <FormLabel>When?</FormLabel>
-        <FormInput id="when" value={this.state.when} placeholder="Where do you want to go?" onChangeText={(text) => this.setState({when: text})} />
+        <FormInput id="when" placeholder="Where do you want to go?" onChangeText={(date) => this.props.dispatch(updateDate(date))} />
         <FormLabel>Where?</FormLabel>
         <FormInput id="where" value={this.state.where} placeholder="When do you want to go?" onChangeText={(text) => this.setState({where: text})} />
         <FormLabel>How many travelers?</FormLabel>
@@ -91,22 +93,27 @@ export default class SearchScreen extends React.Component {
     );
   }
 }
-    const styles = StyleSheet.create({
-      container: {
-        position: 'absolute', 
-        top: 0, 
-        bottom: 0, 
-        left: 0, 
-        right: 0,
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#F5FCFF',
-      },
-      picker: {
-        width: 350,
-      },
-      header: {
-        fontSize: 25,
-      }
-    });
+
+const styles = StyleSheet.create({
+  container: {
+    position: 'absolute', 
+    top: 0, 
+    bottom: 0, 
+    left: 0, 
+    right: 0,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F5FCFF',
+  },
+  picker: {
+    width: 350,
+  },
+  header: {
+    fontSize: 25,
+  }
+});
+
+const mapStateToProps = state => (state);
+
+export default connect(mapStateToProps)(SearchScreen); 
