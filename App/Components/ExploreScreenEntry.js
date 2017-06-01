@@ -56,10 +56,10 @@ export default class ExploreScreenEntry extends React.Component {
           <Button
             small
             raised
-            icon={{name: 'flight-takeoff'}}
+            icon={{name:'group'}}
             backgroundColor='#FF8C00'
-            title='Book a trip with me!'
             onPress={() => this.props.navigation.navigate('GuideProfile')}
+            title='Get to know me!' 
           />
         </Card>
         );
