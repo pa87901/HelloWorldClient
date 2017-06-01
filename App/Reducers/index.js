@@ -1,6 +1,6 @@
 import { combineReducers } from "redux"
 import filter from "./filterReducer"
-import login from "./loginReducer"
+import userProfile from "./userProfileReducer"
 import search from "./searchReducer"
 import profileResults from "./profileResultsReducer"
 import chat from "./chatReducer"
@@ -9,7 +9,7 @@ import auth from "./authReducer"
 
 export default combineReducers({
   filter,
-  login,
+  userProfile,
   search,
   profileResults,
   chat,

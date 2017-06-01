@@ -1,13 +1,24 @@
 import React from 'react';
-import { StyleSheet, Text, ScrollView } from 'react-native';
+import { AsyncStorage, StyleSheet, Text, ScrollView, Image } from 'react-native';
 import {
   Card, Button, List, ListItem
 } from 'react-native-elements';
+import { connect } from "react-redux";
+import { authenticate } from "../Actions/authActions"; 
+import { setUserProfile } from "../Actions/userProfileActions"
 
-export default class ProfileScreen extends React.Component {
+class ProfileScreen extends React.Component {
   constructor(props) {
     super(props);
     this.navigateToGuideQuestions1 = this.navigateToGuideQuestions1.bind(this);
+    this.logout = this.logout.bind(this);
+  }
+
+  logout(){
+    AsyncStorage.setItem('profile', '');
+    AsyncStorage.setItem('authToken', '');
+    this.props.dispatch(authenticate(false));
+    this.props.dispatch(setUserProfile(false));
   }
 
   navigateToGuideQuestions1() {
@@ -15,12 +26,13 @@ export default class ProfileScreen extends React.Component {
   }
 
   render() {
+    //console.log('ProfileScreenState', this.props.userProfile)
     return (
       <ScrollView>
         <Card
-          title='Full Name'
-          image={require('./JONSNOW.png')}
+          title={this.props.userProfile.profile.name}
         >
+          <Image source={{uri: this.props.userProfile.profile.picture}} style={{width: 50, height: 50}} />
           <Text style={{textAlign: 'center'}}>
             How Are You Feeling Today?
           </Text>
@@ -42,8 +54,19 @@ export default class ProfileScreen extends React.Component {
             leftIcon={{name: 'feedback'}}
             title="Provide Feedback"
           />
+          <ListItem
+            hideChevron={true}
+            leftIcon={{name: 'flight-takeoff'}}
+            title="Logout"
+            onPress={this.logout}
+          />
         </List>
       </ScrollView> 
     );
   }
 }
+
+
+const mapStateToProps = state =>(state);
+
+export default connect(mapStateToProps)(ProfileScreen); 
