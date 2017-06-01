@@ -1,5 +1,5 @@
 import React from 'react';
-import { AsyncStorage, StyleSheet, Text, ScrollView } from 'react-native';
+import { AsyncStorage, StyleSheet, Text, ScrollView, Image } from 'react-native';
 import {
   Card, Button, List, ListItem
 } from 'react-native-elements';
@@ -31,8 +31,8 @@ class ProfileScreen extends React.Component {
       <ScrollView>
         <Card
           title={this.props.userProfile.profile.name}
-          image={require('./JONSNOW.png')}
         >
+          <Image source={{uri: this.props.userProfile.profile.picture}} style={{width: 50, height: 50}} />
           <Text style={{textAlign: 'center'}}>
             How Are You Feeling Today?
           </Text>
