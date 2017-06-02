@@ -53,25 +53,31 @@ class ExploreScreenEntry extends React.Component {
   render() {
     console.log('PROPS', this.props);
 
+
     return (
       <ScrollView>
-      {this.state.guides.map((guide, key) => {
+      {this.props.search.result.map((guide, key) => {
         return (
           <Card
           key={key}
           flexDirection='column'
-          title={guide.guideId}
-          image={guide.image}
+          title={guide.user.facebook_id}
+          image={guide.img_url || require('./JONSNOW.png')}
           >
-          <Rating
-            type='star'
-            imageSize={25}
-            ratingCount={5}
-            onFinishRating={this.ratingCompleted}
-          />
           <Text style={{marginBottom: 10}}>
-            {guide.msg}
+            {guide.intro}
           </Text>
+          <Text style={{marginBottom: 10}}>
+            Avg Rating: {guide.avg_rating}
+          </Text>
+          <Text>
+            Specialties:
+          </Text>
+          {guide.guideSpecialties.map((specialtyObj) =>
+            <Text>
+              {`${specialtyObj.specialty.specialty} `}
+            </Text>
+          )}
           <Button
             small
             raised
