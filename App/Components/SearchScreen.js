@@ -124,7 +124,7 @@ class SearchScreen extends React.Component {
   }
 
   render() {
-    console.log('PROPS', this.props);
+    //console.log('PROPS', this.props);
 
     return (
       <View style={styles.container}>

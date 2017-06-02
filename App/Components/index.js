@@ -1,3 +1,5 @@
+//cleanup
+
 import React from 'react';
 import { connect } from 'react-redux';
 import { AsyncStorage, StyleSheet, Text, View } from 'react-native';
@@ -52,35 +54,36 @@ class Navigator extends React.Component {
       facebookId: 'preda'
     };
 
-    axios.get(serverURL + '/api/chats/all/' + this.state.userLoggedIn, params)
-    .then(chats => {
-      // Formate messages into GiftedChat friendly format.
-      let formattedMessages = chats.data.map(chatObject => {
-        return {
-          text: chatObject.message,
-          user: {
-            _id: chatObject.user_id,
-            guideId: chatObject.guide_id
-          },
-          createdAt: chatObject.created_at,
-          _id: chatObject.id
-        }
-      });
-      console.log('Received response from server and formated.', chats.data,  formattedMessages);
-      this.setState({
-        chats: formattedMessages
-      });
-      this.props.updateChats(formattedMessages);
-      // this.props.dispatch({type: 'FETCH_CHATS_FULFILLED', payload: chats.data})
+    // axios.get(serverURL + '/api/chats/all/' + this.state.userLoggedIn, params)
+    // .then(chats => {
+    //   // Formate messages into GiftedChat friendly format.
+    //   let formattedMessages = chats.data.map(chatObject => {
+    //     return {
+    //       text: chatObject.message,
+    //       user: {
+    //         _id: chatObject.user_id,
+    //         guideId: chatObject.guide_id
+    //       },
+    //       createdAt: chatObject.created_at,
+    //       _id: chatObject.id
+    //     }
+    //   });
+    //   console.log('Received response from server and formated.', chats.data,  formattedMessages);
+    //   this.setState({
+    //     chats: formattedMessages
+    //   });
+    //   this.props.updateChats(formattedMessages);
+    //   // this.props.dispatch({type: 'FETCH_CHATS_FULFILLED', payload: chats.data})
 
-    })
-    .catch(error => {
-      console.error('Unable to receive response from server GET /chats.')
-    })
+    // })
+    // .catch(error => {
+    //   console.error('Unable to receive response from server GET /chats.')
+    // })
+
   }
 
   render() {
-    console.log('GIVE ME THE PROPS', this.props);
+    //console.log('GIVE ME THE PROPS', this.props);
     if(this.props.auth.auth){
       return (
         <SearchNavigator />
@@ -94,6 +97,14 @@ class Navigator extends React.Component {
 }
 
 const mapStateToProps = state => (state);
+//const mapDispatchToProps = dispatch =>{dispatch};
+const mapDispatchToProps = (dispatch)=>{
+  return {
+    authenticate: (bool, data) =>{
+      dispatch(authenticate)
+    }
+  }
+}
 
 function bindActions(dispatch) {
   return {

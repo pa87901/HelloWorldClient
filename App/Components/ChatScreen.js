@@ -28,7 +28,7 @@ class Chat extends React.Component {
 
   componentWillMount() {
     this.socket.on('chat message', (msgs) => {
-      console.log('Echo message', msgs);
+      //console.log('Echo message', msgs);
       let formattedMessages = msgs.map(chatObject => {
         return {
           text: chatObject.message,

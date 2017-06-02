@@ -3,7 +3,7 @@ export default function reducer(state = {
   date: '',
   hours: '',
   numTravelers: 1,
-  result: [],
+  result: []
 }, action) {
   if (action.type === 'UPDATE_CITY_FULFILLED') {
     return {...state, city: action.payload}
