@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, ScrollView, Button, Dimensions } from 'react-native';
 import { Card, List, ListItem, Avatar } from 'react-native-elements';
+import { connect } from 'react-redux';
 
 export default class TripScreenEntry extends React.Component {
   constructor(props) {
@@ -35,6 +36,7 @@ export default class TripScreenEntry extends React.Component {
   }
 
   render() {
+    console.log('---TRIP PROPS---', this.props)
     return (
      <ScrollView> 
      <List containerStyle={{marginBottom: 20}}>
@@ -89,6 +91,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between'
   }
 });
+
         // <View style={styles.listContainer}>
         //   <View style={styles.list}>
         //     <Card>
@@ -176,3 +179,5 @@ const styles = StyleSheet.create({
         //     <Text>Guide Name</Text>
         //   </View>
         // </View>
+
+
