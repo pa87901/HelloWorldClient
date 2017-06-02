@@ -1,9 +1,26 @@
+<<<<<<< HEAD
 export default function reducer(state = {
   city: '',
   date: '',
+<<<<<<< HEAD
   hours: '',
   numTravelers: 1,
   result: [],
+=======
+  numTravelers: 1
+=======
+export default function edit(state = {
+  searchLocation: '',
+  Date: {
+    startHour: 9, 
+    endHour: 17, 
+    startDate: Date.now(), 
+    endDate: Date.now() + 1
+  },
+  numGuests: 1
+  // error: null,
+>>>>>>> rebasing
+>>>>>>> rebasing
 }, action) {
   if (action.type === 'UPDATE_CITY_FULFILLED') {
     return {...state, city: action.payload}

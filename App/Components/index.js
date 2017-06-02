@@ -79,6 +79,7 @@ class Navigator extends React.Component {
     .catch(error => {
       console.error('Unable to receive response from server GET /chats.')
     })
+
   }
 
   render() {
@@ -96,6 +97,14 @@ class Navigator extends React.Component {
 }
 
 const mapStateToProps = state => (state);
+//const mapDispatchToProps = dispatch =>{dispatch};
+const mapDispatchToProps = (dispatch)=>{
+  return {
+    authenticate: (bool, data) =>{
+      dispatch(authenticate)
+    }
+  }
+}
 
 function bindActions(dispatch) {
   return {

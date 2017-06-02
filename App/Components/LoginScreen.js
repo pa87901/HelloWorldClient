@@ -8,10 +8,11 @@ import {
   TouchableOpacity
 } from 'react-native';
 
+
 import { authenticate } from "../Actions/authActions";
-import { connect } from "react-redux";
 import { setUserProfile } from "../Actions/userProfileActions"
 
+import { connect } from "react-redux";
 
 import axios from '../axios.js'
 //import store from '../store.js'
@@ -37,6 +38,7 @@ class LoginScreen extends Component {
   }
 
   componentDidMount() {
+    
     var context = this;
     if(!this.props.auth.auth){
       this._fbAuth()
