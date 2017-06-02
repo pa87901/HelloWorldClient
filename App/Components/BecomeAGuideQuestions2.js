@@ -1,8 +1,10 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { becomeGuideDate, becomeGuideStart, becomeGuideEnd } from '../Actions/BecomeAGuideActions';
 import { StyleSheet, Text, Picker, View, ScrollView } from 'react-native';
 import { Button, FormLabel, FormInput, } from 'react-native-elements';
 
-export default class BecomeAGuideQuestions2 extends React.Component {
+class BecomeAGuideQuestions2 extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -45,12 +47,12 @@ export default class BecomeAGuideQuestions2 extends React.Component {
         <View style={{marginTop: 10}}>
           <FormLabel>When will you be giving a tour?</FormLabel>
           <FormLabel>Date</FormLabel>
-          <FormInput id="date" placeholder="YYYY-MM-DD" onChangeText={(text) => { this.setDate(text); }} />
+          <FormInput id="date" placeholder="YYYY-MM-DD" onChangeText={(date) => this.props.dispatch(becomeGuideDate(date))} />
           <FormLabel>Hours</FormLabel>
           <FormLabel>Available From</FormLabel>
-          <FormInput id="startTime" placeholder="9am" onChangeText={(text) => { this.setStartTime(text); }} />
+          <FormInput id="startTime" placeholder="9am" onChangeText={(start) => this.props.dispatch(becomeGuideStart(start))} />
           <FormLabel>Through</FormLabel>
-          <FormInput id="startTime" placeholder="5pm" onChangeText={(text) => { this.setEndTime(text); }} />
+          <FormInput id="startTime" placeholder="5pm" onChangeText={(end) => this.props.dispatch(becomeGuideEnd(end))} />
           <View style={{marginTop: 10}}>
             <Button
               small
@@ -65,3 +67,7 @@ export default class BecomeAGuideQuestions2 extends React.Component {
     );
   }
 }
+
+const mapStateToProps = state => (state);
+
+export default connect(mapStateToProps)(BecomeAGuideQuestions2);

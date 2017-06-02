@@ -1,8 +1,10 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { becomeGuideSpecialties } from '../Actions/BecomeAGuideActions';
 import { StyleSheet, Text, View, Picker } from 'react-native';
 import { Button, FormLabel, FormInput, CheckBox } from 'react-native-elements';
 
-export default class BecomeAGuideQuestions3 extends React.Component {
+class BecomeAGuideQuestions3 extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -13,7 +15,7 @@ export default class BecomeAGuideQuestions3 extends React.Component {
       sports: false,
       music: false,
       history: false,
-      politics: false,
+      politics: false
     };
 
     this.setSightseeing = this.setSightseeing.bind(this);
@@ -76,10 +78,12 @@ export default class BecomeAGuideQuestions3 extends React.Component {
   }
 
   navigateToNext() {
+    this.props.dispatch(becomeGuideSpecialties(this.state))
     this.props.navigation.navigate('GuideQuestions4');
   }
 
   render() {
+    console.log('---SPECIALTY PROPS---', this.props)
     return (
       <View style={{marginTop: 10}}>
         <FormLabel>What are your specialties?</FormLabel>
@@ -162,3 +166,7 @@ export default class BecomeAGuideQuestions3 extends React.Component {
     );
   }
 }
+
+const mapStateToProps = state => (state);
+
+export default connect(mapStateToProps)(BecomeAGuideQuestions3);

@@ -1,8 +1,10 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { becomeGuideStatement } from '../Actions/BecomeAGuideActions';
 import { StyleSheet, Text, View } from 'react-native';
 import { Button, FormLabel, FormInput } from 'react-native-elements';
 
-export default class BecomeAGuideQuestions6 extends React.Component {
+class BecomeAGuideQuestions6 extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -31,7 +33,7 @@ export default class BecomeAGuideQuestions6 extends React.Component {
         <FormInput
           id="statement"
           placeholder="Your blogs, past tours, profiles, etc"
-          onChangeText={(text) => { this.setIntro(text); }}
+          onChangeText={(statement) => this.props.dispatch(becomeGuideStatement(statement))}
         />
         <View style={{marginTop: 10}}>
           <Button
@@ -46,3 +48,7 @@ export default class BecomeAGuideQuestions6 extends React.Component {
     );
   }
 }
+
+const mapStateToProps = state => (state);
+
+export default connect(mapStateToProps)(BecomeAGuideQuestions6);

@@ -1,13 +1,16 @@
 //guide questions here
 import React from 'react';
+import { connect } from 'react-redux';
+import { becomeGuideCity } from '../Actions/BecomeAGuideActions.js';
 import { StyleSheet, Text, View, Picker } from 'react-native';
 import { Button, FormLabel, FormInput, } from 'react-native-elements';
 
-export default class BecomeAGuideQuestions1 extends React.Component {
+class BecomeAGuideQuestions1 extends React.Component {
   constructor(props) {
     super(props);
+    
     this.state = {
-      city: '',
+      city: ''
     };
 
     this.setCity = this.setCity.bind(this);
@@ -25,10 +28,11 @@ export default class BecomeAGuideQuestions1 extends React.Component {
   }
 
   render() {
+    console.log('-----QUESTION PROPS-----', this.props)
     return (
       <View style={{marginTop: 100}}>
-        <FormLabel>What city will you be giving a tour at?</FormLabel>
-        <FormInput id="question1" placeholder="City" onChangeText={(text) => { this.setCity(text); }} />
+        <FormLabel>What city will you be giving a tour in?</FormLabel>
+        <FormInput id="question1" placeholder="City" onChangeText={(city) => this.props.dispatch(becomeGuideCity(city))} />
         <View style={{marginTop: 10}}>
           <Button
             small
@@ -42,3 +46,7 @@ export default class BecomeAGuideQuestions1 extends React.Component {
     );
   }
 }
+
+const mapStateToProps = state => (state);
+
+export default connect(mapStateToProps)(BecomeAGuideQuestions1);

@@ -1,8 +1,10 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { becomeGuideRate } from '../Actions/BecomeAGuideActions';
 import { StyleSheet, Text, View } from 'react-native';
 import { Button, FormLabel, FormInput } from 'react-native-elements';
 
-export default class BecomeAGuideQuestions4 extends React.Component {
+class BecomeAGuideQuestions4 extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -28,7 +30,7 @@ export default class BecomeAGuideQuestions4 extends React.Component {
       <View style={{marginTop: 100}}>
         <FormLabel>How much is your time worth?</FormLabel>
         <FormLabel>Hourly Rate (USD)</FormLabel>
-        <FormInput id="rate" placeholder="example: input '10' for $10 / hour" onChangeText={(text) => { this.setHourlyRate(text); }} />
+        <FormInput id="rate" placeholder="example: input '10' for $10 / hour" onChangeText={(rate) => this.props.dispatch(becomeGuideRate(rate))} />
         <View style={{marginTop: 10}}>
           <Button
             small
@@ -42,3 +44,7 @@ export default class BecomeAGuideQuestions4 extends React.Component {
     );
   }
 }
+
+const mapStateToProps = state => (state);
+
+export default connect(mapStateToProps)(BecomeAGuideQuestions4);
