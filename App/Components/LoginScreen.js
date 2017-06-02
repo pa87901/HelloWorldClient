@@ -58,11 +58,8 @@ class LoginScreen extends Component {
       AsyncStorage.setItem('authToken', JSON.stringify(token));
       context.props.dispatch(authenticate(true, token));
       context.props.dispatch(setUserProfile(true, profile));
-      axios.defaults.headers.common['Authorization'] = token.idToken;
-      axios.post('/auth', {
-        firstName: 'Fred',
-        lastName: 'Flintstone'
-      })
+      // axios.defaults.headers.common['Authorization'] = token.idToken;
+      axios.get('api/',)
       .then(function (response) {
         console.log(response);
       })
