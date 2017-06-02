@@ -42,7 +42,46 @@ class ExploreScreenEntry extends React.Component {
   "avg_rating": "0.00",
   "img_url": null,
   "created_at": "2017-05-30T23:09:54.534Z",
-  "updated_at": "2017-05-30T23:09:54.534Z"
+  "updated_at": "2017-05-30T23:09:54.534Z",
+  "user": {
+    "id": 1,
+    "facebook_id": "charles",
+    "full_name": "Charles Kim",
+    "guide": false,
+    "email": "charles@example.com",
+    "phone": "1111111111",
+    "avg_rating": "0.00",
+    "created_at": "2017-05-30T23:08:03.089Z",
+    "updated_at": "2017-05-30T23:08:03.089Z"
+  },
+  "guideSpecialties": [
+    {
+      "id": 3,
+      "guide_id": 1,
+      "specialty_id": 3,
+      "created_at": "2017-05-30T23:20:42.645Z",
+      "updated_at": "2017-05-30T23:20:42.645Z",
+      "specialty": {
+        "id": 3,
+        "specialty": "nightlife",
+        "created_at": "2017-05-30T23:12:48.482Z",
+        "updated_at": "2017-05-30T23:12:48.482Z"
+      }
+    },
+    {
+      "id": 4,
+      "guide_id": 1,
+      "specialty_id": 5,
+      "created_at": "2017-05-30T23:20:46.861Z",
+      "updated_at": "2017-05-30T23:20:46.861Z",
+      "specialty": {
+        "id": 5,
+        "specialty": "food",
+        "created_at": "2017-05-30T23:12:55.335Z",
+        "updated_at": "2017-05-30T23:12:55.335Z"
+      }
+    }
+  ]
 };
 
     this.props.dispatch(getProfileResult(testData));

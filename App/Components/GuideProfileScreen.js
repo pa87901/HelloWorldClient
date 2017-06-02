@@ -21,58 +21,47 @@ class GuideProfileScreen extends React.Component {
     return (
       <ScrollView>
         <Card
-          title='Guide Name'
+          title={this.props.profileSelection.selectedProfile.user.facebook_id}
         >
           <Text>
-            Selected Date: May 30, 2017
+            Selected Date: {this.props.search.date}
           </Text>
           <Text>
-            Start / End Time: 9AM / 5pm
+            Start / End Time: {this.props.search.hours}
           </Text>
           <Text style={{marginBottom: 10}}>
-            City: SF
+            City: {this.props.search.city}
           </Text>
           <Divider/>
           <ListItem 
             roundAvatar
-            avatar={require('./JONSNOW.png')}
+            avatar={this.props.profileSelection.selectedProfile.img_url || require('./JONSNOW.png')}
             hideChevron={true}
-            title='Rating: 4.5/5.0'
+            title={`Rating: ${this.props.profileSelection.selectedProfile.avg_rating.slice(0, 3)}/5.0`}
           />
           <Text style={styles.subheader}>
             Who am I?
           </Text>
           <Text style={styles.intro}>
-            Hello my name is Guide (Intro)
+            {this.props.profileSelection.selectedProfile.intro}
           </Text>
           <Text style={styles.intro}>
-            I like ... (Description)
+            {this.props.profileSelection.selectedProfile.statement}
           </Text>
           <Divider />
           <Text style={styles.subheader}>
             Specialties
           </Text>
           <List style={styles.list}>
-            <ListItem
-              leftIcon={<Icon name="local-drink" />}
-              hideChevron={true}
-              containerStyle={styles.listItem}
-              titleStyle={styles.specialityTitle}
-              title='nightlife'
-            />
-            <ListItem
-              leftIcon={<Icon name="local-drink" />}
-              hideChevron={true}
-              containerStyle={styles.listItem}
-              titleStyle={styles.specialityTitle}
-              title='nightlife'
-            /><ListItem
-              leftIcon={<Icon name="local-drink" />}
-              hideChevron={true}
-              containerStyle={styles.listItem}
-              titleStyle={styles.specialityTitle}
-              title='nightlife'
-            />
+            {this.props.profileSelection.selectedProfile.guideSpecialties.map(specialtyObj =>
+              <ListItem
+                leftIcon={<Icon name="local-drink" />}
+                hideChevron={true}
+                containerStyle={styles.listItem}
+                titleStyle={styles.specialityTitle}
+                title={specialtyObj.specialty.specialty}
+              />
+            )}
           </List>
           <Divider />
           <Text style={styles.subheader}>
