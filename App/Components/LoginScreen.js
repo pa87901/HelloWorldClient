@@ -8,10 +8,11 @@ import {
   TouchableOpacity
 } from 'react-native';
 
+
 import { authenticate } from "../Actions/authActions";
-import { connect } from "react-redux";
 import { setUserProfile } from "../Actions/userProfileActions"
 
+import { connect } from "react-redux";
 
 import axios from '../axios.js'
 //import store from '../store.js'
@@ -37,6 +38,7 @@ class LoginScreen extends Component {
   }
 
   componentDidMount() {
+    
     var context = this;
     if(!this.props.auth.auth){
       this._fbAuth()
@@ -56,18 +58,16 @@ class LoginScreen extends Component {
       AsyncStorage.setItem('authToken', JSON.stringify(token));
       context.props.dispatch(authenticate(true, token));
       context.props.dispatch(setUserProfile(true, profile));
-      axios.defaults.headers.common['Authorization'] = token.idToken;
-      axios.post('/auth', {
-        firstName: 'Fred',
-        lastName: 'Flintstone'
+      
+      // NEED TO VALIDATE TOKEN WITH SERVER
+      // axios.defaults.headers.common['Authorization'] = token.idToken;
+      axios.post('api/users', profile)
+      .then((res)=>{
+        console.log(res)
       })
-      .then(function (response) {
-        console.log(response);
+      .catch((err)=>{
+        console.log(err)
       })
-      .catch(function (error) {
-        console.log(error);
-      });
-      console.log(this.state);
     });
   }
 
@@ -129,7 +129,7 @@ class LoginScreen extends Component {
 }
 
 
-const mapStateToProps = state =>(state);
+const mapStateToProps = state => (state);
 
 export default connect(mapStateToProps)(LoginScreen); 
 

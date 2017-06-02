@@ -78,12 +78,13 @@ class BecomeAGuideQuestions3 extends React.Component {
   }
 
   navigateToNext() {
-    this.props.dispatch(becomeGuideSpecialties(this.state))
+    this.props.dispatch(becomeGuideSpecialties(this.state));
     this.props.navigation.navigate('GuideQuestions4');
   }
 
   render() {
-    console.log('---SPECIALTY PROPS---', this.props)
+    console.log('PROPS', this.props);
+
     return (
       <View style={{marginTop: 10}}>
         <FormLabel>What are your specialties?</FormLabel>

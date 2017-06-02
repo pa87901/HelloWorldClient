@@ -112,8 +112,8 @@ class ExploreScreenEntry extends React.Component {
           <Text>
             Specialties:
           </Text>
-          {guide.guideSpecialties.map((specialtyObj) =>
-            <Text>
+          {guide.guideSpecialties.map((specialtyObj, key) =>
+            <Text key={key}>
               {`${specialtyObj.specialty.specialty} `}
             </Text>
           )}

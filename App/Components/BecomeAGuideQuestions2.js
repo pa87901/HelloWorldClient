@@ -7,34 +7,19 @@ import { Button, FormLabel, FormInput, } from 'react-native-elements';
 class BecomeAGuideQuestions2 extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      date: '',
-      startTime: '',
-      endTime: '',
-    };
-
-    this.setDate = this.setDate.bind(this);
-    this.setStartTime = this.setStartTime.bind(this);
-    this.setEndTime = this.setEndTime.bind(this);
     this.navigateToNext = this.navigateToNext.bind(this);
   }
 
-  setDate(date) {
-    this.setState({
-      date: date
-    });
+  updateDate(date) {
+    this.props.dispatch(becomeGuideDate(date));
   }
 
-  setStartTime(time) {
-    this.setState({
-      startTime: time
-    });
+  updateStartTime(time) {
+    this.props.dispatch(becomeGuideStart(time));
   }
 
-  setEndTime(time) {
-    this.setState({
-      endTime: time
-    });
+  updateEndTime(time) {
+    this.props.dispatch(becomeGuideEnd(time));    
   }
 
   navigateToNext() {
@@ -42,17 +27,19 @@ class BecomeAGuideQuestions2 extends React.Component {
   }
 
   render() {
+    console.log('PROPS', this.props);
+
     return (
       <ScrollView>
         <View style={{marginTop: 10}}>
           <FormLabel>When will you be giving a tour?</FormLabel>
           <FormLabel>Date</FormLabel>
-          <FormInput id="date" placeholder="YYYY-MM-DD" onChangeText={(date) => this.props.dispatch(becomeGuideDate(date))} />
+          <FormInput id="date" placeholder="YYYY-MM-DD" onChangeText={(date) => this.updateDate(date)} />
           <FormLabel>Hours</FormLabel>
           <FormLabel>Available From</FormLabel>
-          <FormInput id="startTime" placeholder="9am" onChangeText={(start) => this.props.dispatch(becomeGuideStart(start))} />
+          <FormInput id="startTime" placeholder="9am" onChangeText={(time) => this.updateStartTime(time)} />
           <FormLabel>Through</FormLabel>
-          <FormInput id="startTime" placeholder="5pm" onChangeText={(end) => this.props.dispatch(becomeGuideEnd(end))} />
+          <FormInput id="startTime" placeholder="5pm" onChangeText={(time) => this.updateEndTime(time)} />
           <View style={{marginTop: 10}}>
             <Button
               small

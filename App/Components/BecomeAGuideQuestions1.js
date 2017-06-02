@@ -8,31 +8,24 @@ import { Button, FormLabel, FormInput, } from 'react-native-elements';
 class BecomeAGuideQuestions1 extends React.Component {
   constructor(props) {
     super(props);
-    
-    this.state = {
-      city: ''
-    };
-
-    this.setCity = this.setCity.bind(this);
     this.navigateToNext = this.navigateToNext.bind(this);
-  }
-
-  setCity(city) {
-    this.setState({
-      city: city
-    });
   }
 
   navigateToNext() {
     this.props.navigation.navigate('GuideQuestions2');
   }
 
+  updateCity(city) {
+    this.props.dispatch(becomeGuideCity(city));
+  }
+
   render() {
-    console.log('-----QUESTION PROPS-----', this.props)
+    console.log('PROPS', this.props);
+
     return (
       <View style={{marginTop: 100}}>
         <FormLabel>What city will you be giving a tour in?</FormLabel>
-        <FormInput id="question1" placeholder="City" onChangeText={(city) => this.props.dispatch(becomeGuideCity(city))} />
+        <FormInput id="question1" placeholder="City" onChangeText={(city) => this.updateCity(city)} />
         <View style={{marginTop: 10}}>
           <Button
             small

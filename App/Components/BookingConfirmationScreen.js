@@ -1,11 +1,12 @@
 import React from 'react';
 import { Text, ScrollView } from 'react-native';
+import { connect } from 'react-redux';
 import {
   Card, Button, Icon, Grid, Row, Divider
 } from 'react-native-elements';
 import { NavigationActions } from 'react-navigation';
 
-export default class BookingConfirmationScreen extends React.Component {
+class BookingConfirmationScreen extends React.Component {
   constructor(props) {
     super(props);
     this.navigateToExplore = this.navigateToExplore.bind(this);
@@ -24,12 +25,7 @@ export default class BookingConfirmationScreen extends React.Component {
   }
 
   render() {
-    const styles = {
-      subheader: {
-        fontSize: 20,
-        marginTop: 10
-      },
-    };
+    console.log('PROPS', this.props);
 
     return (
       <ScrollView>
@@ -44,22 +40,22 @@ export default class BookingConfirmationScreen extends React.Component {
             Guide
           </Text>
           <Text>
-            Guide Name
+            {this.props.profileSelection.selectedProfile.user.facebook_id}
           </Text>
           <Text style={styles.subheader}>
             City
           </Text>
           <Text>
-            San Francisco, CA
+            {this.props.search.city}
           </Text>
           <Text style={styles.subheader}>
             Date & Time
           </Text>
           <Text>
-            May 30, 2017
+            {this.props.search.date}
           </Text>
           <Text style={{marginBottom: 10}}>
-            9AM / 5PM
+            {this.props.search.hours}
           </Text>
           <Button
             small
@@ -75,3 +71,14 @@ export default class BookingConfirmationScreen extends React.Component {
     );
   }
 }
+
+const styles = {
+  subheader: {
+    fontSize: 20,
+    marginTop: 10
+  },
+};
+
+const mapStateToProps = state => (state);
+
+export default connect(mapStateToProps)(BookingConfirmationScreen);
