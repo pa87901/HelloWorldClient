@@ -23,6 +23,7 @@ export default class TripScreenEntry extends React.Component {
     this.props.navigation.dispatch(resetAction);
   }
 
+//Waiting for db methods/trips to dynamically render
   render() {
     const styles = {
       subheader: {
@@ -33,9 +34,7 @@ export default class TripScreenEntry extends React.Component {
 
     return (
       <ScrollView>
-        <Card
-          title='Your Trips!'
-        >
+        <Card>
           <Text style={styles.subheader}>
             City
           </Text>
@@ -43,7 +42,7 @@ export default class TripScreenEntry extends React.Component {
             San Francisco, CA
           </Text>
           <Text style={styles.subheader}>
-            Name
+            Guide
           </Text>
           <Text>
             Guide Name
