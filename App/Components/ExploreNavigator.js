@@ -1,7 +1,6 @@
 import React from 'react';
 import { DrawerNavigator, StackNavigator, TabNavigator } from 'react-navigation';
 import { Icon } from 'react-native-elements';
-import ExploreScreen from './ExploreScreen';
 import ExploreScreenEntry from './ExploreScreenEntry';
 import TripsScreen from './TripsScreen';
 import InboxScreen from './InboxScreen';

@@ -55,6 +55,17 @@ class SearchScreen extends React.Component {
     "img_url": null,
     "created_at": "2017-05-30T23:09:54.534Z",
     "updated_at": "2017-05-30T23:09:54.534Z",
+    "user": {
+      "id": 1,
+      "facebook_id": "charles",
+      "full_name": "Charles Kim",
+      "guide": false,
+      "email": "charles@example.com",
+      "phone": "1111111111",
+      "avg_rating": "0.00",
+      "created_at": "2017-05-30T23:08:03.089Z",
+      "updated_at": "2017-05-30T23:08:03.089Z"
+    },
     "availabilities": [
       {
         "id": 1,
