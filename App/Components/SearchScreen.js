@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import {
-  updateCity, updateDate, updateTravelers, updateSearchResult
+  updateCity, updateDate, updateHours, updateTravelers, updateSearchResult
 } from '../Actions/searchActions.js';
 import {
   StyleSheet, Text, View, Picker, Item, Keyboard, TextInput
@@ -28,6 +28,10 @@ class SearchScreen extends React.Component {
   handleDateUpdate(date) {
     this.props.dispatch(updateDate(date));
   }
+
+  handleHoursUpdate(hours) {
+    this.props.dispatch(updateHours(hours));
+  }  
 
   handleCityUpdate(city) {
     this.props.dispatch(updateCity(city));
@@ -114,10 +118,13 @@ class SearchScreen extends React.Component {
     return (
       <View style={styles.container}>
         <Text style = {styles.header}>Where are you headed?</Text>
-        <FormLabel>When?</FormLabel>
-        <FormInput id="when" placeholder="Where do you want to go?" onChangeText={(date) => this.handleDateUpdate(date)} />
+        <FormLabel>When do you need a guide?</FormLabel>
+        <FormLabel>Date</FormLabel>
+        <FormInput id="date" placeholder="YYYY-MM-DD" onChangeText={(date) => this.handleDateUpdate(date)} />
+        <FormLabel>Hours</FormLabel>
+        <FormInput id="hours" placeholder="9AM-5PM" onChangeText={(hours) => this.handleHoursUpdate(hours)} />
         <FormLabel>Where?</FormLabel>
-        <FormInput id="where" placeholder="When do you want to go?" onChangeText={(city) => this.handleCityUpdate(city)} />
+        <FormInput id="where" placeholder="Where do you want to go?" onChangeText={(city) => this.handleCityUpdate(city)} />
         <FormLabel>How many travelers?</FormLabel>
         <Picker
           style={styles.picker}

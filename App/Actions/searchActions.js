@@ -6,6 +6,13 @@ export function updateDate(date) {
   };
 }
 
+export function updateHours(hours) {
+  return {
+    type: 'UPDATE_HOURS_FULFILLED',
+    payload: hours
+  };
+}
+
 export function updateCity(city) {
   return {
     type: 'UPDATE_CITY_FULFILLED',
