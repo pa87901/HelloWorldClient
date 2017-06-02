@@ -23,15 +23,15 @@ class ProfileScreen extends React.Component {
     this.props.dispatch(setUserProfile(false));
   }
 
-  test(){
+  test() {
     console.log(this.props.userProfile.profile)
     axios.post('api/users', this.props.userProfile.profile)
-    .then((res)=>{
-      console.log(res)
+    .then((res) => {
+      console.log(res);
     })
-    .catch((err)=>{
-      console.log(err)
-    })
+    .catch((err) => {
+      console.log(err);
+    });
   }
 
   navigateToGuideQuestions1() {

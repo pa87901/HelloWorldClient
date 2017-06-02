@@ -58,6 +58,8 @@ class LoginScreen extends Component {
       AsyncStorage.setItem('authToken', JSON.stringify(token));
       context.props.dispatch(authenticate(true, token));
       context.props.dispatch(setUserProfile(true, profile));
+      
+      // NEED TO VALIDATE TOKEN WITH SERVER
       // axios.defaults.headers.common['Authorization'] = token.idToken;
       axios.post('api/users', profile)
       .then((res)=>{
@@ -127,7 +129,7 @@ class LoginScreen extends Component {
 }
 
 
-const mapStateToProps = state =>(state);
+const mapStateToProps = state => (state);
 
 export default connect(mapStateToProps)(LoginScreen); 
 
