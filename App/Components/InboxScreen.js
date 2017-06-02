@@ -15,6 +15,7 @@ export default class InboxScreen extends React.Component {
           title='testChat'
           onPress={() => {this.props.navigation.navigate('Chat')}}
         />
+        
       </View> 
     );
   }

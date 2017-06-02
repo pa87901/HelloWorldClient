@@ -9,14 +9,20 @@ import LoginScreen from './LoginScreen'
 //Auth0
 var Auth0Lock = require('react-native-lock');
 var lock = new Auth0Lock({clientId: 'Mu8OfgbOlJYH4AnyOP9Efu8sMk2Sb3sa', domain: 'lightningladles.auth0.com'});
-
+import axios from 'axios';
 // import OnboardingNavigator from './navigationOnboarding'
 // import MainNavigator from './navigationMain'
 // import SigningUpNavigator from './navigationSigning'
 
+let serverURL = 'http://localhost:3000'
+
 class Navigator extends React.Component {
-  constructor(props){
-    super(props)
+  constructor(props) {
+    super();
+    this.state = {
+      chats: [],
+      userLoggedIn: 'preda'
+    }
   }
 
   componentDidMount(){
@@ -37,36 +43,40 @@ class Navigator extends React.Component {
         context.props.dispatch(setUserProfile(false))
       }
     });
-    // console.log("!this.props.auth", this.props.auth.auth)
-    // if(!this.props.auth.auth){
-    //   lock.show({}, (err, profile, token) => {
-    //     if (err) {
-    //       console.log(err);
-    //       return;
-    //     }
-    //     // Authentication worked!
-    //     this.setState({
-    //       profile: profile
-    //     });
-    //     AsyncStorage.setItem('profile', JSON.stringify(profile));
-    //     AsyncStorage.setItem('authToken', JSON.stringify(token));
-    //     context.props.dispatch(authenticate(true, token));
+  }
 
-    //     // axios.defaults.headers.common['Authorization'] = token.idToken;
-    //     // axios.post('/', {
-    //     //   firstName: 'Fred',
-    //     //   lastName: 'Flintstone'
-    //     // })
-    //     // .then(function (response) {
-    //     //   console.log(response);
-    //     // })
-    //     // .catch(function (error) {
-    //     //   console.log(error);
-    //     // });
-    //     // console.log(this.state);
-    //   });
-    // }
 
+  componentWillMount() {
+    // Get messages from server using http GET request.
+    let params = {
+      facebookId: 'preda'
+    };
+
+    axios.get(serverURL + '/api/chats/all/' + this.state.userLoggedIn, params)
+    .then(chats => {
+      // Formate messages into GiftedChat friendly format.
+      let formattedMessages = chats.data.map(chatObject => {
+        return {
+          text: chatObject.message,
+          user: {
+            _id: chatObject.user_id,
+            guideId: chatObject.guide_id
+          },
+          createdAt: chatObject.created_at,
+          _id: chatObject.id
+        }
+      });
+      console.log('Received response from server and formated.', chats.data,  formattedMessages);
+      this.setState({
+        chats: formattedMessages
+      });
+      this.props.updateChats(formattedMessages);
+      // this.props.dispatch({type: 'FETCH_CHATS_FULFILLED', payload: chats.data})
+
+    })
+    .catch(error => {
+      console.error('Unable to receive response from server GET /chats.')
+    })
   }
 
   render() {
@@ -85,7 +95,13 @@ class Navigator extends React.Component {
 
 const mapStateToProps = state => (state);
 
-export default connect(mapStateToProps)(Navigator);
+function bindActions(dispatch) {
+  return {
+    updateChats: (chats) => dispatch({type: 'UPDATE_CHATS', payload: chats})
+  }
+}
+
+export default connect(mapStateToProps, bindActions)(Navigator);
 
 const styles = StyleSheet.create({
   container: {
