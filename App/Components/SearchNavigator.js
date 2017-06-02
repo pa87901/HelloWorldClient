@@ -19,7 +19,7 @@ import ChatScreen from './ChatScreen';
 const SearchNavigator = StackNavigator({
   // Login: {screen: LoginScreen},
   Search: {screen: SearchScreen,
-  navigationOptions: {
+    navigationOptions: {
       header: null
     }
   },

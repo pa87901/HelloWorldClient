@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import {
-  updateCity, updateDate, updateTravelers, updateSearchResult
+  updateCity, updateDate, updateHours, updateTravelers, updateSearchResult
 } from '../Actions/searchActions.js';
 import {
   StyleSheet, Text, View, Picker, Item, Keyboard, TextInput
@@ -29,6 +29,10 @@ class SearchScreen extends React.Component {
     this.props.dispatch(updateDate(date));
   }
 
+  handleHoursUpdate(hours) {
+    this.props.dispatch(updateHours(hours));
+  }  
+
   handleCityUpdate(city) {
     this.props.dispatch(updateCity(city));
   }
@@ -51,6 +55,17 @@ class SearchScreen extends React.Component {
     "img_url": null,
     "created_at": "2017-05-30T23:09:54.534Z",
     "updated_at": "2017-05-30T23:09:54.534Z",
+    "user": {
+      "id": 1,
+      "facebook_id": "charles",
+      "full_name": "Charles Kim",
+      "guide": false,
+      "email": "charles@example.com",
+      "phone": "1111111111",
+      "avg_rating": "0.00",
+      "created_at": "2017-05-30T23:08:03.089Z",
+      "updated_at": "2017-05-30T23:08:03.089Z"
+    },
     "availabilities": [
       {
         "id": 1,
@@ -114,10 +129,13 @@ class SearchScreen extends React.Component {
     return (
       <View style={styles.container}>
         <Text style = {styles.header}>Where are you headed?</Text>
-        <FormLabel>When?</FormLabel>
-        <FormInput id="when" placeholder="Where do you want to go?" onChangeText={(date) => this.handleDateUpdate(date)} />
+        <FormLabel>When do you need a guide?</FormLabel>
+        <FormLabel>Date</FormLabel>
+        <FormInput id="date" placeholder="YYYY-MM-DD" onChangeText={(date) => this.handleDateUpdate(date)} />
+        <FormLabel>Hours</FormLabel>
+        <FormInput id="hours" placeholder="9AM-5PM" onChangeText={(hours) => this.handleHoursUpdate(hours)} />
         <FormLabel>Where?</FormLabel>
-        <FormInput id="where" placeholder="When do you want to go?" onChangeText={(city) => this.handleCityUpdate(city)} />
+        <FormInput id="where" placeholder="Where do you want to go?" onChangeText={(city) => this.handleCityUpdate(city)} />
         <FormLabel>How many travelers?</FormLabel>
         <Picker
           style={styles.picker}
