@@ -30,17 +30,17 @@ class Navigator extends React.Component {
     var context = this;
     AsyncStorage.getItem('authToken', (err, data) => {
       if (data) {
-        context.props.dispatch(authenticate(true, JSON.parse(data)));
+        context.props.authenticate(true, JSON.parse(data));
         //axios.defaults.headers.common['Authorization'] = JSON.parse(data).idToken;
       } else {
-        context.props.dispatch(authenticate(true, null));
+        context.props.authenticate(true, null);
       }
     });
     AsyncStorage.getItem('profile', (err, data) =>{
       if(data){
-        context.props.dispatch(setUserProfile(true, JSON.parse(data)))
+        context.props.setUserProfile(true, JSON.parse(data))
       } else {
-        context.props.dispatch(setUserProfile(false))
+        context.props.setUserProfile(false)
       }
     });
   }
@@ -97,7 +97,33 @@ const mapStateToProps = state => (state);
 
 function bindActions(dispatch) {
   return {
-    updateChats: (chats) => dispatch({type: 'UPDATE_CHATS', payload: chats})
+    updateChats: (chats) => dispatch({type: 'UPDATE_CHATS', payload: chats}),
+    authenticate: (authComplete, authData) => {
+      if(authComplete){
+        dispatch({
+          type: 'AUTHORIZATION_COMPLETED',
+          payload: authData
+        });
+      } else {
+        dispatch( {
+          type: 'AUTHORIZATION_FAILED',
+          payload: null
+        });
+      }
+    },
+    setUserProfile: (profileLoaded, profileData) => {
+      if(profileLoaded){
+        dispatch({
+          type: 'PROFILE_LOADED',
+          payload: profileData
+        });
+      } else {
+        dispatch({
+          type: 'PROFILE_UNLOADED',
+          payload: null
+        });
+      }
+    }
   }
 }
 
