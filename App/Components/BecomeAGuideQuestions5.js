@@ -7,18 +7,11 @@ import { Button, FormLabel, FormInput } from 'react-native-elements';
 class BecomeAGuideQuestions5 extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      intro: '',
-    };
-
-    this.setIntro = this.setIntro.bind(this);
     this.navigateToNext = this.navigateToNext.bind(this);
   }
 
-  setIntro(intro) {
-    this.setState({
-      intro: intro
-    });
+  updateIntro(intro) {
+    this.props.dispatch(becomeGuideIntro(intro));
   } 
 
   navigateToNext() {
@@ -26,6 +19,8 @@ class BecomeAGuideQuestions5 extends React.Component {
   }
 
   render() {
+    console.log('PROPS', this.props);
+
     return (
       <View style={{marginTop: 100}}>
         <FormLabel>Introduce Yourself</FormLabel>
@@ -33,7 +28,7 @@ class BecomeAGuideQuestions5 extends React.Component {
         <FormInput
           id="intro"
           placeholder="Hello, my name is Localize..."
-          onChangeText={(intro) => this.props.dispatch(becomeGuideIntro(intro))}
+          onChangeText={(intro) => this.updateIntro(intro)}
         />
         <View style={{marginTop: 10}}>
           <Button

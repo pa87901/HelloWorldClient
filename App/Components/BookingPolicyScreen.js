@@ -1,14 +1,17 @@
 import React from 'react';
 import { Text, ScrollView } from 'react-native';
+import { connect } from 'react-redux';
 import { Card, Button, Icon } from 'react-native-elements';
 
-export default class BookingPolicyScreen extends React.Component {
+class BookingPolicyScreen extends React.Component {
   constructor(props) {
     super(props);
     this.navigateToConfirmation = this.navigateToConfirmation.bind(this);
   }
 
   navigateToConfirmation() {
+    // create axios call to create a booking
+
     this.props.navigation.navigate('BookingConfirmation');
   }
 
@@ -36,3 +39,6 @@ export default class BookingPolicyScreen extends React.Component {
   }
 }
 
+const mapStateToProps = state => (state);
+
+export default connect(mapStateToProps)(BookingPolicyScreen);
