@@ -24,7 +24,8 @@ class ProfileScreen extends React.Component {
   }
 
   test(){
-    axios.get('api')
+    console.log(this.props.userProfile.profile)
+    axios.post('api/users', this.props.userProfile.profile)
     .then((res)=>{
       console.log(res)
     })
@@ -74,7 +75,7 @@ class ProfileScreen extends React.Component {
           />
           <ListItem
             hideChevron={true}
-            leftIcon={{name: 'flight-landing'}}
+            leftIcon={{name: 'feedback'}}
             title="Test"
             onPress={this.test}
           />

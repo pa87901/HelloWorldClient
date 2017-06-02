@@ -59,14 +59,13 @@ class LoginScreen extends Component {
       context.props.dispatch(authenticate(true, token));
       context.props.dispatch(setUserProfile(true, profile));
       // axios.defaults.headers.common['Authorization'] = token.idToken;
-      axios.get('api/',)
-      .then(function (response) {
-        console.log(response);
+      axios.post('api/users', profile)
+      .then((res)=>{
+        console.log(res)
       })
-      .catch(function (error) {
-        console.log(error);
-      });
-      console.log(this.state);
+      .catch((err)=>{
+        console.log(err)
+      })
     });
   }
 
