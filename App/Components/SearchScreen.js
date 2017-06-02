@@ -1,22 +1,18 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { updateCity, updateDate, updateTravelers } from '../Actions/searchActions.js';
-import { StyleSheet, Text, View, Picker, Item, Keyboard, TextInput } from 'react-native';
-import { FormLabel, FormInput, FormValidationMessage, Button } from 'react-native-elements';
+import {
+  updateCity, updateDate, updateTravelers, updateSearchResult
+} from '../Actions/searchActions.js';
+import {
+  StyleSheet, Text, View, Picker, Item, Keyboard, TextInput
+} from 'react-native';
+import {
+  FormLabel, FormInput, FormValidationMessage, Button
+} from 'react-native-elements';
 
 class SearchScreen extends React.Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      when: '',
-      where: '',
-      guests: 1
-    };
-
-    // this.handleWhenInput = this.handleWhenInput.bind(this);
-    // this.handleWhereInput = this.handleWhereInput.bind(this);
-    // this.handleGuestsInput = this.handleGuestsInput.bind(this);
   }
 
   componentWillMount () {
@@ -29,6 +25,81 @@ class SearchScreen extends React.Component {
     this.keyboardDidHideListener.remove();
   }
 
+  handleDateUpdate(date) {
+    this.props.dispatch(updateDate(date));
+  }
+
+  handleCityUpdate(city) {
+    this.props.dispatch(updateCity(city));
+  }
+
+  handleTravelerUpdate(number) {
+    this.props.dispatch(updateTravelers(number));
+  }
+
+  handleSearchSubmit() {
+
+    const sampleData = [
+  {
+    "id": 1,
+    "user_id": 1,
+    "city": "SF",
+    "hourly_rate": "45.00",
+    "intro": "Hello, my name is Charles",
+    "statement": "I like food",
+    "avg_rating": "0.00",
+    "img_url": null,
+    "created_at": "2017-05-30T23:09:54.534Z",
+    "updated_at": "2017-05-30T23:09:54.534Z",
+    "availabilities": [
+      {
+        "id": 1,
+        "guide_id": 1,
+        "start_hr": 9,
+        "end_hr": 17,
+        "date": "2017-05-24T07:00:00.000Z",
+        "created_at": "2017-05-30T23:34:59.547Z",
+        "updated_at": "2017-05-30T23:34:59.547Z"
+      }
+    ],
+    "guideSpecialties": [
+      {
+        "id": 3,
+        "guide_id": 1,
+        "specialty_id": 3,
+        "created_at": "2017-05-30T23:20:42.645Z",
+        "updated_at": "2017-05-30T23:20:42.645Z",
+        "specialty": {
+          "id": 3,
+          "specialty": "nightlife",
+          "created_at": "2017-05-30T23:12:48.482Z",
+          "updated_at": "2017-05-30T23:12:48.482Z"
+        }
+      },
+      {
+        "id": 4,
+        "guide_id": 1,
+        "specialty_id": 5,
+        "created_at": "2017-05-30T23:20:46.861Z",
+        "updated_at": "2017-05-30T23:20:46.861Z",
+        "specialty": {
+          "id": 5,
+          "specialty": "food",
+          "created_at": "2017-05-30T23:12:55.335Z",
+          "updated_at": "2017-05-30T23:12:55.335Z"
+        }
+      }
+    ]
+  }
+]
+
+    // Need to replace below with axios call
+    this.props.dispatch(updateSearchResult(sampleData));
+    
+
+    this.props.navigation.navigate('Explore');
+  }
+
   _keyboardDidShow () {
     console.log('Hey from the keyboard');
   }
@@ -37,28 +108,6 @@ class SearchScreen extends React.Component {
     console.log('Keyboard Hidden');
   }
 
-  // handleWhenInput(event) {
-  //   // event.preventDefault();
-  //   console.log('EVENT', event);
-  //   // this.setState({
-  //   //   when: event.target.value
-  //   // });
-  // }
-
-  // handleWhereInput(event) {
-  //   // event.preventDefault();
-  //   // this.setState({
-  //   //   where: event.target.value
-  //   // });
-  // }  
-
-  // handleGuestsInput(event) {
-  //   // event.preventDefault();
-  //   // this.setState({
-  //     // guests: event.target.value
-  //   // }); 
-  // }
-
   render() {
     console.log('PROPS', this.props);
 
@@ -66,19 +115,20 @@ class SearchScreen extends React.Component {
       <View style={styles.container}>
         <Text style = {styles.header}>Where are you headed?</Text>
         <FormLabel>When?</FormLabel>
-        <FormInput id="when" placeholder="Where do you want to go?" onChangeText={(date) => this.props.dispatch(updateDate(date))} />
+        <FormInput id="when" placeholder="Where do you want to go?" onChangeText={(date) => this.handleDateUpdate(date)} />
         <FormLabel>Where?</FormLabel>
-        <FormInput id="where" value={this.state.where} placeholder="When do you want to go?" onChangeText={(text) => this.setState({where: text})} />
+        <FormInput id="where" placeholder="When do you want to go?" onChangeText={(city) => this.handleCityUpdate(city)} />
         <FormLabel>How many travelers?</FormLabel>
         <Picker
           style={styles.picker}
-          selectedValue={this.state.guests}
-          onValueChange={this.onValueChange = (number) => this.setState({guests: number})}
-          mode="dropdown">
-          <Picker.Item label="1" value= {1} />
-          <Picker.Item label="2" value= {2} />
-          <Picker.Item label="3" value= {3} />
-          <Picker.Item label="4" value= {4} />
+          selectedValue={this.props.search.numTravelers}
+          onValueChange={(number) => this.handleTravelerUpdate(number)}
+          mode="dropdown"
+        >
+          <Picker.Item label="1" value={1} />
+          <Picker.Item label="2" value={2} />
+          <Picker.Item label="3" value={3} />
+          <Picker.Item label="4" value={4} />
         </Picker>
         <View style={{position: 'absolute', left: 0, right: 0, bottom: 0}}>
             <Button
@@ -86,7 +136,7 @@ class SearchScreen extends React.Component {
             raised
             backgroundColor='#FF8C00'
             title='EXPLORE'
-            onPress={() => this.props.navigation.navigate('Explore')} 
+            onPress={() => this.handleSearchSubmit()} 
           />
         </View>
       </View>

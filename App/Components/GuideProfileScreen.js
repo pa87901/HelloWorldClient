@@ -1,10 +1,11 @@
 import React from 'react';
 import { Text, ScrollView } from 'react-native';
+import { connect } from 'react-redux';
 import {
   Card, List, ListItem, Button, Rating, Divider, Icon
 } from 'react-native-elements';
 
-export default class GuideProfileScreen extends React.Component {
+class GuideProfileScreen extends React.Component {
   constructor(props) {
     super(props);
     this.navigateToPolicy = this.navigateToPolicy.bind(this);
@@ -15,28 +16,7 @@ export default class GuideProfileScreen extends React.Component {
   }
   
   render() {
-    const styles = {
-      subheader: {
-        fontSize: 20,
-        marginTop: 10
-      },
-      intro: {
-        marginTop: 10,
-        marginBottom: 10,
-      },
-      list: {
-        borderBottomWidth: 0,
-        borderTopWidth: 0
-      },
-      listItem: {
-        borderBottomWidth: 0,
-        marginTop: 5,
-        marginBottom: 0
-      },
-      specialityTitle: {
-        marginLeft: 40
-      }
-    };
+    console.log('PROPS', this.props);
 
     return (
       <ScrollView>
@@ -137,3 +117,30 @@ export default class GuideProfileScreen extends React.Component {
     );
   }
 }
+
+const styles = {
+  subheader: {
+    fontSize: 20,
+    marginTop: 10
+  },
+  intro: {
+    marginTop: 10,
+    marginBottom: 10,
+  },
+  list: {
+    borderBottomWidth: 0,
+    borderTopWidth: 0
+  },
+  listItem: {
+    borderBottomWidth: 0,
+    marginTop: 5,
+    marginBottom: 0
+  },
+  specialityTitle: {
+    marginLeft: 40
+  }
+};
+
+const mapStateToProps = state => (state);
+
+export default connect(mapStateToProps)(GuideProfileScreen);
