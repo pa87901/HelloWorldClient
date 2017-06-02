@@ -6,7 +6,7 @@ import profileSelection from "./profileSelectionReducer"
 import chat from "./chatReducer"
 import guideForm from "./guideFormReducer"
 import auth from "./authReducer"
-import BecomeAGuide from "./BecomeAGuideReducer"
+import becomeAGuide from "./BecomeAGuideReducer"
 
 export default combineReducers({
   filter,
@@ -16,5 +16,5 @@ export default combineReducers({
   chat,
   guideForm,
   auth,
-  BecomeAGuide
+  becomeAGuide
 });

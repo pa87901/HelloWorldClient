@@ -1,11 +1,12 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Text, ScrollView } from 'react-native';
 import {
   Card, Button, Icon, Grid, Row, Divider
 } from 'react-native-elements';
 import { NavigationActions } from 'react-navigation';
 
-export default class BecomeAGuideQuestionsConfirmation extends React.Component {
+class BecomeAGuideQuestionsConfirmation extends React.Component {
   constructor(props) {
     super(props);
     this.navigateToExplore = this.navigateToExplore.bind(this);
@@ -24,12 +25,7 @@ export default class BecomeAGuideQuestionsConfirmation extends React.Component {
   }
 
   render() {
-    const styles = {
-      subheader: {
-        fontSize: 20,
-        marginTop: 10
-      },
-    };
+    console.log('PROPS', this.props);
 
     return (
       <ScrollView>
@@ -44,46 +40,46 @@ export default class BecomeAGuideQuestionsConfirmation extends React.Component {
             Name
           </Text>
           <Text>
-            Guide Name
+            {this.props.userProfile.profile.name}
           </Text>
           <Text style={styles.subheader}>
             City
           </Text>
           <Text>
-            San Francisco, CA
+            {this.props.becomeAGuide.city}
           </Text>
           <Text style={styles.subheader}>
             Date & Time
           </Text>
           <Text>
-            May 30, 2017
+            {this.props.becomeAGuide.date}
           </Text>
           <Text>
-            9AM / 5PM
+            {this.props.becomeAGuide.start} / {this.props.becomeAGuide.end}
           </Text>
           <Text style={styles.subheader}>
             Specialties
           </Text>
-          <Text>
-            Nightlife, Sports, Food
-          </Text>
+          {Object.keys(this.props.becomeAGuide.specialties).map((specialty, key) =>
+            this.props.becomeAGuide.specialties[specialty] ? <Text>{specialty}</Text> : <Text style={{display: 'none'}} />
+          )}
           <Text style={styles.subheader}>
             Hourly Rate
           </Text>
           <Text>
-            $45.00
+            USD  {this.props.becomeAGuide.hourlyRate}
           </Text>
           <Text style={styles.subheader}>
             Introduction
           </Text>
           <Text>
-            Hello, my name is Guide! I will be glad to show you a good time around SF.
+            {this.props.becomeAGuide.intro}
           </Text>
           <Text style={styles.subheader}>
             Other Info
           </Text>
           <Text style={{marginBottom: 10}}>
-            I like coding.
+            {this.props.becomeAGuide.statement}
           </Text>
           <Button
             small
@@ -99,3 +95,14 @@ export default class BecomeAGuideQuestionsConfirmation extends React.Component {
     );
   }
 }
+    
+const styles = {
+  subheader: {
+    fontSize: 20,
+    marginTop: 10
+  },
+};
+
+const mapStateToProps = state => (state);
+
+export default connect(mapStateToProps)(BecomeAGuideQuestionsConfirmation);
