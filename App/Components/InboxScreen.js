@@ -83,10 +83,6 @@ class InboxScreen extends React.Component {
     return (
       <ScrollView>
         <Text> INBOX </Text>
-        <Button
-          title='testChat'
-          onPress={() => {this.props.navigation.navigate('Chat')}}
-        />
         {this.state.guides.map((guide, index) => 
           <Conversation guideId={guide} key={index} navigation={this.props.navigation} />
         )}
