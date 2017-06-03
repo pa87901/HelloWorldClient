@@ -12,7 +12,7 @@ export default class GuideRequestedOptions extends React.Component {
       <ScrollView>
         <Card title="Trip Requests">
           <Card 
-            title="Trip 1"
+            title="San Francisco on 08/31/17"
           >
             <Button
               extraSmall
@@ -21,7 +21,7 @@ export default class GuideRequestedOptions extends React.Component {
               backgroundColor='#228b22'
             >
             </Button>
-            <Divider/> 
+            <Divider style={{width: 0 }}/> 
             <Button
               extraSmall
               raised
@@ -30,14 +30,62 @@ export default class GuideRequestedOptions extends React.Component {
             >   
             </Button> 
           </Card>
-          <Card title="Trip 2">
-            <Text>Hey</Text>
+          <Card 
+            title="Berkeley on 07/23/17"
+          >
+            <Button
+              extraSmall
+              raised
+              title='Accept'
+              backgroundColor='#228b22'
+            >
+            </Button>
+            <Divider style={{width: 0 }}/> 
+            <Button
+              extraSmall
+              raised
+              title='Decline'
+              backgroundColor='#b22222'
+            >   
+            </Button> 
           </Card>
-          <Card title="Trip 3">
-            <Text>Hey</Text>
+          <Card 
+            title="London on 06/13/17"
+          > 
+            <Button
+              extraSmall
+              raised
+              title='Accept'
+              backgroundColor='#228b22'
+            >
+            </Button>
+            <Divider style={{width: 0 }}/> 
+            <Button
+              extraSmall
+              raised
+              title='Decline'
+              backgroundColor='#b22222'
+            >   
+            </Button> 
           </Card>
-          <Card title="Trip 4">
-            <Text>Hey</Text>
+          <Card 
+            title="Seoul on 12/25/17"
+          >
+            <Button
+              extraSmall
+              raised
+              title='Accept'
+              backgroundColor='#228b22'
+            >
+            </Button>
+            <Divider style={{width: 0 }}/> 
+            <Button
+              extraSmall
+              raised
+              title='Decline'
+              backgroundColor='#b22222'
+            >   
+            </Button> 
           </Card>
         </Card>
       </ScrollView>
