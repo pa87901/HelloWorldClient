@@ -6,10 +6,12 @@ import {
 } from 'react-native-elements';
 import { NavigationActions } from 'react-navigation';
 
+
 class BookingConfirmationScreen extends React.Component {
   constructor(props) {
     super(props);
     this.navigateToExplore = this.navigateToExplore.bind(this);
+
   }
 
   navigateToExplore() {
@@ -20,9 +22,9 @@ class BookingConfirmationScreen extends React.Component {
         NavigationActions.navigate({ routeName: 'Explore' }),
       ]
     });
-
     this.props.navigation.dispatch(resetAction);
   }
+
 
   render() {
     console.log('PROPS', this.props);
