@@ -22,24 +22,26 @@ class Chat extends React.Component {
       guideId: null,
       guide: false
     };
-    this.socket = SocketIOClient('http://localhost:3000', {query: {userId: this.props.userProfile.profile.userId, guideId: this.props.navigation.state.params.guideId.id}})
+    this.socket = SocketIOClient('http://localhost:3000', {query: {userId: this.props.userProfile.profile.userId, guideId: this.props.navigation.state.params.guideId.user_id}})
     this.onSend = this.onSend.bind(this);
   }
 
   componentWillMount() {
     this.setState({
       userId: this.props.userProfile.profile.userId,
-      guideId: this.props.navigation.state.params.guideId.id
+      guideId: this.props.navigation.state.params.guideId.user_id
     });
   }
 
   componentDidMount() {
     console.log('this.props in ChatScreen', this.props, this.state);
     let privateRoom = `${this.state.userId}-${this.state.guideId}`
-    this.socket.on('connection', socket => {
+    console.log('PRIVATE ROOM', privateRoom);
+    // let privateRoom = 'AlexLiang';
+    this.socket.on('connect', socket => {
       // On connection, join a socket io room.
-      console.log('PRIVATE ROOM', privateRoom);
-      socket.emit('room', privateRoom);
+      console.log('PRIVATE ROOM');
+      this.socket.emit('room', privateRoom);
     });
 
     this.socket.on('chat message', (msgs) => {
@@ -66,6 +68,7 @@ class Chat extends React.Component {
 
     // Listen for the echo message from server after sending.
     this.socket.on('new message', (msg) => {
+      console.log('GHOST MESSAGES', msg);
       let newMessages = msg.concat(this.state.messages);
       this.setState({
         messages: newMessages
