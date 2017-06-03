@@ -14,6 +14,7 @@ class BecomeAGuideOptions extends React.Component {
 
     this.navigateToGuideQuestions1 = this.navigateToGuideQuestions1.bind(this);
     this.navigateToSpecialtiesSetting = this.navigateToSpecialtiesSetting.bind(this);
+    this.navigateToGuideRequestTrips = this.navigateToGuideRequestTrips.bind(this);
   }
 
   navigateToGuideQuestions1() {
@@ -30,6 +31,10 @@ class BecomeAGuideOptions extends React.Component {
     })
 
     this.props.navigation.navigate('SpecialtiesSetting');
+  }
+  
+  navigateToGuideRequestTrips() {
+    this.props.navigation.navigate('GuideRequestedTrips');
   }
 
   render() {
@@ -53,7 +58,8 @@ class BecomeAGuideOptions extends React.Component {
           <ListItem
             hideChevron={true}
             leftIcon={{name: 'feedback'}}
-            title="Scheduled & Requested Tours"
+            title="Requested Tours"
+            onPress={this.navigateToGuideRequestTrips}
           />
         </List>
       </ScrollView> 
