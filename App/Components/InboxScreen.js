@@ -45,7 +45,10 @@ class InboxScreen extends React.Component {
       this.componentDidMount();
     })
     .catch(error => {
-      console.error('Unable to receive response from server GET /chats.');
+      this.setState({
+        userLoggedIn: this.props.userProfile.profile.userId
+      });
+      // console.error('Unable to receive response from server GET /chats.');
 
     })
   }

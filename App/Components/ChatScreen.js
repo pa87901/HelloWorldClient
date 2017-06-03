@@ -37,7 +37,6 @@ class Chat extends React.Component {
     console.log('this.props in ChatScreen', this.props, this.state);
     let privateRoom = `${this.state.userId}-${this.state.guideId}`
     console.log('PRIVATE ROOM', privateRoom);
-    // let privateRoom = 'AlexLiang';
     this.socket.on('connect', socket => {
       // On connection, join a socket io room.
       console.log('PRIVATE ROOM');
@@ -61,14 +60,11 @@ class Chat extends React.Component {
 
       this.setState({
         messages: formattedMessages
-        // userId: '',
-        // guideId: this.props.navigation.state.params.guideId.id
       });
     });
 
     // Listen for the echo message from server after sending.
     this.socket.on('new message', (msg) => {
-      console.log('GHOST MESSAGES', msg);
       let newMessages = msg.concat(this.state.messages);
       this.setState({
         messages: newMessages
