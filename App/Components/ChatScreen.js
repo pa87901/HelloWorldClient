@@ -40,7 +40,7 @@ class Chat extends React.Component {
     this.socket.on('connect', socket => {
       // On connection, join a socket io room.
       console.log('PRIVATE ROOM');
-      this.socket.emit('room', privateRoom);
+      this.socket.emit('room', 'AlexLiang');
     });
 
     this.socket.on('chat message', (msgs) => {
