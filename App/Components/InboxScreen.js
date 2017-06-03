@@ -24,7 +24,7 @@ class InboxScreen extends React.Component {
     // With the guideIds, make a call to the database to get guideNames.
     let guideNames = [];
     guideIds.forEach(guideId => {
-      axios.get(`/guides/${guideId}`)
+      axios.get(`/guides/byChat/${guideId}`)
       .then(response => {
         let newState = guideNames.push(response.data);
         this.setState({
