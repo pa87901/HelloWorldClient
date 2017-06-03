@@ -35,7 +35,7 @@ class ProfileScreen extends React.Component {
   }
 
   navigateToGuideQuestions1() {
-    this.props.navigation.navigate('GuideQuestions1');
+    this.props.navigation.navigate('GuideOptions');
   }
 
   render() {
