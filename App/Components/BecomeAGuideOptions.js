@@ -8,7 +8,7 @@ import { authenticate } from '../Actions/authActions';
 import { setUserProfile } from '../Actions/userProfileActions';
 import axios from '../axios'
 
-export default class BecomeAGuideOptions extends React.Component {
+class BecomeAGuideOptions extends React.Component {
   constructor(props){
     super(props);
 
@@ -21,10 +21,20 @@ export default class BecomeAGuideOptions extends React.Component {
   }
 
   navigateToSpecialtiesSetting() {
+    axios.post('api/guides', {facebookId: this.props.userProfile.profile.userId})
+    .then(res => {
+      console.log(res);
+    })
+    .catch(err => {
+      console.log(err);
+    })
+
     this.props.navigation.navigate('SpecialtiesSetting');
   }
 
   render() {
+     console.log('PROPS', this.props);
+
      return (
       <ScrollView>  
         <List>
@@ -50,3 +60,7 @@ export default class BecomeAGuideOptions extends React.Component {
     );
   }
 }
+
+const mapStateToProps = state => (state);
+
+export default connect(mapStateToProps)(BecomeAGuideOptions);

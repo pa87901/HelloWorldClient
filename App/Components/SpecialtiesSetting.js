@@ -5,6 +5,7 @@ import {
 } from '../Actions/specialtyActions';
 import { StyleSheet, Text, View, Picker } from 'react-native';
 import { Button, FormLabel, FormInput, CheckBox } from 'react-native-elements';
+import axios from '../axios';
 
 class SpecialtiesSetting extends React.Component {
   constructor(props) {
@@ -53,6 +54,31 @@ class SpecialtiesSetting extends React.Component {
   }
 
   handleSubmit() {
+    Object.keys(this.props.specialty).forEach(key => {
+      let options = {
+        facebookId: this.props.userProfile.profile.userId,
+        specialty: key
+      }
+
+      if (this.props.specialty[key]) {
+        axios.post('api/specialties', options)
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+      } else {
+        axios.delete(`api/specialties/delete/${options.facebookId.slice(9)}/${options.specialty}`)
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+      }
+    })
+
     this.props.navigation.goBack();
   }
 
