@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import { Card, Button, Rating } from 'react-native-elements';
 import { getProfileResult } from '../Actions/profileSelectionActions';
+import axios from '../axios';
 
 class ExploreScreenEntry extends React.Component {
   constructor(props) {
@@ -31,6 +32,16 @@ class ExploreScreenEntry extends React.Component {
 
   handleProfileClick(guideId) {
     // axios call using guideId to retrieve guide profile needed
+    var query = 'api/guides/search/' + this.props.search.city + '/' + this.props.search.date;
+
+    axios.get(query)
+      .then((res)=>{
+        console.log('explore entry screenr res data', res.data[0]);
+        this.props.dispatch(getProfileResult(res.data[0]));
+      })
+      .catch((err)=>{
+        console.log(err);
+      })
 
     const testData = {
   "id": 1,
@@ -84,7 +95,7 @@ class ExploreScreenEntry extends React.Component {
   ]
 };
 
-    this.props.dispatch(getProfileResult(testData));
+    //this.props.dispatch(getProfileResult(this.props.search.result[guideId]));
 
     this.props.navigation.navigate('GuideProfile');
   }
@@ -122,7 +133,7 @@ class ExploreScreenEntry extends React.Component {
             raised
             icon={{name: 'group'}}
             backgroundColor='#FF8C00'
-            onPress={() => this.handleProfileClick(guide.guideId)}
+            onPress={() => this.handleProfileClick(guide.id)}
             title='Get to know me!' 
           />
         </Card>

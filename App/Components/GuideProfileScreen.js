@@ -17,11 +17,12 @@ class GuideProfileScreen extends React.Component {
   
   render() {
     console.log('PROPS', this.props);
+    console.log('')
 
     return (
       <ScrollView>
         <Card
-          title={this.props.profileSelection.selectedProfile.user.facebook_id}
+          title={this.props.profileSelection.selectedProfile.user.full_name}
         >
           <Text>
             Selected Date: {this.props.search.date}
@@ -35,9 +36,9 @@ class GuideProfileScreen extends React.Component {
           <Divider/>
           <ListItem 
             roundAvatar
-            avatar={this.props.profileSelection.selectedProfile.img_url || require('./JONSNOW.png')}
+            avatar={{uri : this.props.profileSelection.selectedProfile.user.avatar}}
             hideChevron={true}
-            title={`Rating: ${this.props.profileSelection.selectedProfile.avg_rating.slice(0, 3)}/5.0`}
+            title={`Rating: ${this.props.profileSelection.selectedProfile.avg_rating}/5.0`}
           />
           <Text style={styles.subheader}>
             Who am I?
