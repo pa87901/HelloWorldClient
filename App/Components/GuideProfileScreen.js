@@ -22,8 +22,6 @@ class GuideProfileScreen extends React.Component {
   
   render() {
     console.log('PROPS', this.props);
-    console.log('')
-
     return (
       <ScrollView>
         <Card

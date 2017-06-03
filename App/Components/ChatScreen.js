@@ -20,7 +20,7 @@ class Chat extends React.Component {
       messages: [],
       userId: null,
       guideId: null,
-      guide: false
+      guide: true
     };
     if (this.props.navigation.state.params) {
       this.socket = SocketIOClient('http://localhost:3000', {query: {userId: this.props.userProfile.profile.userId, guideId: this.props.navigation.state.params.guideId.user_id}})
