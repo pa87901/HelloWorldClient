@@ -18,16 +18,32 @@ class Chat extends React.Component {
     // this.socket = SocketIOClient('http://ec2-35-167-135-24.us-west-2.compute.amazonaws.com:3000');
     this.state = {
       messages: [],
-      userId: 'preda',
-      guideId: this.props.navigation.state.params.guideId.id,
+      userId: null,
+      guideId: null,
       guide: false
     };
-    this.socket = SocketIOClient('http://localhost:3000', {query: {userId: this.state.userId, guideId: this.state.guideId}})
+    this.socket = SocketIOClient('http://localhost:3000', {query: {userId: this.props.userProfile.profile.userId, guideId: this.props.navigation.state.params.guideId.user_id}})
     this.onSend = this.onSend.bind(this);
   }
 
   componentWillMount() {
-    console.log('this.props in ChatScreen', this.props);
+    this.setState({
+      userId: this.props.userProfile.profile.userId,
+      guideId: this.props.navigation.state.params.guideId.user_id
+    });
+  }
+
+  componentDidMount() {
+    console.log('this.props in ChatScreen', this.props, this.state);
+    let privateRoom = `${this.state.userId}-${this.state.guideId}`
+    console.log('PRIVATE ROOM', privateRoom);
+    // let privateRoom = 'AlexLiang';
+    this.socket.on('connect', socket => {
+      // On connection, join a socket io room.
+      console.log('PRIVATE ROOM');
+      this.socket.emit('room', privateRoom);
+    });
+
     this.socket.on('chat message', (msgs) => {
       // console.log('Echo message', msgs);
       let formattedMessages = msgs.map(chatObject => {
@@ -44,14 +60,15 @@ class Chat extends React.Component {
       });
 
       this.setState({
-        messages: formattedMessages,
-        userId: 'preda',
-        guideId: this.props.navigation.state.params.guideId.id
+        messages: formattedMessages
+        // userId: '',
+        // guideId: this.props.navigation.state.params.guideId.id
       });
     });
 
     // Listen for the echo message from server after sending.
     this.socket.on('new message', (msg) => {
+      console.log('GHOST MESSAGES', msg);
       let newMessages = msg.concat(this.state.messages);
       this.setState({
         messages: newMessages
@@ -103,6 +120,3 @@ function bindActions(dispatch) {
 }
 
 export default connect(mapStateToProps, bindActions)(Chat);
-
-
-// export default Chat;

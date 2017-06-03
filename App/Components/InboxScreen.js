@@ -9,12 +9,49 @@ class InboxScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      guides: []
+      guides: [],
+      chats: []
     }
+    // this.test = this.test.bind(this);
   }
 
   componentWillMount() {
-    // console.log('this.props in InboxScreen', this.props.chat.chats);
+    // console.log('this.props in InboxScreen', this.props.userProfile.profile.userId);
+    let params = {
+      facebookId: this.props.userProfile.profile.userId
+    };
+    console.log('PARAMS', this.props.userProfile.profile.userId);
+    axios.get('/chats/all/' + this.props.userProfile.profile.userId, params)
+    .then(chats => {
+      // Formate messages into GiftedChat friendly format.
+      let formattedMessages = chats.data.map(chatObject => {
+        return {
+          text: chatObject.message,
+          user: {
+            _id: chatObject.user_id,
+            guideId: chatObject.guide_id
+          },
+          createdAt: chatObject.created_at,
+          _id: chatObject.id
+        }
+      });
+      console.log('Received response from server and formated.', chats.data,  formattedMessages);
+      this.setState({
+        chats: formattedMessages,
+        userLoggedIn: this.props.userProfile.profile.userId
+      });
+      this.props.updateChats(formattedMessages);
+      // this.props.dispatch({type: 'FETCH_CHATS_FULFILLED', payload: chats.data})
+      this.componentDidMount();
+    })
+    .catch(error => {
+      console.error('Unable to receive response from server GET /chats.');
+
+    })
+  }
+
+  componentDidMount() {
+    console.log('this.props in InboxScreen', this.state, this.props);
     // Iterate through chats array and reduce for unique guide ids.
     let chats = this.props.chat.chats;
     let guideIds = chats
@@ -24,7 +61,7 @@ class InboxScreen extends React.Component {
     // With the guideIds, make a call to the database to get guideNames.
     let guideNames = [];
     guideIds.forEach(guideId => {
-      axios.get(`/guides/${guideId}`)
+      axios.get(`/guides/byChat/${guideId}`)
       .then(response => {
         let newState = guideNames.push(response.data);
         this.setState({
@@ -57,4 +94,10 @@ class InboxScreen extends React.Component {
 
 const mapStateToProps = state => state;
 
-export default connect(mapStateToProps)(InboxScreen);
+function mapDispatchToProps(dispatch) {
+  return {
+    updateChats: (chats) => dispatch({type: 'UPDATE_CHATS', payload: chats})
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(InboxScreen);
