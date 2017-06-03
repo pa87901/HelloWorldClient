@@ -9,6 +9,7 @@ import {
 import {
   FormLabel, FormInput, FormValidationMessage, Button
 } from 'react-native-elements';
+import axios from '../axios';
 
 class SearchScreen extends React.Component {
   constructor(props) {
@@ -42,6 +43,17 @@ class SearchScreen extends React.Component {
   }
 
   handleSearchSubmit() {
+    var query = 'api/guides/search/' + this.props.search.city + '/' + this.props.search.date;
+
+    axios.get(query)
+      .then((res)=>{
+        console.log('search screen axios props', this)
+        console.log(res.data)
+        this.props.dispatch(updateSearchResult(res.data));
+      })
+      .catch((err)=>{
+        console.log(err);
+      })
 
     const sampleData = [
   {
@@ -109,7 +121,7 @@ class SearchScreen extends React.Component {
 ]
 
     // Need to replace below with axios call
-    this.props.dispatch(updateSearchResult(sampleData));
+    //sthis.props.dispatch(updateSearchResult(sampleData));
     
 
     this.props.navigation.navigate('Explore');
