@@ -9,17 +9,6 @@ import { Button, FormLabel, FormInput, CheckBox } from 'react-native-elements';
 class SpecialtiesSetting extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      sightseeing: false,
-      museum: false,
-      food: false,
-      nightlife: false,
-      sports: false,
-      music: false,
-      history: false,
-      politics: false
-    };
-
     this.setSightseeing = this.setSightseeing.bind(this);
     this.setMuseum = this.setMuseum.bind(this);
     this.setFood = this.setFood.bind(this);
@@ -64,7 +53,6 @@ class SpecialtiesSetting extends React.Component {
   }
 
   handleSubmit() {
-    this.props.dispatch(becomeGuideSpecialties(this.state));
     this.props.navigation.goBack();
   }
 

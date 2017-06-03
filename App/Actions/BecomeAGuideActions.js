@@ -46,10 +46,3 @@ export function becomeGuideStatement(statement) {
       payload: statement
   };
 }
-
-export function becomeGuideSpecialties(specialties) {
-  return {
-    type: 'BECOME_GUIDE_SPECIALTIES',
-    payload: specialties
-  }
-}

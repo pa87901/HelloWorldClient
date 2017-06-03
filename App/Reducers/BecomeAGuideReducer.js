@@ -31,8 +31,6 @@ export default function reducer(state = {
     return {...state, intro: action.payload}
   } else if (action.type === 'BECOME_GUIDE_STATEMENT') {
     return {...state, statement: action.payload}
-  } else if (action.type === 'BECOME_GUIDE_SPECIALTIES') {
-    return {...state, specialties: action.payload}
   }
   return state;
 }
