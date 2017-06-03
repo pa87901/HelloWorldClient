@@ -101,7 +101,7 @@ class ExploreScreenEntry extends React.Component {
           key={key}
           flexDirection='column'
           title={guide.user.full_name}
-          image={guide.img_url || require('./JONSNOW.png')}
+          image={{uri: guide.user.picture}}
           >
           <Text style={{marginBottom: 10}}>
             {guide.intro}

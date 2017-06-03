@@ -48,7 +48,7 @@ class SearchScreen extends React.Component {
     axios.get(query)
       .then((res)=>{
         console.log('search screen axios props', this)
-        console.log(res.data)
+        console.log(res.data);
         this.props.dispatch(updateSearchResult(res.data));
       })
       .catch((err)=>{
