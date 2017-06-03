@@ -9,10 +9,15 @@ class GuideProfileScreen extends React.Component {
   constructor(props) {
     super(props);
     this.navigateToPolicy = this.navigateToPolicy.bind(this);
+    this.navigateToChatScreen = this.navigateToChatScreen.bind(this);
   }
 
   navigateToPolicy() {
     this.props.navigation.navigate('BookingPolicy');
+  }
+
+  navigateToChatScreen() {
+    this.props.navigation.navigate('Chat');
   }
   
   render() {
@@ -101,6 +106,15 @@ class GuideProfileScreen extends React.Component {
             title='Book a trip with me!'
             buttonStyle={{marginTop: 10}}
             onPress={this.navigateToPolicy}
+          />
+          <Button
+            small
+            raised
+            icon={{name: 'chat'}}
+            backgroundColor='#25EDC0'
+            title='Chat with me!'
+            buttonStyle={{marginTop: 10}}
+            onPress={this.navigateToChatScreen}
           />
         </Card>
       </ScrollView>
