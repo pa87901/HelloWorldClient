@@ -39,7 +39,6 @@ class ProfileScreen extends React.Component {
   }
 
   render() {
-    //console.log('ProfileScreenState', this.props.userProfile)
     return (
       <ScrollView>
         <Card
