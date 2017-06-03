@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import { Card, Button, Icon } from 'react-native-elements';
-import axios from '../axios.js'
+import axios from '../axios.js';
 
 
 class BookingPolicyScreen extends React.Component {
@@ -26,6 +26,7 @@ class BookingPolicyScreen extends React.Component {
 
   navigateToConfirmation() {
     // create axios call to create a booking
+    
     this.bookTour();
     this.props.navigation.navigate('BookingConfirmation');
   }

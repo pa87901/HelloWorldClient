@@ -1,5 +1,10 @@
 export default function reducer(state = {
- selectedProfile: {}
+ selectedProfile: {
+   guideSpecialties: [],
+   user:{
+//     full_name: ''
+   }
+ }
 }, action) {
   if (action.type === 'GET_PROFILE_FULFILLED') {
     return {...state, selectedProfile: action.payload}

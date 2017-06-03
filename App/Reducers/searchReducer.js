@@ -1,6 +1,6 @@
 export default function reducer(state = {
-  city: '',
-  date: '',
+  city: 'Sanf',
+  date: '2018-05-05',
   hours: '',
   numTravelers: 1,
   result: []
