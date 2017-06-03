@@ -21,7 +21,7 @@ class InboxScreen extends React.Component {
       facebookId: this.props.userProfile.profile.userId
     };
     console.log('PARAMS', this.props.userProfile.profile.userId);
-    axios.get('/chats/all/' + this.props.userProfile.profile.userId, params)
+    axios.get('api/chats/all/' + this.props.userProfile.profile.userId, params)
     .then(chats => {
       // Formate messages into GiftedChat friendly format.
       let formattedMessages = chats.data.map(chatObject => {
@@ -45,7 +45,10 @@ class InboxScreen extends React.Component {
       this.componentDidMount();
     })
     .catch(error => {
-      console.error('Unable to receive response from server GET /chats.');
+      this.setState({
+        userLoggedIn: this.props.userProfile.profile.userId
+      });
+      // console.error('Unable to receive response from server GET /chats.');
 
     })
   }
@@ -61,7 +64,7 @@ class InboxScreen extends React.Component {
     // With the guideIds, make a call to the database to get guideNames.
     let guideNames = [];
     guideIds.forEach(guideId => {
-      axios.get(`/guides/byChat/${guideId}`)
+      axios.get(`api/guides/byChat/${guideId}`)
       .then(response => {
         let newState = guideNames.push(response.data);
         this.setState({
