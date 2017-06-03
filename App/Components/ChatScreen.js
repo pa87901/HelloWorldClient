@@ -22,15 +22,29 @@ class Chat extends React.Component {
       guideId: null,
       guide: false
     };
-    this.socket = SocketIOClient('http://localhost:3000', {query: {userId: this.props.userProfile.profile.userId, guideId: this.props.navigation.state.params.guideId.user_id}})
+    if (this.props.navigation.state.params) {
+      this.socket = SocketIOClient('http://localhost:3000', {query: {userId: this.props.userProfile.profile.userId, guideId: this.props.navigation.state.params.guideId.user_id}})
+    }
+    else {
+      this.socket = SocketIOClient('http://localhost:3000', {query: {userId: this.props.userProfile.profile.userId, guideId: this.props.profileSelection.selectedProfile.user_id}})
+    }
     this.onSend = this.onSend.bind(this);
   }
 
   componentWillMount() {
-    this.setState({
-      userId: this.props.userProfile.profile.userId,
-      guideId: this.props.navigation.state.params.guideId.user_id
-    });
+    // If we navigated to ChatScreen from Inbox menu icon: 
+    if (this.props.navigation.state.params) {
+      this.setState({
+        userId: this.props.userProfile.profile.userId,
+        guideId: this.props.navigation.state.params.guideId.user_id
+      });
+    } else {
+      // If we navigated to ChatScreen from clicking on a guide profile card:
+      this.setState({
+        userId: this.props.userProfile.profile.userId,
+        guideId: this.props.profileSelection.selectedProfile.user_id
+      });
+    }
   }
 
   componentDidMount() {
@@ -44,17 +58,30 @@ class Chat extends React.Component {
     });
 
     this.socket.on('chat message', (msgs) => {
-      // console.log('Echo message', msgs);
+      console.log('Echo message', msgs);
       let formattedMessages = msgs.map(chatObject => {
-        return {
-          text: chatObject.message,
-          user: {
-            _id: chatObject.user_id,
-            name: chatObject.author,
-            guideId: chatObject.guide_id
-          },
-          createdAt: chatObject.created_at,
-          _id: chatObject.id
+        if (chatObject.author === '') {
+          return {
+            text: chatObject.message,
+            user: {
+              _id: chatObject.user_id,
+              name: 'me',
+              guideId: chatObject.guide_id
+            },
+            createdAt: chatObject.created_at,
+            _id: chatObject.id
+          }
+        } else if (chatObject.author === 'guide') {
+          return {
+            text: chatObject.message,
+            user: {
+              _id: chatObject.user_id,
+              name: chatObject.author,
+              guideId: chatObject.guide_id
+            },
+            createdAt: chatObject.created_at,
+            _id: chatObject.id
+          }
         }
       });
 
