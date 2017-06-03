@@ -1,23 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { becomeGuideSpecialties } from '../Actions/BecomeAGuideActions';
+import {
+  setSightseeing, setMuseum, setFood, setNightlife, setSports, setMusic, setHistory, setPolitics
+} from '../Actions/specialtyActions';
 import { StyleSheet, Text, View, Picker } from 'react-native';
 import { Button, FormLabel, FormInput, CheckBox } from 'react-native-elements';
+import axios from '../axios';
 
 class SpecialtiesSetting extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      sightseeing: false,
-      museum: false,
-      food: false,
-      nightlife: false,
-      sports: false,
-      music: false,
-      history: false,
-      politics: false
-    };
-
     this.setSightseeing = this.setSightseeing.bind(this);
     this.setMuseum = this.setMuseum.bind(this);
     this.setFood = this.setFood.bind(this);
@@ -30,55 +22,63 @@ class SpecialtiesSetting extends React.Component {
   }
 
   setSightseeing() {
-    this.setState({
-      sightseeing: !this.state.sightseeing
-    });
+    this.props.dispatch(setSightseeing(!this.props.specialty.sightseeing));
   }
 
   setMuseum() {
-    this.setState({
-      museum: !this.state.museum
-    });
+    this.props.dispatch(setMuseum(!this.props.specialty.museum));
   }
 
   setFood() {
-    this.setState({
-      food: !this.state.food
-    });
+    this.props.dispatch(setFood(!this.props.specialty.food));
   }
 
   setNightlife() {
-    this.setState({
-      nightlife: !this.state.nightlife
-    });
+    this.props.dispatch(setNightlife(!this.props.specialty.nightlife));
   }
 
   setSports() {
-    this.setState({
-      sports: !this.state.sports
-    });
+    this.props.dispatch(setSports(!this.props.specialty.sports));
   }
 
   setMusic() {
-    this.setState({
-      music: !this.state.music
-    });
+    this.props.dispatch(setMusic(!this.props.specialty.music));
   }
 
   setHistory() {
-    this.setState({
-      history: !this.state.history
-    });
+    this.props.dispatch(setHistory(!this.props.specialty.history));
   }
 
   setPolitics() {
-    this.setState({
-      politics: !this.state.politics
-    });
+    this.props.dispatch(setPolitics(!this.props.specialty.politics));
   }
 
   handleSubmit() {
-    this.props.dispatch(becomeGuideSpecialties(this.state));
+    Object.keys(this.props.specialty).forEach(key => {
+      let options = {
+        facebookId: this.props.userProfile.profile.userId,
+        specialty: key
+      }
+
+      if (this.props.specialty[key]) {
+        axios.post('api/specialties', options)
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+      } else {
+        axios.delete(`api/specialties/delete/${options.facebookId.slice(9)}/${options.specialty}`)
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+      }
+    })
+
     this.props.navigation.goBack();
   }
 
@@ -94,7 +94,7 @@ class SpecialtiesSetting extends React.Component {
             checkedColor='#FF8C00'
             checkedIcon='check-square-o'
             uncheckedIcon='square-o'
-            checked={this.state.sightseeing}
+            checked={this.props.specialty.sightseeing}
             onPress={this.setSightseeing}
           />
           <CheckBox
@@ -102,7 +102,7 @@ class SpecialtiesSetting extends React.Component {
             checkedColor='#FF8C00'
             checkedIcon='check-square-o'
             uncheckedIcon='square-o'
-            checked={this.state.museum}
+            checked={this.props.specialty.museum}
             onPress={this.setMuseum}
           />
           <CheckBox
@@ -110,7 +110,7 @@ class SpecialtiesSetting extends React.Component {
             checkedColor='#FF8C00'
             checkedIcon='check-square-o'
             uncheckedIcon='square-o'
-            checked={this.state.food}
+            checked={this.props.specialty.food}
             onPress={this.setFood}
           />
           <CheckBox
@@ -118,7 +118,7 @@ class SpecialtiesSetting extends React.Component {
             checkedColor='#FF8C00'
             checkedIcon='check-square-o'
             uncheckedIcon='square-o'
-            checked={this.state.nightlife}
+            checked={this.props.specialty.nightlife}
             onPress={this.setNightlife}
           />
           <CheckBox
@@ -126,7 +126,7 @@ class SpecialtiesSetting extends React.Component {
             checkedColor='#FF8C00'
             checkedIcon='check-square-o'
             uncheckedIcon='square-o'
-            checked={this.state.sports}
+            checked={this.props.specialty.sports}
             onPress={this.setSports}
           />
           <CheckBox
@@ -134,7 +134,7 @@ class SpecialtiesSetting extends React.Component {
             checkedColor='#FF8C00'
             checkedIcon='check-square-o'
             uncheckedIcon='square-o'
-            checked={this.state.music}
+            checked={this.props.specialty.music}
             onPress={this.setMusic}
           />
           <CheckBox
@@ -142,7 +142,7 @@ class SpecialtiesSetting extends React.Component {
             checkedColor='#FF8C00'
             checkedIcon='check-square-o'
             uncheckedIcon='square-o'
-            checked={this.state.history}
+            checked={this.props.specialty.history}
             onPress={this.setHistory}
           />
           <CheckBox
@@ -150,7 +150,7 @@ class SpecialtiesSetting extends React.Component {
             checkedColor='#FF8C00'
             checkedIcon='check-square-o'
             uncheckedIcon='square-o'
-            checked={this.state.politics}
+            checked={this.props.specialty.politics}
             onPress={this.setPolitics}
           />
         </View>
