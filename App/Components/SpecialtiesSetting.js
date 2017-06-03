@@ -90,7 +90,7 @@ class SpecialtiesSetting extends React.Component {
         <FormLabel>What are your specialties?</FormLabel>
         <View style={{marginTop: 10}}>
           <CheckBox
-            title='Sighteeing'
+            title='Sightseeing'
             checkedColor='#FF8C00'
             checkedIcon='check-square-o'
             uncheckedIcon='square-o'
