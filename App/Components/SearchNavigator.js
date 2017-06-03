@@ -14,6 +14,7 @@ import BecomeAGuideQuestions4 from './BecomeAGuideQuestions4';
 import BecomeAGuideQuestions5 from './BecomeAGuideQuestions5';
 import BecomeAGuideQuestionsPolicies from './BecomeAGuideQuestionsPolicies';
 import BecomeAGuideQuestionsConfirmation from './BecomeAGuideQuestionsConfirmation';
+import SpecialtiesSetting from './SpecialtiesSetting';
 import ChatScreen from './ChatScreen';
 
 const SearchNavigator = StackNavigator({
@@ -35,6 +36,7 @@ const SearchNavigator = StackNavigator({
   GuideQuestions5: {screen: BecomeAGuideQuestions5},
   GuideQuestionsPolicies: {screen: BecomeAGuideQuestionsPolicies},
   GuideQuestionsConfirmation: {screen: BecomeAGuideQuestionsConfirmation},
+  SpecialtiesSetting: {screen: SpecialtiesSetting},
   Chat: {screen: ChatScreen},
 });
 

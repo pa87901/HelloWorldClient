@@ -13,10 +13,15 @@ export default class BecomeAGuideOptions extends React.Component {
     super(props);
 
     this.navigateToGuideQuestions1 = this.navigateToGuideQuestions1.bind(this);
+    this.navigateToSpecialtiesSetting = this.navigateToSpecialtiesSetting.bind(this);
   }
 
   navigateToGuideQuestions1() {
     this.props.navigation.navigate('GuideQuestions1');
+  }
+
+  navigateToSpecialtiesSetting() {
+    this.props.navigation.navigate('SpecialtiesSetting');
   }
 
   render() {
@@ -33,6 +38,7 @@ export default class BecomeAGuideOptions extends React.Component {
             hideChevron={true}
             leftIcon={{name: 'help-outline'}}
             title="Set Specialties"
+            onPress={this.navigateToSpecialtiesSetting}
           />
           <ListItem
             hideChevron={true}

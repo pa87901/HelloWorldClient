@@ -26,7 +26,7 @@ class SpecialtiesSetting extends React.Component {
     this.setMusic = this.setMusic.bind(this);
     this.setHistory = this.setHistory.bind(this);
     this.setPolitics = this.setPolitics.bind(this);
-    this.navigateToNext = this.navigateToNext.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   setSightseeing() {
@@ -77,9 +77,9 @@ class SpecialtiesSetting extends React.Component {
     });
   }
 
-  navigateToNext() {
+  handleSubmit() {
     this.props.dispatch(becomeGuideSpecialties(this.state));
-    this.props.navigation.navigate('GuideQuestions4');
+    this.props.navigation.goBack();
   }
 
   render() {
@@ -159,8 +159,8 @@ class SpecialtiesSetting extends React.Component {
             small
             raised
             backgroundColor='#FF8C00'
-            title='Next'
-            onPress={this.navigateToNext}
+            title='Submit'
+            onPress={this.handleSubmit}
           />
         </View>
       </View>
