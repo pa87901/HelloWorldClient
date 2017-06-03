@@ -100,7 +100,7 @@ class ExploreScreenEntry extends React.Component {
           <Card
           key={key}
           flexDirection='column'
-          title={guide.user.facebook_id}
+          title={guide.user.full_name}
           image={guide.img_url || require('./JONSNOW.png')}
           >
           <Text style={{marginBottom: 10}}>
