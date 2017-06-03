@@ -107,37 +107,39 @@ class ExploreScreenEntry extends React.Component {
     return (
       <ScrollView>
       {this.props.search.result.map((guide, key) => {
-        return (
-          <Card
-          key={key}
-          flexDirection='column'
-          title={guide.user.full_name}
-          image={{uri: guide.user.picture}}
-          >
-          <Text style={{marginBottom: 10}}>
-            {guide.intro}
-          </Text>
-          <Text style={{marginBottom: 10}}>
-            Avg Rating: {guide.avg_rating}
-          </Text>
-          <Text>
-            Specialties:
-          </Text>
-          {guide.guideSpecialties.map((specialtyObj, key) =>
-            <Text key={key}>
-              {`${specialtyObj.specialty.specialty} `}
+        if (guide.availabilities.length > 0) {
+          return (
+            <Card
+            key={key}
+            flexDirection='column'
+            title={guide.user.full_name}
+            image={{uri: guide.user.picture}}
+            >
+            <Text style={{marginBottom: 10}}>
+              {guide.intro}
             </Text>
-          )}
-          <Button
-            small
-            raised
-            icon={{name: 'group'}}
-            backgroundColor='#FF8C00'
-            onPress={() => this.handleProfileClick(guide.id)}
-            title='Get to know me!' 
-          />
-        </Card>
-        );
+            <Text style={{marginBottom: 10}}>
+              Avg Rating: {guide.avg_rating}
+            </Text>
+            <Text>
+              Specialties:
+            </Text>
+            {guide.guideSpecialties.map((specialtyObj, key) =>
+              <Text key={key}>
+                {`${specialtyObj.specialty.specialty} `}
+              </Text>
+            )}
+            <Button
+              small
+              raised
+              icon={{name: 'group'}}
+              backgroundColor='#FF8C00'
+              onPress={() => this.handleProfileClick(guide.id)}
+              title='Get to know me!' 
+            />
+          </Card>
+          );
+        }
       })}
       </ScrollView> 
     );
