@@ -37,7 +37,11 @@ class ExploreScreenEntry extends React.Component {
     axios.get(query)
       .then((res)=>{
         console.log('explore entry screenr res data', res.data[0]);
-        this.props.dispatch(getProfileResult(res.data[0]));
+        res.data.forEach(datum =>{
+          if(datum.id === guideId){
+            this.props.dispatch(getProfileResult(datum));
+          }
+        })
       })
       .catch((err)=>{
         console.log(err);
