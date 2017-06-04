@@ -22,10 +22,12 @@ class Chat extends React.Component {
       guideId: null,
       guide: true
     };
+    // If we navigated to ChatScreen from Inbox menu icon: 
     if (this.props.navigation.state.params) {
       this.socket = SocketIOClient('http://localhost:3000', {query: {userId: this.props.userProfile.profile.userId, guideId: this.props.navigation.state.params.guideId.user_id}})
     }
     else {
+      // If we navigated to ChatScreen from clicking on a guide profile card:
       this.socket = SocketIOClient('http://localhost:3000', {query: {userId: this.props.userProfile.profile.userId, guideId: this.props.profileSelection.selectedProfile.user_id}})
     }
     this.onSend = this.onSend.bind(this);
