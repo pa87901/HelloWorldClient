@@ -12,7 +12,6 @@ class InboxScreen extends React.Component {
       guides: [],
       chats: []
     }
-    // this.test = this.test.bind(this);
   }
 
   componentWillMount() {
@@ -23,7 +22,7 @@ class InboxScreen extends React.Component {
     console.log('PARAMS', this.props.userProfile.profile.userId);
     axios.get('api/chats/all/' + this.props.userProfile.profile.userId, params)
     .then(chats => {
-      // Formate messages into GiftedChat friendly format.
+      // Format messages into GiftedChat friendly format.
       let formattedMessages = chats.data.map(chatObject => {
         return {
           text: chatObject.message,
@@ -49,8 +48,7 @@ class InboxScreen extends React.Component {
         userLoggedIn: this.props.userProfile.profile.userId
       });
       // console.error('Unable to receive response from server GET /chats.');
-
-    })
+    });
   }
 
   componentDidMount() {
@@ -58,8 +56,8 @@ class InboxScreen extends React.Component {
     // Iterate through chats array and reduce for unique guide ids.
     let chats = this.props.chat.chats;
     let guideIds = chats
-      .map(chatObject => {return chatObject.user.guideId})
-      .filter((id, i, array) => {return array.indexOf(id) === i})
+      .map(chatObject => { return chatObject.user.guideId })
+      .filter((id, i, array) => { return array.indexOf(id) === i });
     // console.log('guideIds', guideIds);
     // With the guideIds, make a call to the database to get guideNames.
     let guideNames = [];
@@ -73,6 +71,10 @@ class InboxScreen extends React.Component {
         console.log('RESPONSE', response, guideNames, this.state);
       })
       .catch(error => {
+        // No chats for logged in user so set chats state to empty [].
+        // this.setState({
+        //   chats: []
+        // });
         console.error('Error in getting guideName from guideId');
       });
     });

@@ -1,56 +1,33 @@
-import React from 'react';
-// import {
-//   Text,
-//   View
-// } from 'react-native';
+import React, { Component } from 'react';
+import { ScrollView, Text, View } from 'react-native';
 import SocketIOClient from 'socket.io-client';
-import { GiftedChat } from 'react-native-gifted-chat';
 import { connect } from 'react-redux';
 import axios from '../axios';
+import { GiftedChat } from 'react-native-gifted-chat';
 
-
-class Chat extends React.Component {
+class GuideChatScreen extends Component {
   constructor(props) {
     super(props);
-    // Creating the socket-client instance will automatically connect to the server.
-    // this.socket = SocketIOClient('http://ec2-35-167-135-24.us-west-2.compute.amazonaws.com:3000');
     this.state = {
       messages: [],
-      userId: null,
       guideId: null,
-      guide: true
+      userId: null,
     };
-    // If we navigated to ChatScreen from Inbox menu icon: 
-    if (this.props.navigation.state.params) {
-      this.socket = SocketIOClient('http://localhost:3000', {query: {userId: this.props.userProfile.profile.userId, guideId: this.props.navigation.state.params.guideId.user_id}})
-    }
-    else {
-      // If we navigated to ChatScreen from clicking on a guide profile card:
-      this.socket = SocketIOClient('http://localhost:3000', {query: {userId: this.props.userProfile.profile.userId, guideId: this.props.profileSelection.selectedProfile.user_id}})
-    }
-    this.onSend = this.onSend.bind(this);
+    this.socket = SocketIOClient('http://localhost3000', {query: {guideId: this.props.userProfile.userGuideId, userId: this.props.navigation.state.params.userId}})
   }
 
   componentWillMount() {
-    // If we navigated to ChatScreen from Inbox menu icon: 
-    if (this.props.navigation.state.params) {
-      this.setState({
-        userId: this.props.userProfile.profile.userId,
-        guideId: this.props.navigation.state.params.guideId.user_id
-      });
-    } else {
-      // If we navigated to ChatScreen from clicking on a guide profile card:
-      this.setState({
-        userId: this.props.userProfile.profile.userId,
-        guideId: this.props.profileSelection.selectedProfile.user_id
-      });
-    }
+    // console.log('this.props in GuideChatScreen', this.props);
+    console.log('guideId in GuideChatScreen', this.props.userProfile.userGuideId);
+    console.log('userId in GuideChatScreen', this.props.navigation.state.params.userId);
+    // Set state of this component to the respective people chatting.
+    this.setState({
+      guideId: this.props.userProfile.userGuideId,
+      userId: this.props.navigation.state.params.userId
+    });
   }
 
   componentDidMount() {
-    console.log('this.props in ChatScreen', this.props, this.state);
-    let privateRoom = `${this.state.userId}-${this.state.guideId}`
-    console.log('PRIVATE ROOM', privateRoom);
     this.socket.on('connect', socket => {
       // On connection, join a socket io room.
       console.log('PRIVATE ROOM');
@@ -106,6 +83,8 @@ class Chat extends React.Component {
     this.socket.emit('chat message', messages);
   }
 
+
+  // SWITCH UP USERID AND GUIDE ID!!!!!
   render() {
     let currentUser;
     if (this.state.guide) {
@@ -134,12 +113,6 @@ class Chat extends React.Component {
   }
 }
 
-const mapStateToProps = state => (state);
+const mapStateToProps = state => state;
 
-function bindActions(dispatch) {
-  return {
-    addMessage: (messages, callback) => dispatch({type: 'ADD_CHAT', payload: messages})
-  };
-}
-
-export default connect(mapStateToProps, bindActions)(Chat);
+export default connect(mapStateToProps)(GuideChatScreen);
