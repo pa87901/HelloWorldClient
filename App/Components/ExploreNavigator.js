@@ -5,6 +5,7 @@ import ExploreScreenEntry from './ExploreScreenEntry';
 import TripsScreen from './TripsScreen';
 import InboxScreen from './InboxScreen';
 import ProfileScreen from './ProfileScreen';
+import PreInboxScreen from './PreInboxScreen';
 
 const SearchNavigator = TabNavigator({
   Explore: {
@@ -22,7 +23,7 @@ const SearchNavigator = TabNavigator({
     }
   },
   Inbox: {
-    screen: InboxScreen,
+    screen: PreInboxScreen,
     navigationOptions: {
       tabBarLabel: 'Inbox',
       tabBarIcon: ({ tintColor }) => <Icon name="mail" size={25} color={'dimgray'}/>
