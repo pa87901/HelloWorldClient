@@ -6,11 +6,25 @@ import {
 import { connect } from 'react-redux';
 import { authenticate } from '../Actions/authActions'; 
 import { setUserProfile } from '../Actions/userProfileActions';
+import {
+  setSightseeing, setMuseum, setFood, setNightlife, setSports, setMusic, setHistory, setPolitics
+}
+from '../Actions/specialtyActions';
 import axios from '../axios'
 
 class ProfileScreen extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      sightseeing: setSightseeing,
+      nightlife: setNightlife,
+      museum: setMuseum,
+      politics: setPolitics,
+      history: setHistory,
+      food: setFood,
+      sports: setSports
+    }
+
     this.navigateToGuideOptions = this.navigateToGuideOptions.bind(this);
     this.logout = this.logout.bind(this);
     this.test = this.test.bind(this)
@@ -39,7 +53,10 @@ class ProfileScreen extends React.Component {
 
     axios.get(`api/specialties/${this.props.userProfile.profile.userId}`)
     .then(res => {
-      console.log('guideSpecialties!!!!!', res);
+      res.data[0].guideSpecialties.forEach(specialtyObj => {
+        var specialtyItem = specialtyObj.specialty.specialty;
+        this.props.dispatch(this.state[specialtyItem](true));
+      });
     })
     .catch(err => {
       console.log(err);
