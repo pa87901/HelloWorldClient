@@ -11,7 +11,7 @@ import axios from '../axios'
 class ProfileScreen extends React.Component {
   constructor(props) {
     super(props);
-    this.navigateToGuideQuestions1 = this.navigateToGuideQuestions1.bind(this);
+    this.navigateToGuideOptions = this.navigateToGuideOptions.bind(this);
     this.logout = this.logout.bind(this);
     this.test = this.test.bind(this)
   }
@@ -34,8 +34,10 @@ class ProfileScreen extends React.Component {
     });
   }
 
-  navigateToGuideQuestions1() {
+  navigateToGuideOptions() {
     this.props.navigation.navigate('GuideOptions');
+
+    
   }
 
   render() {
@@ -54,7 +56,7 @@ class ProfileScreen extends React.Component {
             hideChevron={true}
             leftIcon={{name: 'directions-walk'}}
             title="Become a Guide"
-            onPress={this.navigateToGuideQuestions1}
+            onPress={this.navigateToGuideOptions}
           />
           <ListItem
             hideChevron={true}

@@ -6,16 +6,6 @@ export default function reducer(state = {
   hourlyRate: '',
   intro: '',
   statement: '',
-  specialties: {
-    sightseeing: false,
-    museum: false,
-    food: false,
-    nightlife: false,
-    sports: false,
-    music: false,
-    history: false,
-    politics: false
-  }
 }, action) {
   if (action.type === 'BECOME_GUIDE_CITY') {
     return {...state, city: action.payload}
