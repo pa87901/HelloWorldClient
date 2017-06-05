@@ -37,7 +37,13 @@ class ProfileScreen extends React.Component {
   navigateToGuideOptions() {
     this.props.navigation.navigate('GuideOptions');
 
-    
+    axios.get(`api/specialties/${this.props.userProfile.profile.userId}`)
+    .then(res => {
+      console.log('guideSpecialties!!!!!', res);
+    })
+    .catch(err => {
+      console.log(err);
+    });
   }
 
   render() {
