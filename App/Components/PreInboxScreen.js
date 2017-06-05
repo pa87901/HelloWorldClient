@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Text, View } from 'react-native';
 import { connect } from 'react-redux';
 import axios from '../axios';
-import InboxNavigator from './InboxNavigator';
+import UserAndGuideInboxNavigator from './UserAndGuideInboxNavigator';
 import InboxScreen from './InboxScreen';
 
 class PreInboxScreen extends Component {
@@ -25,7 +25,7 @@ class PreInboxScreen extends Component {
     if (this.props.userProfile.userGuideId) {
       // Navigate them to BoxNavigator.
       return (
-        <InboxNavigator />
+        <UserAndGuideInboxNavigator />
       )
     } else {
       // Navigate them to Inbox Screen.
