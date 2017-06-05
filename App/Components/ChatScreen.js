@@ -9,8 +9,6 @@ import { connect } from 'react-redux';
 import axios from '../axios';
 
 
-let serverURL = 'http://localhost:3000/api/chats/'
-
 class Chat extends React.Component {
   constructor(props) {
     super(props);

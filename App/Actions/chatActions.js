@@ -12,3 +12,10 @@ export function fetchMessages() {
 //     payload: ,
 //   }
 // }
+
+export function updateChats(formattedMessages) {
+  return {
+    type: 'UPDATE_CHATS',
+    payload: formattedMessages
+  }
+}

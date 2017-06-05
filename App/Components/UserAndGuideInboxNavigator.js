@@ -2,7 +2,7 @@ import { StackNavigator } from 'react-navigation';
 import InboxChoiceScreen from './InboxChoiceScreen';
 import InboxScreen from './InboxScreen';
 import GuideInboxScreen from './GuideInboxScreen';
-import ChatScreen from './ChatScreen';
+import GuideChatScreen from './GuideChatScreen';
 
 const UserAndGuideInboxNavigator = StackNavigator({
   InboxChoice: {screen: InboxChoiceScreen,
@@ -12,7 +12,7 @@ const UserAndGuideInboxNavigator = StackNavigator({
   },
   UserInbox: {screen: InboxScreen},
   GuideInbox: {screen: GuideInboxScreen},
-  Chat: {screen: ChatScreen}
+  GuideChat: {screen: GuideChatScreen}
 });
 
 export default UserAndGuideInboxNavigator;
