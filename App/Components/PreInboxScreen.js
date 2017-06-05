@@ -3,7 +3,7 @@ import { Text, View } from 'react-native';
 import { connect } from 'react-redux';
 import axios from '../axios';
 import UserAndGuideInboxNavigator from './UserAndGuideInboxNavigator';
-import InboxScreen from './InboxScreen';
+import UserInboxNavigator from './UserInboxNavigator';
 
 class PreInboxScreen extends Component {
   constructor(props) {
@@ -29,7 +29,7 @@ class PreInboxScreen extends Component {
       )
     } else {
       // Navigate them to Inbox Screen.
-      return <InboxScreen />
+      return <UserInboxNavigator />
     }
 
     // return (
