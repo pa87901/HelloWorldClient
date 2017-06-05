@@ -62,7 +62,7 @@ class Conversation extends React.Component {
       // } else {
         // Otherwise use default React logo image.
         return (
-          <TouchableHighlight onPress={() => navigate('GuideChat', {guideId: this.props.guideId})}>
+          <TouchableHighlight onPress={() => navigate('GuideChat', {guideId: this.props.guideId, userId: this.props.userId.id})}>
             <View>
               <Image
                 source={{uri: 'https://facebook.github.io/react/img/logo_og.png'}}
