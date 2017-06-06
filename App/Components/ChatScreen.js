@@ -1,8 +1,4 @@
 import React from 'react';
-// import {
-//   Text,
-//   View
-// } from 'react-native';
 import SocketIOClient from 'socket.io-client';
 import { GiftedChat } from 'react-native-gifted-chat';
 import { connect } from 'react-redux';

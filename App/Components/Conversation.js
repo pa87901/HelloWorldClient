@@ -48,7 +48,7 @@ class Conversation extends React.Component {
     else if (this.props.userId) {
       if (this.props.userId.avatar) {
         return (
-          <TouchableHighlight onPress={() => navigate('GuideChat', {guideId: this.props.guideId})}>
+          <TouchableHighlight onPress={() => navigate('GuideChat', {guideId: this.props.guideId, userId: this.props.userId.facebook_id})}>
             <View>
               <Image
                 source={this.props.userId.avatar}
@@ -63,7 +63,7 @@ class Conversation extends React.Component {
       } else {
         // Otherwise use default React logo image.
         return (
-          <TouchableHighlight onPress={() => navigate('GuideChat', {guideId: this.props.guideId, userId: this.props.userId.id})}>
+          <TouchableHighlight onPress={() => navigate('GuideChat', {guideId: this.props.guideId, userId: this.props.userId.facebook_id})}>
             <View>
               <Image
                 source={{uri: 'https://facebook.github.io/react/img/logo_og.png'}}
