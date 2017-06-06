@@ -1,39 +1,36 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, ScrollView } from 'react-native';
-import { Card } from 'react-native-elements';
 import { connect } from 'react-redux';
-import { NavigationActions } from 'react-navigation'
+import { View, ScrollView, Button, Text} from 'react-native';
+import { Card } from 'react-native-elements';
+import { NavigationActions } from 'react-navigation';
+// import {} from 'react-native-elements';
 
-class TripsScreen extends React.Component {
+class GuideTripsScreen extends React.Component {
   constructor(props) {
     super(props);
 
     this.navigateToExplore = this.navigateToExplore.bind(this);
   }
 
-
   navigateToExplore() {
     const resetAction = NavigationActions.reset({
       index: 1,
       actions: [
-        NavigationActions.navigate({ routeName: 'Search' }),
-        NavigationActions.navigate({ routeName: 'Explore' }),
+        NavigationActions.navigate({ routeName: 'Trips' }),
       ]
     });
 
     this.props.navigation.dispatch(resetAction);
   }
 
-//Waiting for db methods/trips to dynamically render
   render() {
-    const styles = {
+     const styles = {
       subheader: {
         fontSize: 20,
         marginTop: 10
       },
     };
-    console.log('---TRIP PROPS---', this.props)
-    
+
     return (
       <ScrollView>
           <Text>Trips As A Tourist</Text>
@@ -60,13 +57,14 @@ class TripsScreen extends React.Component {
       </ScrollView>
     );
   }
-  
+    
   static navigationOptions = ({ navigation }) => ({
     headerLeft: <Button title='Explore' onPress={() => navigation.navigate('Explore')}/>,
-    headerRight: <Button title='Guide Trips' onPress={() => navigation.navigate('GuideTrips')}/>
+    headerRight: <Button title='Tourist Trips' onPress={() => navigation.navigate('Trips')}/>
   })
+
 }
 
 const mapStateToProps = state => (state);
 
-export default connect(mapStateToProps)(TripsScreen);
+export default connect(mapStateToProps)(GuideTripsScreen);

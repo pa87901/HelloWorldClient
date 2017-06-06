@@ -1,6 +1,7 @@
 import React from 'react';
 import { DrawerNavigator, StackNavigator, TabNavigator } from 'react-navigation';
 import { Icon } from 'react-native-elements';
+import { Button } from 'react-native'
 import ExploreScreenEntry from './ExploreScreenEntry';
 import TripsScreen from './TripsScreen';
 import InboxScreen from './InboxScreen';
@@ -20,6 +21,7 @@ const SearchNavigator = TabNavigator({
     navigationOptions: {
       tabBarLabel: 'Trips',
       tabBarIcon: ({ tintColor }) => <Icon name="flight" size={25} color={'dimgray'}/>
+      //headerRight: <Button title='See Guide Trips' onPress={console.log('show me the guide page!')}/>
     }
   },
   Inbox: {
