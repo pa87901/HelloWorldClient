@@ -6,6 +6,7 @@ import chat from "./chatReducer"
 import auth from "./authReducer"
 import becomeAGuide from "./BecomeAGuideReducer"
 import specialty from "./specialtyReducer"
+import booking from "./bookingReducer"
 
 export default combineReducers({
   userProfile,
@@ -14,5 +15,6 @@ export default combineReducers({
   chat,
   auth,
   becomeAGuide,
-  specialty
+  specialty,
+  booking
 });

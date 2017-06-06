@@ -6,12 +6,27 @@ import {
 import { connect } from 'react-redux';
 import { authenticate } from '../Actions/authActions'; 
 import { setUserProfile } from '../Actions/userProfileActions';
+import {
+  setSightseeing, setMuseum, setFood, setNightlife, setSports, setMusic, setHistory, setPolitics
+}
+from '../Actions/specialtyActions';
+import { setRequestedGuideBookings } from '../Actions/bookingActions';
 import axios from '../axios'
 
 class ProfileScreen extends React.Component {
   constructor(props) {
     super(props);
-    this.navigateToGuideQuestions1 = this.navigateToGuideQuestions1.bind(this);
+    this.state = {
+      sightseeing: setSightseeing,
+      nightlife: setNightlife,
+      museum: setMuseum,
+      politics: setPolitics,
+      history: setHistory,
+      food: setFood,
+      sports: setSports
+    }
+
+    this.navigateToGuideOptions = this.navigateToGuideOptions.bind(this);
     this.logout = this.logout.bind(this);
     this.test = this.test.bind(this)
   }
@@ -34,11 +49,32 @@ class ProfileScreen extends React.Component {
     });
   }
 
-  navigateToGuideQuestions1() {
+  navigateToGuideOptions() {
     this.props.navigation.navigate('GuideOptions');
+
+    axios.get(`api/specialties/${this.props.userProfile.profile.userId}`)
+    .then(res => {
+      res.data[0].guideSpecialties.forEach(specialtyObj => {
+        var specialtyItem = specialtyObj.specialty.specialty;
+        this.props.dispatch(this.state[specialtyItem](true));
+      });
+    })
+    .catch(err => {
+      console.log(err);
+    });
+
+    axios.get(`api/bookings/requested/guide/${this.props.userProfile.profile.userId}`)
+    .then(res => {
+      this.props.dispatch(setRequestedGuideBookings(res.data[0].bookings));
+    })
+    .catch(err => {
+      console.log(err);
+    });
   }
 
   render() {
+    console.log('PROPS', this.props);
+
     return (
       <ScrollView>
         <Card
@@ -54,7 +90,7 @@ class ProfileScreen extends React.Component {
             hideChevron={true}
             leftIcon={{name: 'directions-walk'}}
             title="Become a Guide"
-            onPress={this.navigateToGuideQuestions1}
+            onPress={this.navigateToGuideOptions}
           />
           <ListItem
             hideChevron={true}

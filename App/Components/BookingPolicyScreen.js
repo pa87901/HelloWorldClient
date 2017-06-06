@@ -13,9 +13,16 @@ class BookingPolicyScreen extends React.Component {
   }
 
   bookTour(){
-    console.log('booking props', this.props.profileSelection.selectedProfile);
-    this.props.profileSelection.selectedProfile.travelerId = this.props.userProfile.profile.userId;
-    axios.post('api/bookings', this.props.profileSelection.selectedProfile)
+    let options = {
+      travelerId: this.props.userProfile.profile.userId,
+      guideFacebookId: this.props.profileSelection.selectedProfile.user.facebook_id,
+      city: this.props.search.city,
+      startHr: 9,
+      endHr: 17,
+      date: this.props.search.date
+    };
+    
+    axios.post('api/bookings', options)
       .then((res)=>{
         console.log(res)
       })
@@ -32,6 +39,8 @@ class BookingPolicyScreen extends React.Component {
   }
 
   render() {
+    console.log('PROPS', this.props);
+
     return (
       <ScrollView>
         <Card
