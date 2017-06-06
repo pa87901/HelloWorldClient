@@ -2,12 +2,19 @@ import React from 'react';
 import { StyleSheet, Text, View, Button, ScrollView } from 'react-native';
 import { Card } from 'react-native-elements';
 import { connect } from 'react-redux';
+import { NavigationActions } from 'react-navigation'
 
 class TripsScreen extends React.Component {
   constructor(props) {
     super(props);
+
     this.navigateToExplore = this.navigateToExplore.bind(this);
   }
+
+  static navigationOptions = ({ navigation }) => ({
+    headerLeft: <Button title='Explore' onPress={() => navigation.navigate('Explore')}/>,
+    headerRight: <Button title='Guide Trips' onPress={() => navigation.navigate('GuideTrips')}/>
+  })
 
   navigateToExplore() {
     const resetAction = NavigationActions.reset({

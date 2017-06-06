@@ -17,6 +17,7 @@ import BecomeAGuideQuestionsConfirmation from './BecomeAGuideQuestionsConfirmati
 import SpecialtiesSetting from './SpecialtiesSetting';
 import GuideRequestedTrips from './GuideRequestedTrips';
 import ChatScreen from './ChatScreen';
+import GuideTripsScreen from './GuideTripsScreen';
 
 const SearchNavigator = StackNavigator({
   // Login: {screen: LoginScreen},
@@ -40,6 +41,7 @@ const SearchNavigator = StackNavigator({
   SpecialtiesSetting: {screen: SpecialtiesSetting},
   Chat: {screen: ChatScreen},
   GuideRequestedTrips: {screen: GuideRequestedTrips},
+  GuideTrips: {screen: GuideTripsScreen},
 });
 
 export default SearchNavigator;
