@@ -10,6 +10,7 @@ import {
   setSightseeing, setMuseum, setFood, setNightlife, setSports, setMusic, setHistory, setPolitics
 }
 from '../Actions/specialtyActions';
+import { setRequestedGuideBookings } from '../Actions/bookingActions';
 import axios from '../axios'
 
 class ProfileScreen extends React.Component {
@@ -61,9 +62,19 @@ class ProfileScreen extends React.Component {
     .catch(err => {
       console.log(err);
     });
+
+    axios.get(`api/bookings/requested/guide/${this.props.userProfile.profile.userId}`)
+    .then(res => {
+      this.props.dispatch(setRequestedGuideBookings(res.data[0].bookings));
+    })
+    .catch(err => {
+      console.log(err);
+    });
   }
 
   render() {
+    console.log('PROPS', this.props);
+
     return (
       <ScrollView>
         <Card
