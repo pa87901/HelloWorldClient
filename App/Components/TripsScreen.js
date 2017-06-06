@@ -11,10 +11,6 @@ class TripsScreen extends React.Component {
     this.navigateToExplore = this.navigateToExplore.bind(this);
   }
 
-  static navigationOptions = ({ navigation }) => ({
-    headerLeft: <Button title='Explore' onPress={() => navigation.navigate('Explore')}/>,
-    headerRight: <Button title='Guide Trips' onPress={() => navigation.navigate('GuideTrips')}/>
-  })
 
   navigateToExplore() {
     const resetAction = NavigationActions.reset({
@@ -62,6 +58,11 @@ class TripsScreen extends React.Component {
       </ScrollView>
     );
   }
+  
+  static navigationOptions = ({ navigation }) => ({
+    headerLeft: <Button title='Explore' onPress={() => navigation.navigate('Explore')}/>,
+    headerRight: <Button title='Guide Trips' onPress={() => navigation.navigate('GuideTrips')}/>
+  })
 }
 
 const mapStateToProps = state => (state);

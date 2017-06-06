@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
+import { Button as NativeButton } from 'react-native';
 import { Card, Button, Rating } from 'react-native-elements';
 import { getProfileResult } from '../Actions/profileSelectionActions';
 import axios from '../axios';
@@ -148,6 +149,11 @@ class ExploreScreenEntry extends React.Component {
       </ScrollView> 
     );
   }
+
+  static navigationOptions = ({ navigation }) => ({
+    headerLeft: <NativeButton title='Search' onPress={() => navigation.navigate('Search')}/>,
+  })
+
 }
 
 const mapStateToProps = state => (state);

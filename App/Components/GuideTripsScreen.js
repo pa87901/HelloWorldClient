@@ -11,11 +11,6 @@ class GuideTripsScreen extends React.Component {
     this.navigateToExplore = this.navigateToExplore.bind(this);
   }
 
-  static navigationOptions = ({ navigation }) => ({
-    headerLeft: <Button title='Explore' onPress={() => navigation.navigate('Explore')}/>,
-    headerRight: <Button title='Tourist Trips' onPress={() => navigation.navigate('Trips')}/>
-  })
-
   navigateToExplore() {
     const resetAction = NavigationActions.reset({
       index: 1,
@@ -34,6 +29,12 @@ class GuideTripsScreen extends React.Component {
       </ScrollView>
     );
   }
+    
+  static navigationOptions = ({ navigation }) => ({
+    headerLeft: <Button title='Explore' onPress={() => navigation.navigate('Explore')}/>,
+    headerRight: <Button title='Tourist Trips' onPress={() => navigation.navigate('Trips')}/>
+  })
+
 }
 
 const mapStateToProps = state => (state);
