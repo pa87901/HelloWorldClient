@@ -3,6 +3,7 @@ import InboxChoiceScreen from './InboxChoiceScreen';
 import InboxScreen from './InboxScreen';
 import GuideInboxScreen from './GuideInboxScreen';
 import GuideChatScreen from './GuideChatScreen';
+import ChatScreen from './ChatScreen';
 
 const UserAndGuideInboxNavigator = StackNavigator({
   InboxChoice: {screen: InboxChoiceScreen,
@@ -12,7 +13,8 @@ const UserAndGuideInboxNavigator = StackNavigator({
   },
   UserInbox: {screen: InboxScreen},
   GuideInbox: {screen: GuideInboxScreen},
-  GuideChat: {screen: GuideChatScreen}
+  GuideChat: {screen: GuideChatScreen},
+  Chat: {screen: ChatScreen}
 });
 
 export default UserAndGuideInboxNavigator;

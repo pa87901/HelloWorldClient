@@ -14,7 +14,7 @@ import Navigator from './Components';
 //   console.log('store changed', store.getState());
 // });
 
-export default class HelloWorld extends React.Component {
+class HelloWorld extends React.Component {
   constructor() {
     super();
     this.state = { store };
@@ -22,7 +22,7 @@ export default class HelloWorld extends React.Component {
 
   render() {
     // Console.log to see the store methods and initial state.
-    console.log('store', this.state.store, this.state.store.getState());
+    // console.log('store', this.state.store, this.state.store.getState());
     return (
       <Provider store={this.state.store}>
         <Navigator />
@@ -49,3 +49,5 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
 });
+
+export default HelloWorld;

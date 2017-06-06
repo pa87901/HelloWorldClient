@@ -11,13 +11,14 @@ class GuideChatScreen extends Component {
     this.state = {
       messages: [],
       guideId: null,
-      userId: null,
+      userId: null
     };
-    this.socket = SocketIOClient('http://localhost3000', {query: {guideId: this.props.userProfile.userGuideId, userId: this.props.navigation.state.params.userId}})
+    this.socket = SocketIOClient('http://localhost3000', {query: {userId: this.props.navigation.state.params.userId, guideId: this.props.userProfile.userGuideId}});
+    this.onSend = this.onSend.bind(this);
   }
 
   componentWillMount() {
-    // console.log('this.props in GuideChatScreen', this.props);
+    console.log('this.props in GuideChatScreen', this.props);
     console.log('guideId in GuideChatScreen', this.props.userProfile.userGuideId);
     console.log('userId in GuideChatScreen', this.props.navigation.state.params.userId);
     // Set state of this component to the respective people chatting.
@@ -113,6 +114,6 @@ class GuideChatScreen extends Component {
   }
 }
 
-const mapStateToProps = state => state;
+const mapStateToProps = state => (state);
 
 export default connect(mapStateToProps)(GuideChatScreen);

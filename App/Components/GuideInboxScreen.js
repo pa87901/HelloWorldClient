@@ -50,7 +50,7 @@ class GuideInboxScreen extends Component {
     // Iterate through chat [] and reduce for unique userIds.
     let userNames = [];
     this.state.chats
-      .map(chatObject => { console.log('LATE!!!', chatObject.user._id); return chatObject.user._id })
+      .map(chatObject => { console.log('chatObject from server in GuideInboxScreen', chatObject.user._id); return chatObject.user._id })
       .filter((id, i, array) => { return array.indexOf(id) === i })
     // With the userIds, make a call to the database to get customer/user names.
       .forEach(user => {
