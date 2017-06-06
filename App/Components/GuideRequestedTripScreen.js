@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { ScrollView, Text, View, Modal } from 'react-native';
 import { Button, Card, Divider, List, ListItem } from 'react-native-elements';
+import axios from '../axios';
 
 class GuideRequestedTripScreen extends React.Component {
   constructor(props) {
@@ -11,7 +12,9 @@ class GuideRequestedTripScreen extends React.Component {
       declineModalVisible: false
     }
     this.handleAcceptButton = this.handleAcceptButton.bind(this);
+    this.handleAcceptConfirm = this.handleAcceptConfirm.bind(this);
     this.handleDeclineButton = this.handleDeclineButton.bind(this);
+    this.handleDeclineConfirm = this.handleDeclineConfirm.bind(this);
   }
 
   handleAcceptButton() {
@@ -20,21 +23,58 @@ class GuideRequestedTripScreen extends React.Component {
     })
   }
 
+  handleAcceptConfirm() {
+    let selectedIndex = this.props.booking.selectedRequestedBooking;
+    let selectedBooking = this.props.booking.requestedGuideBookings[selectedIndex];
+    let bookingId = selectedBooking.id;
+
+    axios.put('api/bookings', {bookingId: bookingId, status: 'confirmed'})
+    .then(res => {
+      console.log(res);
+    })
+    .catch(err => {
+      console.log(err);
+    })
+
+    this.handleAcceptButton();
+  }
+
   handleDeclineButton() {
     this.setState({
       declineModalVisible: !this.state.declineModalVisible
     })
   }
 
+  handleDeclineConfirm() {
+    let selectedIndex = this.props.booking.selectedRequestedBooking;
+    let selectedBooking = this.props.booking.requestedGuideBookings[selectedIndex];
+    let bookingId = selectedBooking.id;
+
+    axios.put('api/bookings', {bookingId: bookingId, status: 'declined'})
+    .then(res => {
+      console.log(res);
+    })
+    .catch(err => {
+      console.log(err);
+    })
+
+    this.handleDeclineButton();
+  }
+
   render() {
+    let selectedIndex = this.props.booking.selectedRequestedBooking;
+    let selectedBooking = this.props.booking.requestedGuideBookings[selectedIndex];
+    let reqDate = new Date(selectedBooking.date);
+    let reqDateFormatted = `${reqDate.getMonth() + 1}/${reqDate.getDate()}/${reqDate.getFullYear()}`
+
     return (
       <ScrollView>
         <Card
-          title={'User Name (4.50)'}
-          image={require('./JONSNOW.png')}
+          title={`${selectedBooking.user.full_name} (${selectedBooking.user.avg_rating})`}
+          image={{uri: selectedBooking.user.picture}}
         >
           <Text>
-            Requested Date: 2017-10-10
+            Requested Date: {reqDateFormatted}
           </Text>
           <Text>
             Requested Start / End Time: 9am / 5pm
@@ -94,7 +134,7 @@ class GuideRequestedTripScreen extends React.Component {
           animationType={'none'}
           transparent={true}
           visible={this.state.acceptModalVisible}
-          onRequestClose={this.state.acceptModalVisible}
+          onRequestClose={this.handleAcceptButton}
         >
           <View style={styles.modal}>
             <Card
@@ -110,7 +150,7 @@ class GuideRequestedTripScreen extends React.Component {
                 backgroundColor='#5AAF5A'
                 title='Confirm and Accept'
                 buttonStyle={{marginTop: 10}}
-                onPress={this.handleAcceptButton}
+                onPress={this.handleAcceptConfirm}
               />
               <Button
                 small
@@ -128,7 +168,7 @@ class GuideRequestedTripScreen extends React.Component {
           animationType={'none'}
           transparent={true}
           visible={this.state.declineModalVisible}
-          onRequestClose={this.state.declineModalVisible}
+          onRequestClose={this.handleDeclineButton}
         >
           <View style={styles.modal}>
             <Card
@@ -144,7 +184,7 @@ class GuideRequestedTripScreen extends React.Component {
                 backgroundColor='#D1686D'
                 title='Confirm and Decline'
                 buttonStyle={{marginTop: 10}}
-                onPress={this.handleDeclineButton}
+                onPress={this.handleDeclineConfirm}
               />
               <Button
                 small

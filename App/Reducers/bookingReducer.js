@@ -2,7 +2,7 @@ export default function reducer(state = {
   requestedGuideBookings: [],
   touristBookings: [],
   guideBookings: []
-  selectedRequestedBooking: {},
+  selectedRequestedBooking: 0,
 }, action) {
   if (action.type === 'SET_REQUESTED_GUIDE_BOOKINGS_FULFILLED') {
     return {...state, requestedGuideBookings: action.payload}

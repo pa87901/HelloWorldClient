@@ -5,6 +5,7 @@ export function setRequestedGuideBookings(bookings) {
   }
 }
 
+<<<<<<< HEAD
 export function setTouristBookings(bookings) {
   return {
     type: 'SET_TOURIST_BOOKINGS',
@@ -19,9 +20,9 @@ export function setGuideBookings(bookings) {
   }
 }
 
-export function setSelectedRequestedBooking(booking) {
+export function setSelectedRequestedBooking(bookingIndex) {
   return {
     type: 'SET_SELECTED_REQUESTED_BOOKING_FULFILLED',
-    payload: booking
+    payload: bookingIndex
   }
 }
