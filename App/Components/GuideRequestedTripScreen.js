@@ -11,7 +11,7 @@ class GuideRequestedTripScreen extends React.Component {
       declineModalVisible: false
     }
     this.handleAcceptButton = this.handleAcceptButton.bind(this);
-
+    this.handleDeclineButton = this.handleDeclineButton.bind(this);
   }
 
   handleAcceptButton() {
@@ -87,6 +87,7 @@ class GuideRequestedTripScreen extends React.Component {
             backgroundColor='#D1686D'
             title='Decline Request'
             buttonStyle={{marginTop: 10}}
+            onPress={this.handleDeclineButton}
           />
         </Card>
         <Modal
@@ -105,11 +106,54 @@ class GuideRequestedTripScreen extends React.Component {
               <Button
                 small
                 raised
-                icon={{name: 'thumb-up'}}
+                icon={{name: 'sentiment-very-satisfied'}}
                 backgroundColor='#5AAF5A'
                 title='Confirm and Accept'
                 buttonStyle={{marginTop: 10}}
                 onPress={this.handleAcceptButton}
+              />
+              <Button
+                small
+                raised
+                icon={{name: 'exit-to-app'}}
+                backgroundColor='#787D7F'
+                title='Go Back'
+                buttonStyle={{marginTop: 10}}
+                onPress={this.handleAcceptButton}
+              />
+            </Card>
+          </View>
+        </Modal>
+        <Modal
+          animationType={'none'}
+          transparent={true}
+          visible={this.state.declineModalVisible}
+          onRequestClose={this.state.declineModalVisible}
+        >
+          <View style={styles.modal}>
+            <Card
+              title='Are You Sure?'
+            >
+              <Text>
+                We are sad to see that you are about to decline this request :( Are you sure you would like to decline this request? You will not be able to view this request any further.
+              </Text>
+              <Button
+                small
+                raised
+                icon={{name: 'sentiment-very-dissatisfied'}}
+                backgroundColor='#D1686D'
+                title='Confirm and Decline'
+                buttonStyle={{marginTop: 10}}
+                onPress={this.handleDeclineButton}
+              />
+              <Button
+                small
+                raised
+                icon={{name: 'exit-to-app'}}
+                backgroundColor='#787D7F'
+                title='Go Back'
+                buttonStyle={{marginTop: 10}}
+                onPress={this.handleDeclineButton}
               />
             </Card>
           </View>
