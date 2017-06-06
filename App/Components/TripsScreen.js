@@ -33,8 +33,10 @@ class TripsScreen extends React.Component {
       },
     };
     console.log('---TRIP PROPS---', this.props)
+    
     return (
       <ScrollView>
+          <Text>Trips As A Tourist</Text>
         <Card>
           <Text style={styles.subheader}>
             City

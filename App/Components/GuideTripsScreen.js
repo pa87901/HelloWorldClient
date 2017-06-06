@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { View, ScrollView, Button, Text} from 'react-native';
+import { Card } from 'react-native-elements';
 import { NavigationActions } from 'react-navigation';
 // import {} from 'react-native-elements';
 
@@ -23,9 +24,36 @@ class GuideTripsScreen extends React.Component {
   }
 
   render() {
+     const styles = {
+      subheader: {
+        fontSize: 20,
+        marginTop: 10
+      },
+    };
+
     return (
       <ScrollView>
-        <Text>HELLO FROM THE GUIDE TRIP SCREEN!</Text>
+          <Text>Trips As A Tourist</Text>
+        <Card>
+          <Text style={styles.subheader}>
+            City
+          </Text>
+          <Text>
+            San Francisco, CA
+          </Text>
+          <Text style={styles.subheader}>
+            Guide
+          </Text>
+          <Text>
+            Guide Name
+          </Text>
+          <Text style={styles.subheader}>
+            Date & Time
+          </Text>
+          <Text>
+            May 30, 2017
+          </Text>
+        </Card>
       </ScrollView>
     );
   }
