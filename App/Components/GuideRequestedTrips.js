@@ -6,6 +6,11 @@ import { List, ListItem } from 'react-native-elements';
 class GuideRequestedTrips extends React.Component {
   constructor(props){
     super(props);
+    this.navigateToGuideRequestedTrip = this.navigateToGuideRequestedTrip.bind(this);
+  }
+
+  navigateToGuideRequestedTrip() {
+    this.props.navigation.navigate('GuideRequestedTripScreen');
   }
 
   render() {
@@ -24,6 +29,7 @@ class GuideRequestedTrips extends React.Component {
                     `Requested Date: ${bookingDate.getMonth()}/${bookingDate.getDate()}/${bookingDate.getFullYear()}`
                   }
                   avatar={booking.user.avatar}
+                  onPress={this.navigateToGuideRequestedTrip}
                 />
               )
             }
