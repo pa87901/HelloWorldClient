@@ -18,9 +18,12 @@ class GuideRequestedTrips extends React.Component {
               return (
                 <ListItem
                   key={key}
+                  roundAvatar
                   title={`${booking.user.full_name} (${booking.user.avg_rating})`}
                   subtitle={
-                    `Requested Date: ${bookingDate.getMonth()}/${bookingDate.getDate()}/${bookingDate.getFullYear()}`}
+                    `Requested Date: ${bookingDate.getMonth()}/${bookingDate.getDate()}/${bookingDate.getFullYear()}`
+                  }
+                  avatar={booking.user.avatar}
                 />
               )
             }
