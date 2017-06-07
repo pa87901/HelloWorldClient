@@ -93,7 +93,7 @@ class InboxScreen extends React.Component {
   }
   static navigationOptions = ({ navigation }) => ({
       headerLeft: <Button title='Explore' onPress={() => navigation.navigate('Explore')}/>,
-      headerRight: <Button title='Guide Chats' onPress={() => navigation.navigate('GuideInbox')}/>
+      headerRight: <Button title='Guide Chat' onPress={() => navigation.navigate('GuideInbox')}/>
   })
 }
 
