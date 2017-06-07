@@ -19,6 +19,7 @@ class GuideRequestedTripScreen extends React.Component {
     this.handleAcceptConfirm = this.handleAcceptConfirm.bind(this);
     this.handleDeclineButton = this.handleDeclineButton.bind(this);
     this.handleDeclineConfirm = this.handleDeclineConfirm.bind(this);
+    this.navigateToGuideOptions = this.navigateToGuideOptions.bind(this);
   }
 
   handleAcceptButton() {
@@ -32,18 +33,6 @@ class GuideRequestedTripScreen extends React.Component {
     let selectedBooking = this.props.booking.requestedGuideBookings[selectedIndex];
     let bookingId = selectedBooking.id;
 
-    const resetToGuideOptions = NavigationActions.reset({
-      index: 3,
-      actions: [
-        NavigationActions.navigate({routeName: 'Search'}),
-        NavigationActions.navigate({routeName: 'Explore'}),
-        NavigationActions.navigate({routeName: 'ProfileScreen'}),
-        NavigationActions.navigate({routeName: 'GuideOptions'}),
-      ]
-    })
-    
-    this.props.navigation.dispatch(resetToGuideOptions);
-
     axios.put('api/bookings', {bookingId: bookingId, status: 'confirmed'})
     .then(res => {
       axios.get(`api/bookings/requested/guide/${this.props.userProfile.profile.userId}`)
@@ -53,6 +42,11 @@ class GuideRequestedTripScreen extends React.Component {
     })
     .catch(err => {
       console.log(err);
+    })
+
+    this.setState({
+      acceptModalVisible: !this.state.acceptModalVisible,
+      acceptConfirmVisible: !this.state.acceptConfirmVisible
     })
   }
 
@@ -69,13 +63,33 @@ class GuideRequestedTripScreen extends React.Component {
 
     axios.put('api/bookings', {bookingId: bookingId, status: 'declined'})
     .then(res => {
-      console.log(res);
+      axios.get(`api/bookings/requested/guide/${this.props.userProfile.profile.userId}`)
+      .then(res => {
+        this.props.dispatch(setRequestedGuideBookings(res.data[0].bookings));
+      })
     })
     .catch(err => {
       console.log(err);
     })
 
-    this.handleDeclineButton();
+    this.setState({
+      declineModalVisible: !this.state.declineModalVisible,
+      declineConfirmVisible: !this.state.declineConfirmVisible
+    })
+  }
+
+  navigateToGuideOptions() {
+    const resetToGuideOptions = NavigationActions.reset({
+      index: 3,
+      actions: [
+        NavigationActions.navigate({routeName: 'Search'}),
+        NavigationActions.navigate({routeName: 'Explore'}),
+        NavigationActions.navigate({routeName: 'ProfileScreen'}),
+        NavigationActions.navigate({routeName: 'GuideOptions'}),
+      ]
+    })
+    
+    this.props.navigation.dispatch(resetToGuideOptions);    
   }
 
   render() {
@@ -229,7 +243,7 @@ class GuideRequestedTripScreen extends React.Component {
               title='Confirmation'
             >
               <Text>
-                ${selectedBooking.user.full_name} has been notified on your acceptance! This trip is now confirmed and moved to the Trips tab.
+                {selectedBooking.user.full_name} has been notified on your acceptance! This trip is now confirmed and moved to the Trips tab.
               </Text>
               <Button
                 small
@@ -238,7 +252,31 @@ class GuideRequestedTripScreen extends React.Component {
                 backgroundColor='#787D7F'
                 title='Go to Guide Menu'
                 buttonStyle={{marginTop: 10}}
-                onPress={this.handleDeclineButton}
+                onPress={this.navigateToGuideOptions}
+              />
+            </Card>
+          </View>
+        </Modal>
+        <Modal
+          animationType={'none'}
+          transparent={true}
+          visible={this.state.declineConfirmVisible}
+        >
+          <View style={styles.modal}>
+            <Card
+              title='The Request Has Been Declined'
+            >
+              <Text>
+                {selectedBooking.user.full_name} has been notified! This trip is now declined and will no longer be visible.
+              </Text>
+              <Button
+                small
+                raised
+                icon={{name: 'exit-to-app'}}
+                backgroundColor='#787D7F'
+                title='Go to Guide Menu'
+                buttonStyle={{marginTop: 10}}
+                onPress={this.navigateToGuideOptions}
               />
             </Card>
           </View>
