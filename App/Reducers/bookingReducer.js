@@ -1,7 +1,7 @@
 export default function reducer(state = {
   requestedGuideBookings: [],
   touristBookings: [],
-  guideBookings: []
+  guideBookings: [],
   selectedRequestedBooking: 0,
 }, action) {
   if (action.type === 'SET_REQUESTED_GUIDE_BOOKINGS_FULFILLED') {

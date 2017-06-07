@@ -58,12 +58,6 @@ class BecomeAGuideQuestionsConfirmation extends React.Component {
             {this.props.becomeAGuide.start} / {this.props.becomeAGuide.end}
           </Text>
           <Text style={styles.subheader}>
-            Specialties
-          </Text>
-          {Object.keys(this.props.becomeAGuide.specialties).map((specialty, key) =>
-            this.props.becomeAGuide.specialties[specialty] ? <Text>{specialty}</Text> : <Text style={{display: 'none'}} />
-          )}
-          <Text style={styles.subheader}>
             Hourly Rate
           </Text>
           <Text>

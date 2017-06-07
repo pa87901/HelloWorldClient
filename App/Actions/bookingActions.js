@@ -5,7 +5,6 @@ export function setRequestedGuideBookings(bookings) {
   }
 }
 
-<<<<<<< HEAD
 export function setTouristBookings(bookings) {
   return {
     type: 'SET_TOURIST_BOOKINGS',
