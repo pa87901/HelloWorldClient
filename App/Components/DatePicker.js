@@ -65,7 +65,8 @@ class DatePicker extends Component {
           date={this.state.date}
           mode="date"
           timeZoneOffsetInMinutes={this.state.timeZoneOffsetInHours * 60}
-          onDateChange={(e) => {console.log('event', e); this.onDateChange(e); this.props.dispatch(updateDate((new Date((new Date(e))-86400000)).toJSON().slice(0,10).replace(/-/g,'-')))}}
+          // onDateChange={(e) => {console.log('event', e); this.onDateChange(e); this.props.dispatch(updateDate((new Date((new Date(e))-86400000)).toJSON().slice(0,10).replace(/-/g,'-')))}}
+          onDateChange={(e) => {console.log('event', e); this.onDateChange(e); this.props.dispatch(updateDate(e.toJSON().slice(0,10).replace(/-/g,'-')))}}
         />
         {/*<Heading label="Time picker, 10-minute interval" />
         <DatePickerIOS
