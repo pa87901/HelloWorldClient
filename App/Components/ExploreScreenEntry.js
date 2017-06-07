@@ -27,6 +27,13 @@ class ExploreScreenEntry extends React.Component {
     };
   }
 
+  // componentWillMount() {
+  //   axios.get(`api/bookings/all/user/${this.props.userProfile.profile.userId}`)
+  //     .then(res => {
+  //       this.props.dispatch(setTouristBookings(res.data))
+  //     })
+  // } 
+
   ratingCompleted(rating) {
     console.log('Rating is: ' + rating);
   }

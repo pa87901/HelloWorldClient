@@ -4,3 +4,18 @@ export function setRequestedGuideBookings(bookings) {
     payload: bookings
   }
 }
+
+export function setTouristBookings(bookings) {
+  return {
+    type: 'SET_TOURIST_BOOKINGS',
+    payload: bookings
+  }
+}
+
+export function setGuideBookings(bookings) {
+  return {
+    type: 'SET_GUIDE_BOOKINGS',
+    payload: bookings
+  }
+}
+
