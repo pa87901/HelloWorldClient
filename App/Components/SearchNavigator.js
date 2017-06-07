@@ -20,6 +20,7 @@ import ChatScreen from './ChatScreen';
 import GuideRequestedTripScreen from './GuideRequestedTripScreen';
 import GuideTripsScreen from './GuideTripsScreen';
 import ProfileScreen from './ProfileScreen';
+import GuideInboxScreen from './GuideInboxScreen';
 
 const SearchNavigator = StackNavigator({
   // Login: {screen: LoginScreen},
@@ -46,6 +47,7 @@ const SearchNavigator = StackNavigator({
   GuideRequestedTripScreen: {screen: GuideRequestedTripScreen},
   GuideTrips: {screen: GuideTripsScreen},
   ProfileScreen: {screen: ProfileScreen},
+  GuideInbox: {screen: GuideInboxScreen},
 });
 
 export default SearchNavigator;

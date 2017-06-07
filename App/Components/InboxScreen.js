@@ -91,7 +91,12 @@ class InboxScreen extends React.Component {
       </ScrollView> 
     );
   }
+  static navigationOptions = ({ navigation }) => ({
+      headerLeft: <Button title='Explore' onPress={() => navigation.navigate('Explore')}/>,
+      headerRight: <Button title='Guide Chat' onPress={() => navigation.navigate('GuideInbox')}/>
+  })
 }
+
 
 const mapStateToProps = state => state;
 

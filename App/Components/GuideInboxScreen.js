@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ScrollView, Text, View } from 'react-native';
+import { ScrollView, Text, View, Button } from 'react-native';
 import { connect } from 'react-redux';
 import axios from '../axios';
 import { updateChats } from '../Actions/chatActions.js';
@@ -83,6 +83,11 @@ class GuideInboxScreen extends Component {
       </ScrollView>
     );
   }
+
+  static navigationOptions = ({ navigation }) => ({
+      headerLeft: <Button title='Explore' onPress={() => navigation.navigate('Explore')}/>,
+      headerRight: <Button title='Tourist Chat' onPress={() => navigation.navigate('Inbox')}/>
+  })
 }
 
 const parseChatData = function(chat) {
