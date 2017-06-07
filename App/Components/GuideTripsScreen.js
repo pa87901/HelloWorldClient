@@ -129,6 +129,7 @@ class GuideTripsScreen extends React.Component {
               <Text>
                 {booking.status}
               </Text>
+              <Button title='Details' onPress={()=>{this.props.navigation.navigate('MapScreen')}}/>   
               <Button title='Review' onPress={()=>{
                 this.setState({activeCard : i})
                 this.toggleReviewModal()
