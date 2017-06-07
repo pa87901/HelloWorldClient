@@ -1,20 +1,31 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, Button, ScrollView, TouchableHighlight, Modal, TextInput } from 'react-native';
 import { Card } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { NavigationActions } from 'react-navigation';
 import { setTouristBookings } from '../Actions/bookingActions';
 import axios from '../axios';
+import Stars from 'react-native-stars-rating';
+
 
 class TripsScreen extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      touristBookings: []
-    }
+      touristBookings: [],
+      reviewModalVisible: false,
+      tipsModalVisible: false,
+      rating: 0,
+      review: '',
+      tips: '0',
+      activeCard: null
+    };
 
     this.navigateToExplore = this.navigateToExplore.bind(this);
+    this.toggleReviewModal = this.toggleReviewModal.bind(this);
+    this.toggleTipsModal = this.toggleTipsModal.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
   }
 
   componentDidMount() {
@@ -38,6 +49,35 @@ class TripsScreen extends React.Component {
     this.props.navigation.dispatch(resetAction);
   }
 
+  onSubmit(){
+    axios.put(`api/bookings/guide/rrt`, {
+        bookingId: this.props.booking.touristBookings[0].bookings[this.state.activeCard].id, 
+        guide_review: this.state.review,
+        guide_rating: this.state.rating,
+        tips: this.state.tips
+      })
+      .then(res => {})
+      .catch(err => {
+        console.log(err);
+      })
+
+    this.toggleTipsModal(false);
+  }
+
+  toggleReviewModal(state) {
+    this.setState({
+      reviewModalVisible: state
+    })
+  }
+
+  toggleTipsModal(state) {
+    this.setState({
+      tipsModalVisible: state
+    });
+    this.toggleReviewModal(false);
+  }
+
+  
 //Waiting for db methods/trips to dynamically render
   render() {
     const styles = {
@@ -50,7 +90,64 @@ class TripsScreen extends React.Component {
     if (this.state.touristBookings[0]) {
       return (
         <ScrollView>
-            <Text>Trips As A Tourist</Text>
+          <View>
+          <Modal
+            animationType={"none"}
+            transparent={false}
+            visible={this.state.reviewModalVisible}
+            onRequestClose={() => {alert("Modal has been closed.")}}
+            >
+            <View style={{marginTop: 22}}>
+              <View>
+                <Text>Review Your Guide!</Text>
+                <Stars
+                  isActive={true}
+                  rateMax={5}
+                  isHalfStarEnabled={false}
+                  onStarPress={(rating) => {this.setState({rating: rating})}}
+                  rate={0}
+                  size={60}
+                />
+                <TextInput
+                  style={{height: 40, borderColor: 'gray', borderWidth: 1}}
+                  onChangeText={(review) => this.setState({review: review})}
+                  value={this.state.review}
+                />
+                <TouchableHighlight
+                  onPress={()=>{this.toggleTipsModal(true)}}
+                >
+                  <Text>Next!</Text>
+                </TouchableHighlight>
+
+              </View>
+            </View>
+          </Modal>
+          {/*Tip Modal */}
+          <Modal
+            animationType={"none"}
+            transparent={false}
+            visible={this.state.tipsModalVisible}
+            >
+            <View style={{marginTop: 22}}>
+              <View>
+                <Text>Tip Your Guide!</Text>
+                <TextInput
+                  style={{height: 40, borderColor: 'gray', borderWidth: 1}}
+                  onChangeText={(tips) => this.setState({tips: tips})}
+                  keyboardType='numeric'
+                  value={this.state.tips}
+                />
+                <TouchableHighlight
+                  onPress={this.onSubmit}
+                >
+                  <Text>Submit</Text>
+                </TouchableHighlight>
+
+              </View>
+            </View>
+          </Modal>
+          </View>
+          <Text>Trips As A Tourist</Text> 
           {this.state.touristBookings[0].bookings.map((booking, i)=>{
             return (
             <Card key={i}>
@@ -78,6 +175,10 @@ class TripsScreen extends React.Component {
               <Text>
                 {booking.status}
               </Text>
+              <Button title='Review' onPress={()=>{
+                this.setState({activeCard : i})
+                this.toggleReviewModal(true)
+                }} />
             </Card>
             )
           })}

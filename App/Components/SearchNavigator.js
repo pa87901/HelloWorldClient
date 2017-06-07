@@ -22,6 +22,7 @@ import GuideTripsScreen from './GuideTripsScreen';
 import ProfileScreen from './ProfileScreen';
 import GuideInboxScreen from './GuideInboxScreen';
 
+
 const SearchNavigator = StackNavigator({
   // Login: {screen: LoginScreen},
   Search: {screen: SearchScreen,
