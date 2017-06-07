@@ -19,3 +19,9 @@ export function setGuideBookings(bookings) {
   }
 }
 
+export function setSelectedRequestedBooking(bookingIndex) {
+  return {
+    type: 'SET_SELECTED_REQUESTED_BOOKING_FULFILLED',
+    payload: bookingIndex
+  }
+}

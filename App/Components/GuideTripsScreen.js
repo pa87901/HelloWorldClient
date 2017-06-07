@@ -38,12 +38,7 @@ class GuideTripsScreen extends React.Component {
   }
 
   render() {
-     const styles = {
-      subheader: {
-        fontSize: 20,
-        marginTop: 10
-      },
-    };
+    console.log('STATE', this.state);
 
     if (this.state.guideBookings[0]) {
       return (
@@ -94,6 +89,13 @@ class GuideTripsScreen extends React.Component {
   })
 
 }
+
+const styles = {
+  subheader: {
+    fontSize: 20,
+    marginTop: 10
+  },
+};
 
 const mapStateToProps = state => (state);
 
