@@ -114,7 +114,7 @@ class ExploreScreenEntry extends React.Component {
   }
 
   render() {
-    console.log('PROPS', this.props);
+    console.log('PROPS IN EXPLORE SCREEN ENTRY', this.props);
 
 
     return (
