@@ -4,16 +4,20 @@ import {
   updateCity, updateDate, updateHours, updateTravelers, updateSearchResult
 } from '../Actions/searchActions.js';
 import {
-  StyleSheet, Text, View, Picker, Item, Keyboard, TextInput
+  StyleSheet, Text, View, Picker, Item, Keyboard, TextInput, ScrollView, TouchableOpacity
 } from 'react-native';
 import {
   FormLabel, FormInput, FormValidationMessage, Button
 } from 'react-native-elements';
 import axios from '../axios';
+import DatePicker from './DatePicker';
 
 class SearchScreen extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      showDatePicker: false
+    }
   }
 
   componentWillMount () {
@@ -137,39 +141,43 @@ class SearchScreen extends React.Component {
 
   render() {
     //console.log('PROPS', this.props);
-
+    let showDatePicker = this.state.showDatePicker ? <DatePicker /> : <Text style={styles.date}>{(new Date()).toJSON().slice(0,10).replace(/-/g,'-')}</Text>
     return (
-      <View style={styles.container}>
-        <Text style = {styles.header}>Where are you headed?</Text>
-        <FormLabel>When do you need a guide?</FormLabel>
-        <FormLabel>Date</FormLabel>
-        <FormInput id="date" placeholder="YYYY-MM-DD" onChangeText={(date) => this.handleDateUpdate(date)} />
-        <FormLabel>Hours</FormLabel>
-        <FormInput id="hours" placeholder="9AM-5PM" onChangeText={(hours) => this.handleHoursUpdate(hours)} />
-        <FormLabel>Where?</FormLabel>
-        <FormInput id="where" placeholder="Where do you want to go?" onChangeText={(city) => this.handleCityUpdate(city)} />
-        <FormLabel>How many travelers?</FormLabel>
-        <Picker
-          style={styles.picker}
-          selectedValue={this.props.search.numTravelers}
-          onValueChange={(number) => this.handleTravelerUpdate(number)}
-          mode="dropdown"
-        >
-          <Picker.Item label="1" value={1} />
-          <Picker.Item label="2" value={2} />
-          <Picker.Item label="3" value={3} />
-          <Picker.Item label="4" value={4} />
-        </Picker>
-        <View style={{position: 'absolute', left: 0, right: 0, bottom: 0}}>
-            <Button
-            large
-            raised
-            backgroundColor='#FF8C00'
-            title='EXPLORE'
-            onPress={() => this.handleSearchSubmit()} 
-          />
+        <View style={styles.container}>
+          
+          <Text style = {styles.header}>Where are you headed?</Text>
+          <FormLabel>When do you need a guide?</FormLabel>
+          <FormLabel>Date</FormLabel>
+          <TouchableOpacity onPress={() => this.setState({showDatePicker: !this.state.showDatePicker})} >
+            {showDatePicker}
+          </TouchableOpacity>
+          {/*<FormInput id="date" placeholder="YYYY-MM-DD" onChangeText={(date) => this.handleDateUpdate(date)} />*/}
+          <FormLabel>Hours</FormLabel>
+          <FormInput id="hours" placeholder="9AM-5PM" onChangeText={(hours) => this.handleHoursUpdate(hours)} />
+          <FormLabel>Where?</FormLabel>
+          <FormInput id="where" placeholder="Where do you want to go?" onChangeText={(city) => this.handleCityUpdate(city)} />
+          {/*<FormLabel>How many travelers?</FormLabel>
+          <Picker
+            style={styles.picker}
+            selectedValue={this.props.search.numTravelers}
+            onValueChange={(number) => this.handleTravelerUpdate(number)}
+            mode="dropdown"
+          >
+            <Picker.Item label="1" value={1} />
+            <Picker.Item label="2" value={2} />
+            <Picker.Item label="3" value={3} />
+            <Picker.Item label="4" value={4} />
+          </Picker>*/}
+          <View style={{position: 'absolute', left: 0, right: 0, bottom: 0}}>
+              <Button
+              large
+              raised
+              backgroundColor='#FF8C00'
+              title='EXPLORE'
+              onPress={() => this.handleSearchSubmit()} 
+            />
+          </View>
         </View>
-      </View>
     );
   }
 }
@@ -191,6 +199,9 @@ const styles = StyleSheet.create({
   },
   header: {
     fontSize: 25,
+  },
+  date: {
+    fontSize: 20,
   }
 });
 

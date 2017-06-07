@@ -1,7 +1,7 @@
 //placeholder for actions
 export function updateDate(date) {
   return {
-    type: 'UPDATE_DATE_FULFILLED',
+    type: 'UPDATE_DATE',
     payload: date
   };
 }
