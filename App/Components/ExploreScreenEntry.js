@@ -27,12 +27,13 @@ class ExploreScreenEntry extends React.Component {
     };
   }
 
-  // componentWillMount() {
-  //   axios.get(`api/bookings/all/user/${this.props.userProfile.profile.userId}`)
-  //     .then(res => {
-  //       this.props.dispatch(setTouristBookings(res.data))
-  //     })
-  // } 
+  componentWillMount() {
+     axios.get('api/guides/byUserId/' + this.props.userProfile.profile.userId)
+    .then(guideId => {
+      console.log('GOTTEN guideId', guideId);
+      this.props.updateUserGuideId(guideId.data.id);
+    });  
+  } 
 
   ratingCompleted(rating) {
     console.log('Rating is: ' + rating);
@@ -165,4 +166,10 @@ class ExploreScreenEntry extends React.Component {
 
 const mapStateToProps = state => (state);
 
-export default connect(mapStateToProps)(ExploreScreenEntry);
+const mapDispatchToProps = dispatch => {
+  return {
+    updateUserGuideId: userGuideId => dispatch({type: 'UPDATE_USER_GUIDE_ID', payload: userGuideId})
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ExploreScreenEntry);

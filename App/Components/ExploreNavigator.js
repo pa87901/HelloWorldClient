@@ -25,7 +25,7 @@ const SearchNavigator = TabNavigator({
     }
   },
   Inbox: {
-    screen: PreInboxScreen,
+    screen: InboxScreen,
     navigationOptions: {
       tabBarLabel: 'Inbox',
       tabBarIcon: ({ tintColor }) => <Icon name="mail" size={25} color={'dimgray'}/>
