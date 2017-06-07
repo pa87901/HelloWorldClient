@@ -1,7 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { ScrollView, Text, View, Modal } from 'react-native';
+import { NavigationActions } from 'react-navigation';
 import { Button, Card, Divider, List, ListItem } from 'react-native-elements';
+import { setRequestedGuideBookings } from '../Actions/bookingActions';
 import axios from '../axios';
 
 class GuideRequestedTripScreen extends React.Component {
@@ -9,7 +11,9 @@ class GuideRequestedTripScreen extends React.Component {
     super(props);
     this.state = {
       acceptModalVisible: false,
-      declineModalVisible: false
+      declineModalVisible: false,
+      acceptConfirmVisible: false,
+      declineConfirmVisible: false
     }
     this.handleAcceptButton = this.handleAcceptButton.bind(this);
     this.handleAcceptConfirm = this.handleAcceptConfirm.bind(this);
@@ -28,15 +32,28 @@ class GuideRequestedTripScreen extends React.Component {
     let selectedBooking = this.props.booking.requestedGuideBookings[selectedIndex];
     let bookingId = selectedBooking.id;
 
+    const resetToGuideOptions = NavigationActions.reset({
+      index: 3,
+      actions: [
+        NavigationActions.navigate({routeName: 'Search'}),
+        NavigationActions.navigate({routeName: 'Explore'}),
+        NavigationActions.navigate({routeName: 'ProfileScreen'}),
+        NavigationActions.navigate({routeName: 'GuideOptions'}),
+      ]
+    })
+    
+    this.props.navigation.dispatch(resetToGuideOptions);
+
     axios.put('api/bookings', {bookingId: bookingId, status: 'confirmed'})
     .then(res => {
-      console.log(res);
+      axios.get(`api/bookings/requested/guide/${this.props.userProfile.profile.userId}`)
+      .then(res => {
+        this.props.dispatch(setRequestedGuideBookings(res.data[0].bookings));
+      })
     })
     .catch(err => {
       console.log(err);
     })
-
-    this.handleAcceptButton();
   }
 
   handleDeclineButton() {
@@ -66,6 +83,10 @@ class GuideRequestedTripScreen extends React.Component {
     let selectedBooking = this.props.booking.requestedGuideBookings[selectedIndex];
     let reqDate = new Date(selectedBooking.date);
     let reqDateFormatted = `${reqDate.getMonth() + 1}/${reqDate.getDate()}/${reqDate.getFullYear()}`
+    let adjustTime = time =>
+      time < 12 ? `${time} AM` : time === 12 ? `12 PM` : `${time - 12} PM`;
+
+    console.log('NAVIGATION PROPS', this.props.navigation.navigate);
 
     return (
       <ScrollView>
@@ -77,10 +98,10 @@ class GuideRequestedTripScreen extends React.Component {
             Requested Date: {reqDateFormatted}
           </Text>
           <Text>
-            Requested Start / End Time: 9am / 5pm
+            Requested Start / End Time: {adjustTime(selectedBooking.start_hr)} / {adjustTime(selectedBooking.end_hr)}
           </Text>
           <Text style={{marginBottom: 10}}>
-            Requested City: San Francisco
+            Requested City: {selectedBooking.city}
           </Text>
           <Divider />
           <Text style={styles.subheader}>
@@ -138,7 +159,7 @@ class GuideRequestedTripScreen extends React.Component {
         >
           <View style={styles.modal}>
             <Card
-              title='Confirmation'
+              title='Please Read'
             >
               <Text>
                 We are excited you are about to accept the request! In order to protect both you and customer's experiences, we are offering allowance of up to two weeks prior to scheduled trip during which you can cancel / decline the trip without any penalties. Thereafter, you will be charged per Localize's late cancelation fee schedule set forth in our policies.
@@ -192,6 +213,30 @@ class GuideRequestedTripScreen extends React.Component {
                 icon={{name: 'exit-to-app'}}
                 backgroundColor='#787D7F'
                 title='Go Back'
+                buttonStyle={{marginTop: 10}}
+                onPress={this.handleDeclineButton}
+              />
+            </Card>
+          </View>
+        </Modal>
+        <Modal
+          animationType={'none'}
+          transparent={true}
+          visible={this.state.acceptConfirmVisible}
+        >
+          <View style={styles.modal}>
+            <Card
+              title='Confirmation'
+            >
+              <Text>
+                ${selectedBooking.user.full_name} has been notified on your acceptance! This trip is now confirmed and moved to the Trips tab.
+              </Text>
+              <Button
+                small
+                raised
+                icon={{name: 'exit-to-app'}}
+                backgroundColor='#787D7F'
+                title='Go to Guide Menu'
                 buttonStyle={{marginTop: 10}}
                 onPress={this.handleDeclineButton}
               />
