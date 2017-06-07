@@ -20,7 +20,7 @@ class TripsScreen extends React.Component {
       review: '',
       tips: '0',
       activeCard: null
-    }
+    };
 
     this.navigateToExplore = this.navigateToExplore.bind(this);
     this.toggleReviewModal = this.toggleReviewModal.bind(this);
@@ -56,10 +56,7 @@ class TripsScreen extends React.Component {
         guide_rating: this.state.rating,
         tips: this.state.tips
       })
-      .then(res => {
-        this.props.dispatch(setTouristBookings(res.data));
-        this.setState({touristBookings: res.data});
-      })
+      .then(res => {})
       .catch(err => {
         console.log(err);
       })
