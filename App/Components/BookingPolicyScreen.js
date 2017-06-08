@@ -69,7 +69,7 @@ class BookingPolicyScreen extends React.Component {
           loading: false,
           token,
         });
-
+        
         this.props.navigation.navigate('BookingConfirmation');
       } catch (error) {
         console.log('ERROR', error);
@@ -80,14 +80,15 @@ class BookingPolicyScreen extends React.Component {
     };
 
     const { loading, token } = this.state;
+    const hourlyRate = this.props.profileSelection.selectedProfile.availabilities[0].hourly_rate;
 
     return (
       <ScrollView>
         <PricingCard
           color='#FF8C00'
           title='Your Total Cost'
-          price='$100'
-          info={['$10 Per Hour', '9AM - 9PM', 'Authorize Only', 'Payment Will Be Made When Trip Is Confirmed']}
+          price={`$${hourlyRate * (this.props.search.toHour - this.props.search.fromHour)}`}
+          info={[`$${hourlyRate} Per Hour`, `${this.props.search.fromHour} - ${this.props.search.toHour}`, 'Authorize Only', 'Payment Will Be Made When Trip Is Confirmed']}
           button={{ title: 'Confirm and Request a Tour!', icon: 'check-circle' }}
           onButtonPress={handleCardPayPress}
         />
