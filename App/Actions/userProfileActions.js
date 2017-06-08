@@ -14,3 +14,12 @@ export function setUserProfile(profileLoaded, profileData) {
     }
   }
 }
+
+export function updateUserGuideId(userGuideId) {
+  return function (dispatch) {
+    dispatch({
+      type: 'UPDATE_USER_GUIDE_ID', 
+      payload: userGuideId
+    });
+  };
+};

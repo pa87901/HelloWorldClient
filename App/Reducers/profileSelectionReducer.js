@@ -1,9 +1,9 @@
 export default function reducer(state = {
  selectedProfile: {
    guideSpecialties: [],
-   user:{
-//     full_name: ''
-   }
+   user:{},
+   availabilities:[{}],
+   bookings: [],
  }
 }, action) {
   if (action.type === 'GET_PROFILE_FULFILLED') {
