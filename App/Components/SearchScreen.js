@@ -11,7 +11,7 @@ import {
 } from 'react-native-elements';
 import axios from '../axios';
 import DatePicker from './DatePicker';
-import FromTimePick from './FromTimePick';
+import TimePick from './TimePick';
 
 class SearchScreen extends React.Component {
   constructor(props) {
@@ -162,7 +162,7 @@ class SearchScreen extends React.Component {
 
     // console.log('this.props.search.date', this.props.search.date);
     let showDatePicker = this.state.showDatePicker ? <DatePicker /> : <Text style={styles.date}>{this.props.search.date}</Text>;
-    let showTimePicker = this.state.showTimePicker ? <FromTimePick /> : <Text style={styles.date}> From: {fromTime} To: {toTime}</Text>;
+    let showTimePicker = this.state.showTimePicker ? <TimePick /> : <Text style={styles.date}> From: {fromTime} To: {toTime}</Text>;
     return (
         <View style={styles.container}>
           <Text style = {styles.header}>Where are you headed?</Text>

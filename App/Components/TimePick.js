@@ -106,7 +106,7 @@ import { Picker, View, StyleSheet, Text } from 'react-native';
 import { connect } from 'react-redux';
 import { updateFromHour, updateToHour } from '../Actions/searchActions';
 
-class FromTimePick extends Component {
+class TimePick extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -256,4 +256,4 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => (state);
 
-export default connect(mapStateToProps)(FromTimePick);
+export default connect(mapStateToProps)(TimePick);
