@@ -36,6 +36,9 @@ local.properties
 *.iml
 /android/
 
+# Config
+App/Config/config.js
+
 
 # node.js
 #
