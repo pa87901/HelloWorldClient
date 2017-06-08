@@ -69,6 +69,8 @@ class BookingPolicyScreen extends React.Component {
           loading: false,
           token,
         });
+
+        this.props.navigation.navigate('BookingConfirmation');
       } catch (error) {
         console.log('ERROR', error);
         this.setState({
