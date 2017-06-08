@@ -6,7 +6,8 @@ export default function reducer(state = {
   fromHour: 0,
   toHour: 0,
   numTravelers: 1,
-  result: []
+  result: [],
+  filterCriteria: {}
 }, action) {
   if (action.type === 'UPDATE_CITY_FULFILLED') {
     return {...state, city: action.payload}
@@ -22,6 +23,9 @@ export default function reducer(state = {
     return {...state, fromHour: action.payload}
   } else if (action.type === 'UPDATE_TO_HOUR') {
     return {...state, toHour: action.payload}
+  } else if (action.type === 'FILTER_CRITERIA') {
+    return {...state, filterCriteria: action.payload}
   }
+
   return state;
 }

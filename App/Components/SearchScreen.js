@@ -1,25 +1,36 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {
-  updateCity, updateDate, updateHours, updateTravelers, updateSearchResult
-} from '../Actions/searchActions.js';
-import {
-  StyleSheet, Text, View, Picker, Item, Keyboard, TextInput, ScrollView, TouchableOpacity
-} from 'react-native';
-import {
-  FormLabel, FormInput, FormValidationMessage, Button, Divider
-} from 'react-native-elements';
+import { updateCity, updateDate, updateHours, updateTravelers, updateSearchResult } from '../Actions/searchActions.js';
+import { StyleSheet, Text, View, Picker, Item, Keyboard, TextInput, ScrollView, TouchableOpacity, Switch } from 'react-native';
+import { FormLabel, FormInput, FormValidationMessage, Button, Divider, CheckBox } from 'react-native-elements';
 import axios from '../axios';
 import DatePicker from './DatePicker';
 import TimePick from './TimePick';
+import { updateFilterCriteria } from '../Actions/searchActions';
 
 class SearchScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       showDatePicker: false,
-      showTimePicker: false
+      showTimePicker: false,
+      sightseeingCheck: false,
+      foodCheck: false,
+      sportsCheck: false,
+      nightlifeCheck: false,
+      musicCheck: false,
+      museumCheck: false,
+      historyCheck: false,
+      politicsCheck: false,
     }
+    this.checkSightseeing = this.checkSightseeing.bind(this);
+    this.checkFood = this.checkFood.bind(this);
+    this.checkSports = this.checkSports.bind(this);
+    this.checkNightlife = this.checkNightlife.bind(this);
+    this.checkMusic = this.checkMusic.bind(this);
+    this.checkMuseum = this.checkMuseum.bind(this);
+    this.checkHistory = this.checkHistory.bind(this);
+    this.checkPolitics = this.checkPolitics.bind(this);
   }
 
   componentWillMount () {
@@ -130,6 +141,9 @@ class SearchScreen extends React.Component {
     //sthis.props.dispatch(updateSearchResult(sampleData));
     
 
+    // Axios call to call upon all guides that have the selected search criteria.
+    
+
     this.props.navigation.navigate('Explore');
   }
 
@@ -139,6 +153,143 @@ class SearchScreen extends React.Component {
 
   _keyboardDidHide () {
     console.log('Keyboard Hidden');
+  }
+
+  checkSightseeing() {
+    this.setState({
+      sightseeingCheck: !this.state.sightseeingCheck
+    });
+    console.log('this.state.sightSeeingCheck', this.state.sightseeingCheck)
+    let criteria = {
+      sightseeingCheck: this.state.sightseeingCheck,
+      foodCheck: this.state.foodCheck,
+      sportsCheck: this.state.sportsCheck,
+      nightlifeCheck: this.state.nightlifeCheck,
+      musicCheck: this.state.musicCheck,
+      museumCheck: this.state.museumCheck,
+      historyCheck: this.state.historyCheck,
+      politicsCheck: this.state.politicsCheck,
+    };
+    this.props.dispatch(updateFilterCriteria(criteria));
+  }
+
+  checkFood() {
+    this.setState({
+      foodCheck: !this.state.foodCheck
+    });
+    let criteria = {
+      sightseeing: this.state.sightseeingCheck,
+      foodCheck: this.state.foodCheck,
+      sportsCheck: this.state.sportsCheck,
+      nightlifeCheck: this.state.nightlifeCheck,
+      musicCheck: this.state.musicCheck,
+      museumCheck: this.state.museumCheck,
+      historyCheck: this.state.historyCheck,
+      politicsCheck: this.state.politicsCheck,
+    };
+    this.props.dispatch(updateFilterCriteria(criteria));
+  }
+
+  checkSports() {
+    this.setState({
+      sportsCheck: !this.state.sportsCheck
+    });
+    let criteria = {
+      sightseeingCheck: this.state.sightseeingCheck,
+      foodCheck: this.state.foodCheck,
+      sportsCheck: this.state.sportsCheck,
+      nightlifeCheck: this.state.nightlifeCheck,
+      musicCheck: this.state.musicCheck,
+      museumCheck: this.state.museumCheck,
+      historyCheck: this.state.historyCheck,
+      politicsCheck: this.state.politicsCheck,
+    };
+    this.props.dispatch(updateFilterCriteria(criteria));
+  }
+
+  checkNightlife() {
+    this.setState({
+      nightlifeCheck: !this.state.nightlifeCheck
+    });
+    let criteria = {
+      sightseeingCheck: this.state.sightseeingCheck,
+      foodCheck: this.state.foodCheck,
+      sportsCheck: this.state.sportsCheck,
+      nightlifeCheck: this.state.nightlifeCheck,
+      musicCheck: this.state.musicCheck,
+      museumCheck: this.state.museumCheck,
+      historyCheck: this.state.historyCheck,
+      politicsCheck: this.state.politicsCheck,
+    };
+    this.props.dispatch(updateFilterCriteria(criteria));
+  }
+
+  checkMusic() {
+    this.setState({
+      musicCheck: !this.state.musicCheck
+    });
+    let criteria = {
+      sightseeingCheck: this.state.sightseeingCheck,
+      foodCheck: this.state.foodCheck,
+      sportsCheck: this.state.sportsCheck,
+      nightlifeCheck: this.state.nightlifeCheck,
+      musicCheck: this.state.musicCheck,
+      museumCheck: this.state.museumCheck,
+      historyCheck: this.state.historyCheck,
+      politicsCheck: this.state.politicsCheck,
+    };
+    this.props.dispatch(updateFilterCriteria(criteria));
+  }
+
+  checkMuseum() {
+    this.setState({
+      museumCheck: !this.state.museumCheck
+    });
+    let criteria = {
+      sightseeingCheck: this.state.sightseeingCheck,
+      foodCheck: this.state.foodCheck,
+      sportsCheck: this.state.sportsCheck,
+      nightlifeCheck: this.state.nightlifeCheck,
+      musicCheck: this.state.musicCheck,
+      museumCheck: this.state.museumCheck,
+      historyCheck: this.state.historyCheck,
+      politicsCheck: this.state.politicsCheck,
+    };
+    this.props.dispatch(updateFilterCriteria(criteria));
+  }
+
+  checkHistory() {
+    this.setState({
+      historyCheck: !this.state.historyCheck
+    });
+    let criteria = {
+      sightseeingCheck: this.state.sightseeingCheck,
+      foodCheck: this.state.foodCheck,
+      sportsCheck: this.state.sportsCheck,
+      nightlifeCheck: this.state.nightlifeCheck,
+      musicCheck: this.state.musicCheck,
+      museumCheck: this.state.museumCheck,
+      historyCheck: this.state.historyCheck,
+      politicsCheck: this.state.politicsCheck,
+    };
+    this.props.dispatch(updateFilterCriteria(criteria));
+  }
+
+  checkPolitics() {
+    this.setState({
+      politicsCheck: !this.state.politicsCheck
+    });
+    let criteria = {
+      sightseeingCheck: this.state.sightseeingCheck,
+      foodCheck: this.state.foodCheck,
+      sportsCheck: this.state.sportsCheck,
+      nightlifeCheck: this.state.nightlifeCheck,
+      musicCheck: this.state.musicCheck,
+      museumCheck: this.state.museumCheck,
+      historyCheck: this.state.historyCheck,
+      politicsCheck: this.state.politicsCheck,
+    };
+    this.props.dispatch(updateFilterCriteria(criteria));
   }
 
   render() {
@@ -164,49 +315,107 @@ class SearchScreen extends React.Component {
     let showDatePicker = this.state.showDatePicker ? <DatePicker /> : <Text style={styles.date}>{this.props.search.date}</Text>;
     let showTimePicker = this.state.showTimePicker ? <TimePick /> : <Text style={styles.date}> From: {fromTime} To: {toTime}</Text>;
     return (
-        <View style={styles.container}>
-          <Text style = {styles.header}>Where are you headed?</Text>
-          <FormLabel>When do you need a guide?</FormLabel>
-          <TouchableOpacity onPress={() => this.setState({showDatePicker: !this.state.showDatePicker, showTimePicker: false})} >
-          <FormLabel>Date</FormLabel>
+      <View style={styles.container}>
+        <Text style = {styles.header}>Where are you headed?</Text>
+        <FormLabel>When do you need a guide?</FormLabel>
+        <TouchableOpacity onPress={() => this.setState({showDatePicker: !this.state.showDatePicker, showTimePicker: false})} >
+        <FormLabel>Date</FormLabel>
+        <Divider />
+          {showDatePicker}
+        <Divider />
+        </TouchableOpacity>
+        {/*<FormInput id="date" placeholder="YYYY-MM-DD" onChangeText={(date) => this.handleDateUpdate(date)} />*/}
+        <TouchableOpacity onPress={() => (this.setState({showDatePicker: false, showTimePicker: !this.state.showTimePicker}))}>
+        <FormLabel>Hours</FormLabel>
+          {/*<FormInput id="hours" placeholder="9AM-5PM" onChangeText={(hours) => this.handleHoursUpdate(hours)} />*/}
           <Divider />
-            {showDatePicker}
+          {showTimePicker}
           <Divider />
-          </TouchableOpacity>
-          {/*<FormInput id="date" placeholder="YYYY-MM-DD" onChangeText={(date) => this.handleDateUpdate(date)} />*/}
-          <TouchableOpacity onPress={() => (this.setState({showDatePicker: false, showTimePicker: !this.state.showTimePicker}))}>
-          <FormLabel>Hours</FormLabel>
-            {/*<FormInput id="hours" placeholder="9AM-5PM" onChangeText={(hours) => this.handleHoursUpdate(hours)} />*/}
-            <Divider />
-            {showTimePicker}
-            <Divider />
-          </TouchableOpacity>
-          <TouchableOpacity  onPress={() => (this.setState({showDatePicker: false, showTimePicker: false}))}>
-            <FormLabel >Where?</FormLabel>
-            <FormInput id="where" placeholder="Where do you want to go?" onChangeText={(city) => this.handleCityUpdate(city)} />
-          </TouchableOpacity>
-          {/*<FormLabel>How many travelers?</FormLabel>
-          <Picker
-            style={styles.picker}
-            selectedValue={this.props.search.numTravelers}
-            onValueChange={(number) => this.handleTravelerUpdate(number)}
-            mode="dropdown"
-          >
-            <Picker.Item label="1" value={1} />
-            <Picker.Item label="2" value={2} />
-            <Picker.Item label="3" value={3} />
-            <Picker.Item label="4" value={4} />
-          </Picker>*/}
-          <View style={{position: 'absolute', left: 0, right: 0, bottom: 0}}>
-              <Button
-              large
-              raised
-              backgroundColor='#FF8C00'
-              title='EXPLORE'
-              onPress={() => this.handleSearchSubmit()} 
+        </TouchableOpacity>
+        <TouchableOpacity  onPress={() => (this.setState({showDatePicker: false, showTimePicker: false}))}>
+          <FormLabel >Where?</FormLabel>
+          <FormInput id="where" placeholder="Where do you want to go?" onChangeText={(city) => this.handleCityUpdate(city)} />
+        </TouchableOpacity>
+        {/*<FormLabel>How many travelers?</FormLabel>
+        <Picker
+          style={styles.picker}
+          selectedValue={this.props.search.numTravelers}
+          onValueChange={(number) => this.handleTravelerUpdate(number)}
+          mode="dropdown"
+        >
+          <Picker.Item label="1" value={1} />
+          <Picker.Item label="2" value={2} />
+          <Picker.Item label="3" value={3} />
+          <Picker.Item label="4" value={4} />
+        </Picker>*/}
+        <View style={styles.switches}>
+          <View style={styles.checkbox}>
+            <CheckBox
+            title='Sightseeing'
+            checked={this.state.sightseeingCheck}
+            onPress={this.checkSightseeing}
+            />
+          </View>
+          <View style={styles.checkbox}>
+            <CheckBox
+            title='Food'
+            checked={this.state.foodCheck}
+            onPress={this.checkFood}
+            />
+          </View>
+          <View style={styles.checkbox}>
+            <CheckBox
+            title='Sports'
+            checked={this.state.sportsCheck}
+            onPress={this.checkSports}
+            />
+          </View>
+          <View style={styles.checkbox}>
+            <CheckBox
+            title='Nightlife'
+            checked={this.state.nightlifeCheck}
+            onPress={this.checkNightlife}
+            />
+          </View>
+          <View style={styles.checkbox}>
+            <CheckBox
+            title='Music'
+            checked={this.state.musicCheck}
+            onPress={this.checkMusic}
+            />
+          </View>
+          <View style={styles.checkbox}>
+            <CheckBox
+            title='Museum'
+            checked={this.state.museumCheck}
+            onPress={this.checkMuseum}
+            />
+          </View>
+          <View style={styles.checkbox}>
+            <CheckBox
+            title='History'
+            checked={this.state.historyCheck}
+            onPress={this.checkHistory}
+            />
+          </View>
+          <View style={styles.checkbox}>
+            <CheckBox
+            title='Politics'
+            checked={this.state.politicsCheck}
+            onPress={this.checkPolitics}
             />
           </View>
         </View>
+        <View style={{position: 'absolute', left: 0, right: 0, bottom: 0}}>
+            <Button
+            large
+            raised
+            backgroundColor='#FF8C00'
+            title='EXPLORE'
+            onPress={() => this.handleSearchSubmit()} 
+          />
+        </View>
+      </View>
     );
   }
 }
@@ -214,7 +423,7 @@ class SearchScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     position: 'absolute', 
-    top: 0, 
+    top: 30,
     bottom: 0, 
     left: 0, 
     right: 0,
@@ -231,6 +440,14 @@ const styles = StyleSheet.create({
   },
   date: {
     fontSize: 20,
+  },
+  switches: {
+    flex: 1,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  checkbox: {
+    flexGrow: 1
   }
 });
 

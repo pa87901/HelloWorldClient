@@ -47,3 +47,10 @@ export function updateToHour(hour) {
     payload: hour
   }
 }
+
+export function updateFilterCriteria(criteria) {
+  return {
+    type: 'FILTER_CRITERIA',
+    payload: criteria
+  }
+}
