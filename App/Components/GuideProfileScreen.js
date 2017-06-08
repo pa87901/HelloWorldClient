@@ -41,10 +41,10 @@ class GuideProfileScreen extends React.Component {
             roundAvatar
             avatar={{uri : this.props.profileSelection.selectedProfile.user.avatar}}
             hideChevron={true}
-            title={`Rating: ${this.props.profileSelection.selectedProfile.avg_rating}/5.0`}
+            title={`Rating: ${this.props.profileSelection.selectedProfile.avg_rating}/5.0 (${this.props.profileSelection.selectedProfile.rating_count})`}
           />
           <Text style={styles.subheader}>
-            Who am I?
+            {this.props.profileSelection.selectedProfile.availabilities[0].statement}
           </Text>
           <Text style={styles.intro}>
             {this.props.profileSelection.selectedProfile.intro}
@@ -57,8 +57,9 @@ class GuideProfileScreen extends React.Component {
             Specialties
           </Text>
           <List style={styles.list}>
-            {this.props.profileSelection.selectedProfile.guideSpecialties.map(specialtyObj =>
+            {this.props.profileSelection.selectedProfile.guideSpecialties.map((specialtyObj, i) =>
               <ListItem
+                key = {i}
                 leftIcon={<Icon name="local-drink" />}
                 hideChevron={true}
                 containerStyle={styles.listItem}
@@ -72,29 +73,21 @@ class GuideProfileScreen extends React.Component {
             Reviews
           </Text>
           <List style={styles.list}>
-            <ListItem
-              roundAvatar
-              avatar={require('./JONSNOW.png')}
-              hideChevron={true}
-              containerStyle={styles.listItem}
-              title='user1'
-              subtitle='Rating: 4. The Guide was great! I highly suggest him.'
-            />
-            <ListItem
-              roundAvatar
-              avatar={require('./JONSNOW.png')}
-              hideChevron={true}
-              containerStyle={styles.listItem}
-              title='user2'
-              subtitle='Rating: 3. Meh'
-            /><ListItem
-              roundAvatar
-              avatar={require('./JONSNOW.png')}
-              hideChevron={true}
-              containerStyle={styles.listItem}
-              title='user3'
-              subtitle='Rating: 1. I hated the experience.'
-            />
+            {this.props.profileSelection.selectedProfile.bookings.map((review, i)=>{
+              return (
+                <ListItem
+                  key={i}
+                  roundAvatar
+                  avatar={{uri:review.userAvatar}}
+                  hideChevron={true}
+                  containerStyle={styles.listItem}
+                  title={review.userFullName}
+                  subtitle={'Rating: ' + review.rating + '. ' + review.review}
+                />
+              ) 
+            })}
+
+
           </List>
           <Button
             small

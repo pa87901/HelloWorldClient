@@ -9,35 +9,18 @@ import axios from '../axios';
 class ExploreScreenEntry extends React.Component {
   constructor(props) {
     super(props);
-
-    //Test Data
-    this.state = {
-      guides: [{
-        guideId: 'Jon Snow',
-        image: require('./JONSNOW.png'),
-        msg: 'You know nothing, Jon Snow!'},
-      {
-        guideId: 'Jon Snow',
-        image: require('./JONSNOW.png'),
-        msg: 'You know nothing, Jon Snow!'},
-      {
-        guideId: 'Jon Snow',
-        image: require('./JONSNOW.png'),
-        msg: 'You know nothing, Jon Snow!'}]
-    };
   }
-
   componentWillMount() {
-     axios.get('api/guides/byUserId/' + this.props.userProfile.profile.userId)
+    axios.get('api/guides/byUserId/' + this.props.userProfile.profile.userId)
     .then(guideId => {
       console.log('GOTTEN guideId', guideId);
-      this.props.updateUserGuideId(guideId.data.id);
+      this.props.dispatch(updateUserGuideId(guideId.data.id));
     });  
   } 
 
-  ratingCompleted(rating) {
-    console.log('Rating is: ' + rating);
-  }
+  // ratingCompleted(rating) {
+  //   console.log('Rating is: ' + rating);
+  // }
 
   handleProfileClick(guideId) {
     // axios call using guideId to retrieve guide profile needed
@@ -55,58 +38,6 @@ class ExploreScreenEntry extends React.Component {
       .catch((err)=>{
         console.log(err);
       })
-
-    const testData = {
-  "id": 1,
-  "user_id": 1,
-  "city": "SF",
-  "hourly_rate": "45.00",
-  "intro": "Hello, my name is Charles",
-  "statement": "I like food",
-  "avg_rating": "0.00",
-  "img_url": null,
-  "created_at": "2017-05-30T23:09:54.534Z",
-  "updated_at": "2017-05-30T23:09:54.534Z",
-  "user": {
-    "id": 1,
-    "facebook_id": "charles",
-    "full_name": "Charles Kim",
-    "guide": false,
-    "email": "charles@example.com",
-    "phone": "1111111111",
-    "avg_rating": "0.00",
-    "created_at": "2017-05-30T23:08:03.089Z",
-    "updated_at": "2017-05-30T23:08:03.089Z"
-  },
-  "guideSpecialties": [
-    {
-      "id": 3,
-      "guide_id": 1,
-      "specialty_id": 3,
-      "created_at": "2017-05-30T23:20:42.645Z",
-      "updated_at": "2017-05-30T23:20:42.645Z",
-      "specialty": {
-        "id": 3,
-        "specialty": "nightlife",
-        "created_at": "2017-05-30T23:12:48.482Z",
-        "updated_at": "2017-05-30T23:12:48.482Z"
-      }
-    },
-    {
-      "id": 4,
-      "guide_id": 1,
-      "specialty_id": 5,
-      "created_at": "2017-05-30T23:20:46.861Z",
-      "updated_at": "2017-05-30T23:20:46.861Z",
-      "specialty": {
-        "id": 5,
-        "specialty": "food",
-        "created_at": "2017-05-30T23:12:55.335Z",
-        "updated_at": "2017-05-30T23:12:55.335Z"
-      }
-    }
-  ]
-};
 
     //this.props.dispatch(getProfileResult(this.props.search.result[guideId]));
 
@@ -132,7 +63,7 @@ class ExploreScreenEntry extends React.Component {
               {guide.intro}
             </Text>
             <Text style={{marginBottom: 10}}>
-              Avg Rating: {guide.avg_rating}
+              Avg Rating: {guide.avg_rating} ({guide.rating_count}) 
             </Text>
             <Text>
               Specialties:
@@ -166,10 +97,78 @@ class ExploreScreenEntry extends React.Component {
 
 const mapStateToProps = state => (state);
 
-const mapDispatchToProps = dispatch => {
-  return {
-    updateUserGuideId: userGuideId => dispatch({type: 'UPDATE_USER_GUIDE_ID', payload: userGuideId})
-  }
-}
 
-export default connect(mapStateToProps, mapDispatchToProps)(ExploreScreenEntry);
+
+//export default connect(mapStateToProps, mapDispatchToProps)(ExploreScreenEntry);
+
+export default connect(mapStateToProps)(ExploreScreenEntry);
+
+  //   //Test Data
+  //   this.state = {
+  //     guides: [{
+  //       guideId: 'Jon Snow',
+  //       image: require('./JONSNOW.png'),
+  //       msg: 'You know nothing, Jon Snow!'},
+  //     {
+  //       guideId: 'Jon Snow',
+  //       image: require('./JONSNOW.png'),
+  //       msg: 'You know nothing, Jon Snow!'},
+  //     {
+  //       guideId: 'Jon Snow',
+  //       image: require('./JONSNOW.png'),
+  //       msg: 'You know nothing, Jon Snow!'}]
+  //   };
+  // }
+
+
+// const testData = {
+//   "id": 1,
+//   "user_id": 1,
+//   "city": "SF",
+//   "hourly_rate": "45.00",
+//   "intro": "Hello, my name is Charles",
+//   "statement": "I like food",
+//   "avg_rating": "0.00",
+//   "img_url": null,
+//   "created_at": "2017-05-30T23:09:54.534Z",
+//   "updated_at": "2017-05-30T23:09:54.534Z",
+//   "user": {
+//     "id": 1,
+//     "facebook_id": "charles",
+//     "full_name": "Charles Kim",
+//     "guide": false,
+//     "email": "charles@example.com",
+//     "phone": "1111111111",
+//     "avg_rating": "0.00",
+//     "created_at": "2017-05-30T23:08:03.089Z",
+//     "updated_at": "2017-05-30T23:08:03.089Z"
+//   },
+//   "guideSpecialties": [
+//     {
+//       "id": 3,
+//       "guide_id": 1,
+//       "specialty_id": 3,
+//       "created_at": "2017-05-30T23:20:42.645Z",
+//       "updated_at": "2017-05-30T23:20:42.645Z",
+//       "specialty": {
+//         "id": 3,
+//         "specialty": "nightlife",
+//         "created_at": "2017-05-30T23:12:48.482Z",
+//         "updated_at": "2017-05-30T23:12:48.482Z"
+//       }
+//     },
+//     {
+//       "id": 4,
+//       "guide_id": 1,
+//       "specialty_id": 5,
+//       "created_at": "2017-05-30T23:20:46.861Z",
+//       "updated_at": "2017-05-30T23:20:46.861Z",
+//       "specialty": {
+//         "id": 5,
+//         "specialty": "food",
+//         "created_at": "2017-05-30T23:12:55.335Z",
+//         "updated_at": "2017-05-30T23:12:55.335Z"
+//       }
+//     }
+//   ]
+// };
