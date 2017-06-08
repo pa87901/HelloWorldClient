@@ -7,7 +7,16 @@ export default function reducer(state = {
   toHour: 0,
   numTravelers: 1,
   result: [],
-  filterCriteria: {}
+  filterCriteria: {
+    sightseeing: false,
+    food: false,
+    sports: false,
+    nightlife: false,
+    music: false,
+    museum: false,
+    history: false,
+    politics: false,
+  }
 }, action) {
   if (action.type === 'UPDATE_CITY_FULFILLED') {
     return {...state, city: action.payload}

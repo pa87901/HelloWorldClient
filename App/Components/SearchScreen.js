@@ -14,23 +14,18 @@ class SearchScreen extends React.Component {
     this.state = {
       showDatePicker: false,
       showTimePicker: false,
-      sightseeingCheck: false,
-      foodCheck: false,
-      sportsCheck: false,
-      nightlifeCheck: false,
-      musicCheck: false,
-      museumCheck: false,
-      historyCheck: false,
-      politicsCheck: false,
+      criteria: {
+        sightseeing: false,
+        food: false,
+        sports: false,
+        nightlife: false,
+        music: false,
+        museum: false,
+        history: false,
+        politics: false,
+      }
     }
-    this.checkSightseeing = this.checkSightseeing.bind(this);
-    this.checkFood = this.checkFood.bind(this);
-    this.checkSports = this.checkSports.bind(this);
-    this.checkNightlife = this.checkNightlife.bind(this);
-    this.checkMusic = this.checkMusic.bind(this);
-    this.checkMuseum = this.checkMuseum.bind(this);
-    this.checkHistory = this.checkHistory.bind(this);
-    this.checkPolitics = this.checkPolitics.bind(this);
+    this.checkSpecialty = this.checkSpecialty.bind(this);
   }
 
   componentWillMount () {
@@ -61,8 +56,8 @@ class SearchScreen extends React.Component {
 
   handleSearchSubmit() {
     var query = 'api/guides/search/' + this.props.search.city + '/' + this.props.search.date;
-
-    axios.get(query)
+    console.log('QUERY', this.props.search.filterCriteria);
+    axios.get(query, this.props.search.filterCriteria)
       .then((res)=>{
         console.log('search screen axios props', this)
         console.log(res.data);
@@ -155,144 +150,15 @@ class SearchScreen extends React.Component {
     console.log('Keyboard Hidden');
   }
 
-  checkSightseeing() {
-    this.setState({
-      sightseeingCheck: !this.state.sightseeingCheck
-    });
-    console.log('this.state.sightSeeingCheck', this.state.sightseeingCheck)
-    let criteria = {
-      sightseeingCheck: this.state.sightseeingCheck,
-      foodCheck: this.state.foodCheck,
-      sportsCheck: this.state.sportsCheck,
-      nightlifeCheck: this.state.nightlifeCheck,
-      musicCheck: this.state.musicCheck,
-      museumCheck: this.state.museumCheck,
-      historyCheck: this.state.historyCheck,
-      politicsCheck: this.state.politicsCheck,
-    };
+  checkSpecialty(specialty) {
+    let criteria = {...this.props.search.filterCriteria }
+    criteria[specialty] = !this.state.criteria[specialty];
     this.props.dispatch(updateFilterCriteria(criteria));
-  }
-
-  checkFood() {
-    this.setState({
-      foodCheck: !this.state.foodCheck
-    });
-    let criteria = {
-      sightseeing: this.state.sightseeingCheck,
-      foodCheck: this.state.foodCheck,
-      sportsCheck: this.state.sportsCheck,
-      nightlifeCheck: this.state.nightlifeCheck,
-      musicCheck: this.state.musicCheck,
-      museumCheck: this.state.museumCheck,
-      historyCheck: this.state.historyCheck,
-      politicsCheck: this.state.politicsCheck,
-    };
-    this.props.dispatch(updateFilterCriteria(criteria));
-  }
-
-  checkSports() {
-    this.setState({
-      sportsCheck: !this.state.sportsCheck
-    });
-    let criteria = {
-      sightseeingCheck: this.state.sightseeingCheck,
-      foodCheck: this.state.foodCheck,
-      sportsCheck: this.state.sportsCheck,
-      nightlifeCheck: this.state.nightlifeCheck,
-      musicCheck: this.state.musicCheck,
-      museumCheck: this.state.museumCheck,
-      historyCheck: this.state.historyCheck,
-      politicsCheck: this.state.politicsCheck,
-    };
-    this.props.dispatch(updateFilterCriteria(criteria));
-  }
-
-  checkNightlife() {
-    this.setState({
-      nightlifeCheck: !this.state.nightlifeCheck
-    });
-    let criteria = {
-      sightseeingCheck: this.state.sightseeingCheck,
-      foodCheck: this.state.foodCheck,
-      sportsCheck: this.state.sportsCheck,
-      nightlifeCheck: this.state.nightlifeCheck,
-      musicCheck: this.state.musicCheck,
-      museumCheck: this.state.museumCheck,
-      historyCheck: this.state.historyCheck,
-      politicsCheck: this.state.politicsCheck,
-    };
-    this.props.dispatch(updateFilterCriteria(criteria));
-  }
-
-  checkMusic() {
-    this.setState({
-      musicCheck: !this.state.musicCheck
-    });
-    let criteria = {
-      sightseeingCheck: this.state.sightseeingCheck,
-      foodCheck: this.state.foodCheck,
-      sportsCheck: this.state.sportsCheck,
-      nightlifeCheck: this.state.nightlifeCheck,
-      musicCheck: this.state.musicCheck,
-      museumCheck: this.state.museumCheck,
-      historyCheck: this.state.historyCheck,
-      politicsCheck: this.state.politicsCheck,
-    };
-    this.props.dispatch(updateFilterCriteria(criteria));
-  }
-
-  checkMuseum() {
-    this.setState({
-      museumCheck: !this.state.museumCheck
-    });
-    let criteria = {
-      sightseeingCheck: this.state.sightseeingCheck,
-      foodCheck: this.state.foodCheck,
-      sportsCheck: this.state.sportsCheck,
-      nightlifeCheck: this.state.nightlifeCheck,
-      musicCheck: this.state.musicCheck,
-      museumCheck: this.state.museumCheck,
-      historyCheck: this.state.historyCheck,
-      politicsCheck: this.state.politicsCheck,
-    };
-    this.props.dispatch(updateFilterCriteria(criteria));
-  }
-
-  checkHistory() {
-    this.setState({
-      historyCheck: !this.state.historyCheck
-    });
-    let criteria = {
-      sightseeingCheck: this.state.sightseeingCheck,
-      foodCheck: this.state.foodCheck,
-      sportsCheck: this.state.sportsCheck,
-      nightlifeCheck: this.state.nightlifeCheck,
-      musicCheck: this.state.musicCheck,
-      museumCheck: this.state.museumCheck,
-      historyCheck: this.state.historyCheck,
-      politicsCheck: this.state.politicsCheck,
-    };
-    this.props.dispatch(updateFilterCriteria(criteria));
-  }
-
-  checkPolitics() {
-    this.setState({
-      politicsCheck: !this.state.politicsCheck
-    });
-    let criteria = {
-      sightseeingCheck: this.state.sightseeingCheck,
-      foodCheck: this.state.foodCheck,
-      sportsCheck: this.state.sportsCheck,
-      nightlifeCheck: this.state.nightlifeCheck,
-      musicCheck: this.state.musicCheck,
-      museumCheck: this.state.museumCheck,
-      historyCheck: this.state.historyCheck,
-      politicsCheck: this.state.politicsCheck,
-    };
-    this.props.dispatch(updateFilterCriteria(criteria));
+    this.setState({criteria: criteria});
   }
 
   render() {
+    console.log('Props in SearchScreen', this.props, this.state.criteria);
     let fromTime;
     if (this.props.search.fromHour === 0) {
       fromTime = '12am';
@@ -352,57 +218,57 @@ class SearchScreen extends React.Component {
           <View style={styles.checkbox}>
             <CheckBox
             title='Sightseeing'
-            checked={this.state.sightseeingCheck}
-            onPress={this.checkSightseeing}
+            checked={this.props.search.filterCriteria.sightseeing}
+            onPress={() => this.checkSpecialty('sightseeing')}
             />
           </View>
           <View style={styles.checkbox}>
             <CheckBox
             title='Food'
-            checked={this.state.foodCheck}
-            onPress={this.checkFood}
+            checked={this.props.search.filterCriteria.food}
+            onPress={() => this.checkSpecialty('food')}
             />
           </View>
           <View style={styles.checkbox}>
             <CheckBox
             title='Sports'
-            checked={this.state.sportsCheck}
-            onPress={this.checkSports}
+            checked={this.props.search.filterCriteria.sports}
+            onPress={() => this.checkSpecialty('sports')}
             />
           </View>
           <View style={styles.checkbox}>
             <CheckBox
             title='Nightlife'
-            checked={this.state.nightlifeCheck}
-            onPress={this.checkNightlife}
+            checked={this.props.search.filterCriteria.nightlife}
+            onPress={() => this.checkSpecialty('nightlife')}
             />
           </View>
           <View style={styles.checkbox}>
             <CheckBox
             title='Music'
-            checked={this.state.musicCheck}
-            onPress={this.checkMusic}
+            checked={this.props.search.filterCriteria.music}
+            onPress={() => this.checkSpecialty('music')}
             />
           </View>
           <View style={styles.checkbox}>
             <CheckBox
             title='Museum'
-            checked={this.state.museumCheck}
-            onPress={this.checkMuseum}
+            checked={this.props.search.filterCriteria.museum}
+            onPress={() => this.checkSpecialty('museum')}
             />
           </View>
           <View style={styles.checkbox}>
             <CheckBox
             title='History'
-            checked={this.state.historyCheck}
-            onPress={this.checkHistory}
+            checked={this.props.search.filterCriteria.history}
+            onPress={() => this.checkSpecialty('history')}
             />
           </View>
           <View style={styles.checkbox}>
             <CheckBox
             title='Politics'
-            checked={this.state.politicsCheck}
-            onPress={this.checkPolitics}
+            checked={this.props.search.filterCriteria.politics}
+            onPress={() => this.checkSpecialty('politics')}
             />
           </View>
         </View>
