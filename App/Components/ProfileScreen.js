@@ -39,14 +39,18 @@ class ProfileScreen extends React.Component {
   }
 
   test() {
-    console.log(this.props.userProfile.profile)
-    axios.post('api/users', this.props.userProfile.profile)
-    .then((res) => {
-      console.log(res);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+    // Alex's test
+    // console.log(this.props.userProfile.profile)
+    // axios.post('api/users', this.props.userProfile.profile)
+    // .then((res) => {
+    //   console.log(res);
+    // })
+    // .catch((err) => {
+    //   console.log(err);
+    // });
+
+    // Charles's test
+    this.props.navigation.navigate('CardFormScreen');
   }
 
   navigateToGuideOptions() {
