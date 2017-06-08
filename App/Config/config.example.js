@@ -1,0 +1,3 @@
+export default {
+  STRIPE_PUBLISHABLE_KEY: 'ENTER YOUR KEY HERE'
+};
