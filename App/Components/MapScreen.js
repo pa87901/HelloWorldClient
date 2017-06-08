@@ -25,10 +25,24 @@ class MapScreen extends React.Component {
       markerPosition: {
         latitude: 0,
         longitude: 0
-      }
+      },
+      pointsOfInterest: [
+        {
+          latitude: 37.8199, 
+          longitude: -122.4783
+        }, 
+        {
+          latitude: 37.7786,
+          longitude: -122.3893
+        },
+        {
+          latitude: 37.7694,
+          longitude: -122.4862
+        }
+      ]
     }
   }
-
+//GG Bridge, GG Park, ATT Park??
   watchID: ?number = null
 
   componentDidMount () {
@@ -81,6 +95,14 @@ class MapScreen extends React.Component {
                 <View style={styles.marker}/>
               </View>
           </MapView.Marker>
+          {this.state.pointsOfInterest.map(marker => {
+            console.log('---marker---', marker)
+            return (
+              <MapView.Marker
+                coordinate={marker}
+                />
+            )
+          })}
         </MapView>
       </View>
     )
