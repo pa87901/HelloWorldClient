@@ -5,10 +5,10 @@ import { PricingCard, Card, Button } from 'react-native-elements';
 import axios from '../axios.js';
 import stripe from 'tipsi-stripe';
 import testID from '../Utils/testID';
-import { STRIPE_PUBLISHABLE_KEY } from '../Config/config';
+import { STRIPE_API_KEY } from '../Config/config';
 
 stripe.init({
-  publishableKey: STRIPE_PUBLISHABLE_KEY
+  publishableKey: STRIPE_API_KEY
 });
 
 class BookingPolicyScreen extends React.Component {
@@ -64,12 +64,20 @@ class BookingPolicyScreen extends React.Component {
           managedAccountCurrency: 'usd',
         });
 
+        axios.post('api/payments', { stripeToken: token })
+          .then(res => {
+            console.log(res);
+          })
+          .catch(err => {
+            console.log(err);
+          });
+
         console.log('RESULT', token);
         this.setState({
           loading: false,
           token,
         });
-        
+
         this.props.navigation.navigate('BookingConfirmation');
       } catch (error) {
         console.log('ERROR', error);
