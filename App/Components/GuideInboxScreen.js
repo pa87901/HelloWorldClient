@@ -46,7 +46,7 @@ class GuideInboxScreen extends Component {
   }
 
   componentDidMount() {
-    console.log('this.state in GuideInboxScreen', this.state);
+    // console.log('this.state in GuideInboxScreen', this.state);
     // Iterate through chat [] and reduce for unique userIds.
     let userNames = [];
     this.state.chats
@@ -73,15 +73,22 @@ class GuideInboxScreen extends Component {
   }
 
   render() {
-    // console.log('this.state in GuideInboxScreen', this.state, this.props);
-    return (
-      <ScrollView>
-        <Text>Guide Inbox</Text>
-        {this.state.users.map((user, index) => 
-          <Conversation userId={user} key={index} navigation={this.props.navigation} />
-        )}
-      </ScrollView>
-    );
+    console.log('this.state in GuideInboxScreen', this.state, this.props);
+    if (!this.state.users.length) {
+      return (
+        <View>
+        </View>
+      )
+    } else {
+      return (
+        <ScrollView>
+          <Text>Guide Inbox</Text>
+          {this.state.users.map((user, index) => 
+            <Conversation userId={user} key={index} navigation={this.props.navigation} />
+          )}
+        </ScrollView>
+      );
+    }
   }
 
   static navigationOptions = ({ navigation }) => ({

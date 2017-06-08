@@ -22,7 +22,7 @@ import GuideTripsScreen from './GuideTripsScreen';
 import ProfileScreen from './ProfileScreen';
 import GuideInboxScreen from './GuideInboxScreen';
 import MapScreen from './MapScreen';
-import CardFormScreen from './CardFormScreen';
+// import CardFormScreen from './CardFormScreen';
 
 
 const SearchNavigator = StackNavigator({
@@ -52,7 +52,7 @@ const SearchNavigator = StackNavigator({
   ProfileScreen: {screen: ProfileScreen},
   GuideInbox: {screen: GuideInboxScreen},
   MapScreen: {screen: MapScreen},
-  CardFormScreen: {screen: CardFormScreen},
+  // CardFormScreen: {screen: CardFormScreen},
 });
 
 export default SearchNavigator;
