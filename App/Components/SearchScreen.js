@@ -7,16 +7,18 @@ import {
   StyleSheet, Text, View, Picker, Item, Keyboard, TextInput, ScrollView, TouchableOpacity
 } from 'react-native';
 import {
-  FormLabel, FormInput, FormValidationMessage, Button
+  FormLabel, FormInput, FormValidationMessage, Button, Divider
 } from 'react-native-elements';
 import axios from '../axios';
 import DatePicker from './DatePicker';
+import FromTimePick from './FromTimePick';
 
 class SearchScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      showDatePicker: false
+      showDatePicker: false,
+      showTimePicker: false
     }
   }
 
@@ -140,22 +142,49 @@ class SearchScreen extends React.Component {
   }
 
   render() {
-    //console.log('PROPS', this.props);
-    let showDatePicker = this.state.showDatePicker ? <DatePicker /> : <Text style={styles.date}>{(new Date()).toJSON().slice(0,10).replace(/-/g,'-')}</Text>
+    let fromTime;
+    if (this.props.search.fromHour === 0) {
+      fromTime = '12am';
+    } else if (this.props.search.fromHour > 0 && this.props.search.fromHour < 12) {
+      fromTime = this.props.search.fromHour + 'am';
+    } else {
+      fromTime = this.props.search.fromHour - 12 + 'pm';
+    }
+
+    let toTime;
+    if (this.props.search.toHour === 0) {
+      toTime = '12am';
+    } else if (this.props.search.toHour > 0 && this.props.search.toHour < 12) {
+      toTime = this.props.search.toHour + 'am';
+    } else {
+      toTime = this.props.search.toHour - 12 + 'pm';
+    }
+
+    // console.log('this.props.search.date', this.props.search.date);
+    let showDatePicker = this.state.showDatePicker ? <DatePicker /> : <Text style={styles.date}>{this.props.search.date}</Text>;
+    let showTimePicker = this.state.showTimePicker ? <FromTimePick /> : <Text style={styles.date}> From: {fromTime} To: {toTime}</Text>;
     return (
         <View style={styles.container}>
-          
           <Text style = {styles.header}>Where are you headed?</Text>
           <FormLabel>When do you need a guide?</FormLabel>
+          <TouchableOpacity onPress={() => this.setState({showDatePicker: !this.state.showDatePicker, showTimePicker: false})} >
           <FormLabel>Date</FormLabel>
-          <TouchableOpacity onPress={() => this.setState({showDatePicker: !this.state.showDatePicker})} >
+          <Divider />
             {showDatePicker}
+          <Divider />
           </TouchableOpacity>
           {/*<FormInput id="date" placeholder="YYYY-MM-DD" onChangeText={(date) => this.handleDateUpdate(date)} />*/}
+          <TouchableOpacity onPress={() => (this.setState({showDatePicker: false, showTimePicker: !this.state.showTimePicker}))}>
           <FormLabel>Hours</FormLabel>
-          <FormInput id="hours" placeholder="9AM-5PM" onChangeText={(hours) => this.handleHoursUpdate(hours)} />
-          <FormLabel>Where?</FormLabel>
-          <FormInput id="where" placeholder="Where do you want to go?" onChangeText={(city) => this.handleCityUpdate(city)} />
+            {/*<FormInput id="hours" placeholder="9AM-5PM" onChangeText={(hours) => this.handleHoursUpdate(hours)} />*/}
+            <Divider />
+            {showTimePicker}
+            <Divider />
+          </TouchableOpacity>
+          <TouchableOpacity  onPress={() => (this.setState({showDatePicker: false, showTimePicker: false}))}>
+            <FormLabel >Where?</FormLabel>
+            <FormInput id="where" placeholder="Where do you want to go?" onChangeText={(city) => this.handleCityUpdate(city)} />
+          </TouchableOpacity>
           {/*<FormLabel>How many travelers?</FormLabel>
           <Picker
             style={styles.picker}
