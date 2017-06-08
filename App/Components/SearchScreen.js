@@ -1,23 +1,31 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {
-  updateCity, updateDate, updateHours, updateTravelers, updateSearchResult
-} from '../Actions/searchActions.js';
-import {
-  StyleSheet, Text, View, Picker, Item, Keyboard, TextInput, ScrollView, TouchableOpacity
-} from 'react-native';
-import {
-  FormLabel, FormInput, FormValidationMessage, Button
-} from 'react-native-elements';
+import { updateCity, updateDate, updateHours, updateTravelers, updateSearchResult } from '../Actions/searchActions.js';
+import { StyleSheet, Text, View, Picker, Item, Keyboard, TextInput, ScrollView, TouchableOpacity, Switch } from 'react-native';
+import { FormLabel, FormInput, FormValidationMessage, Button, Divider, CheckBox } from 'react-native-elements';
 import axios from '../axios';
 import DatePicker from './DatePicker';
+import TimePick from './TimePick';
+import { updateFilterCriteria } from '../Actions/searchActions';
 
 class SearchScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      showDatePicker: false
+      showDatePicker: false,
+      showTimePicker: false,
+      criteria: {
+        sightseeing: false,
+        food: false,
+        sports: false,
+        nightlife: false,
+        music: false,
+        museum: false,
+        history: false,
+        politics: false,
+      }
     }
+    this.checkSpecialty = this.checkSpecialty.bind(this);
   }
 
   componentWillMount () {
@@ -48,8 +56,8 @@ class SearchScreen extends React.Component {
 
   handleSearchSubmit() {
     var query = 'api/guides/search/' + this.props.search.city + '/' + this.props.search.date;
-
-    axios.get(query)
+    console.log('QUERY', this.props.search.filterCriteria);
+    axios.get(query, this.props.search.filterCriteria)
       .then((res)=>{
         console.log('search screen axios props', this)
         console.log(res.data);
@@ -128,6 +136,9 @@ class SearchScreen extends React.Component {
     //sthis.props.dispatch(updateSearchResult(sampleData));
     
 
+    // Axios call to call upon all guides that have the selected search criteria.
+    
+
     this.props.navigation.navigate('Explore');
   }
 
@@ -139,45 +150,138 @@ class SearchScreen extends React.Component {
     console.log('Keyboard Hidden');
   }
 
+  checkSpecialty(specialty) {
+    let criteria = {...this.props.search.filterCriteria }
+    criteria[specialty] = !this.state.criteria[specialty];
+    this.props.dispatch(updateFilterCriteria(criteria));
+    this.setState({criteria: criteria});
+  }
+
   render() {
-    //console.log('PROPS', this.props);
-    let showDatePicker = this.state.showDatePicker ? <DatePicker /> : <Text style={styles.date}>{(new Date()).toJSON().slice(0,10).replace(/-/g,'-')}</Text>
+    console.log('Props in SearchScreen', this.props, this.state.criteria);
+    let fromTime;
+    if (this.props.search.fromHour === 0) {
+      fromTime = '12am';
+    } else if (this.props.search.fromHour > 0 && this.props.search.fromHour < 12) {
+      fromTime = this.props.search.fromHour + 'am';
+    } else {
+      fromTime = this.props.search.fromHour - 12 + 'pm';
+    }
+
+    let toTime;
+    if (this.props.search.toHour === 0) {
+      toTime = '12am';
+    } else if (this.props.search.toHour > 0 && this.props.search.toHour < 12) {
+      toTime = this.props.search.toHour + 'am';
+    } else {
+      toTime = this.props.search.toHour - 12 + 'pm';
+    }
+
+    // console.log('this.props.search.date', this.props.search.date);
+    let showDatePicker = this.state.showDatePicker ? <DatePicker /> : <Text style={styles.date}>{this.props.search.date}</Text>;
+    let showTimePicker = this.state.showTimePicker ? <TimePick /> : <Text style={styles.date}> From: {fromTime} To: {toTime}</Text>;
     return (
-        <View style={styles.container}>
-          
-          <Text style = {styles.header}>Where are you headed?</Text>
-          <FormLabel>When do you need a guide?</FormLabel>
-          <FormLabel>Date</FormLabel>
-          <TouchableOpacity onPress={() => this.setState({showDatePicker: !this.state.showDatePicker})} >
-            {showDatePicker}
-          </TouchableOpacity>
-          {/*<FormInput id="date" placeholder="YYYY-MM-DD" onChangeText={(date) => this.handleDateUpdate(date)} />*/}
-          <FormLabel>Hours</FormLabel>
-          <FormInput id="hours" placeholder="9AM-5PM" onChangeText={(hours) => this.handleHoursUpdate(hours)} />
-          <FormLabel>Where?</FormLabel>
+      <View style={styles.container}>
+        <Text style = {styles.header}>Where are you headed?</Text>
+        <FormLabel>When do you need a guide?</FormLabel>
+        <TouchableOpacity onPress={() => this.setState({showDatePicker: !this.state.showDatePicker, showTimePicker: false})} >
+        <FormLabel>Date</FormLabel>
+        <Divider />
+          {showDatePicker}
+        <Divider />
+        </TouchableOpacity>
+        {/*<FormInput id="date" placeholder="YYYY-MM-DD" onChangeText={(date) => this.handleDateUpdate(date)} />*/}
+        <TouchableOpacity onPress={() => (this.setState({showDatePicker: false, showTimePicker: !this.state.showTimePicker}))}>
+        <FormLabel>Hours</FormLabel>
+          {/*<FormInput id="hours" placeholder="9AM-5PM" onChangeText={(hours) => this.handleHoursUpdate(hours)} />*/}
+          <Divider />
+          {showTimePicker}
+          <Divider />
+        </TouchableOpacity>
+        <TouchableOpacity  onPress={() => (this.setState({showDatePicker: false, showTimePicker: false}))}>
+          <FormLabel >Where?</FormLabel>
           <FormInput id="where" placeholder="Where do you want to go?" onChangeText={(city) => this.handleCityUpdate(city)} />
-          {/*<FormLabel>How many travelers?</FormLabel>
-          <Picker
-            style={styles.picker}
-            selectedValue={this.props.search.numTravelers}
-            onValueChange={(number) => this.handleTravelerUpdate(number)}
-            mode="dropdown"
-          >
-            <Picker.Item label="1" value={1} />
-            <Picker.Item label="2" value={2} />
-            <Picker.Item label="3" value={3} />
-            <Picker.Item label="4" value={4} />
-          </Picker>*/}
-          <View style={{position: 'absolute', left: 0, right: 0, bottom: 0}}>
-              <Button
-              large
-              raised
-              backgroundColor='#FF8C00'
-              title='EXPLORE'
-              onPress={() => this.handleSearchSubmit()} 
+        </TouchableOpacity>
+        {/*<FormLabel>How many travelers?</FormLabel>
+        <Picker
+          style={styles.picker}
+          selectedValue={this.props.search.numTravelers}
+          onValueChange={(number) => this.handleTravelerUpdate(number)}
+          mode="dropdown"
+        >
+          <Picker.Item label="1" value={1} />
+          <Picker.Item label="2" value={2} />
+          <Picker.Item label="3" value={3} />
+          <Picker.Item label="4" value={4} />
+        </Picker>*/}
+        <View style={styles.switches}>
+          <View style={styles.checkbox}>
+            <CheckBox
+            title='Sightseeing'
+            checked={this.props.search.filterCriteria.sightseeing}
+            onPress={() => this.checkSpecialty('sightseeing')}
+            />
+          </View>
+          <View style={styles.checkbox}>
+            <CheckBox
+            title='Food'
+            checked={this.props.search.filterCriteria.food}
+            onPress={() => this.checkSpecialty('food')}
+            />
+          </View>
+          <View style={styles.checkbox}>
+            <CheckBox
+            title='Sports'
+            checked={this.props.search.filterCriteria.sports}
+            onPress={() => this.checkSpecialty('sports')}
+            />
+          </View>
+          <View style={styles.checkbox}>
+            <CheckBox
+            title='Nightlife'
+            checked={this.props.search.filterCriteria.nightlife}
+            onPress={() => this.checkSpecialty('nightlife')}
+            />
+          </View>
+          <View style={styles.checkbox}>
+            <CheckBox
+            title='Music'
+            checked={this.props.search.filterCriteria.music}
+            onPress={() => this.checkSpecialty('music')}
+            />
+          </View>
+          <View style={styles.checkbox}>
+            <CheckBox
+            title='Museum'
+            checked={this.props.search.filterCriteria.museum}
+            onPress={() => this.checkSpecialty('museum')}
+            />
+          </View>
+          <View style={styles.checkbox}>
+            <CheckBox
+            title='History'
+            checked={this.props.search.filterCriteria.history}
+            onPress={() => this.checkSpecialty('history')}
+            />
+          </View>
+          <View style={styles.checkbox}>
+            <CheckBox
+            title='Politics'
+            checked={this.props.search.filterCriteria.politics}
+            onPress={() => this.checkSpecialty('politics')}
             />
           </View>
         </View>
+        <View style={{position: 'absolute', left: 0, right: 0, bottom: 0}}>
+            <Button
+            large
+            raised
+            backgroundColor='#FF8C00'
+            title='EXPLORE'
+            onPress={() => this.handleSearchSubmit()} 
+          />
+        </View>
+      </View>
     );
   }
 }
@@ -185,7 +289,7 @@ class SearchScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     position: 'absolute', 
-    top: 0, 
+    top: 30,
     bottom: 0, 
     left: 0, 
     right: 0,
@@ -202,6 +306,14 @@ const styles = StyleSheet.create({
   },
   date: {
     fontSize: 20,
+  },
+  switches: {
+    flex: 1,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  checkbox: {
+    flexGrow: 1
   }
 });
 

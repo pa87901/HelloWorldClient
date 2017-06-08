@@ -21,7 +21,7 @@ class DatePicker extends Component {
 
   onDateChange(date) {
     this.setState({date: date});
-    console.log('JJDHFSDIJJDIJOSJDF', this.props.search);
+    // console.log('JJDHFSDIJJDIJOSJDF', this.props.search);
     this.props.dispatch(updateDate(this.state.date));
   };
 
@@ -64,7 +64,7 @@ class DatePicker extends Component {
           style={styles.picker}
           date={this.state.date}
           mode="date"
-          timeZoneOffsetInMinutes={this.state.timeZoneOffsetInHours * 60}
+          // timeZoneOffsetInMinutes={this.state.timeZoneOffsetInHours * 60}
           // onDateChange={(e) => {console.log('event', e); this.onDateChange(e); this.props.dispatch(updateDate((new Date((new Date(e))-86400000)).toJSON().slice(0,10).replace(/-/g,'-')))}}
           onDateChange={(e) => {console.log('event', e); this.onDateChange(e); this.props.dispatch(updateDate(e.toJSON().slice(0,10).replace(/-/g,'-')))}}
         />
@@ -108,7 +108,7 @@ class Heading extends React.Component {
   }
 }
 
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
   textinput: {
     height: 26,
     width: 50,

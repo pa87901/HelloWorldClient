@@ -33,3 +33,24 @@ export function updateSearchResult(result) {
     payload: result
   };
 }
+
+export function updateFromHour(hour) {
+  return {
+    type: 'UPDATE_FROM_HOUR',
+    payload: hour
+  }
+}
+
+export function updateToHour(hour) {
+  return {
+    type: 'UPDATE_TO_HOUR',
+    payload: hour
+  }
+}
+
+export function updateFilterCriteria(criteria) {
+  return {
+    type: 'FILTER_CRITERIA',
+    payload: criteria
+  }
+}
