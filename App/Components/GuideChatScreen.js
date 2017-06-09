@@ -13,7 +13,7 @@ class GuideChatScreen extends Component {
       guideId: null,
       userId: null
     };
-    this.socket = SocketIOClient('http://localhost3000', {query: {userId: this.props.navigation.state.params.userId, guideId: this.props.userProfile.userGuideId}});
+    this.socket = SocketIOClient('http://localhost:3000', {query: {userId: this.props.navigation.state.params.userId, guideId: this.props.userProfile.userGuideId}});
     this.onSend = this.onSend.bind(this);
   }
 
@@ -26,6 +26,10 @@ class GuideChatScreen extends Component {
       guideId: this.props.userProfile.userGuideId,
       userId: this.props.navigation.state.params.userId
     });
+    // axios.get('/api/users/byUserId/4')
+    // .then(response => {
+    //   console.log('sjdhh d', response);
+    // });
   }
 
   componentDidMount() {

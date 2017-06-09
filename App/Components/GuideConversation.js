@@ -8,22 +8,23 @@ class GuideConversation extends React.Component {
   }
 
   render() {
+    // console.log('this.props.userId in GuideConversation', this.props.userId);
     const { navigate } = this.props.navigation;
-    if (this.props.userId.avatar) {
-      return (
-        <TouchableHighlight onPress={() => navigate('GuideChat', {guideId: this.props.guideId, userId: this.props.userId.facebook_id})}>
-          <View>
-            <Image
-              source={this.props.userId.avatar}
-              style={styles.image}
-              />
-            <Text>
-              {this.props.userId.full_name}
-            </Text>
-          </View>
-        </TouchableHighlight>
-      )
-    } else {
+    // if (this.props.userId.picture) {
+    //   return (
+    //     <TouchableHighlight onPress={() => navigate('GuideChat', {guideId: this.props.guideId, userId: this.props.userId.facebook_id})}>
+    //       <View>
+    //         <Image
+    //           source={this.props.userId.picture}
+    //           style={styles.image}
+    //           />
+    //         <Text>
+    //           {this.props.userId.full_name}
+    //         </Text>
+    //       </View>
+    //     </TouchableHighlight>
+    //   )
+    // } else {
       // Otherwise use default React logo image.
       return (
         <TouchableHighlight onPress={() => navigate('GuideChat', {guideId: this.props.guideId, userId: this.props.userId.facebook_id})}>
@@ -38,7 +39,7 @@ class GuideConversation extends React.Component {
           </View>
         </TouchableHighlight>
       )
-    }
+    // }
   }
 }
 
