@@ -29,6 +29,7 @@ class MapScreen extends React.Component {
         latitude: 0,
         longitude: 0
       },
+      //GG Bridge, GG Park, ATT Park
       pointsOfInterest: [
         {
           latitude: 37.8199, 
@@ -48,7 +49,6 @@ class MapScreen extends React.Component {
     this.fitAllMarkers = this.fitAllMarkers.bind(this);
 
   }
-//GG Bridge, GG Park, ATT Park??
   watchID: ?number = null
 
   componentDidMount () {
@@ -100,6 +100,7 @@ class MapScreen extends React.Component {
     return (
       <View style={styles.container}>
         <MapView
+          ref={ref => { this.map = ref; }}
           style={styles.map}
           region={this.state.initialPosition}>
           <MapView.Marker
@@ -123,7 +124,7 @@ class MapScreen extends React.Component {
             raised
             backgroundColor='#FF8C00'
             title='Points of Interest'
-            onPress={()=> {fitToCoordinates(this.fitAllMarkers)}}
+            onPress={()=>this.fitAllMarkers()}
           />
         </View>
       </View>
