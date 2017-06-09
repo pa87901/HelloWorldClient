@@ -5,9 +5,9 @@ import stripe from 'tipsi-stripe';
 import testID from '../Utils/testID';
 import { STRIPE_PUBLISHABLE_KEY } from '../Config/config';
 
-stripe.init({
-  publishableKey: STRIPE_PUBLISHABLE_KEY
-});
+// stripe.init({
+//   publishableKey: STRIPE_PUBLISHABLE_KEY
+// });
 
 
 export default class CardFormScreen extends PureComponent {
@@ -28,6 +28,7 @@ export default class CardFormScreen extends PureComponent {
       const token = await stripe.paymentRequestWithCardForm({
         smsAutofillDisabled: true,
         requiredBillingAddressFields: 'full',
+        managedAccountCurrency: 'usd',
       });
 
       console.log('RESULT', token);
