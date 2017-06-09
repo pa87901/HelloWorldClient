@@ -17,8 +17,8 @@ class BecomeAGuideQuestionsPolicies extends React.Component {
       hourlyRate: this.props.becomeAGuide.hourlyRate,
       intro: this.props.becomeAGuide.intro,
       statement: this.props.becomeAGuide.statement,
-      startHr: `${this.props.search.date}, ${this.props.search.fromHour}:00`,
-      endHr: `${this.props.search.date}, ${this.props.search.toHour}:00`,
+      startDateHr: `${this.props.becomeAGuide.date}, ${this.props.becomeAGuide.fromHour}:00`,
+      endDateHr: `${this.props.becomeAGuide.date}, ${this.props.becomeAGuide.toHour}:00`,
     };
 
     axios.post('api/availabilities', options)

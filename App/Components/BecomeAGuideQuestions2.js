@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Button, FormLabel, FormInput, } from 'react-native-elements';
-import { Text, Divider, View, ScrollView, TouchableOpacity } from 'react-native';
+import { Button, FormLabel } from 'react-native-elements';
+import { Text, View, TouchableOpacity } from 'react-native';
 import { becomeGuideDate, becomeGuideStart, becomeGuideEnd } from '../Actions/BecomeAGuideActions';
 import DatePicker from './BecomeAGuideComponents/DatePicker';
 import TimePick from './BecomeAGuideComponents/TimePick';
@@ -120,14 +120,3 @@ const styles = {
 const mapStateToProps = state => (state);
 
 export default connect(mapStateToProps)(BecomeAGuideQuestions2);
-
-
-
-          // <FormLabel>Date</FormLabel>
-          // <FormInput id="date" placeholder="YYYY-MM-DD" onChangeText={(date) => this.updateDate(date)} />
-          // <FormLabel>Hours</FormLabel>
-          // <FormLabel>Available From</FormLabel>
-          // <FormInput id="startTime" placeholder="9am" onChangeText={(time) => this.updateStartTime(time)} />
-          // <FormLabel>Through</FormLabel>
-          // <FormInput id="startTime" placeholder="5pm" onChangeText={(time) => this.updateEndTime(time)} />
-          // 
