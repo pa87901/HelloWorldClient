@@ -4,9 +4,11 @@ import { updateCity, updateDate, updateHours, updateTravelers, updateSearchResul
 import { StyleSheet, Text, View, Picker, Item, Keyboard, TextInput, ScrollView, TouchableOpacity, Switch } from 'react-native';
 import { FormLabel, FormInput, FormValidationMessage, Button, Divider, CheckBox } from 'react-native-elements';
 import axios from '../axios';
+import Axios from 'axios';
 import DatePicker from './DatePicker';
 import TimePick from './TimePick';
 import { updateFilterCriteria } from '../Actions/searchActions';
+import Autocomplete from 'react-native-autocomplete-input';
 
 class SearchScreen extends React.Component {
   constructor(props) {
@@ -23,9 +25,12 @@ class SearchScreen extends React.Component {
         museum: false,
         history: false,
         politics: false,
-      }
-    }
+      },
+      citiesPrediction: [],
+      query: ''
+    };
     this.checkSpecialty = this.checkSpecialty.bind(this);
+    this.handleCityUpdate.bind(this);
   }
 
   componentWillMount () {
@@ -47,7 +52,25 @@ class SearchScreen extends React.Component {
   }  
 
   handleCityUpdate(city) {
+    console.log(this)
+    city = city.query;
     this.props.dispatch(updateCity(city));
+    if(city.length > 3){
+      var query = 'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=' + city + '&types=(cities)&language=en_US&key=AIzaSyBW_uhgYM4O5Lii4lGG6bljWAXv9B7uYaM'
+      Axios.get(query)
+      .then((res) => {
+        let cities = res.data.predictions;
+        console.log('google search data', this.state)
+
+        this.setState({ citiesPrediction: cities });
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+    } else {
+      this.setState({ citiesPrediction: [] });
+    }
+
   }
 
   handleTravelerUpdate(number) {
@@ -67,70 +90,6 @@ class SearchScreen extends React.Component {
         console.log(err);
       })
 
-    const sampleData = [
-  {
-    "id": 1,
-    "user_id": 1,
-    "city": "SF",
-    "hourly_rate": "45.00",
-    "intro": "Hello, my name is Charles",
-    "statement": "I like food",
-    "avg_rating": "0.00",
-    "img_url": null,
-    "created_at": "2017-05-30T23:09:54.534Z",
-    "updated_at": "2017-05-30T23:09:54.534Z",
-    "user": {
-      "id": 1,
-      "facebook_id": "charles",
-      "full_name": "Charles Kim",
-      "guide": false,
-      "email": "charles@example.com",
-      "phone": "1111111111",
-      "avg_rating": "0.00",
-      "created_at": "2017-05-30T23:08:03.089Z",
-      "updated_at": "2017-05-30T23:08:03.089Z"
-    },
-    "availabilities": [
-      {
-        "id": 1,
-        "guide_id": 1,
-        "start_hr": 9,
-        "end_hr": 17,
-        "date": "2017-05-24T07:00:00.000Z",
-        "created_at": "2017-05-30T23:34:59.547Z",
-        "updated_at": "2017-05-30T23:34:59.547Z"
-      }
-    ],
-    "guideSpecialties": [
-      {
-        "id": 3,
-        "guide_id": 1,
-        "specialty_id": 3,
-        "created_at": "2017-05-30T23:20:42.645Z",
-        "updated_at": "2017-05-30T23:20:42.645Z",
-        "specialty": {
-          "id": 3,
-          "specialty": "nightlife",
-          "created_at": "2017-05-30T23:12:48.482Z",
-          "updated_at": "2017-05-30T23:12:48.482Z"
-        }
-      },
-      {
-        "id": 4,
-        "guide_id": 1,
-        "specialty_id": 5,
-        "created_at": "2017-05-30T23:20:46.861Z",
-        "updated_at": "2017-05-30T23:20:46.861Z",
-        "specialty": {
-          "id": 5,
-          "specialty": "food",
-          "created_at": "2017-05-30T23:12:55.335Z",
-          "updated_at": "2017-05-30T23:12:55.335Z"
-        }
-      }
-    ]
-  }
-]
 
     // Need to replace below with axios call
     //sthis.props.dispatch(updateSearchResult(sampleData));
@@ -199,8 +158,23 @@ class SearchScreen extends React.Component {
           <Divider />
         </TouchableOpacity>
         <TouchableOpacity  onPress={() => (this.setState({showDatePicker: false, showTimePicker: false}))}>
-          <FormLabel >Where?</FormLabel>
-          <FormInput id="where" placeholder="Where do you want to go?" onChangeText={(city) => this.handleCityUpdate(city)} />
+          <Autocomplete
+            autoCapitalize="none"
+            autoCorrect={false}
+            containerStyle={styles.autocompleteContainer}
+            data={this.state.citiesPrediction}
+            defaultValue={this.props.search.city}
+            onChangeText={text => this.handleCityUpdate({ query: text })}
+            placeholder="Enter Destination"
+            renderItem={({ description }) => {
+              return (
+              <TouchableOpacity onPress={() =>this.handleCityUpdate({ query: description })}>
+                <Text style={styles.itemText}>
+                  {description}
+                </Text>
+              </TouchableOpacity>
+            )}}
+          />
         </TouchableOpacity>
         {/*<FormLabel>How many travelers?</FormLabel>
         <Picker
@@ -314,9 +288,111 @@ const styles = StyleSheet.create({
   },
   checkbox: {
     flexGrow: 1
+  },
+  container: {
+    backgroundColor: '#F5FCFF',
+    flex: 1,
+    paddingTop: 25
+  },
+  autocompleteContainer: {
+    marginLeft: 10,
+    marginRight: 10
+  },
+  itemText: {
+    fontSize: 15,
+    margin: 2
+  },
+  descriptionContainer: {
+    // `backgroundColor` needs to be set otherwise the
+    // autocomplete input will disappear on text input.
+    backgroundColor: '#F5FCFF',
+    marginTop: 8
+  },
+  infoText: {
+    textAlign: 'center'
+  },
+  titleText: {
+    fontSize: 18,
+    fontWeight: '500',
+    marginBottom: 10,
+    marginTop: 10,
+    textAlign: 'center'
+  },
+  directorText: {
+    color: 'grey',
+    fontSize: 12,
+    marginBottom: 10,
+    textAlign: 'center'
+  },
+  openingText: {
+    textAlign: 'center'
   }
 });
 
 const mapStateToProps = state => (state);
 
 export default connect(mapStateToProps)(SearchScreen); 
+//     const sampleData = [
+//   {
+//     "id": 1,
+//     "user_id": 1,
+//     "city": "SF",
+//     "hourly_rate": "45.00",
+//     "intro": "Hello, my name is Charles",
+//     "statement": "I like food",
+//     "avg_rating": "0.00",
+//     "img_url": null,
+//     "created_at": "2017-05-30T23:09:54.534Z",
+//     "updated_at": "2017-05-30T23:09:54.534Z",
+//     "user": {
+//       "id": 1,
+//       "facebook_id": "charles",
+//       "full_name": "Charles Kim",
+//       "guide": false,
+//       "email": "charles@example.com",
+//       "phone": "1111111111",
+//       "avg_rating": "0.00",
+//       "created_at": "2017-05-30T23:08:03.089Z",
+//       "updated_at": "2017-05-30T23:08:03.089Z"
+//     },
+//     "availabilities": [
+//       {
+//         "id": 1,
+//         "guide_id": 1,
+//         "start_hr": 9,
+//         "end_hr": 17,
+//         "date": "2017-05-24T07:00:00.000Z",
+//         "created_at": "2017-05-30T23:34:59.547Z",
+//         "updated_at": "2017-05-30T23:34:59.547Z"
+//       }
+//     ],
+//     "guideSpecialties": [
+//       {
+//         "id": 3,
+//         "guide_id": 1,
+//         "specialty_id": 3,
+//         "created_at": "2017-05-30T23:20:42.645Z",
+//         "updated_at": "2017-05-30T23:20:42.645Z",
+//         "specialty": {
+//           "id": 3,
+//           "specialty": "nightlife",
+//           "created_at": "2017-05-30T23:12:48.482Z",
+//           "updated_at": "2017-05-30T23:12:48.482Z"
+//         }
+//       },
+//       {
+//         "id": 4,
+//         "guide_id": 1,
+//         "specialty_id": 5,
+//         "created_at": "2017-05-30T23:20:46.861Z",
+//         "updated_at": "2017-05-30T23:20:46.861Z",
+//         "specialty": {
+//           "id": 5,
+//           "specialty": "food",
+//           "created_at": "2017-05-30T23:12:55.335Z",
+//           "updated_at": "2017-05-30T23:12:55.335Z"
+//         }
+//       }
+//     ]
+//   }
+// ]
