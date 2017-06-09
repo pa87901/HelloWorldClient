@@ -5,6 +5,7 @@ import { Button as NativeButton } from 'react-native';
 import { Card, Button, Rating } from 'react-native-elements';
 import { getProfileResult } from '../Actions/profileSelectionActions';
 import axios from '../axios';
+import { updateUserGuideId } from '../Actions/userProfileActions.js';
 
 class ExploreScreenEntry extends React.Component {
   constructor(props) {

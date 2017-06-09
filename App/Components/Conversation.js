@@ -45,38 +45,38 @@ class Conversation extends React.Component {
       }
     }
     // Where this has been rendered from the GuideInboxScreen...
-    else if (this.props.userId) {
-      if (this.props.userId.avatar) {
-        return (
-          <TouchableHighlight onPress={() => navigate('GuideChat', {guideId: this.props.guideId, userId: this.props.userId.facebook_id})}>
-            <View>
-              <Image
-                source={this.props.userId.avatar}
-                style={styles.image}
-                />
-              <Text>
-                {this.props.userId.full_name}
-              </Text>
-            </View>
-          </TouchableHighlight>
-        )
-      } else {
-        // Otherwise use default React logo image.
-        return (
-          <TouchableHighlight onPress={() => navigate('GuideChat', {guideId: this.props.guideId, userId: this.props.userId.facebook_id})}>
-            <View>
-              <Image
-                source={{uri: 'https://facebook.github.io/react/img/logo_og.png'}}
-                style={styles.image}
-                />
-              <Text>
-                Render something.
-              </Text>
-            </View>
-          </TouchableHighlight>
-        )
-      }
-    }
+    // else if (this.props.userId) {
+    //   if (this.props.userId.avatar) {
+    //     return (
+    //       <TouchableHighlight onPress={() => navigate('GuideChat', {guideId: this.props.guideId, userId: this.props.userId.facebook_id})}>
+    //         <View>
+    //           <Image
+    //             source={this.props.userId.avatar}
+    //             style={styles.image}
+    //             />
+    //           <Text>
+    //             {this.props.userId.full_name}
+    //           </Text>
+    //         </View>
+    //       </TouchableHighlight>
+    //     )
+    //   } else {
+    //     // Otherwise use default React logo image.
+    //     return (
+    //       <TouchableHighlight onPress={() => navigate('GuideChat', {guideId: this.props.guideId, userId: this.props.userId.facebook_id})}>
+    //         <View>
+    //           <Image
+    //             source={{uri: 'https://facebook.github.io/react/img/logo_og.png'}}
+    //             style={styles.image}
+    //             />
+    //           <Text>
+    //             Render something.
+    //           </Text>
+    //         </View>
+    //       </TouchableHighlight>
+    //     )
+    //   }
+    // }
   }
 }
 

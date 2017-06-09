@@ -44,7 +44,6 @@ class Chat extends React.Component {
   }
 
   componentDidMount() {
-    console.log('this.props in ChatScreen', this.props, this.state);
     let privateRoom = `${this.state.userId}-${this.state.guideId}`
     console.log('PRIVATE ROOM', privateRoom);
     this.socket.on('connect', socket => {
@@ -103,6 +102,7 @@ class Chat extends React.Component {
   }
 
   render() {
+    console.log('this.props in ChatScreen', this.props, this.state);
     let currentUser;
     if (this.state.guide) {
       currentUser = {

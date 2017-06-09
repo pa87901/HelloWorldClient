@@ -57,7 +57,7 @@ class SearchScreen extends React.Component {
   handleSearchSubmit() {
     var query = 'api/guides/search/' + this.props.search.city + '/' + this.props.search.date;
     console.log('QUERY', this.props.search.filterCriteria);
-    axios.get(query, this.props.search.filterCriteria)
+    axios.get(query, {headers: this.props.search.filterCriteria})
       .then((res)=>{
         console.log('search screen axios props', this)
         console.log(res.data);
