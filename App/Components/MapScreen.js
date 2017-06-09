@@ -113,7 +113,9 @@ class MapScreen extends React.Component {
             console.log('---point---', point)
             return (
               <MapView.Marker
+                ref={ref=> {this.marker = ref}}
                 coordinate={point}
+                title='POI Placeholder'
                 />
             )
           })}
