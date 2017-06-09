@@ -9,6 +9,7 @@ import DatePicker from './DatePicker';
 import TimePick from './TimePick';
 import { updateFilterCriteria } from '../Actions/searchActions';
 import Autocomplete from 'react-native-autocomplete-input';
+import config from '../Config/config.js';
 
 class SearchScreen extends React.Component {
   constructor(props) {
@@ -52,16 +53,16 @@ class SearchScreen extends React.Component {
   }  
 
   handleCityUpdate(city) {
+    console.log('GOOGLE_PLACES_API_KEY', config.GOOGLE_PLACES_API_KEY)
     console.log(this)
     city = city.query;
     this.props.dispatch(updateCity(city));
     if(city.length > 3){
-      var query = 'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=' + city + '&types=(cities)&language=en_US&key=AIzaSyBW_uhgYM4O5Lii4lGG6bljWAXv9B7uYaM'
+      var query = 'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=' + city + '&types=(cities)&language=en_US&key=' + config.GOOGLE_PLACES_API_KEY;
       Axios.get(query)
       .then((res) => {
         let cities = res.data.predictions;
-        console.log('google search data', this.state)
-
+        // console.log('google search data', this.state)
         this.setState({ citiesPrediction: cities });
       })
       .catch((err) => {
@@ -139,6 +140,7 @@ class SearchScreen extends React.Component {
     // console.log('this.props.search.date', this.props.search.date);
     let showDatePicker = this.state.showDatePicker ? <DatePicker /> : <Text style={styles.date}>{this.props.search.date}</Text>;
     let showTimePicker = this.state.showTimePicker ? <TimePick /> : <Text style={styles.date}> From: {fromTime} To: {toTime}</Text>;
+    let filterCities = this.state.citiesPrediction.length > 0 && this.state.citiesPrediction[0].description !== this.props.search.city ? this.state.citiesPrediction : [];
     return (
       <View style={styles.container}>
         <Text style = {styles.header}>Where are you headed?</Text>
@@ -162,7 +164,7 @@ class SearchScreen extends React.Component {
             autoCapitalize="none"
             autoCorrect={false}
             containerStyle={styles.autocompleteContainer}
-            data={this.state.citiesPrediction}
+            data={filterCities}
             defaultValue={this.props.search.city}
             onChangeText={text => this.handleCityUpdate({ query: text })}
             placeholder="Enter Destination"
@@ -287,7 +289,8 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
   },
   checkbox: {
-    flexGrow: 1
+    flexGrow: 1,
+    zIndex: 0
   },
   container: {
     backgroundColor: '#F5FCFF',
@@ -296,7 +299,8 @@ const styles = StyleSheet.create({
   },
   autocompleteContainer: {
     marginLeft: 10,
-    marginRight: 10
+    marginRight: 10,
+    height: 150
   },
   itemText: {
     fontSize: 15,
