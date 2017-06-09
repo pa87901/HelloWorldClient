@@ -3,6 +3,10 @@ import { StyleSheet, Text, View, Dimensions } from 'react-native';
 import { Button } from 'react-native-elements';
 import { connect } from 'react-redux';
 import MapView from 'react-native-maps';
+import Geocoder from 'react-native-geocoding';
+import config from '../Config/config';
+
+Geocoder.setApiKey(config.GOOGLE_MAPS_API_KEY)
 
 const { width, height } = Dimensions.get('window');
 
@@ -29,6 +33,11 @@ class MapScreen extends React.Component {
         latitude: 0,
         longitude: 0
       },
+      pointOfInterestNames: [
+        'Golden Gate Bridge', 
+        'Golden Gate Park',
+        'AT&T Park'
+        ],
       //GG Bridge, GG Park, ATT Park
       pointsOfInterest: [
         {
@@ -47,6 +56,7 @@ class MapScreen extends React.Component {
     }
 
     this.fitAllMarkers = this.fitAllMarkers.bind(this);
+    this.getCoordsFromLocation = this.getCoordsFromLocation.bind(this);
 
   }
   watchID: ?number = null
@@ -96,6 +106,23 @@ class MapScreen extends React.Component {
     });
   }
 
+  getCoordsFromLocation() {
+    this.state.pointOfInterestNames.forEach((point) => {
+      Geocoder.getFromLocation(point).then(
+        json => {
+          let poiLocation = {
+            latitude: json.results[0].geometry.location.lat,
+            longitude: json.results[0].geometry.location.lng
+          };
+          console.log(poiLocation);
+        },
+        error => {
+          alert(error);
+        }
+      );      
+    })
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -126,7 +153,8 @@ class MapScreen extends React.Component {
             raised
             backgroundColor='#FF8C00'
             title='Points of Interest'
-            onPress={()=>this.fitAllMarkers()}
+            // onPress={()=>this.fitAllMarkers()}
+            onPress={()=>this.getCoordsFromLocation()}
           />
         </View>
       </View>
