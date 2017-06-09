@@ -79,27 +79,20 @@ class SearchScreen extends React.Component {
   }
 
   handleSearchSubmit() {
-    var query = 'api/guides/search/' + this.props.search.city + '/' + this.props.search.date;
-    console.log('QUERY', this.props.search.filterCriteria);
-    axios.get(query, {headers: this.props.search.filterCriteria})
-      .then((res)=>{
-        console.log('search screen axios props', this)
-        console.log(res.data);
-        this.props.dispatch(updateSearchResult(res.data));
-      })
-      .catch((err)=>{
-        console.log(err);
-      })
-
-
-    // Need to replace below with axios call
-    //sthis.props.dispatch(updateSearchResult(sampleData));
-    
-
-    // Axios call to call upon all guides that have the selected search criteria.
-    
-
-    this.props.navigation.navigate('Explore');
+    // if(this.state.citiesPrediction.length > 0 && this.state.citiesPrediction[0].description == this.props.search.city){
+    // }
+      var query = 'api/guides/search/' + this.props.search.city + '/' + this.props.search.date;
+      console.log('QUERY', this.props.search.filterCriteria);
+      axios.get(query, {headers: this.props.search.filterCriteria})
+        .then((res)=>{
+          console.log('search screen axios props', this)
+          console.log(res.data);
+          this.props.dispatch(updateSearchResult(res.data));
+        })
+        .catch((err)=>{
+          console.log(err);
+        })
+      this.props.navigation.navigate('Explore');
   }
 
   _keyboardDidShow () {
@@ -289,6 +282,8 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
   },
   checkbox: {
+    height: 50,
+    width: 150,
     flexGrow: 1,
     zIndex: 0
   },
