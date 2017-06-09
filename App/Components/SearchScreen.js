@@ -53,8 +53,6 @@ class SearchScreen extends React.Component {
   }  
 
   handleCityUpdate(city) {
-    console.log('GOOGLE_PLACES_API_KEY', config.GOOGLE_PLACES_API_KEY)
-    console.log(this)
     city = city.query;
     this.props.dispatch(updateCity(city));
     if(city.length > 3){
@@ -163,7 +161,7 @@ class SearchScreen extends React.Component {
             placeholder="Enter Destination"
             renderItem={({ description }) => {
               return (
-              <TouchableOpacity onPress={() =>this.handleCityUpdate({ query: description })}>
+              <TouchableOpacity onPress={() => this.handleCityUpdate({ query: description })}>
                 <Text style={styles.itemText}>
                   {description}
                 </Text>
@@ -171,84 +169,72 @@ class SearchScreen extends React.Component {
             )}}
           />
         </TouchableOpacity>
-        {/*<FormLabel>How many travelers?</FormLabel>
-        <Picker
-          style={styles.picker}
-          selectedValue={this.props.search.numTravelers}
-          onValueChange={(number) => this.handleTravelerUpdate(number)}
-          mode="dropdown"
-        >
-          <Picker.Item label="1" value={1} />
-          <Picker.Item label="2" value={2} />
-          <Picker.Item label="3" value={3} />
-          <Picker.Item label="4" value={4} />
-        </Picker>*/}
         <View style={styles.switches}>
           <View style={styles.checkbox}>
             <CheckBox
-            title='Sightseeing'
-            checked={this.props.search.filterCriteria.sightseeing}
-            onPress={() => this.checkSpecialty('sightseeing')}
+              title='Sightseeing'
+              checked={this.props.search.filterCriteria.sightseeing}
+              onPress={() => this.checkSpecialty('sightseeing')}
             />
           </View>
           <View style={styles.checkbox}>
             <CheckBox
-            title='Food'
-            checked={this.props.search.filterCriteria.food}
-            onPress={() => this.checkSpecialty('food')}
+              title='Food'
+              checked={this.props.search.filterCriteria.food}
+              onPress={() => this.checkSpecialty('food')}
             />
           </View>
           <View style={styles.checkbox}>
             <CheckBox
-            title='Sports'
-            checked={this.props.search.filterCriteria.sports}
-            onPress={() => this.checkSpecialty('sports')}
+              title='Sports'
+              checked={this.props.search.filterCriteria.sports}
+              onPress={() => this.checkSpecialty('sports')}
             />
           </View>
           <View style={styles.checkbox}>
             <CheckBox
-            title='Nightlife'
-            checked={this.props.search.filterCriteria.nightlife}
-            onPress={() => this.checkSpecialty('nightlife')}
+              title='Nightlife'
+              checked={this.props.search.filterCriteria.nightlife}
+              onPress={() => this.checkSpecialty('nightlife')}
             />
           </View>
           <View style={styles.checkbox}>
             <CheckBox
-            title='Music'
-            checked={this.props.search.filterCriteria.music}
-            onPress={() => this.checkSpecialty('music')}
+              title='Music'
+              checked={this.props.search.filterCriteria.music}
+              onPress={() => this.checkSpecialty('music')}
             />
           </View>
           <View style={styles.checkbox}>
             <CheckBox
-            title='Museum'
-            checked={this.props.search.filterCriteria.museum}
-            onPress={() => this.checkSpecialty('museum')}
+              title='Museum'
+              checked={this.props.search.filterCriteria.museum}
+              onPress={() => this.checkSpecialty('museum')}
             />
           </View>
           <View style={styles.checkbox}>
             <CheckBox
-            title='History'
-            checked={this.props.search.filterCriteria.history}
-            onPress={() => this.checkSpecialty('history')}
+              title='History'
+              checked={this.props.search.filterCriteria.history}
+              onPress={() => this.checkSpecialty('history')}
             />
           </View>
           <View style={styles.checkbox}>
             <CheckBox
-            title='Politics'
-            checked={this.props.search.filterCriteria.politics}
-            onPress={() => this.checkSpecialty('politics')}
+              title='Politics'
+              checked={this.props.search.filterCriteria.politics}
+              onPress={() => this.checkSpecialty('politics')}
             />
           </View>
         </View>
         <View style={{position: 'absolute', left: 0, right: 0, bottom: 0}}>
             <Button
-            large
-            raised
-            backgroundColor='#FF8C00'
-            title='EXPLORE'
-            onPress={() => this.handleSearchSubmit()} 
-          />
+              large
+              raised
+              backgroundColor='#FF8C00'
+              title='EXPLORE'
+              onPress={() => this.handleSearchSubmit()} 
+            />
         </View>
       </View>
     );
@@ -256,17 +242,17 @@ class SearchScreen extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    position: 'absolute', 
-    top: 30,
-    bottom: 0, 
-    left: 0, 
-    right: 0,
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
+//   container: {
+//     position: 'absolute', 
+//     top: 30,
+//     bottom: 0, 
+//     left: 0, 
+//     right: 0,
+//     flex: 1,
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//     backgroundColor: '#F5FCFF',
+//   },
   picker: {
     width: 350,
   },
@@ -290,7 +276,10 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#F5FCFF',
     flex: 1,
-    paddingTop: 25
+    paddingTop: 25,
+    paddingLeft: 10,
+    paddingRight: 10,
+    paddingBottom: 25,
   },
   autocompleteContainer: {
     marginLeft: 10,
@@ -306,31 +295,36 @@ const styles = StyleSheet.create({
     // autocomplete input will disappear on text input.
     backgroundColor: '#F5FCFF',
     marginTop: 8
-  },
-  infoText: {
-    textAlign: 'center'
-  },
-  titleText: {
-    fontSize: 18,
-    fontWeight: '500',
-    marginBottom: 10,
-    marginTop: 10,
-    textAlign: 'center'
-  },
-  directorText: {
-    color: 'grey',
-    fontSize: 12,
-    marginBottom: 10,
-    textAlign: 'center'
-  },
-  openingText: {
-    textAlign: 'center'
   }
 });
 
 const mapStateToProps = state => (state);
 
 export default connect(mapStateToProps)(SearchScreen); 
+
+
+
+
+
+
+
+
+
+
+
+        {/*<FormLabel>How many travelers?</FormLabel>
+        <Picker
+          style={styles.picker}
+          selectedValue={this.props.search.numTravelers}
+          onValueChange={(number) => this.handleTravelerUpdate(number)}
+          mode="dropdown"
+        >
+          <Picker.Item label="1" value={1} />
+          <Picker.Item label="2" value={2} />
+          <Picker.Item label="3" value={3} />
+          <Picker.Item label="4" value={4} />
+        </Picker>*/}
+
 //     const sampleData = [
 //   {
 //     "id": 1,
