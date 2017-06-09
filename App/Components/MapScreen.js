@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, Dimensions } from 'react-native';
+import { Button } from 'react-native-elements';
 import { connect } from 'react-redux';
 import MapView from 'react-native-maps';
 
@@ -41,6 +42,8 @@ class MapScreen extends React.Component {
         }
       ]
     }
+
+    this.fitToPointsOfInterest = this.fitToPointsOfInterest.bind(this);
   }
 //GG Bridge, GG Park, ATT Park??
   watchID: ?number = null
@@ -83,6 +86,11 @@ class MapScreen extends React.Component {
     navigator.geolocation.clearWatch(this.watchID);
   }
 
+  fitToPointsOfInterest() {
+    console.log('refocusing to points of interest!');
+    fitToCoordinates(this.state.pointsOfInterest)
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -95,15 +103,24 @@ class MapScreen extends React.Component {
                 <View style={styles.marker}/>
               </View>
           </MapView.Marker>
-          {this.state.pointsOfInterest.map(marker => {
-            console.log('---marker---', marker)
+          {this.state.pointsOfInterest.map(point => {
+            console.log('---point---', point)
             return (
               <MapView.Marker
-                coordinate={marker}
+                coordinate={point}
                 />
             )
           })}
         </MapView>
+        <View style={{position: 'absolute', left: 0, right: 0, bottom: 0}}>
+          <Button
+            small
+            raised
+            backgroundColor='#FF8C00'
+            title='Points of Interest'
+            onPress={()=> {fitToCoordinates(this.state.pointsOfInterest)}}
+          />
+        </View>
       </View>
     )
   }
@@ -142,6 +159,12 @@ const styles = StyleSheet.create({
     top: 0,
     bottom: 0,
     position: 'absolute' 
+  },
+  button: {
+    position: 'absolute',
+    right: 0,
+    left: 0,
+    bottom: 0
   }
 });
 
