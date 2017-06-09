@@ -1,11 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { StyleSheet, Text, View, Keyboard, TouchableOpacity } from 'react-native';
-import { FormLabel, FormInput, Button, Divider, CheckBox } from 'react-native-elements';
-import { updateCity, updateDate, updateHours, updateTravelers, updateSearchResult, updateFilterCriteria } from '../Actions/searchActions.js';
-import axios from '../axios';
+import { FormLabel, Button, Divider, CheckBox } from 'react-native-elements';
 import Axios from 'axios';
 import Autocomplete from 'react-native-autocomplete-input';
+import {
+  updateCity, updateDate, updateHours, updateTravelers, updateSearchResult, updateFilterCriteria
+} from '../Actions/searchActions.js';
+import axios from '../axios';
 import config from '../Config/config.js';
 import DatePicker from './SearchComponents/DatePicker';
 import TimePick from './SearchComponents/TimePick';
@@ -54,21 +56,20 @@ class SearchScreen extends React.Component {
   handleCityUpdate(city) {
     city = city.query;
     this.props.dispatch(updateCity(city));
-    if(city.length > 3){
+    if (city.length > 3) {
       var query = 'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=' + city + '&types=(cities)&language=en_US&key=' + config.GOOGLE_PLACES_API_KEY;
       Axios.get(query)
       .then((res) => {
-        let cities = res.data.predictions;
+        const cities = res.data.predictions;
         // console.log('google search data', this.state)
         this.setState({ citiesPrediction: cities });
       })
       .catch((err) => {
         console.log(err);
-      })
+      });
     } else {
       this.setState({ citiesPrediction: [] });
     }
-
   }
 
   handleTravelerUpdate(number) {
@@ -76,11 +77,11 @@ class SearchScreen extends React.Component {
   }
 
   handleSearchSubmit() {
-    const query = 'api/guides/search/' + this.props.search.city + '/' + this.props.search.date;
-    console.log('QUERY', this.props.search.filterCriteria);
-    axios.get(query, { headers: this.props.search.filterCriteria })
+    const searchProps = this.props.search;
+    const query = `api/guides/search/${searchProps.city}/${searchProps.date}/${searchProps.fromHour}/${searchProps.toHour}`;
+    
+    axios.get(query, { headers: searchProps.filterCriteria })
       .then((res) => {
-        console.log('search screen axios props', this);
         console.log(res.data);
         this.props.dispatch(updateSearchResult(res.data));
       })
@@ -88,7 +89,7 @@ class SearchScreen extends React.Component {
         console.log(err);
       });  
 
-      this.props.navigation.navigate('Explore');
+    this.props.navigation.navigate('Explore');
   }
 
   _keyboardDidShow() {
