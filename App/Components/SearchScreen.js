@@ -4,9 +4,12 @@ import { updateCity, updateDate, updateHours, updateTravelers, updateSearchResul
 import { StyleSheet, Text, View, Picker, Item, Keyboard, TextInput, ScrollView, TouchableOpacity, Switch } from 'react-native';
 import { FormLabel, FormInput, FormValidationMessage, Button, Divider, CheckBox } from 'react-native-elements';
 import axios from '../axios';
+import Axios from 'axios';
 import DatePicker from './DatePicker';
 import TimePick from './TimePick';
 import { updateFilterCriteria } from '../Actions/searchActions';
+import Autocomplete from 'react-native-autocomplete-input';
+import config from '../Config/config.js';
 
 class SearchScreen extends React.Component {
   constructor(props) {
@@ -23,9 +26,12 @@ class SearchScreen extends React.Component {
         museum: false,
         history: false,
         politics: false,
-      }
-    }
+      },
+      citiesPrediction: [],
+      query: ''
+    };
     this.checkSpecialty = this.checkSpecialty.bind(this);
+    this.handleCityUpdate.bind(this);
   }
 
   componentWillMount () {
@@ -47,7 +53,25 @@ class SearchScreen extends React.Component {
   }  
 
   handleCityUpdate(city) {
+    console.log('GOOGLE_PLACES_API_KEY', config.GOOGLE_PLACES_API_KEY)
+    console.log(this)
+    city = city.query;
     this.props.dispatch(updateCity(city));
+    if(city.length > 3){
+      var query = 'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=' + city + '&types=(cities)&language=en_US&key=' + config.GOOGLE_PLACES_API_KEY;
+      Axios.get(query)
+      .then((res) => {
+        let cities = res.data.predictions;
+        // console.log('google search data', this.state)
+        this.setState({ citiesPrediction: cities });
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+    } else {
+      this.setState({ citiesPrediction: [] });
+    }
+
   }
 
   handleTravelerUpdate(number) {
@@ -55,91 +79,20 @@ class SearchScreen extends React.Component {
   }
 
   handleSearchSubmit() {
-    var query = 'api/guides/search/' + this.props.search.city + '/' + this.props.search.date;
-    console.log('QUERY', this.props.search.filterCriteria);
-    axios.get(query, {headers: this.props.search.filterCriteria})
-      .then((res)=>{
-        console.log('search screen axios props', this)
-        console.log(res.data);
-        this.props.dispatch(updateSearchResult(res.data));
-      })
-      .catch((err)=>{
-        console.log(err);
-      })
-
-    const sampleData = [
-  {
-    "id": 1,
-    "user_id": 1,
-    "city": "SF",
-    "hourly_rate": "45.00",
-    "intro": "Hello, my name is Charles",
-    "statement": "I like food",
-    "avg_rating": "0.00",
-    "img_url": null,
-    "created_at": "2017-05-30T23:09:54.534Z",
-    "updated_at": "2017-05-30T23:09:54.534Z",
-    "user": {
-      "id": 1,
-      "facebook_id": "charles",
-      "full_name": "Charles Kim",
-      "guide": false,
-      "email": "charles@example.com",
-      "phone": "1111111111",
-      "avg_rating": "0.00",
-      "created_at": "2017-05-30T23:08:03.089Z",
-      "updated_at": "2017-05-30T23:08:03.089Z"
-    },
-    "availabilities": [
-      {
-        "id": 1,
-        "guide_id": 1,
-        "start_hr": 9,
-        "end_hr": 17,
-        "date": "2017-05-24T07:00:00.000Z",
-        "created_at": "2017-05-30T23:34:59.547Z",
-        "updated_at": "2017-05-30T23:34:59.547Z"
-      }
-    ],
-    "guideSpecialties": [
-      {
-        "id": 3,
-        "guide_id": 1,
-        "specialty_id": 3,
-        "created_at": "2017-05-30T23:20:42.645Z",
-        "updated_at": "2017-05-30T23:20:42.645Z",
-        "specialty": {
-          "id": 3,
-          "specialty": "nightlife",
-          "created_at": "2017-05-30T23:12:48.482Z",
-          "updated_at": "2017-05-30T23:12:48.482Z"
-        }
-      },
-      {
-        "id": 4,
-        "guide_id": 1,
-        "specialty_id": 5,
-        "created_at": "2017-05-30T23:20:46.861Z",
-        "updated_at": "2017-05-30T23:20:46.861Z",
-        "specialty": {
-          "id": 5,
-          "specialty": "food",
-          "created_at": "2017-05-30T23:12:55.335Z",
-          "updated_at": "2017-05-30T23:12:55.335Z"
-        }
-      }
-    ]
-  }
-]
-
-    // Need to replace below with axios call
-    //sthis.props.dispatch(updateSearchResult(sampleData));
-    
-
-    // Axios call to call upon all guides that have the selected search criteria.
-    
-
-    this.props.navigation.navigate('Explore');
+    // if(this.state.citiesPrediction.length > 0 && this.state.citiesPrediction[0].description == this.props.search.city){
+    // }
+      var query = 'api/guides/search/' + this.props.search.city + '/' + this.props.search.date;
+      console.log('QUERY', this.props.search.filterCriteria);
+      axios.get(query, {headers: this.props.search.filterCriteria})
+        .then((res)=>{
+          console.log('search screen axios props', this)
+          console.log(res.data);
+          this.props.dispatch(updateSearchResult(res.data));
+        })
+        .catch((err)=>{
+          console.log(err);
+        })
+      this.props.navigation.navigate('Explore');
   }
 
   _keyboardDidShow () {
@@ -180,6 +133,7 @@ class SearchScreen extends React.Component {
     // console.log('this.props.search.date', this.props.search.date);
     let showDatePicker = this.state.showDatePicker ? <DatePicker /> : <Text style={styles.date}>{this.props.search.date}</Text>;
     let showTimePicker = this.state.showTimePicker ? <TimePick /> : <Text style={styles.date}> From: {fromTime} To: {toTime}</Text>;
+    let filterCities = this.state.citiesPrediction.length > 0 && this.state.citiesPrediction[0].description !== this.props.search.city ? this.state.citiesPrediction : [];
     return (
       <View style={styles.container}>
         <Text style = {styles.header}>Where are you headed?</Text>
@@ -199,8 +153,23 @@ class SearchScreen extends React.Component {
           <Divider />
         </TouchableOpacity>
         <TouchableOpacity  onPress={() => (this.setState({showDatePicker: false, showTimePicker: false}))}>
-          <FormLabel >Where?</FormLabel>
-          <FormInput id="where" placeholder="Where do you want to go?" onChangeText={(city) => this.handleCityUpdate(city)} />
+          <Autocomplete
+            autoCapitalize="none"
+            autoCorrect={false}
+            containerStyle={styles.autocompleteContainer}
+            data={filterCities}
+            defaultValue={this.props.search.city}
+            onChangeText={text => this.handleCityUpdate({ query: text })}
+            placeholder="Enter Destination"
+            renderItem={({ description }) => {
+              return (
+              <TouchableOpacity onPress={() =>this.handleCityUpdate({ query: description })}>
+                <Text style={styles.itemText}>
+                  {description}
+                </Text>
+              </TouchableOpacity>
+            )}}
+          />
         </TouchableOpacity>
         {/*<FormLabel>How many travelers?</FormLabel>
         <Picker
@@ -313,10 +282,116 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
   },
   checkbox: {
-    flexGrow: 1
+    height: 50,
+    width: 150,
+    flexGrow: 1,
+    zIndex: 0
+  },
+  container: {
+    backgroundColor: '#F5FCFF',
+    flex: 1,
+    paddingTop: 25
+  },
+  autocompleteContainer: {
+    marginLeft: 10,
+    marginRight: 10,
+    height: 150
+  },
+  itemText: {
+    fontSize: 15,
+    margin: 2
+  },
+  descriptionContainer: {
+    // `backgroundColor` needs to be set otherwise the
+    // autocomplete input will disappear on text input.
+    backgroundColor: '#F5FCFF',
+    marginTop: 8
+  },
+  infoText: {
+    textAlign: 'center'
+  },
+  titleText: {
+    fontSize: 18,
+    fontWeight: '500',
+    marginBottom: 10,
+    marginTop: 10,
+    textAlign: 'center'
+  },
+  directorText: {
+    color: 'grey',
+    fontSize: 12,
+    marginBottom: 10,
+    textAlign: 'center'
+  },
+  openingText: {
+    textAlign: 'center'
   }
 });
 
 const mapStateToProps = state => (state);
 
 export default connect(mapStateToProps)(SearchScreen); 
+//     const sampleData = [
+//   {
+//     "id": 1,
+//     "user_id": 1,
+//     "city": "SF",
+//     "hourly_rate": "45.00",
+//     "intro": "Hello, my name is Charles",
+//     "statement": "I like food",
+//     "avg_rating": "0.00",
+//     "img_url": null,
+//     "created_at": "2017-05-30T23:09:54.534Z",
+//     "updated_at": "2017-05-30T23:09:54.534Z",
+//     "user": {
+//       "id": 1,
+//       "facebook_id": "charles",
+//       "full_name": "Charles Kim",
+//       "guide": false,
+//       "email": "charles@example.com",
+//       "phone": "1111111111",
+//       "avg_rating": "0.00",
+//       "created_at": "2017-05-30T23:08:03.089Z",
+//       "updated_at": "2017-05-30T23:08:03.089Z"
+//     },
+//     "availabilities": [
+//       {
+//         "id": 1,
+//         "guide_id": 1,
+//         "start_hr": 9,
+//         "end_hr": 17,
+//         "date": "2017-05-24T07:00:00.000Z",
+//         "created_at": "2017-05-30T23:34:59.547Z",
+//         "updated_at": "2017-05-30T23:34:59.547Z"
+//       }
+//     ],
+//     "guideSpecialties": [
+//       {
+//         "id": 3,
+//         "guide_id": 1,
+//         "specialty_id": 3,
+//         "created_at": "2017-05-30T23:20:42.645Z",
+//         "updated_at": "2017-05-30T23:20:42.645Z",
+//         "specialty": {
+//           "id": 3,
+//           "specialty": "nightlife",
+//           "created_at": "2017-05-30T23:12:48.482Z",
+//           "updated_at": "2017-05-30T23:12:48.482Z"
+//         }
+//       },
+//       {
+//         "id": 4,
+//         "guide_id": 1,
+//         "specialty_id": 5,
+//         "created_at": "2017-05-30T23:20:46.861Z",
+//         "updated_at": "2017-05-30T23:20:46.861Z",
+//         "specialty": {
+//           "id": 5,
+//           "specialty": "food",
+//           "created_at": "2017-05-30T23:12:55.335Z",
+//           "updated_at": "2017-05-30T23:12:55.335Z"
+//         }
+//       }
+//     ]
+//   }
+// ]
