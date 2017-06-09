@@ -34,7 +34,7 @@ class GuideConversation extends React.Component {
               style={styles.image}
               />
             <Text>
-              Render something.
+              {this.props.userId.full_name}
             </Text>
           </View>
         </TouchableHighlight>
