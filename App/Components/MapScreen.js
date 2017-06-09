@@ -12,6 +12,8 @@ const ASPECT_RATIO = width/height;
 const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
+const DEFAULT_PADDING = { top: 40, right: 40, bottom: 40, left: 40 };
+
 class MapScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -43,7 +45,8 @@ class MapScreen extends React.Component {
       ]
     }
 
-    this.fitToPointsOfInterest = this.fitToPointsOfInterest.bind(this);
+    this.fitAllMarkers = this.fitAllMarkers.bind(this);
+
   }
 //GG Bridge, GG Park, ATT Park??
   watchID: ?number = null
@@ -86,9 +89,11 @@ class MapScreen extends React.Component {
     navigator.geolocation.clearWatch(this.watchID);
   }
 
-  fitToPointsOfInterest() {
-    console.log('refocusing to points of interest!');
-    fitToCoordinates(this.state.pointsOfInterest)
+  fitAllMarkers() {
+    this.map.fitToCoordinates(this.state.pointsOfInterest, {
+      edgePadding: DEFAULT_PADDING,
+      animated: true,
+    });
   }
 
   render() {
@@ -118,7 +123,7 @@ class MapScreen extends React.Component {
             raised
             backgroundColor='#FF8C00'
             title='Points of Interest'
-            onPress={()=> {fitToCoordinates(this.state.pointsOfInterest)}}
+            onPress={()=> {fitToCoordinates(this.fitAllMarkers)}}
           />
         </View>
       </View>
