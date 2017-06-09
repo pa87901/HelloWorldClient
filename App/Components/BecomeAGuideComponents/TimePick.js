@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Picker, View, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
-import { updateFromHour, updateToHour } from '../../Actions/searchActions';
+import { becomeGuideFromHour, becomeGuideToHour } from '../../Actions/BecomeAGuideActions';
 
 class TimePick extends Component {
   constructor(props) {
@@ -23,11 +23,10 @@ class TimePick extends Component {
     } else if (this.state.fromAmPm === 'pm') {
       fromHour = this.state.fromHour + 12;
     }
-    this.props.dispatch(updateFromHour(fromHour));
+    this.props.dispatch(becomeGuideFromHour(fromHour));
   }
 
   handleFromHourChange(hour) {
-    // console.log('FROMPICKER HOUR', hour);
     let fromHour;
     if (this.state.fromAmPm === 'am') {
       fromHour = hour;
@@ -40,8 +39,7 @@ class TimePick extends Component {
     this.setState({
       fromHour: hour
     });
-    console.log('OJDFJS', this.state);
-    this.props.dispatch(updateFromHour(fromHour));
+    this.props.dispatch(becomeGuideFromHour(fromHour));
   }
 
   handleFromAmPmChange(amPm) {
@@ -58,11 +56,10 @@ class TimePick extends Component {
     if (this.state.fromHour === 12 && this.state.fromAmPm === 'am') {
       fromHour = 0;
     }
-    this.props.dispatch(updateFromHour(fromHour));
+    this.props.dispatch(becomeGuideFromHour(fromHour));
   }
 
   handleToHourChange(hour) {
-    // console.log('FROMPICKER HOUR', hour);
     let toHour;
     if (this.state.toAmPm === 'am') {
       toHour = hour;
@@ -75,15 +72,13 @@ class TimePick extends Component {
     this.setState({
       toHour: hour
     });
-    console.log('OJDFJS', this.state);
-    this.props.dispatch(updateToHour(toHour));
+    this.props.dispatch(becomeGuideToHour(toHour));
   }
 
   handleToAmPmChange(amPm) {
     this.setState({
       toAmPm: amPm
     });
-    console.log('FROMPICKER AMPM', this.state);
     let toHour;
     if (amPm === 'am') {
       toHour = this.state.toHour;
@@ -93,7 +88,7 @@ class TimePick extends Component {
     if (this.state.toHour === 12 && this.state.toAmPm === 'am') {
       toHour = 0;
     }
-    this.props.dispatch(updateToHour(toHour));
+    this.props.dispatch(becomeGuideToHour(toHour));
   }  
 
   render() {
