@@ -114,6 +114,9 @@ class MapScreen extends React.Component {
             latitude: json.results[0].geometry.location.lat,
             longitude: json.results[0].geometry.location.lng
           };
+          
+          let poiList = []
+
           console.log(poiLocation);
         },
         error => {
@@ -136,16 +139,16 @@ class MapScreen extends React.Component {
                 <View style={styles.marker}/>
               </View>
           </MapView.Marker>
-          {this.state.pointsOfInterest.map(point => {
-            console.log('---point---', point)
-            return (
-              <MapView.Marker
-                ref={ref=> {this.marker = ref}}
-                coordinate={point}
-                title='POI Placeholder'
-                />
-            )
-          })}
+            {this.state.pointsOfInterest.map(point => {
+              console.log('---point---', point)
+              return (
+                <MapView.Marker
+                  ref={ref=> {this.marker = ref}}
+                  coordinate={point}
+                  title='POI Placeholder'
+                  />
+              );
+            })}
         </MapView>
         <View style={{position: 'absolute', left: 0, right: 0, bottom: 0}}>
           <Button
@@ -153,12 +156,12 @@ class MapScreen extends React.Component {
             raised
             backgroundColor='#FF8C00'
             title='Points of Interest'
-            // onPress={()=>this.fitAllMarkers()}
-            onPress={()=>this.getCoordsFromLocation()}
+            onPress={()=>this.fitAllMarkers()}
+            // onPress={()=>this.getCoordsFromLocation()}
           />
         </View>
       </View>
-    )
+    );
   }
 }
 
