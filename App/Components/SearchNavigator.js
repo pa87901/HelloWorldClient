@@ -4,7 +4,7 @@ import SearchScreen from './SearchScreen';
 import ExploreNavigator from './ExploreNavigator';
 import GuideProfileScreen from './GuideProfileScreen';
 import LoginScreen from './LoginScreen';
-import BookingPolicyScreen from './BookingPolicyScreen';
+// import BookingPolicyScreen from './BookingPolicyScreen';
 import BookingConfirmationScreen from './BookingConfirmationScreen';
 import BecomeAGuideOptions from './BecomeAGuideOptions';
 import BecomeAGuideQuestions1 from './BecomeAGuideQuestions1';
@@ -35,7 +35,7 @@ const SearchNavigator = StackNavigator({
   },
   Explore: {screen: ExploreNavigator},
   GuideProfile: {screen: GuideProfileScreen},
-  BookingPolicy: {screen: BookingPolicyScreen},
+  // BookingPolicy: {screen: BookingPolicyScreen},
   BookingConfirmation: {screen: BookingConfirmationScreen},
   GuideOptions: {screen: BecomeAGuideOptions},
   GuideQuestions1: {screen: BecomeAGuideQuestions1},

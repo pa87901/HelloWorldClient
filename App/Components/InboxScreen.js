@@ -52,7 +52,7 @@ class InboxScreen extends React.Component {
   }
 
   componentDidMount() {
-    console.log('this.props in InboxScreen', this.state, this.props);
+    // console.log('this.props in InboxScreen', this.state, this.props);
     // Iterate through chats array and reduce for unique guide ids.
     let chats = this.props.chat.chats;
     let guideIds = chats
@@ -68,7 +68,7 @@ class InboxScreen extends React.Component {
         this.setState({
           guides: guideNames
         });
-        console.log('RESPONSE', response, guideNames, this.state);
+        // console.log('RESPONSE', response, guideNames, this.state);
       })
       .catch(error => {
         // No chats for logged in user so set chats state to empty [].
@@ -81,7 +81,7 @@ class InboxScreen extends React.Component {
   }
 
   render() {
-    console.log('this.state.guides in InboxScreen', this.state.guides);
+    // console.log('this.state.guides in InboxScreen', this.state.guides);
     return (
       <ScrollView>
         <Text> INBOX </Text>

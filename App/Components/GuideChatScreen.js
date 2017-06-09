@@ -11,7 +11,8 @@ class GuideChatScreen extends Component {
     this.state = {
       messages: [],
       guideId: null,
-      userId: null
+      userId: null,
+      author: 'guide'
     };
     this.socket = SocketIOClient('http://localhost:3000', {query: {userId: this.props.navigation.state.params.userId, guideId: this.props.userProfile.userGuideId}});
     this.onSend = this.onSend.bind(this);
@@ -42,23 +43,23 @@ class GuideChatScreen extends Component {
     this.socket.on('chat message', (msgs) => {
       console.log('Echo message', msgs);
       let formattedMessages = msgs.map(chatObject => {
-        if (chatObject.author === '') {
+        if (chatObject.author === 'guide') {
           return {
             text: chatObject.message,
             user: {
               _id: chatObject.user_id,
-              name: 'me',
+              name: chatObject.guide.user.full_name,
               guideId: chatObject.guide_id
             },
             createdAt: chatObject.created_at,
             _id: chatObject.id
           }
-        } else if (chatObject.author === 'guide') {
+        } else {
           return {
             text: chatObject.message,
             user: {
               _id: chatObject.user_id,
-              name: chatObject.author,
+              name: chatObject.user.full_name,
               guideId: chatObject.guide_id
             },
             createdAt: chatObject.created_at,
@@ -92,21 +93,21 @@ class GuideChatScreen extends Component {
   // SWITCH UP USERID AND GUIDE ID!!!!!
   render() {
     let currentUser;
-    if (this.state.guide) {
+    // if (this.state.guide) {
       currentUser = {
         _id: this.state.userId,
-        name: 'guide',
+        author: this.state.author,
         guideId: this.state.guideId,
         // avatar: 'https://avatars0.githubusercontent.com/u/22867659?v=3&u=ce528a943e09cdde30d47ef590543c0ce41ff615&s=400'
       }
-    } else {
-      currentUser = {
-        _id: this.state.userId,
-        name: '',
-        guideId: this.state.guideId,
-        // avatar: 'https://avatars0.githubusercontent.com/u/22867659?v=3&u=ce528a943e09cdde30d47ef590543c0ce41ff615&s=400'
-      }
-    }
+    // } else {
+    //   currentUser = {
+    //     _id: this.state.userId,
+    //     name: '',
+    //     guideId: this.state.guideId,
+    //     // avatar: 'https://avatars0.githubusercontent.com/u/22867659?v=3&u=ce528a943e09cdde30d47ef590543c0ce41ff615&s=400'
+    //   }
+    // }
 
     return (
       <GiftedChat

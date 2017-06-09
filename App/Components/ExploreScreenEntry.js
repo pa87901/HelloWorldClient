@@ -16,7 +16,7 @@ class ExploreScreenEntry extends React.Component {
     .then(guideId => {
       console.log('GOTTEN guideId', guideId);
       this.props.dispatch(updateUserGuideId(guideId.data.id));
-    });  
+    });
   } 
 
   // ratingCompleted(rating) {

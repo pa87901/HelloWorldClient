@@ -14,7 +14,7 @@ class Chat extends React.Component {
       messages: [],
       userId: null,
       guideId: null,
-      guide: true
+      author: 'user'
     };
     // If we navigated to ChatScreen from Inbox menu icon: 
     if (this.props.navigation.state.params) {
@@ -55,23 +55,23 @@ class Chat extends React.Component {
     this.socket.on('chat message', (msgs) => {
       console.log('Echo message', msgs);
       let formattedMessages = msgs.map(chatObject => {
-        if (chatObject.author === '') {
+        if (chatObject.author === 'user') {
           return {
             text: chatObject.message,
             user: {
               _id: chatObject.user_id,
-              name: 'me',
+              name: chatObject.user.full_name,
               guideId: chatObject.guide_id
             },
             createdAt: chatObject.created_at,
             _id: chatObject.id
           }
-        } else if (chatObject.author === 'guide') {
+        } else {
           return {
             text: chatObject.message,
             user: {
               _id: chatObject.user_id,
-              name: chatObject.author,
+              name: chatObject.guide.user.full_name,
               guideId: chatObject.guide_id
             },
             createdAt: chatObject.created_at,
@@ -97,28 +97,28 @@ class Chat extends React.Component {
   onSend(messages = []) {
     // console.log('previous state', messages, this.state.messages);
     // Emit typed message to server.
-    // console.log('emitting', messages);
+    console.log('emitting', messages);
     this.socket.emit('chat message', messages);
   }
 
   render() {
     console.log('this.props in ChatScreen', this.props, this.state);
     let currentUser;
-    if (this.state.guide) {
+    // if (this.state.guide) {
+    //   currentUser = {
+    //     _id: this.state.userId,
+    //     name: 'guide',
+    //     guideId: this.state.guideId,
+    //     // avatar: 'https://avatars0.githubusercontent.com/u/22867659?v=3&u=ce528a943e09cdde30d47ef590543c0ce41ff615&s=400'
+    //   }
+    // } else {
       currentUser = {
         _id: this.state.userId,
-        name: 'guide',
+        author: this.state.author,
         guideId: this.state.guideId,
         // avatar: 'https://avatars0.githubusercontent.com/u/22867659?v=3&u=ce528a943e09cdde30d47ef590543c0ce41ff615&s=400'
       }
-    } else {
-      currentUser = {
-        _id: this.state.userId,
-        name: '',
-        guideId: this.state.guideId,
-        // avatar: 'https://avatars0.githubusercontent.com/u/22867659?v=3&u=ce528a943e09cdde30d47ef590543c0ce41ff615&s=400'
-      }
-    }
+    // }
 
     return (
       <GiftedChat

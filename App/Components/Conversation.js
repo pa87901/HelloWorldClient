@@ -1,14 +1,29 @@
 import React from 'react';
 import { TouchableHighlight, View, Image, Text, StyleSheet } from 'react-native';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
+import axios from '../axios';
 
 class Conversation extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      otherChatterName: null
+    }
+  }
+
+  componentDidMount() {
+    // Get guide name from guideId.
+    axios.get(`/api/users/byUserId/${this.props.guideId.user_id}`)
+    .then(response => {
+      this.setState({
+        otherChatterName: response.data.full_name
+      })
+      console.log('CONVERSATION RESPONSE', this.state.otherChatterName);
+    })
   }
 
   render() {
-    console.log('this.props in Conversation', this.props);
+    console.log('this.state in Conversation', this.state);
     const { navigate } = this.props.navigation;
     // Where this has been rendered from the UserInboxScreen...
     if (this.props.guideId) {
@@ -22,7 +37,7 @@ class Conversation extends React.Component {
                 style={styles.image}
                 />
               <Text>
-                PlaceHolder: render guide name here.
+                {this.state.otherChatterName}
               </Text>
             </View>
           </TouchableHighlight>
@@ -37,7 +52,7 @@ class Conversation extends React.Component {
                 style={styles.image}
                 />
               <Text>
-                PlaceHolder: render guide name here.
+                {this.state.otherChatterName}
               </Text>
             </View>
           </TouchableHighlight>
