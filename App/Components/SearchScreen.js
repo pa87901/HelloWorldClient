@@ -5,7 +5,6 @@ import { FormLabel, FormInput, Button, Divider, CheckBox } from 'react-native-el
 import { updateCity, updateDate, updateHours, updateTravelers, updateSearchResult, updateFilterCriteria } from '../Actions/searchActions.js';
 import axios from '../axios';
 import Axios from 'axios';
-import { updateFilterCriteria } from '../Actions/searchActions';
 import Autocomplete from 'react-native-autocomplete-input';
 import config from '../Config/config.js';
 import DatePicker from './SearchComponents/DatePicker';
