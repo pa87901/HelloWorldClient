@@ -30,7 +30,7 @@ class BecomeAGuideQuestions2 extends React.Component {
   }
 
   navigateToNext() {
-    this.props.navigation.navigate('GuideQuestions3');
+    this.props.navigation.navigate('GuideQuestions2p1');
   }
 
   render() {
@@ -59,7 +59,7 @@ class BecomeAGuideQuestions2 extends React.Component {
 
     return (
       <View style={{ marginTop: 100 }}>
-        <FormLabel>When do you need a guide?</FormLabel>
+        <FormLabel>When will you give a tour?</FormLabel>
         <View style={{ alignItems: 'center' }}>
           <TouchableOpacity onPress={() => this.setState({showDatePicker: !this.state.showDatePicker, showTimePicker: false})} >
           <FormLabel>Date</FormLabel>

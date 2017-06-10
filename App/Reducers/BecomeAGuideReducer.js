@@ -6,6 +6,7 @@ export default function reducer(state = {
   hourlyRate: '',
   intro: '',
   statement: '',
+  pointsOfInterest: []
 }, action) {
   if (action.type === 'BECOME_GUIDE_CITY') {
     return {...state, city: action.payload}
@@ -21,6 +22,8 @@ export default function reducer(state = {
     return {...state, intro: action.payload}
   } else if (action.type === 'BECOME_GUIDE_STATEMENT') {
     return {...state, statement: action.payload}
+  } else if (action.type === 'BECOME_GUIDE_POINTS_OF_INTEREST') {
+    return {...state, pointsOfInterest: action.payload}
   }
   return state;
 }
