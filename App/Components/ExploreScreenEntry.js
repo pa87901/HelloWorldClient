@@ -20,10 +20,6 @@ class ExploreScreenEntry extends React.Component {
     });
   } 
 
-  // ratingCompleted(rating) {
-  //   console.log('Rating is: ' + rating);
-  // }
-
   handleProfileClick(searchIndex) {
     this.props.dispatch(getProfileResult(this.props.search.result[searchIndex]));
 
@@ -32,7 +28,6 @@ class ExploreScreenEntry extends React.Component {
 
   render() {
     console.log('PROPS IN EXPLORE SCREEN ENTRY', this.props);
-
 
     return (
       <ScrollView>

@@ -27,20 +27,20 @@ class TimePick extends Component {
   }
 
   handleFromHourChange(hour) {
-    // console.log('FROMPICKER HOUR', hour);
     let fromHour;
-    if (this.state.fromAmPm === 'am') {
+    if (this.state.fromAmPm === 'am' && hour === 12) {
+      fromHour = hour - 12;
+    } else if (this.state.fromAmPm === 'am') {
       fromHour = hour;
+    } else if (this.state.fromAmPm === 'pm' && hour === 12) {
+      fromHour = 12;
     } else if (this.state.fromAmPm === 'pm') {
       fromHour = hour + 12;
     }
-    if (this.state.fromHour === 12 && this.state.fromAmPm === 'am') {
-      fromHour = 0;
-    }
+
     this.setState({
       fromHour: hour
     });
-    console.log('OJDFJS', this.state);
     this.props.dispatch(updateFromHour(fromHour));
   }
 
@@ -48,33 +48,33 @@ class TimePick extends Component {
     this.setState({
       fromAmPm: amPm
     });
-    console.log('FROMPICKER AMPM', this.state);
     let fromHour;
-    if (amPm === 'am') {
+    if (amPm === 'am' && this.state.fromHour === 12) {
+      fromHour = this.state.fromHour - 12;
+    } else if (amPm === 'am') {
       fromHour = this.state.fromHour;
+    } else if (amPm === 'pm' && this.state.fromHour === 12) {
+      fromHour = 12;
     } else if (amPm === 'pm') {
       fromHour = this.state.fromHour + 12;
-    }
-    if (this.state.fromHour === 12 && this.state.fromAmPm === 'am') {
-      fromHour = 0;
     }
     this.props.dispatch(updateFromHour(fromHour));
   }
 
   handleToHourChange(hour) {
     let toHour;
-    if (this.state.toAmPm === 'am') {
+    if (this.state.toAmPm === 'am' && hour === 12) {
+      toHour = hour - 12;
+    } else if (this.state.toAmPm === 'am') {
       toHour = hour;
+    } else if (this.state.toAmPm === 'pm' && hour === 12) {
+      toHour = 12;
     } else if (this.state.toAmPm === 'pm') {
       toHour = hour + 12;
-    }
-    if (this.state.toHour === 12 && this.state.toAmPm === 'am') {
-      toHour = 0;
     }
     this.setState({
       toHour: hour
     });
-    console.log('OJDFJS', this.state);
     this.props.dispatch(updateToHour(toHour));
   }
 
@@ -82,15 +82,15 @@ class TimePick extends Component {
     this.setState({
       toAmPm: amPm
     });
-    console.log('FROMPICKER AMPM', this.state);
     let toHour;
-    if (amPm === 'am') {
+    if (amPm === 'am' && this.state.toHour === 12) {
+      toHour = this.state.toHour - 12;
+    } else if (amPm === 'am') {
       toHour = this.state.toHour;
+    } else if (amPm === 'pm' && this.state.toHour === 12) {
+      toHour = 12;
     } else if (amPm === 'pm') {
       toHour = this.state.toHour + 12;
-    }
-    if (this.state.toHour === 12 && this.state.toAmPm === 'am') {
-      toHour = 0;
     }
     this.props.dispatch(updateToHour(toHour));
   }  
