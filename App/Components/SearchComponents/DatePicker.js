@@ -14,8 +14,8 @@ class DatePicker extends Component {
   }
 
   onDateChange(date) {
+    console.log('NEW DATE', `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`);
     this.setState({ date });
-    this.props.dispatch(updateDate(this.state.date));
   }
 
   render() {
@@ -25,7 +25,7 @@ class DatePicker extends Component {
           style={styles.picker}
           date={this.state.date}
           mode="date"
-          onDateChange={(e) => { this.onDateChange(e); this.props.dispatch(updateDate(e.toJSON().slice(0, 10).replace(/-/g, '-'))); }}
+          onDateChange={(e) => { this.onDateChange(e); this.props.dispatch(updateDate(`${e.getFullYear()}-${e.getMonth() + 1}-${e.getDate()}`)); }}
         />
       </View>
     );

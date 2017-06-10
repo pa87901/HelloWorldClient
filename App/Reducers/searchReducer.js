@@ -1,6 +1,6 @@
 export default function reducer(state = {
   city: 'SF',
-  date: '2017-10-10',
+  date: new Date().toDateString(),
   fromHour: 0,
   toHour: 0,
   numTravelers: 1,
