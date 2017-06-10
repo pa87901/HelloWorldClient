@@ -54,7 +54,7 @@ class BecomeAGuideQuestions2 extends React.Component {
     }
 
     // console.log('this.props.search.date', this.props.search.date);
-    const showDatePicker = this.state.showDatePicker ? <DatePicker /> : <Text style={styles.date}>{this.props.search.date}</Text>;
+    const showDatePicker = this.state.showDatePicker ? <DatePicker /> : <Text style={styles.date}>{this.props.becomeAGuide.date}</Text>;
     const showTimePicker = this.state.showTimePicker ? <TimePick /> : <Text style={styles.date}> From: {fromTime} To: {toTime}</Text>;
 
     return (

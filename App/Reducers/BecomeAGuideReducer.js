@@ -1,6 +1,6 @@
 export default function reducer(state = {
   city: '',
-  date: '',
+  date: new Date().toDateString(),
   fromHour: '',
   toHour: '',
   hourlyRate: '',
