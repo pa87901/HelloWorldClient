@@ -518,7 +518,8 @@
 				AB816C01BFE747FEA4279E14 /* RNVectorIcons.xcodeproj */,
 				FCE80525FE754AC3BC97F71A /* AirMaps.xcodeproj */,
 				55BEB261BE4A4E578C8B173B /* TPSStripe.xcodeproj */,
-				B102A7D717E447CDBE898FE1 /* TimePicker.xcodeproj */,			);
+				B102A7D717E447CDBE898FE1 /* TimePicker.xcodeproj */,
+			);
 			name = Libraries;
 			sourceTree = "<group>";
 		};
