@@ -14,7 +14,7 @@ class NewChatScreen extends Component {
   }
 
   componentDidMount() {
-    let privateRoom = `${this.props.navigation.state.params.me}-${this.props.navigation.state.params.them}`
+    let privateRoom = `${this.props.navigation.state.params.me}-${this.props.navigation.state.params.them}`;
 
     this.socket.on('connect', socket => {
       console.log('connected');

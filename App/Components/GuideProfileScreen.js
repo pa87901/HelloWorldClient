@@ -17,7 +17,7 @@ class GuideProfileScreen extends React.Component {
   }
 
   navigateToChatScreen() {
-    this.props.navigation.navigate('Chat');
+    this.props.navigation.navigate('NewChatScreen2');
   }
   
   render() {
