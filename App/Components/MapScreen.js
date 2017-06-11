@@ -127,6 +127,7 @@ class MapScreen extends React.Component {
   }
 
   render() {
+    console.log('---PROPS FROM THE MAP---', this.props.becomeAGuide)
     return (
       <View style={styles.container}>
         <MapView
