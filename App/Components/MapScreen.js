@@ -3,6 +3,10 @@ import { StyleSheet, Text, View, Dimensions } from 'react-native';
 import { Button } from 'react-native-elements';
 import { connect } from 'react-redux';
 import MapView from 'react-native-maps';
+import Geocoder from 'react-native-geocoding';
+import config from '../Config/config';
+
+Geocoder.setApiKey(config.GOOGLE_MAPS_API_KEY)
 
 const { width, height } = Dimensions.get('window');
 
@@ -29,6 +33,11 @@ class MapScreen extends React.Component {
         latitude: 0,
         longitude: 0
       },
+      pointOfInterestNames: [
+        'Golden Gate Bridge', 
+        'Golden Gate Park',
+        'AT&T Park'
+        ],
       //GG Bridge, GG Park, ATT Park
       pointsOfInterest: [
         {
@@ -47,6 +56,7 @@ class MapScreen extends React.Component {
     }
 
     this.fitAllMarkers = this.fitAllMarkers.bind(this);
+    this.getCoordsFromLocation = this.getCoordsFromLocation.bind(this);
 
   }
   watchID: ?number = null
@@ -96,7 +106,28 @@ class MapScreen extends React.Component {
     });
   }
 
+  getCoordsFromLocation() {
+    this.state.pointOfInterestNames.forEach((point) => {
+      Geocoder.getFromLocation(point).then(
+        json => {
+          let poiLocation = {
+            latitude: json.results[0].geometry.location.lat,
+            longitude: json.results[0].geometry.location.lng
+          };
+          
+          let poiList = []
+
+          console.log(poiLocation);
+        },
+        error => {
+          alert(error);
+        }
+      );      
+    })
+  }
+
   render() {
+    console.log('---PROPS FROM THE MAP---', this.props)
     return (
       <View style={styles.container}>
         <MapView
@@ -109,14 +140,16 @@ class MapScreen extends React.Component {
                 <View style={styles.marker}/>
               </View>
           </MapView.Marker>
-          {this.state.pointsOfInterest.map(point => {
-            console.log('---point---', point)
-            return (
-              <MapView.Marker
-                coordinate={point}
-                />
-            )
-          })}
+            {this.state.pointsOfInterest.map(point => {
+              console.log('---point---', point)
+              return (
+                <MapView.Marker
+                  ref={ref=> {this.marker = ref}}
+                  coordinate={point}
+                  title='POI Placeholder'
+                  />
+              );
+            })}
         </MapView>
         <View style={{position: 'absolute', left: 0, right: 0, bottom: 0}}>
           <Button
@@ -125,10 +158,11 @@ class MapScreen extends React.Component {
             backgroundColor='#FF8C00'
             title='Points of Interest'
             onPress={()=>this.fitAllMarkers()}
+            // onPress={()=>this.getCoordsFromLocation()}
           />
         </View>
       </View>
-    )
+    );
   }
 }
 

@@ -46,3 +46,10 @@ export function becomeGuideStatement(statement) {
       payload: statement
   };
 }
+
+export function becomeGuidePointsOfInterest(pointsOfInterest) {
+  return {
+    type: 'BECOME_GUIDE_POINTS_OF_INTEREST',
+    payload: pointsOfInterest
+  };
+}
