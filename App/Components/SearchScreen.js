@@ -33,6 +33,7 @@ class SearchScreen extends React.Component {
     };
     this.checkSpecialty = this.checkSpecialty.bind(this);
     this.handleCityUpdate.bind(this);
+    this.handleSearchSubmit.bind(this);
   }
 
   componentWillMount() {
@@ -77,10 +78,21 @@ class SearchScreen extends React.Component {
   }
 
   handleSearchSubmit() {
+    this.props.dispatch(updateSearchResult([]));
     const searchProps = this.props.search;
-    const query = `api/guides/search/${searchProps.city}/${searchProps.date}/${searchProps.fromHour}/${searchProps.toHour}`;
+    const criteriaList = ['sightseeing', 'food', 'sports', 'nightlife', 'music', 'museum', 'history', 'politics'];
+    const criteria = criteriaList.reduce((acc, crit, i) => {
+      console.log(acc, crit, i, crit[i]);
+      if (this.props.search.filterCriteria[crit] === true) {
+        return acc + 1;
+      } else {
+        return acc + 0;
+      }
+    }, '');
+    console.log('CRITERIA', criteria)
+    const query = `api/guides/search/${searchProps.city}/${searchProps.date}/${searchProps.fromHour}/${searchProps.toHour}/${criteria}`;
     
-    axios.get(query, { headers: searchProps.filterCriteria })
+    axios.get(query)
       .then((res) => {
         console.log(res.data);
         this.props.dispatch(updateSearchResult(res.data));
