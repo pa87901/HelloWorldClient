@@ -173,13 +173,13 @@ class GuideItineraryScreen extends Component {
     });
     // Axios put method to update booking in database.
     let nameOfPOIToDelete = this.state.pointsOfInterestNames[index];
-    axios.delete(`/api/events/remove/${this.props.navigation.state.params.bookingId}/${nameOfPOIToDelete}`)
-    .then(response => {
-      console.log('deleted event ', nameOfPOIToDelete,' for booking ', this.props.navigation.state.params.bookingId)
-    })
-    .catch(error => {
-      console.error('Error deleting event ', nameOfPOIToDelete, ' for booking ', this.props.navigation.state.params.bookingId)
-    })
+    // axios.delete(`/api/events/remove/${this.props.navigation.state.params.bookingId}/${nameOfPOIToDelete}`)
+    // .then(response => {
+    //   console.log('deleted event ', nameOfPOIToDelete,' for booking ', this.props.navigation.state.params.bookingId)
+    // })
+    // .catch(error => {
+    //   console.error('Error deleting event ', nameOfPOIToDelete, ' for booking ', this.props.navigation.state.params.bookingId)
+    // })
 
   }
 
