@@ -6,7 +6,8 @@ import { setGuideBookings } from '../Actions/bookingActions';
 import { NavigationActions } from 'react-navigation';
 import axios from '../axios';
 import Stars from 'react-native-stars-rating';
-// import {} from 'react-native-elements';
+import SwipeOut from 'react-native-swipeout';
+import GuideItineraryScreen from './GuideItineraryScreen';
 
 class GuideTripsScreen extends React.Component {
   constructor(props) {
@@ -17,7 +18,7 @@ class GuideTripsScreen extends React.Component {
       reviewModalVisible: false,
       rating: 0,
       review: '',
-      activeCard: null
+      activeCard: null,
     };
 
     this.navigateToExplore = this.navigateToExplore.bind(this);
@@ -65,14 +66,21 @@ class GuideTripsScreen extends React.Component {
   }
 
   render() {
-    console.log('STATE', this.state);
+    // console.log('STATE', this.state);
+
+    let swipeButtons = [{
+      text: 'Delete',
+      backGroudColor: 'red',
+      underlayColor: 'rgba(0, 0, 0, 1, 0.6)',
+      onPress: () => this.deletePointOfInterest(index)
+    }];
 
     if (this.state.guideBookings[0]) {
       return (
         <ScrollView>
           <Modal
             animationType={"none"}
-            transparent={false}
+            transparent={true}
             visible={this.state.reviewModalVisible}
             onRequestClose={() => {alert("Modal has been closed.")}}
             >
@@ -129,11 +137,22 @@ class GuideTripsScreen extends React.Component {
               <Text>
                 {booking.status}
               </Text>
-              <Button title='Map' onPress={()=>{this.props.navigation.navigate('MapScreen')}}/>   
+              {/*<Button title="Itinerary" onPress={() => this.props.navigation.navigate('ItineraryScreen', {bookingId: this.props.booking.guideBookings[0].bookings[i].id})}></Button>*/}
+              <Button title='Map' onPress={()=>{this.props.navigation.navigate('MapScreen', {bookingId: this.props.booking.guideBookings[0].bookings[i].id})}}/>   
               <Button title='Review' onPress={()=>{
                 this.setState({activeCard : i})
                 this.toggleReviewModal()
                 }} />
+
+
+              <Button
+                title="Itinerary" 
+                onPress={() => this.props.navigation.navigate('GuideItineraryScreen', {bookingId: this.props.booking.guideBookings[0].bookings[i].id})}
+              >
+              </Button>
+
+
+
             </Card>
             )
           })}

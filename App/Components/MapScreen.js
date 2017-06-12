@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import MapView from 'react-native-maps';
 import Geocoder from 'react-native-geocoding';
 import config from '../Config/config';
+import axios from '../axios';
 
 Geocoder.setApiKey(config.GOOGLE_MAPS_API_KEY)
 
@@ -60,6 +61,28 @@ class MapScreen extends React.Component {
 
   }
   watchID: ?number = null
+
+  componentWillMount() {
+    axios.get(`/api/events/booking/${this.props.navigation.state.params.bookingId}`)
+    .then(event => {
+      // console.log('event info from db', event);
+      let eventsCoordinates = event.data.map(booking => {
+        return {
+          coordinates: {
+            longitude: booking.latitude,
+            latitude: booking.longitude,
+          },
+          eventName: booking.event_name
+        }
+      });
+      this.setState({
+        pointsOfInterest: eventsCoordinates
+      });
+    })
+    .catch(error => {
+      console.error('error', error);
+    });
+  }
 
   componentDidMount () {
     navigator.geolocation.getCurrentPosition((position) =>{
@@ -127,7 +150,8 @@ class MapScreen extends React.Component {
   }
 
   render() {
-    console.log('---PROPS FROM THE MAP---', this.props)
+    // console.log('---PROPS FROM THE MAP---', this.props)
+    console.log('this.state in MAP', this.state);
     return (
       <View style={styles.container}>
         <MapView
@@ -141,12 +165,12 @@ class MapScreen extends React.Component {
               </View>
           </MapView.Marker>
             {this.state.pointsOfInterest.map(point => {
-              console.log('---point---', point)
+              // console.log('---point---', point)
               return (
                 <MapView.Marker
                   ref={ref=> {this.marker = ref}}
-                  coordinate={point}
-                  title='POI Placeholder'
+                  coordinate={point.coordinates}
+                  title={point.eventName}
                   />
               );
             })}
