@@ -22,6 +22,7 @@ import GuideRequestedTripScreen from './GuideRequestedTripScreen';
 import GuideTripsScreen from './GuideTripsScreen';
 import ProfileScreen from './ProfileScreen';
 import GuideInboxScreen from './GuideInboxScreen';
+import GuideItineraryScreen from './GuideItineraryScreen';
 import MapScreen from './MapScreen';
 import GuideChatScreen from './GuideChatScreen';
 // import CardFormScreen from './CardFormScreen';
@@ -56,6 +57,7 @@ const SearchNavigator = StackNavigator({
   GuideTrips: {screen: GuideTripsScreen},
   ProfileScreen: {screen: ProfileScreen},
   GuideInbox: {screen: GuideInboxScreen},
+  GuideItineraryScreen: {screen: GuideItineraryScreen},
   MapScreen: {screen: MapScreen},
   GuideChat: {screen: GuideChatScreen},
   NewChatScreen: {screen: NewChatScreen},

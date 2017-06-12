@@ -1,11 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import { Button, FormLabel, FormInput } from 'react-native-elements';
+import { StyleSheet, Text, View, TouchableOpacity, TouchableHighlight } from 'react-native';
+import { Button, FormLabel, FormInput, Divider} from 'react-native-elements';
 import Autocomplete from 'react-native-autocomplete-input';
 import { becomeGuidePointsOfInterest } from '../Actions/BecomeAGuideActions';
 import config from '../Config/config';
 import axios from '../axios';
+import Swipeout from 'react-native-swipeout';
 
 class BecomeAGuideQuestions2p1 extends React.Component {
   constructor(props){
@@ -64,8 +65,6 @@ class BecomeAGuideQuestions2p1 extends React.Component {
     this.setState({
       pointsOfInterest: poi
     });
-
-    
   }
 
   savePointsOfInterest() {
@@ -74,40 +73,59 @@ class BecomeAGuideQuestions2p1 extends React.Component {
   }
 
   render() {
-    console.log('--DREW--', this.props.becomeAGuide.pointsOfInterest);
+    // console.log('--DREW--', this.props.becomeAGuide.pointsOfInterest);
     const filterPOIs = this.state.pointOfInterestPredictions.length > 0 ? this.state.pointOfInterestPredictions : [];
+
     return (
       <View style={{marginTop: 100}}>
         <Text>Random string</Text>
         <FormLabel>What events are you searching for?</FormLabel>
         <Autocomplete
-            autoCapitalize="none"
-            keyboardShouldPersistTaps='always'
-            autoCorrect={false}
-            containerStyle={styles.autocompleteContainer}
-            data={filterPOIs}
-            defaultValue={this.state.pointOfInterestDescription}
-            onChangeText={text => this.updatePointOfInterest({ query: text })}
-            placeholder="Enter Point Of Interest"
-            renderItem={({ description }) => {
-              return (
-              <TouchableOpacity onPress={() => this.updatePointOfInterest({ query: description })}>
-                <Text style={styles.itemText}>
-                  {description}
-                </Text>
-              </TouchableOpacity>
-            )}}
-          />
-        {this.state.pointsOfInterest.map((pointOfInterest, index) => {
-          return (
-            <TouchableOpacity
-              key={index}
-              onPress={(event) => this.deletePointOfInterest(index)}
-            >
-              <Text>- {pointOfInterest}</Text>
+          autoCapitalize="none"
+          keyboardShouldPersistTaps='always'
+          autoCorrect={false}
+          containerStyle={styles.autocompleteContainer}
+          data={filterPOIs}
+          defaultValue={this.state.pointOfInterestDescription}
+          onChangeText={text => this.updatePointOfInterest({ query: text })}
+          placeholder="Enter Point Of Interest"
+          renderItem={({ description }) => {
+            return (
+            <TouchableOpacity onPress={() => this.updatePointOfInterest({ query: description })}>
+              <Text style={styles.itemText}>
+                {description}
+              </Text>
+
             </TouchableOpacity>
+          )}}
+        />
+
+        {this.state.pointsOfInterest.map((pointOfInterest, index) => {
+          let swipeBtns = [{
+            text: 'Delete',
+            backgroundColor: 'red',
+            underlayColor: 'rgba(0, 0, 0, 1, 0.6)',
+            onPress: () => { this.deletePointOfInterest(index) }
+          }];
+          return (
+            <Swipeout
+              right={swipeBtns}
+              autoClose='true'
+              backgroundColor='transparent'
+              key={index}
+            >
+              <View>
+                <View>
+                  <Text>
+                    {pointOfInterest}
+                  </Text>
+                  <Divider style={styles.swipeOut} />
+                </View>
+              </View>
+            </Swipeout>
           )
         })}
+
         <Button
           onPress={() => this.addPointsOfInterest(this.state.pointOfInterestDescription)}
           title='Add'
@@ -127,14 +145,14 @@ class BecomeAGuideQuestions2p1 extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: '#F5FCFF',
-    flex: 1,
-    paddingTop: 25,
-    paddingLeft: 10,
-    paddingRight: 10,
-    paddingBottom: 25,
-  },
+  // container: {
+  //   backgroundColor: '#F5FCFF',
+  //   flex: 1,
+  //   paddingTop: 25,
+  //   paddingLeft: 10,
+  //   paddingRight: 10,
+  //   paddingBottom: 25,
+  // },
   autocompleteContainer: {
     marginLeft: 10,
     marginRight: 10,
@@ -149,6 +167,11 @@ const styles = StyleSheet.create({
     // autocomplete input will disappear on text input.
     backgroundColor: '#F5FCFF',
     marginTop: 8
+  },
+  swipeOut: {
+    height: 20,
+    borderBottomColor: '#000',
+    borderBottomWidth: StyleSheet.hairlineWidth
   }
 });
 
