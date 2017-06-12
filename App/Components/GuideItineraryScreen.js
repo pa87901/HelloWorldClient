@@ -206,7 +206,6 @@ class GuideItineraryScreen extends Component {
 
       axios.get(query)
       .then(res => {
-        // console.log(res);
         const pointOfInterestPredictions = res.data.predictions;
         this.setState({
           pointOfInterestPredictions: pointOfInterestPredictions

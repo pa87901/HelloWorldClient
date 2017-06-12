@@ -33,7 +33,6 @@ class BecomeAGuideQuestions2p1 extends React.Component {
 
       axios.get(query)
       .then(res => {
-        // console.log(res);
         const pointOfInterestPredictions = res.data.predictions;
         this.setState({
           pointOfInterestPredictions: pointOfInterestPredictions
@@ -73,7 +72,6 @@ class BecomeAGuideQuestions2p1 extends React.Component {
   }
 
   render() {
-    // console.log('--DREW--', this.props.becomeAGuide.pointsOfInterest);
     const filterPOIs = this.state.pointOfInterestPredictions.length > 0 ? this.state.pointOfInterestPredictions : [];
 
     return (
