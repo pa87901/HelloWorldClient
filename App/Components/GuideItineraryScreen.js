@@ -81,12 +81,13 @@ class GuideItineraryScreen extends Component {
       });
       // Get coordinates of events
       let pointsOfInterestCoordinates = pointsOfInterest.data.map(pointOfInterest => {
+        console.log('pointOfInterest', Number(pointOfInterest.latitude), Number(pointOfInterest.longitude));
         return {
-          coordinates: {
-            longitude: pointOfInterest.latitude,
-            latitude: pointOfInterest.longitude,
-          },
-          eventName: pointOfInterest.event_name
+          // coordinates: {
+            latitude: Number(pointOfInterest.longitude),
+            longitude: Number(pointOfInterest.latitude),
+          // },
+          // eventName: pointOfInterest.event_name
         }
       });
       this.setState({
@@ -236,7 +237,7 @@ class GuideItineraryScreen extends Component {
 
 
   render() {
-    console.log('this.props ITINERARY SCREEN', this.props, this.state.pointsOfInterestNames);
+    // console.log('this.props ITINERARY SCREEN', this.state.pointsOfInterest);
     const filterPOIs = this.state.pointOfInterestPredictions.length > 0 ? this.state.pointOfInterestPredictions : [];
     return (
       <View>
@@ -348,13 +349,13 @@ class GuideItineraryScreen extends Component {
                     <View style={styles.marker}/>
                   </View>
               </MapView.Marker>
-                {this.state.pointsOfInterest.map(point => {
-                  // console.log('---point---', point)
+                {this.state.pointsOfInterest.map((point, index) => {
+                  console.log('---point---', point.coordinates)
                   return (
                     <MapView.Marker
                       ref={ref=> {this.marker = ref}}
-                      coordinate={point.coordinates}
-                      title={point.eventName}
+                      coordinate={point}
+                      title={this.state.pointsOfInterestNames[index]}
                       />
                   );
                 })}
