@@ -180,6 +180,11 @@ class TripsScreen extends React.Component {
                 this.setState({activeCard : i})
                 this.toggleReviewModal(true)
                 }} />
+                <Button
+                title="Itinerary" 
+                onPress={() => this.props.navigation.navigate('TouristItinerary', {bookingId: this.props.booking.touristBookings[0].bookings[i].id})}
+                >
+          </Button>
             </Card>
             )
           })}

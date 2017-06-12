@@ -28,6 +28,7 @@ import GuideChatScreen from './GuideChatScreen';
 // import CardFormScreen from './CardFormScreen';
 import NewChatScreen from './NewChatScreen';
 import NewChatScreen2 from './NewChatScreen2';
+import TouristItineraryScreen from './TouristItineraryScreen';
 
 
 const SearchNavigator = StackNavigator({
@@ -61,7 +62,8 @@ const SearchNavigator = StackNavigator({
   MapScreen: {screen: MapScreen},
   GuideChat: {screen: GuideChatScreen},
   NewChatScreen: {screen: NewChatScreen},
-  NewChatScreen2: {screen: NewChatScreen2}
+  NewChatScreen2: {screen: NewChatScreen2},
+  TouristItinerary: {screen: TouristItineraryScreen}
 });
 
 export default SearchNavigator;
