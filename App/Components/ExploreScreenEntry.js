@@ -32,7 +32,7 @@ class ExploreScreenEntry extends React.Component {
     return (
       <ScrollView>
       {this.props.search.result.map((guide, key) => {
-        if (guide.availabilities.length > 0 && guide.users.id) {
+        if (guide.availabilities.length > 0) {
           return (
             <Card
             key={key}
