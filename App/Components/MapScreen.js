@@ -68,11 +68,11 @@ class MapScreen extends React.Component {
       // console.log('event info from db', event);
       let eventsCoordinates = event.data.map(booking => {
         return {
-          coordinates: {
-            longitude: booking.latitude,
-            latitude: booking.longitude,
-          },
-          eventName: booking.event_name
+          // coordinates: {
+            longitude: Number(booking.latitude),
+            latitude: Number(booking.longitude),
+          // },
+          // eventName: booking.event_name
         }
       });
       this.setState({
@@ -164,13 +164,13 @@ class MapScreen extends React.Component {
                 <View style={styles.marker}/>
               </View>
           </MapView.Marker>
-            {this.state.pointsOfInterest.map(point => {
+            {this.state.pointsOfInterest.map((point, index) => {
               // console.log('---point---', point)
               return (
                 <MapView.Marker
                   ref={ref=> {this.marker = ref}}
-                  coordinate={point.coordinates}
-                  title={point.eventName}
+                  coordinate={point}
+                  title={this.state.pointOfInterestNames[index]}
                   />
               );
             })}
