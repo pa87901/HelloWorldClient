@@ -65,8 +65,6 @@ class BecomeAGuideQuestions2p1 extends React.Component {
     this.setState({
       pointsOfInterest: poi
     });
-
-    
   }
 
   savePointsOfInterest() {
@@ -83,34 +81,24 @@ class BecomeAGuideQuestions2p1 extends React.Component {
         <Text>Random string</Text>
         <FormLabel>What events are you searching for?</FormLabel>
         <Autocomplete
-            autoCapitalize="none"
-            keyboardShouldPersistTaps='always'
-            autoCorrect={false}
-            containerStyle={styles.autocompleteContainer}
-            data={filterPOIs}
-            defaultValue={this.state.pointOfInterestDescription}
-            onChangeText={text => this.updatePointOfInterest({ query: text })}
-            placeholder="Enter Point Of Interest"
-            renderItem={({ description }) => {
-              return (
-              <TouchableOpacity onPress={() => this.updatePointOfInterest({ query: description })}>
-                <Text style={styles.itemText}>
-                  {description}
-                </Text>
+          autoCapitalize="none"
+          keyboardShouldPersistTaps='always'
+          autoCorrect={false}
+          containerStyle={styles.autocompleteContainer}
+          data={filterPOIs}
+          defaultValue={this.state.pointOfInterestDescription}
+          onChangeText={text => this.updatePointOfInterest({ query: text })}
+          placeholder="Enter Point Of Interest"
+          renderItem={({ description }) => {
+            return (
+            <TouchableOpacity onPress={() => this.updatePointOfInterest({ query: description })}>
+              <Text style={styles.itemText}>
+                {description}
+              </Text>
 
-              </TouchableOpacity>
-            )}}
-          />
-        {/*{this.state.pointsOfInterest.map((pointOfInterest, index) => {
-          return (
-            <TouchableOpacity
-              key={index}
-              onPress={(event) => this.deletePointOfInterest(index)}
-            >
-              <Text>- {pointOfInterest}</Text>
             </TouchableOpacity>
-          )
-        })}*/}
+          )}}
+        />
 
         {this.state.pointsOfInterest.map((pointOfInterest, index) => {
           let swipeBtns = [{

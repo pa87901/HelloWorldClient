@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
-import { Button, Card, Text, ScrollView, StyleSheet, View, Dimensions, Modal } from 'react-native';
-import { Divider} from 'react-native-elements';
+import { Card, Text, ScrollView, StyleSheet, View, Dimensions, Modal, TouchableHighlight } from 'react-native';
+import { Button, Divider, FormLabel, FormInput} from 'react-native-elements';
 import { connect } from 'react-redux';
 import SwipeOut from 'react-native-swipeout';
 import axios from '../axios';
 import MapView from 'react-native-maps';
 import Geocoder from 'react-native-geocoding';
 import config from '../Config/config';
+import Autocomplete from 'react-native-autocomplete-input';
 
 Geocoder.setApiKey(config.GOOGLE_MAPS_API_KEY)
 
@@ -55,12 +56,18 @@ class GuideItineraryScreen extends Component {
         }
       ],
       modalVisible: false,
+      pointOfInterestPredictions: [],
+      pointOfInterestDescription: '',
+      autocompleteModalVisible: false
     }
     this.deleteEvent = this.deleteEvent.bind(this);
     this.initialisePosition = this.initialisePosition.bind(this);
     this.fitAllMarkers = this.fitAllMarkers.bind(this);
     this.getCoordsFromLocation = this.getCoordsFromLocation.bind(this);
     this.setModalVisible = this.setModalVisible.bind(this);
+    this.updatePointOfInterest = this.updatePointOfInterest.bind(this); //working
+    this.addPointsOfInterest = this.addPointsOfInterest.bind(this); //working
+    this.setAutocompleteModalVisible = this.setAutocompleteModalVisible.bind(this);
   }
 
   watchID: ?number = null
@@ -165,6 +172,15 @@ class GuideItineraryScreen extends Component {
       pointsOfInterestNames: newPointsOfInterestNames
     });
     // Axios put method to update booking in database.
+    let nameOfPOIToDelete = this.state.pointsOfInterestNames[index];
+    axios.delete(`/api/events/remove/${this.props.navigation.state.params.bookingId}/${nameOfPOIToDelete}`)
+    .then(response => {
+      console.log('deleted event ', nameOfPOIToDelete,' for booking ', this.props.navigation.state.params.bookingId)
+    })
+    .catch(error => {
+      console.error('Error deleting event ', nameOfPOIToDelete, ' for booking ', this.props.navigation.state.params.bookingId)
+    })
+
   }
 
   setModalVisible(boolean) {
@@ -173,14 +189,62 @@ class GuideItineraryScreen extends Component {
     })
   }
 
+  setAutocompleteModalVisible(boolean) {
+    this.setState({
+      autocompleteModalVisible: boolean
+    })
+  }
+
+  updatePointOfInterest(pointOfInterest) {
+    // Update local state.
+    pointOfInterest = pointOfInterest.query
+    this.setState({
+      pointOfInterestDescription: pointOfInterest
+    })
+    if (pointOfInterest.length > 3) {
+      let query = `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${pointOfInterest}&key=${config.GOOGLE_PLACES_API_KEY}`;
+
+      axios.get(query)
+      .then(res => {
+        // console.log(res);
+        const pointOfInterestPredictions = res.data.predictions;
+        this.setState({
+          pointOfInterestPredictions: pointOfInterestPredictions
+        });
+        console.log('pointOfInterestPredictions', this.state.pointOfInterestPredictions);
+      })
+      .catch(err => {
+        console.error(err);
+      })
+    } else {
+      this.setState({
+        pointOfInterestPredictions: [],
+      });
+      console.log('pointsOfInterestDescription', this.pointOfInterestDescription);
+    }
+  }
+
+  addPointsOfInterest(pointOfInterest) {
+    let poi = this.state.pointsOfInterestNames;
+    poi.push(pointOfInterest)
+    this.setState({
+      pointsOfInterestNames: poi
+    });
+    console.log('this.state.pointsOfInterestNames', this.state.pointsOfInterestNames);
+    // Axios post method to include event for booking.
+    
+  }
+
 
   render() {
     console.log('this.props ITINERARY SCREEN', this.props, this.state.pointsOfInterestNames);
+    const filterPOIs = this.state.pointOfInterestPredictions.length > 0 ? this.state.pointOfInterestPredictions : [];
     return (
       <View>
         <View style={styles.header}>
           <Text style={styles.title}>Itinerary</Text>
         </View>
+
         <View style={styles.list}>
           <Divider style={styles.swipeOut} />
           {this.state.pointsOfInterestNames.map((event, index) => {
@@ -206,6 +270,64 @@ class GuideItineraryScreen extends Component {
               </SwipeOut>
             )
           })}
+        </View>
+
+        <View style={{marginTop: 22}}>
+          <Modal
+            animationType={"slide"}
+            transparent={false}
+            visible={this.state.autocompleteModalVisible}
+            onRequestClose={() => {alert("Modal has been closed.")}}
+          >
+            <FormLabel>Event to add</FormLabel>
+            <Autocomplete
+              autoCapitalize="none"
+              keyboardShouldPersistTaps='always'
+              autoCorrect={false}
+              containerStyle={styles.autocompleteContainer}
+              data={filterPOIs}
+              defaultValue={this.state.pointOfInterestDescription}
+              onChangeText={text => this.updatePointOfInterest({ query: text })}
+              placeholder="Enter Point Of Interest"
+              renderItem={({ description }) => {
+                return (
+                <TouchableHighlight
+                  onPress={() => this.updatePointOfInterest({ query: description })}
+                >
+                  <Text style={styles.itemText}>
+                    {description}
+                  </Text>
+                </TouchableHighlight>
+              )}}
+            />
+            <View style={{position: 'absolute', left: 0, right: 0, bottom: 70}}>
+              <Button
+                small
+                raised
+                backgroundColor='#4B0082'
+                title='Add'
+                onPress={() => this.addPointsOfInterest(this.state.pointOfInterestDescription)}
+              />
+            </View>
+            <View style={{position: 'absolute', left: 0, right: 0, bottom: 10}}>
+              <Button
+                small
+                raised
+                backgroundColor='#32CD32'
+                title='Back to Itinerary'
+                onPress={() => this.setAutocompleteModalVisible(!this.state.autocompleteModalVisible)}
+              />
+            </View>
+          </Modal>
+          <View style={{position: 'absolute', left: 0, right: 0, bottom: 70}}>
+            <Button
+              large
+              raised
+              backgroundColor='#0000FF'
+              title='Add event'
+              onPress={() => this.setAutocompleteModalVisible(true)}
+            />
+          </View>
         </View>
 
 
@@ -248,6 +370,9 @@ class GuideItineraryScreen extends Component {
                 // onPress={()=>this.getCoordsFromLocation()}
               />
               <Button
+                small
+                raised
+                backgroundColor='#32CD32'
                 title='Back to Itinerary'
                 onPress={() => this.setModalVisible(!this.state.modalVisible)}
               />
@@ -255,7 +380,7 @@ class GuideItineraryScreen extends Component {
           </Modal>
           <View style={{position: 'absolute', left: 0, right: 0, bottom: 0}}>
             <Button
-              small
+              large
               raised
               backgroundColor='#FF8C00'
               title='Map'
@@ -276,7 +401,7 @@ const styles = StyleSheet.create({
     fontSize: 15
   },
   list: {
-    height: 550
+    height: 475
   },
   swipeOut: {
     height: 20,
