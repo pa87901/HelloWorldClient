@@ -63,8 +63,8 @@ class SearchScreen extends React.Component {
         return acc + 0;
       }
     }, '');
-
-    const query = `api/guides/search/${searchProps.city}/${searchProps.date}/${searchProps.fromHour}/${searchProps.toHour}/${criteria}`;
+    
+    const query = `api/guides/search/${searchProps.city}/${(new Date(searchProps.date)).getTime()}/${searchProps.fromHour}/${searchProps.toHour}/${criteria}`;
     
     axios.get(query)
       .then((res) => {
@@ -94,7 +94,7 @@ class SearchScreen extends React.Component {
   }
 
   render() {
-    const showDatePicker =  this.state.display === 'date'  ? <DatePicker /> : <TextInput style={styles.timeContainer} onFocus={()=>{this.setState({ display : 'date' })}} value={'  Date: ' + this.props.search.date} />;
+    const showDatePicker =  this.state.display === 'date'  ? <DatePicker /> : <TextInput style={styles.timeContainer} onFocus={()=>{this.setState({ display : 'date' })}} value={'  Date: ' + new Date(this.props.search.date).toDateString()} />;
     const showTimePicker = this.state.display === 'time' ? <TimePick mode='datetime' /> : <TextInput style={styles.timeContainer} onFocus={()=>{this.setState({ display : 'time' })}} value={'  Time: ' + this.props.search.fromHour + ' - ' + this.props.search.toHour} />;
     const filterCities = this.state.citiesPrediction.length > 0 && this.state.citiesPrediction[0].description !== this.props.search.city ? this.state.citiesPrediction : [];
 

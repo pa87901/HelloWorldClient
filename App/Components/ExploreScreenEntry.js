@@ -18,7 +18,7 @@ class ExploreScreenEntry extends React.Component {
       <View style={styles.orangeContainer}>
         <View>
           <Text style={styles.orangeText}>{this.props.search.city + '\n'} 
-          {this.props.search.date} {this.props.search.fromHour} {this.props.search.toHour}</Text>
+          {new Date(this.props.search.date).toDateString()} {this.props.search.fromHour} {this.props.search.toHour}</Text>
         </View>
         <ScrollView>
           <View style={styles.orangeContainer}>
