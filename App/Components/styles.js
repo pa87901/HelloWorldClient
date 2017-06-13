@@ -7,7 +7,7 @@ export default StyleSheet.create({
     paddingLeft: 10,
     paddingRight: 10,
     paddingBottom: 25,
-    backgroundColor: 'rgba(255, 131, 17, 0.015)'
+    backgroundColor: 'white'
   },
   header: {
     color: '#FF830D',
@@ -76,17 +76,11 @@ export default StyleSheet.create({
   date: {
     fontSize: 20,
   },
-  switches: {
-    // backgroundColor: '#F5FCFF',
-    flex: 1,
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-  },
   timeContainer: {
     marginLeft: 10,
     marginRight: 10,
     marginBottom: 10,
-    height: 50,
+    height: 45,
     borderColor: '#FF830D',
     borderWidth: 3    
   },
@@ -97,15 +91,14 @@ export default StyleSheet.create({
     borderColor: '#FF830D',
     borderWidth: 3,
   },
-  itemText: {
-    fontSize: 15,
-    margin: 2
+  orangeText:{
+    color: '#FF830D',
+    backgroundColor: 'white',
+    fontSize: 18,
   },
-  checkedItem: {
-    borderRadius: 5,
-    width: 150
-  },
-  unCheckedItem: {
-    width: 150
-  },
+  orangeContainer:{
+    backgroundColor: 'rgba(255, 131, 17, 0.15)',
+    // backgroundColor:'black',
+    flex: 1
+  }
 });

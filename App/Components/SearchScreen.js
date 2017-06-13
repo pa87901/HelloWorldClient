@@ -56,8 +56,7 @@ class SearchScreen extends React.Component {
     this.props.dispatch(updateSearchResult([]));
     const searchProps = this.props.search;
     const criteriaList = ['sightseeing', 'food', 'sports', 'nightlife', 'music', 'museum', 'history', 'politics'];
-    const criteria = criteriaList.reduce((acc, crit, i) => {
-      console.log(acc, crit, i, crit[i]);
+    const criteria = criteriaList.reduce((acc, crit) => {
       if (this.props.search.filterCriteria[crit] === true) {
         return acc + 1;
       } else {
@@ -95,8 +94,6 @@ class SearchScreen extends React.Component {
   }
 
   render() {
-    console.log('Props in SearchScreen', this.props, this.state.criteria);
-
     const showDatePicker =  this.state.display === 'date'  ? <DatePicker /> : <TextInput style={styles.timeContainer} onFocus={()=>{this.setState({ display : 'date' })}} value={'  Date: ' + this.props.search.date} />;
     const showTimePicker = this.state.display === 'time' ? <TimePick mode='datetime' /> : <TextInput style={styles.timeContainer} onFocus={()=>{this.setState({ display : 'time' })}} value={'  Time: ' + this.props.search.fromHour + ' - ' + this.props.search.toHour} />;
     const filterCities = this.state.citiesPrediction.length > 0 && this.state.citiesPrediction[0].description !== this.props.search.city ? this.state.citiesPrediction : [];
