@@ -1,9 +1,7 @@
-import React from 'react';
 import { StackNavigator } from 'react-navigation';
 import SearchScreen from './SearchScreen';
 import ExploreNavigator from './ExploreNavigator';
 import GuideProfileScreen from './GuideProfileScreen';
-import LoginScreen from './LoginScreen';
 import BookingPolicyScreen from './BookingPolicyScreen';
 import BookingConfirmationScreen from './BookingConfirmationScreen';
 import BecomeAGuideOptions from './BecomeAGuideOptions';
@@ -25,45 +23,72 @@ import GuideInboxScreen from './GuideInboxScreen';
 import GuideItineraryScreen from './GuideItineraryScreen';
 import MapScreen from './MapScreen';
 import GuideChatScreen from './GuideChatScreen';
-// import CardFormScreen from './CardFormScreen';
 import NewChatScreen from './NewChatScreen';
 import NewChatScreen2 from './NewChatScreen2';
 import TouristItineraryScreen from './TouristItineraryScreen';
 
 
 const SearchNavigator = StackNavigator({
-  // Login: {screen: LoginScreen},
-  Search: {screen: SearchScreen,
+  Search: {
+    screen: SearchScreen,
     navigationOptions: {
-      header: null
+      headerMode: 'float',
+      header: null,
+      title: 'LOCALIZE',
+      card: 'modal',
+      headerTintColor: '#000',
+      headerStyle: { styles }
     }
   },
-  Explore: {screen: ExploreNavigator},
-  GuideProfile: {screen: GuideProfileScreen},
-  BookingPolicy: {screen: BookingPolicyScreen},
-  BookingConfirmation: {screen: BookingConfirmationScreen},
-  GuideOptions: {screen: BecomeAGuideOptions},
-  GuideQuestions1: {screen: BecomeAGuideQuestions1},
-  GuideQuestions2: {screen: BecomeAGuideQuestions2},
-  GuideQuestions2p1: {screen: BecomeAGuideQuestions2p1},
-  GuideQuestions3: {screen: BecomeAGuideQuestions3},
-  GuideQuestions4: {screen: BecomeAGuideQuestions4},
-  GuideQuestions5: {screen: BecomeAGuideQuestions5},
-  GuideQuestionsPolicies: {screen: BecomeAGuideQuestionsPolicies},
-  GuideQuestionsConfirmation: {screen: BecomeAGuideQuestionsConfirmation},
-  SpecialtiesSetting: {screen: SpecialtiesSetting},
-  Chat: {screen: ChatScreen},
-  GuideRequestedTrips: {screen: GuideRequestedTrips},
-  GuideRequestedTripScreen: {screen: GuideRequestedTripScreen},
-  GuideTrips: {screen: GuideTripsScreen},
-  ProfileScreen: {screen: ProfileScreen},
-  GuideInbox: {screen: GuideInboxScreen},
-  GuideItineraryScreen: {screen: GuideItineraryScreen},
-  MapScreen: {screen: MapScreen},
-  GuideChat: {screen: GuideChatScreen},
-  NewChatScreen: {screen: NewChatScreen},
-  NewChatScreen2: {screen: NewChatScreen2},
-  TouristItinerary: {screen: TouristItineraryScreen}
+  Explore: { screen: ExploreNavigator },
+  GuideProfile: { screen: GuideProfileScreen },
+  BookingPolicy: { screen: BookingPolicyScreen },
+  BookingConfirmation: { screen: BookingConfirmationScreen },
+  GuideOptions: { screen: BecomeAGuideOptions },
+  GuideQuestions1: { screen: BecomeAGuideQuestions1 },
+  GuideQuestions2: { screen: BecomeAGuideQuestions2 },
+  GuideQuestions2p1: { screen: BecomeAGuideQuestions2p1 },
+  GuideQuestions3: { screen: BecomeAGuideQuestions3 },
+  GuideQuestions4: { screen: BecomeAGuideQuestions4 },
+  GuideQuestions5: { screen: BecomeAGuideQuestions5 },
+  GuideQuestionsPolicies: { screen: BecomeAGuideQuestionsPolicies },
+  GuideQuestionsConfirmation: { screen: BecomeAGuideQuestionsConfirmation },
+  SpecialtiesSetting: { screen: SpecialtiesSetting },
+  Chat: { screen: ChatScreen },
+  GuideRequestedTrips: { screen: GuideRequestedTrips },
+  GuideRequestedTripScreen: { screen: GuideRequestedTripScreen },
+  GuideTrips: { screen: GuideTripsScreen },
+  ProfileScreen: { screen: ProfileScreen },
+  GuideInbox: { screen: GuideInboxScreen },
+  GuideItineraryScreen: { screen: GuideItineraryScreen },
+  MapScreen: { screen: MapScreen },
+  GuideChat: { screen: GuideChatScreen },
+  NewChatScreen: { screen: NewChatScreen },
+  NewChatScreen2: { screen: NewChatScreen2 },
+  TouristItinerary: { screen: TouristItineraryScreen }
 });
+
+const styles = {
+  headerStyle: {
+    fontSize: 30,
+    marginTop: 10
+  },
+  intro: {
+    marginTop: 10,
+    marginBottom: 10,
+  },
+  list: {
+    borderBottomWidth: 0,
+    borderTopWidth: 0
+  },
+  listItem: {
+    borderBottomWidth: 0,
+    marginTop: 5,
+    marginBottom: 0
+  },
+  specialityTitle: {
+    marginLeft: 40
+  }
+};
 
 export default SearchNavigator;
