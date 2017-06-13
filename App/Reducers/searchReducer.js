@@ -1,8 +1,8 @@
 export default function reducer(state = {
-  city: 'SF',
+  city: '',
   date: new Date().toDateString(),
-  fromHour: 0,
-  toHour: 0,
+  fromHour: (new Date()).getHours(),
+  toHour: (new Date()).getHours() + 1,
   numTravelers: 1,
   result: [],
   filterCriteria: {

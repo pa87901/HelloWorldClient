@@ -35,7 +35,11 @@ const SearchNavigator = StackNavigator({
   // Login: {screen: LoginScreen},
   Search: {screen: SearchScreen,
     navigationOptions: {
-      header: null
+      headerMode: 'float',
+      header: null,
+      title: 'LOCALIZE',
+      card: 'modal',
+      cardStyles: { styles }
     }
   },
   Explore: {screen: ExploreNavigator},
@@ -65,5 +69,28 @@ const SearchNavigator = StackNavigator({
   NewChatScreen2: {screen: NewChatScreen2},
   TouristItinerary: {screen: TouristItineraryScreen}
 });
+
+const styles = {
+  headerStyle: {
+    fontSize: 20,
+    marginTop: 10
+  },
+  intro: {
+    marginTop: 10,
+    marginBottom: 10,
+  },
+  list: {
+    borderBottomWidth: 0,
+    borderTopWidth: 0
+  },
+  listItem: {
+    borderBottomWidth: 0,
+    marginTop: 5,
+    marginBottom: 0
+  },
+  specialityTitle: {
+    marginLeft: 40
+  }
+};
 
 export default SearchNavigator;
