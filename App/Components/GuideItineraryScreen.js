@@ -35,31 +35,14 @@ class GuideItineraryScreen extends Component {
         latitude: 0,
         longitude: 0
       },
-      pointsOfInterestNames: [
-        'Golden Gate Bridge', 
-        'Golden Gate Park',
-        'AT&T Park'
-        ],
-      //GG Bridge, GG Park, ATT Park
-      pointsOfInterest: [
-        {
-          latitude: 37.8199, 
-          longitude: -122.4783
-        }, 
-        {
-          latitude: 37.7786,
-          longitude: -122.3893
-        },
-        {
-          latitude: 37.7694,
-          longitude: -122.4862
-        }
-      ],
+      pointsOfInterestNames: [],
+      pointsOfInterest: [],
       modalVisible: false,
       pointOfInterestPredictions: [],
       pointOfInterestDescription: '',
       autocompleteModalVisible: false
     }
+
     this.deleteEvent = this.deleteEvent.bind(this);
     this.initialisePosition = this.initialisePosition.bind(this);
     this.fitAllMarkers = this.fitAllMarkers.bind(this);
@@ -68,6 +51,7 @@ class GuideItineraryScreen extends Component {
     this.updatePointOfInterest = this.updatePointOfInterest.bind(this); //working
     this.addPointsOfInterest = this.addPointsOfInterest.bind(this); //working
     this.setAutocompleteModalVisible = this.setAutocompleteModalVisible.bind(this);
+
   }
 
   watchID: ?number = null
@@ -147,6 +131,8 @@ class GuideItineraryScreen extends Component {
   }
 
   getCoordsFromLocation() {
+    let poiList = [];
+    
     this.state.pointsOfInterestNames.forEach(point => {
       Geocoder.getFromLocation(point).then(
         json => {
@@ -155,9 +141,10 @@ class GuideItineraryScreen extends Component {
             longitude: json.results[0].geometry.location.lng
           };
           
-          let poiList = []
-
-          console.log(poiLocation);
+          poiList.push(poiLocation);
+          this.setState({
+            pointsOfInterest: poiList
+          });
         },
         error => {
           alert(error);
@@ -188,6 +175,7 @@ class GuideItineraryScreen extends Component {
     this.setState({
       modalVisible: boolean
     })
+    this.getCoordsFromLocation();
   }
 
   setAutocompleteModalVisible(boolean) {
@@ -367,7 +355,6 @@ class GuideItineraryScreen extends Component {
                 backgroundColor='#FF8C00'
                 title='Points of Interest'
                 onPress={()=>this.fitAllMarkers()}
-                // onPress={()=>this.getCoordsFromLocation()}
               />
               <Button
                 small

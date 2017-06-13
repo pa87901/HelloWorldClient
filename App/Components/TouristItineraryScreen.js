@@ -34,31 +34,14 @@ class TouristItineraryScreen extends Component {
         latitude: 0,
         longitude: 0
       },
-      pointsOfInterestNames: [
-        'Golden Gate Bridge', 
-        'Golden Gate Park',
-        'AT&T Park'
-        ],
-      //GG Bridge, GG Park, ATT Park
-      pointsOfInterest: [
-        {
-          latitude: 37.8199, 
-          longitude: -122.4783
-        }, 
-        {
-          latitude: 37.7786,
-          longitude: -122.3893
-        },
-        {
-          latitude: 37.7694,
-          longitude: -122.4862
-        }
-      ],
+      pointsOfInterestNames: [],
+      pointsOfInterest: [],
       modalVisible: false,
       pointOfInterestPredictions: [],
       pointOfInterestDescription: '',
       autocompleteModalVisible: false
     }
+
     this.deleteEvent = this.deleteEvent.bind(this);
     this.initialisePosition = this.initialisePosition.bind(this);
     this.fitAllMarkers = this.fitAllMarkers.bind(this);
@@ -67,6 +50,7 @@ class TouristItineraryScreen extends Component {
     this.updatePointOfInterest = this.updatePointOfInterest.bind(this); //working
     this.addPointsOfInterest = this.addPointsOfInterest.bind(this); //working
     this.setAutocompleteModalVisible = this.setAutocompleteModalVisible.bind(this);
+
   }
 
   watchID: ?number = null
@@ -74,18 +58,13 @@ class TouristItineraryScreen extends Component {
   componentDidMount() {
     axios.get(`/api/events/booking/${this.props.navigation.state.params.bookingId}`)
     .then(pointsOfInterest => {
-      // Get names of events
       let pointsOfInterestNames = pointsOfInterest.data.map(pointOfInterest => {
         return pointOfInterest.event_name
       });
-      // Get coordinates of events
       let pointsOfInterestCoordinates = pointsOfInterest.data.map(pointOfInterest => {
         return {
-          coordinates: {
-            longitude: pointOfInterest.latitude,
-            latitude: pointOfInterest.longitude,
-          },
-          eventName: pointOfInterest.event_name
+          longitude: Number(pointOfInterest.latitude),
+          latitude: Number(pointOfInterest.longitude),
         }
       });
       this.setState({
@@ -145,6 +124,8 @@ class TouristItineraryScreen extends Component {
   }
 
   getCoordsFromLocation() {
+    let poiList = [];
+    
     this.state.pointsOfInterestNames.forEach(point => {
       Geocoder.getFromLocation(point).then(
         json => {
@@ -153,9 +134,10 @@ class TouristItineraryScreen extends Component {
             longitude: json.results[0].geometry.location.lng
           };
           
-          let poiList = []
-
-          console.log(poiLocation);
+          poiList.push(poiLocation);
+          this.setState({
+            pointsOfInterest: poiList
+          });
         },
         error => {
           alert(error);
@@ -164,34 +146,17 @@ class TouristItineraryScreen extends Component {
     });
   }
 
-  deleteEvent(index) {
-    let newPointsOfInterestNames = this.state.pointsOfInterestNames.slice();
-    newPointsOfInterestNames.splice(index, 1);
-    this.setState({
-      pointsOfInterestNames: newPointsOfInterestNames
-    });
-    // Axios put method to update booking in database.
-    let nameOfPOIToDelete = this.state.pointsOfInterestNames[index];
-    // axios.delete(`/api/events/remove/${this.props.navigation.state.params.bookingId}/${nameOfPOIToDelete}`)
-    // .then(response => {
-    //   console.log('deleted event ', nameOfPOIToDelete,' for booking ', this.props.navigation.state.params.bookingId)
-    // })
-    // .catch(error => {
-    //   console.error('Error deleting event ', nameOfPOIToDelete, ' for booking ', this.props.navigation.state.params.bookingId)
-    // })
-
-  }
-
   setModalVisible(boolean) {
     this.setState({
       modalVisible: boolean
-    })
+    });
+    this.getCoordsFromLocation();
   }
 
   setAutocompleteModalVisible(boolean) {
     this.setState({
       autocompleteModalVisible: boolean
-    })
+    });
   }
 
   updatePointOfInterest(pointOfInterest) {
@@ -199,7 +164,7 @@ class TouristItineraryScreen extends Component {
     pointOfInterest = pointOfInterest.query
     this.setState({
       pointOfInterestDescription: pointOfInterest
-    })
+    });
     if (pointOfInterest.length > 3) {
       let query = `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${pointOfInterest}&key=${config.GOOGLE_PLACES_API_KEY}`;
 
@@ -209,16 +174,14 @@ class TouristItineraryScreen extends Component {
         this.setState({
           pointOfInterestPredictions: pointOfInterestPredictions
         });
-        console.log('pointOfInterestPredictions', this.state.pointOfInterestPredictions);
       })
       .catch(err => {
         console.error(err);
-      })
+      });
     } else {
       this.setState({
         pointOfInterestPredictions: [],
       });
-      console.log('pointsOfInterestDescription', this.pointOfInterestDescription);
     }
   }
 
@@ -228,14 +191,10 @@ class TouristItineraryScreen extends Component {
     this.setState({
       pointsOfInterestNames: poi
     });
-    console.log('this.state.pointsOfInterestNames', this.state.pointsOfInterestNames);
-    // Axios post method to include event for booking.
-    
   }
 
 
   render() {
-    console.log('this.props ITINERARY SCREEN', this.props, this.state.pointsOfInterestNames);
     const filterPOIs = this.state.pointOfInterestPredictions.length > 0 ? this.state.pointOfInterestPredictions : [];
     return (
       <View>
@@ -246,13 +205,16 @@ class TouristItineraryScreen extends Component {
         <View style={styles.list}>
           <Divider style={styles.swipeOut} />
           {this.state.pointsOfInterestNames.map((event, index) => {
-            let swipeButtons = [{
-              text: 'Delete',
-              backgroundColor: 'red',
-              underlayColor: 'rgba(0, 0, 0, 1.6)',
-              onPress: () => this.deleteEvent(index)
-            }];
-           
+            return (
+            <View
+              key={index}
+            >
+              <Text>{event}</Text>
+              <Divider
+                style={styles.swipeOut}
+              />
+            </View>
+            )
           })}
         </View>
 
@@ -324,13 +286,13 @@ class TouristItineraryScreen extends Component {
                     <View style={styles.marker}/>
                   </View>
               </MapView.Marker>
-                {this.state.pointsOfInterest.map(point => {
+                {this.state.pointsOfInterest.map((point, index) => {
                   // console.log('---point---', point)
                   return (
                     <MapView.Marker
                       ref={ref=> {this.marker = ref}}
-                      coordinate={point.coordinates}
-                      title={point.eventName}
+                      coordinate={point}
+                      title={this.state.pointsOfInterestNames[index]}
                       />
                   );
                 })}
