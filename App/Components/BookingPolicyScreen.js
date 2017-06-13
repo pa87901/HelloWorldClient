@@ -29,7 +29,8 @@ class BookingPolicyScreen extends React.Component {
       city: this.props.search.city,
       startDateHr: `${this.props.search.date}, ${this.props.search.fromHour}:00`,
       endDateHr: `${this.props.search.date}, ${this.props.search.toHour}:00`,
-      date: this.props.search.date
+      date: this.props.search.date,
+      availabilityId: this.props.profileSelection.selectedProfile.availabilities[0].id
     };
     
     axios.post('api/bookings', options)
