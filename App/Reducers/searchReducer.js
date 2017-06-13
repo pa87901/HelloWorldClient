@@ -14,7 +14,8 @@ export default function reducer(state = {
     museum: false,
     history: false,
     politics: false,
-  }
+  },
+  
 }, action) {
   if (action.type === 'UPDATE_CITY_FULFILLED') {
     return {...state, city: action.payload}

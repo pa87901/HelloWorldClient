@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import { Button as NativeButton } from 'react-native';
 import { Card, Button, Rating } from 'react-native-elements';
-import { getProfileResult } from '../Actions/profileSelectionActions';
+import { getProfileResult, selectAvailability } from '../Actions/profileSelectionActions';
 import axios from '../axios';
 import { updateUserGuideId } from '../Actions/userProfileActions.js';
 
@@ -22,7 +22,7 @@ class ExploreScreenEntry extends React.Component {
 
   handleProfileClick(searchIndex) {
     this.props.dispatch(getProfileResult(this.props.search.result[searchIndex]));
-
+    // this.props.dispatch(selectAvailability(this.props.search.result[searchIndex]));
     this.props.navigation.navigate('GuideProfile');
   }
 

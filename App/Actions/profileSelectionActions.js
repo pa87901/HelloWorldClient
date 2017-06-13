@@ -5,3 +5,10 @@ export function getProfileResult(profile) {
     payload: profile
   };
 }
+
+export function selectAvailability(availabilityId) {
+  return {
+    type: 'SELECT_AVAILABILITY',
+    payload: availabilityId
+  }
+}
