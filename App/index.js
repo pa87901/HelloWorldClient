@@ -1,18 +1,8 @@
 import React from 'react';
-import {
-  AppRegistry,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native';
+import { StyleSheet } from 'react-native';
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware, combineReducers, compose } from 'redux';
 import store from './store';
 import Navigator from './Components';
-
-// store.subscribe(()=> {
-//   console.log('store changed', store.getState());
-// });
 
 class HelloWorld extends React.Component {
   constructor() {
@@ -30,24 +20,5 @@ class HelloWorld extends React.Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
 
 export default HelloWorld;
