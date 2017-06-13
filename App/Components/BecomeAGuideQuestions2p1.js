@@ -73,7 +73,6 @@ class BecomeAGuideQuestions2p1 extends React.Component {
 
   render() {
     const filterPOIs = this.state.pointOfInterestPredictions.length > 0 ? this.state.pointOfInterestPredictions : [];
-
     return (
       <View style={{marginTop: 100}}>
         <Text>Random string</Text>
@@ -108,7 +107,7 @@ class BecomeAGuideQuestions2p1 extends React.Component {
           return (
             <Swipeout
               right={swipeBtns}
-              autoClose='true'
+              autoClose={true}
               backgroundColor='transparent'
               key={index}
             >
