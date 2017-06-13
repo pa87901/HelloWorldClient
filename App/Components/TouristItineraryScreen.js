@@ -42,7 +42,6 @@ class TouristItineraryScreen extends Component {
       autocompleteModalVisible: false
     }
 
-    this.deleteEvent = this.deleteEvent.bind(this);
     this.initialisePosition = this.initialisePosition.bind(this);
     this.fitAllMarkers = this.fitAllMarkers.bind(this);
     this.getCoordsFromLocation = this.getCoordsFromLocation.bind(this);

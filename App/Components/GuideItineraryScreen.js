@@ -51,7 +51,6 @@ class GuideItineraryScreen extends Component {
     this.updatePointOfInterest = this.updatePointOfInterest.bind(this); //working
     this.addPointsOfInterest = this.addPointsOfInterest.bind(this); //working
     this.setAutocompleteModalVisible = this.setAutocompleteModalVisible.bind(this);
-
   }
 
   watchID: ?number = null
@@ -153,6 +152,8 @@ class GuideItineraryScreen extends Component {
     });
   }
 
+
+
   deleteEvent(index) {
     let newPointsOfInterestNames = this.state.pointsOfInterestNames.slice();
     newPointsOfInterestNames.splice(index, 1);
@@ -161,13 +162,13 @@ class GuideItineraryScreen extends Component {
     });
     // Axios put method to update booking in database.
     let nameOfPOIToDelete = this.state.pointsOfInterestNames[index];
-    // axios.delete(`/api/events/remove/${this.props.navigation.state.params.bookingId}/${nameOfPOIToDelete}`)
-    // .then(response => {
-    //   console.log('deleted event ', nameOfPOIToDelete,' for booking ', this.props.navigation.state.params.bookingId)
-    // })
-    // .catch(error => {
-    //   console.error('Error deleting event ', nameOfPOIToDelete, ' for booking ', this.props.navigation.state.params.bookingId)
-    // })
+    axios.delete(`/api/events/remove/${this.props.navigation.state.params.bookingId}/${nameOfPOIToDelete}`)
+    .then(response => {
+      console.log('deleted event ', nameOfPOIToDelete,' for booking ', this.props.navigation.state.params.bookingId)
+    })
+    .catch(error => {
+      console.error('Error deleting event ', nameOfPOIToDelete, ' for booking ', this.props.navigation.state.params.bookingId)
+    })
 
   }
 
@@ -220,12 +221,22 @@ class GuideItineraryScreen extends Component {
     });
     console.log('this.state.pointsOfInterestNames', this.state.pointsOfInterestNames);
     // Axios post method to include event for booking.
-    
+    let options = {
+      bookingId: this.props.navigation.state.params.bookingId,
+      eventName: pointOfInterest
+    }
+    axios.post('/api/events/add', options)
+    .then(response => {
+      console.log('Saved point of interest successfully.');
+    })
+    .catch(err => {
+      console.error('Error adding event.');
+    });
   }
 
 
   render() {
-    // console.log('this.props ITINERARY SCREEN', this.state.pointsOfInterest);
+    console.log('this.props ITINERARY SCREEN', this.props.navigation.state.params);
     const filterPOIs = this.state.pointOfInterestPredictions.length > 0 ? this.state.pointOfInterestPredictions : [];
     return (
       <View>
@@ -341,6 +352,7 @@ class GuideItineraryScreen extends Component {
                   console.log('---point---', point.coordinates)
                   return (
                     <MapView.Marker
+                      key={index}
                       ref={ref=> {this.marker = ref}}
                       coordinate={point}
                       title={this.state.pointsOfInterestNames[index]}
