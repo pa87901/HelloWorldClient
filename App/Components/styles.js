@@ -11,12 +11,14 @@ export default StyleSheet.create({
   },
   header: {
     color: '#FF830D',
-    fontSize: 60,
+    fontSize: 50,
+    fontFamily: 'Arial Rounded MT Bold',
     textAlign: 'center',
-    marginTop: 30,
-    marginBottom: 30
+    marginTop: 25,
+    marginBottom: 35
   },
   flexSwitchContainer: {
+    marginTop: 20,
     height: 250,
     display: 'flex',
     flexDirection: 'row',
@@ -26,8 +28,8 @@ export default StyleSheet.create({
     marginTop: 8,
     textAlign: 'center',
     flex: 0,
-    fontFamily: 'arial',
-    fontSize: 20,
+    fontFamily: 'Arial Rounded MT Bold',
+    fontSize: 18,
     fontWeight: '900',
     color: 'white'
   },
@@ -35,14 +37,14 @@ export default StyleSheet.create({
     marginTop: 8,
     textAlign: 'center',
     flex: 0,
-    fontFamily: 'arial',
-    fontSize: 20,
+    fontFamily: 'Arial Rounded MT Bold',
+    fontSize: 18,
     fontWeight: '900',
     color: '#FF830D'
   },
   checkbox: {
     margin: 5,
-    borderWidth: 3, 
+    borderWidth: 2.5, 
     borderColor: '#FF830D',
     backgroundColor: '#FF830D',
     alignItems: 'center',
@@ -51,19 +53,19 @@ export default StyleSheet.create({
     color: 'white',
     borderRadius: 25,
     flexWrap: 'wrap',
-    height: 50,
+    height: 44,
     width: 150,
   },
   checkboxInactive: {
     margin: 5,
-    borderWidth: 3, 
+    borderWidth: 2.5, 
     borderColor: '#FF830D',
     backgroundColor: '#FFFFFF',
     alignItems: 'center',
     flexGrow: 1,
     borderRadius: 25,
     flexWrap: 'wrap',
-    height: 50,
+    height: 44,
     width: 150,
   },
   baseColor: {
@@ -79,26 +81,50 @@ export default StyleSheet.create({
   timeContainer: {
     marginLeft: 10,
     marginRight: 10,
-    marginBottom: 10,
+    marginBottom: 15,
     height: 45,
     borderColor: '#FF830D',
-    borderWidth: 3    
+    borderWidth: 2.5,
+    fontFamily: 'Arial',
+    color: 'black'
   },
   autocompleteContainer: {
     marginLeft: 10,
     marginRight: 10,
     marginBottom: 10,
     borderColor: '#FF830D',
-    borderWidth: 3,
+    borderWidth: 2.5,
   },
-  orangeText:{
+  orangeText: {
     color: '#FF830D',
     backgroundColor: 'white',
     fontSize: 18,
   },
-  orangeContainer:{
+  orangeContainer: {
     backgroundColor: 'rgba(255, 131, 17, 0.15)',
     // backgroundColor:'black',
     flex: 1
+  },
+  buttonContainer: {
+    flex: 1,
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0
+  },
+  fullWidthButton: {
+    backgroundColor: '#FF830D',
+    height: 70,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  fullWidthButtonText: {
+    fontSize: 30,
+    color: 'white',
+    fontFamily: 'Arial Rounded MT Bold'
+  },
+  searchTextInput: {
+    fontFamily: 'Arial Rounded MT Bold'
   }
 });

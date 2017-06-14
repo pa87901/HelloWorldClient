@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Text, View, Keyboard, TouchableOpacity, TextInput } from 'react-native';
-import { Button } from 'react-native-elements';
+import { Text, View, Keyboard, TouchableOpacity, TouchableHighlight, TextInput } from 'react-native';
 import Axios from 'axios';
 import Autocomplete from 'react-native-autocomplete-input';
 import { updateCity, updateSearchResult, updateFilterCriteria } from '../Actions/searchActions.js';
@@ -17,7 +16,9 @@ class SearchScreen extends React.Component {
     this.state = {
       display: 'none',
       citiesPrediction: [],
-      query: ''
+      query: '',
+      dateSelected: false,
+      timeSelected: false
     };
     this.checkSpecialty = this.checkSpecialty.bind(this);
     this.handleCityUpdate.bind(this);
@@ -120,7 +121,8 @@ class SearchScreen extends React.Component {
                     {description}
                   </Text>
                 </TouchableOpacity>
-              )}}
+              );
+              }}
             />
           <TouchableOpacity onPress={() => this.setState({ display: 'date' })} >
             {showDatePicker}
@@ -144,14 +146,13 @@ class SearchScreen extends React.Component {
             );
             })}
           </View>
-          <View style={{ position: 'absolute', left: 0, right: 0, bottom: 0 }}>
-              <Button
-                large
-                raised
-                backgroundColor='#FF830D'
-                title='EXPLORE'
-                onPress={() => this.handleSearchSubmit()} 
-              />
+          <View style={styles.buttonContainer}>
+              <TouchableHighlight
+                style={styles.fullWidthButton}
+                onPress={() => this.handleSearchSubmit()}
+              >
+                <Text style={styles.fullWidthButtonText}>EXPLORE</Text>
+              </TouchableHighlight>
           </View>
         </View>
       </View>
