@@ -26,31 +26,67 @@ class GuideProfileScreen extends React.Component {
     console.log('PROPS', this.props);
     
     return (
-      <View style={{ flex: 1 }}>
-        <ScrollView>
+      <View style={{ flex: 1, backgroundColor: 'white' }}>
+        <ScrollView style={styles.orangeTintProfileContainer}>
           <View style={styles.profileContainer}>
             <View style={styles.profileHeaderContainer}>
               <Text style={styles.profileHeader}>{this.props.search.city}</Text>
               <Text style={styles.profileHeader}>{`${this.props.search.date}  ${this.props.search.fromHour}-${this.props.search.toHour}`}</Text>
             </View>
             <View style={styles.profileCard}>
-              <View>
+              <View style={{ flex: 1, alignItems: 'center' }}>
                 <Text style={styles.profileName}>{this.props.profileSelection.selectedProfile.user.full_name}</Text>
               </View>
-              <View style={{ marginTop: 8, marginBottom: 6 }}>
+              <View style={{ flex: 1, marginTop: 8, marginBottom: 6, alignItems: 'center' }}>
                 <Stars
                   rateMax={5}
                   rate={this.props.profileSelection.selectedProfile.avg_rating}
                   size={25}
                 />
               </View>
-              <Image
-                source={{ uri: this.props.profileSelection.selectedProfile.user.picture }}
-                style={styles.profileImage}
-              />
-              <View style={{ marginTop: 15 }}>
+              <View style={{ flex: 1, alignItems: 'center' }}>
+                <Image
+                  source={{ uri: this.props.profileSelection.selectedProfile.user.picture }}
+                  style={styles.profileImage}
+                />
+              </View>
+              <View style={{ marginTop: 20, paddingLeft: 20 }}>
                 <Text>{this.props.profileSelection.selectedProfile.availabilities[0].intro}</Text>
                 <Text>{this.props.profileSelection.selectedProfile.availabilities[0].statement}</Text>
+              </View>
+              <View style={{ flex: 1, paddingLeft: 20, marginTop: 10 }}>
+                <Text style={styles.profileSubheader}>Specialties</Text>
+              </View>
+              <View>
+                <View style={styles.profileFlexRow}>
+                  {this.props.profileSelection.selectedProfile.guideSpecialties.map((specialty, i) =>
+                    <View style={{ marginRight: 10 }}>
+                      <Icon
+                        key={i}
+                        name='search'
+                        size={22}
+                      />
+                    </View>
+                  )}
+                </View>
+              </View>
+              <View style={{ flex: 1, paddingLeft: 20, marginTop: 10 }}>
+                <Text style={styles.profileSubheader}>Reviews</Text>
+              </View>
+              <View>
+                <List style={styles.reviewList}>
+                  {this.props.profileSelection.selectedProfile.bookings.map((review, i) =>
+                      <ListItem
+                        key={i}
+                        roundAvatar
+                        avatar={{ uri: review.userAvatar }}
+                        hideChevron={true}
+                        containerStyle={styles.listItem}
+                        title={review.userFullName}
+                        subtitle={`Rating: ${Math.floor(review.rating)}. ${review.review}`}
+                      />
+                  )}
+                </List>
               </View>
             </View>
           </View>
@@ -58,13 +94,15 @@ class GuideProfileScreen extends React.Component {
         <View style={styles.doubleButtonContainer}>
           <TouchableHighlight
             style={styles.affirmativeButton}
+            onPress={this.navigateToPolicy}
           >
-            <Text style={styles.fullWidthButtonText}>Book</Text>
+            <Text style={styles.doubleButtonText}>Book</Text>
           </TouchableHighlight>
           <TouchableHighlight
             style={styles.negativeButton}
+            onPress={this.navigateToChatScreen}
           >
-            <Text style={styles.fullWidthButtonText}>Chat</Text>
+            <Text style={styles.doubleButtonText}>Chat</Text>
           </TouchableHighlight>
         </View>
       </View>
