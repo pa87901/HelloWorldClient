@@ -130,26 +130,35 @@ class BookingPolicyScreen extends React.Component {
               style={{ height: 210, width: Dimensions.get('window').width, resizeMode: 'contain', verticalAlign: 'text-top' }}
             />
           </View>
-          <PricingCard
-            color='#FF8C00'
-            title='Your Total Cost'
-            price={`$${hourlyRate * (this.props.search.toHour - this.props.search.fromHour)}`}
-            info={[`$${hourlyRate} Per Hour`, `${this.props.search.fromHour} - ${this.props.search.toHour}`, 'Authorize Only', 'Payment Will Be Made When Trip Is Confirmed']}
-            button={{ title: 'Confirm and Request a Tour!', icon: 'check-circle' }}
-            onButtonPress={handleCardPayPress}
-          />
-          <Card
-            title='Terms & Conditions'
-          >
-            <Text style={{ marginBottom: 10 }}>
-              HelloWorld enforces terms to protect both tourist(s) and guide alike. Tourist(s) may cancel and review any penalties by viewing their travel plans and then clicking ‘Cancel’ on the appropriate reservation.
-            </Text>
-          </Card>
+          <View style={styles.bookingConfirmDetails}>
+            <View style={{ marginBottom: 20 }}>
+              <Text style={styles.profileSubheader}>Tour in {this.props.search.city}</Text>
+            </View>
+            <View style={{ marginBottom: 20 }}>
+              <Text style={styles.bookingConfirmDates}>{Utils.time.displayDate(new Date(this.props.search.date).toDateString())}, {Utils.time.convert24ToAmPm(this.props.search.fromHour)} - {Utils.time.convert24ToAmPm(this.props.search.toHour)}</Text>
+            </View>
+            <View style={{ marginBottom: 20 }}>
+              <Text style={{ fontFamily: 'Arial', fontSize: 12 }}>{`$${hourlyRate} Per Hour x ${this.props.search.toHour - this.props.search.fromHour}hr`}</Text>
+              <Text style={{ fontFamily: 'Arial', fontSize: 12 }}>Authorize only</Text>
+              <Text style={{ fontFamily: 'Arial', fontSize: 12 }}>Payment will be made when trip is confirmed</Text>
+            </View>
+            <View>
+              <Text style={styles.profileSubheader}>{`$${hourlyRate * (this.props.search.toHour - this.props.search.fromHour)}`}</Text>
+            </View>
+          </View>
+          <View style={styles.termsConditions}>
+            <View style={{ flex: 1, alignItems: 'center', marginBottom: 20 }}>
+              <Text style={{ fontFamily: 'Arial', fontSize: 14, fontWeight: 'bold' }}>Terms & Conditions</Text>
+            </View>
+            <View>
+              <Text style={{ fontFamily: 'Arial', fontSize: 12 }}>Localize enforces terms to protect both tourists and guides alike. Tourist(s) may cancel and review penalties or lack thereof by viewing their travel plans and then clicking ‘Cancel’ on the appropriate reservation.</Text>
+            </View>
+          </View>
         </ScrollView>
         <View style={styles.buttonContainer}>
           <TouchableHighlight
             style={styles.fullWidthButton}
-            // onPress={() => this.handleSearchSubmit()}
+            onPress={handleCardPayPress}
           >
             <Text style={styles.bookingConfirmText}>Confirm and Request a Tour!</Text>
           </TouchableHighlight>

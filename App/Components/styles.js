@@ -338,6 +338,31 @@ export default StyleSheet.create({
   },
   placeImage: {
     height: 220,
-    resizeMode: 'contain',
+  },
+  bookingConfirmDetails: {
+    paddingLeft: 35,
+    paddingRight: 35,
+    paddingTop: 25,
+    paddingBottom: 25,
+    flexGrow: 1,
+    backgroundColor:
+    'white',
+    flexWrap: 'wrap'
+  },
+  bookingConfirmDates: {
+    fontFamily: main.font,
+    fontSize: 18,
+    color: main.color
+  },
+  termsConditions: {
+    marginTop: 20,
+    paddingLeft: 35,
+    paddingRight: 35,
+    paddingTop: 25,
+    paddingBottom: 25,
+    flexGrow: 1,
+    backgroundColor:
+    'white',
+    flexWrap: 'wrap'
   }
 });
