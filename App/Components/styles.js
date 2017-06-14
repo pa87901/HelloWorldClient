@@ -205,8 +205,13 @@ export default StyleSheet.create({
   },
   toolbarText: {
     color: 'white',
-    fontSize: 25,
+    fontSize: 40,
     fontFamily: main.font
+  },
+  toolbarIcon: {
+    color: 'white',
+    fontSize: 25,
+    marginBottom: 13
   },
   // selected profile
   profileContainer: {

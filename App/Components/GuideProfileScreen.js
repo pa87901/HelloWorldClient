@@ -29,10 +29,27 @@ class GuideProfileScreen extends React.Component {
   render() {
     console.log('PROPS', this.props);
     
+    const toolbarSetting = {
+        toolbar1: {
+          hover: false,
+          leftButton: {
+            icon: 'chevron-left',
+            iconStyle: styles.toolbarIcon,
+            iconFontFamily: 'FontAwesome',
+            onPress: this.navigateBack,
+          },
+          title: {
+            text: 'LOCALIZE',
+            textStyle: styles.toolbarText
+          }
+      },
+    };
+    
     return (
       <View style={{ flex: 1, backgroundColor: 'white' }}>
         <Toolbar
         backgroundColor='#FF8C00'
+        toolbarHeight={35}
         ref={(toolbar) => { this.toolbar = toolbar; }}
         presets={toolbarSetting}
         />
@@ -128,18 +145,3 @@ const mapStateToProps = state => (state);
 
 export default connect(mapStateToProps)(GuideProfileScreen);
 
-const toolbarSetting = {
-    toolbar1: {
-      hover: false,
-      leftButton: {
-        icon: 'chevron-left',
-        iconStyle: { color: 'white', fontSize: 25 },
-        iconFontFamily: 'FontAwesome',
-        onPress: this.navigateBack,
-      },
-      title: {
-        text: 'LOCALIZE',
-        textStyle: styles.toolbarText
-      }
-  },
-};
