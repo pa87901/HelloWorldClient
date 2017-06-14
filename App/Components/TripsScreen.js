@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, ScrollView, TouchableHighlight, Modal, TextInput } from 'react-native';
+import { StyleSheet, Text, View, Button, ScrollView, TouchableHighlight, Modal, TextInput, TouchableOpacity } from 'react-native';
 import { Card } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { NavigationActions } from 'react-navigation';
@@ -170,7 +170,7 @@ class TripsScreen extends React.Component {
               <Text>
                 {booking.status}
               </Text>
-              <Button title='Map' onPress={()=>{this.props.navigation.navigate('MapScreen', {bookingId: this.props.booking.touristBookings[i].id})}}/>
+              {/*<Button title='Map' onPress={()=>{this.props.navigation.navigate('MapScreen', {bookingId: this.props.booking.touristBookings[i].id})}}/>*/}
               <Button title='Review' onPress={()=>{
                 this.setState({activeCard : i})
                 this.toggleReviewModal(true)
