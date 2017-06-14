@@ -299,8 +299,23 @@ export default StyleSheet.create({
     marginTop: 8,
     paddingLeft: 12
   },
+  //Trip Views
   TripCardText: {
     fontSize: 20,
     marginTop: 10
+  },
+  smallAffirmativeButton: {
+    backgroundColor: '#FF830D',
+    height: 33,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexGrow: 1
+  },
+  smallNegativeButton: {
+    backgroundColor: '#00acdb',
+    height: 33,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexGrow: 1
   }
 });

@@ -186,8 +186,25 @@ class TripsScreen extends React.Component {
               <Text>
                 {booking.status}
               </Text>
+              <View style={styles.doubleButtonContainer}>
+                <TouchableHighlight
+                  style={styles.smallAffirmativeButton}
+                  onPress={()=>{this.props.navigation.navigate('TouristItinerary', {bookingId: this.props.booking.touristBookings[0].bookings[i].id})}}
+                >
+                  <Text style={styles.doubleButtonText}>Itinerary</Text>
+                </TouchableHighlight>
+                <TouchableHighlight
+                  style={styles.smallNegativeButton}
+                  onPress={ () => {
+                    this.setState({activeCard : i})
+                    this.toggleReviewModal(true)
+                  }}
+                >
+                  <Text style={styles.doubleButtonText}>Review</Text>
+                </TouchableHighlight>
+              </View>
               {/*<Button title='Map' onPress={()=>{this.props.navigation.navigate('MapScreen', {bookingId: this.props.booking.touristBookings[i].id})}}/>*/}
-              <Button title='Review' onPress={()=>{
+              {/*<Button title='Review' onPress={()=>{
                 this.setState({activeCard : i})
                 this.toggleReviewModal(true)
                 }} />
@@ -195,7 +212,7 @@ class TripsScreen extends React.Component {
                 title="Itinerary" 
                 onPress={() => this.props.navigation.navigate('TouristItinerary', {bookingId: this.props.booking.touristBookings[0].bookings[i].id})}
                 >
-          </Button>
+          </Button>*/}
             </Card>
             )
           })}
@@ -203,7 +220,7 @@ class TripsScreen extends React.Component {
       ); 
     } else {
       return (
-        <View></View>
+        <View style={styles.orangeContainer}></View>
       ); 
     }
   }

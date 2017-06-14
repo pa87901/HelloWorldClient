@@ -161,7 +161,7 @@ class GuideTripsScreen extends React.Component {
       ); 
     } else {
       return (
-        <View></View>
+        <View style={styles.orangeContainer}></View>
       ); 
     }
   }
