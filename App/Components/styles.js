@@ -329,5 +329,11 @@ export default StyleSheet.create({
     fontSize: 15,
     color: 'white',
     fontFamily: main.font
+  },
+  // Booking Confirmation
+  bookingConfirmText: {
+    fontSize: 22,
+    color: 'white',
+    fontFamily: main.font    
   }
 });

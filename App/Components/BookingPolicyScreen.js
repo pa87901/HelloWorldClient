@@ -1,14 +1,14 @@
 import React from 'react';
-import { Text, ScrollView } from 'react-native';
+import { Text, ScrollView, View, TouchableHighlight, Image } from 'react-native';
 import { connect } from 'react-redux';
 import { PricingCard, Card } from 'react-native-elements';
+import Toolbar from 'react-native-toolbar';
 import stripe from 'tipsi-stripe';
 import axios from '../axios.js';
 import config from '../Config/config';
+import Utils from '../Utils';
+import styles from './styles.js';
 
-stripe.init({
-  publishableKey: config.STRIPE_API_KEY
-});
 
 class BookingPolicyScreen extends React.Component {
   constructor(props) {
@@ -20,6 +20,13 @@ class BookingPolicyScreen extends React.Component {
 
     this.navigateToConfirmation = this.navigateToConfirmation.bind(this);
     this.bookTour = this.bookTour.bind(this);
+    this.navigateBack = this.navigateBack.bind(this);
+  }
+
+  componentDidMount() {
+    stripe.init({
+      publishableKey: config.STRIPE_API_KEY
+    });
   }
 
   bookTour() {
@@ -45,6 +52,10 @@ class BookingPolicyScreen extends React.Component {
   navigateToConfirmation() {
     this.bookTour();
     this.props.navigation.navigate('BookingConfirmation');
+  }
+
+  navigateBack() {
+    this.props.navigation.goBack();
   }
 
   render() {
@@ -85,29 +96,71 @@ class BookingPolicyScreen extends React.Component {
       }
     };
 
-    const { loading, token } = this.state;
+    const toolbarSetting = {
+        toolbar1: {
+          hover: false,
+          leftButton: {
+            icon: 'chevron-left',
+            iconStyle: styles.toolbarIcon,
+            iconFontFamily: 'FontAwesome',
+            onPress: this.navigateBack,
+          },
+          title: {
+            text: 'LOCALIZE',
+            textStyle: styles.toolbarText
+          }
+      },
+    };
+
     const hourlyRate = this.props.profileSelection.selectedProfile.availabilities[0].hourly_rate;
 
     return (
-      <ScrollView>
-        <PricingCard
-          color='#FF8C00'
-          title='Your Total Cost'
-          price={`$${hourlyRate * (this.props.search.toHour - this.props.search.fromHour)}`}
-          info={[`$${hourlyRate} Per Hour`, `${this.props.search.fromHour} - ${this.props.search.toHour}`, 'Authorize Only', 'Payment Will Be Made When Trip Is Confirmed']}
-          button={{ title: 'Confirm and Request a Tour!', icon: 'check-circle' }}
-          onButtonPress={handleCardPayPress}
+      <View style={{ flex: 1, backgroundColor: 'white' }}>
+        <Toolbar
+        backgroundColor='#FF8C00'
+        toolbarHeight={35}
+        ref={(toolbar) => { this.toolbar = toolbar; }}
+        presets={toolbarSetting}
         />
-        <Card
-          title='Terms & Conditions'
-        >
-          <Text style={{ marginBottom: 10 }}>
-            HelloWorld enforces terms to protect both tourist(s) and guide alike. Tourist(s) may cancel and review any penalties by viewing their travel plans and then clicking ‘Cancel’ on the appropriate reservation.
-          </Text>
-        </Card>
-      </ScrollView>
+        <View style={styles.orangeBar} />
+        <ScrollView style={styles.orangeTintProfileContainer}>
+          {/*
+          <View>
+            <Image
+              source={require('./Assets/san-francisco')}
+            />
+          </View> */}
+          <PricingCard
+            color='#FF8C00'
+            title='Your Total Cost'
+            price={`$${hourlyRate * (this.props.search.toHour - this.props.search.fromHour)}`}
+            info={[`$${hourlyRate} Per Hour`, `${this.props.search.fromHour} - ${this.props.search.toHour}`, 'Authorize Only', 'Payment Will Be Made When Trip Is Confirmed']}
+            button={{ title: 'Confirm and Request a Tour!', icon: 'check-circle' }}
+            onButtonPress={handleCardPayPress}
+          />
+          <Card
+            title='Terms & Conditions'
+          >
+            <Text style={{ marginBottom: 10 }}>
+              HelloWorld enforces terms to protect both tourist(s) and guide alike. Tourist(s) may cancel and review any penalties by viewing their travel plans and then clicking ‘Cancel’ on the appropriate reservation.
+            </Text>
+          </Card>
+        </ScrollView>
+        <View style={styles.buttonContainer}>
+          <TouchableHighlight
+            style={styles.fullWidthButton}
+            // onPress={() => this.handleSearchSubmit()}
+          >
+            <Text style={styles.bookingConfirmText}>Confirm and Request a Tour!</Text>
+          </TouchableHighlight>
+        </View>
+      </View>
     );
   }
+
+  static navigationOptions = ({ navigation }) => ({
+    header: null
+  })
 }
 
 const mapStateToProps = state => (state);
