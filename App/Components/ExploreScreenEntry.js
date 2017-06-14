@@ -62,9 +62,10 @@ class ExploreScreenEntry extends React.Component {
                         </Text>
                         <Stars
                           isActive={false}
+                          isHalfStarEnabled={true}
                           rateMax={5}
                           isHalfStarEnabled={false}
-                          rate={guide.user.avg_rating}
+                          rate={guide.avg_rating}
                           size={36}
                         />
                         <Text style={styles.searchCardFont}>
