@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, ScrollView, View, TouchableHighlight, Image } from 'react-native';
+import { Text, ScrollView, View, TouchableHighlight, Image, Dimensions } from 'react-native';
 import { connect } from 'react-redux';
 import { PricingCard, Card } from 'react-native-elements';
 import Toolbar from 'react-native-toolbar';
@@ -124,12 +124,12 @@ class BookingPolicyScreen extends React.Component {
         />
         <View style={styles.orangeBar} />
         <ScrollView style={styles.orangeTintProfileContainer}>
-          {/*
-          <View>
+          <View style={{ flex: 1, height: 210 }}>
             <Image
-              source={require('./Assets/san-francisco')}
+              source={require('../Utils/sanfrancisco.jpg')}
+              style={{ height: 210, width: Dimensions.get('window').width, resizeMode: 'contain', verticalAlign: 'text-top' }}
             />
-          </View> */}
+          </View>
           <PricingCard
             color='#FF8C00'
             title='Your Total Cost'

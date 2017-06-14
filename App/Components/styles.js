@@ -335,5 +335,9 @@ export default StyleSheet.create({
     fontSize: 22,
     color: 'white',
     fontFamily: main.font    
+  },
+  placeImage: {
+    height: 220,
+    resizeMode: 'contain',
   }
 });
