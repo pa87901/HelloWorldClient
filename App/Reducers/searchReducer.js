@@ -1,8 +1,12 @@
 export default function reducer(state = {
-  city: '',
-  date: new Date().toDateString(),
-  fromHour: (new Date()).getHours(),
-  toHour: (new Date()).getHours() + 1,
+  // city: '',
+  // date: new Date().toDateString(),
+  // fromHour: (new Date()).getHours(),
+  // toHour: (new Date()).getHours() + 1,
+  city: "San Francisco, CA, United States",
+  date: (new Date('2017-10-11')).toDateString(),
+  fromHour: 13,
+  toHour:14,
   numTravelers: 1,
   result: [],
   filterCriteria: {

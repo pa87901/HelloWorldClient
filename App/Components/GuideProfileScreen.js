@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import {
-  Card, List, ListItem, Button, Rating, Divider, Icon
+  Card, List, ListItem, Button, Divider, Icon
 } from 'react-native-elements';
 
 class GuideProfileScreen extends React.Component {

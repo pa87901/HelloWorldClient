@@ -34,7 +34,6 @@ const SearchNavigator = StackNavigator({
     navigationOptions: {
       headerMode: 'float',
       header: null,
-      title: 'LOCALIZE',
       card: 'modal',
       headerTintColor: '#000',
       headerStyle: { styles }
