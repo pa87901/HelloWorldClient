@@ -301,8 +301,15 @@ export default StyleSheet.create({
   },
   //Trip Views
   TripCardText: {
-    fontSize: 20,
-    marginTop: 10
+    fontSize: 15,
+    marginTop: 10,
+    fontFamily: main.font
+  },
+  orangeTripCardText: {
+    fontSize: 15,
+    marginTop: 10,
+    fontFamily: main.font,
+    color: main.color
   },
   smallAffirmativeButton: {
     backgroundColor: '#FF830D',
@@ -317,5 +324,10 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     flexGrow: 1
+  },
+  smallDoubleButtonText: {
+    fontSize: 15,
+    color: 'white',
+    fontFamily: main.font
   }
 });

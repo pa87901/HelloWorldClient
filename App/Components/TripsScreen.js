@@ -7,6 +7,7 @@ import { setTouristBookings } from '../Actions/bookingActions';
 import axios from '../axios';
 import Stars from 'react-native-stars-rating';
 import styles from './styles.js';
+import Utils from '../Utils';
 
 
 class TripsScreen extends React.Component {
@@ -161,48 +162,27 @@ class TripsScreen extends React.Component {
           <Text>Trips As A Tourist</Text> 
           {this.state.touristBookings[0].bookings.map((booking, i) => {
             return (
-            <Card key={i}>
+            <View>
+            <Card 
+              key={i}
+              flexDirection='column'
+            >
+            <View style={styles.searchCardContainer}>
               <Text style={styles.TripCardText}>
-                City
+                {booking.city}{"\n"}
+                with{booking.guide.user.full_name}
               </Text>
-              <Text>
-                {booking.city}
+              <Text style={styles.orangeTripCardText}>
+                {new Date(booking.start_date_hr).toDateString()}, {Utils.time.convert24ToAmPm(new Date(booking.start_date_hr).getHours())} - {Utils.time.convert24ToAmPm(new Date(booking.end_date_hr).getHours())}
+                {"\n"}
               </Text>
-              <Text style={styles.TripCardText}>
-                Guide
-              </Text>
-              <Text>
-                {booking.guide.user.full_name}
-              </Text>
-              <Text style={styles.TripCardText}>
-                Date & Time
-              </Text>
-              <Text>
-                {new Date(booking.start_date_hr).toDateString()} | {new Date(booking.start_date_hr).getHours()}:00-{new Date(booking.end_date_hr).getHours()}:00
-              </Text>
-              <Text style={styles.TripCardText}>
+              <Text style={{fontSize: 10, fontFamily: 'Arial Rounded MT Bold'}}>
                 Status
-              </Text>
-              <Text>
+                {"\n"}
+              <Text style={styles.TripCardText}>
                 {booking.status}
               </Text>
-              <View style={styles.doubleButtonContainer}>
-                <TouchableHighlight
-                  style={styles.smallAffirmativeButton}
-                  onPress={()=>{this.props.navigation.navigate('TouristItinerary', {bookingId: this.props.booking.touristBookings[0].bookings[i].id})}}
-                >
-                  <Text style={styles.doubleButtonText}>Itinerary</Text>
-                </TouchableHighlight>
-                <TouchableHighlight
-                  style={styles.smallNegativeButton}
-                  onPress={ () => {
-                    this.setState({activeCard : i})
-                    this.toggleReviewModal(true)
-                  }}
-                >
-                  <Text style={styles.doubleButtonText}>Review</Text>
-                </TouchableHighlight>
-              </View>
+              </Text>
               {/*<Button title='Map' onPress={()=>{this.props.navigation.navigate('MapScreen', {bookingId: this.props.booking.touristBookings[i].id})}}/>*/}
               {/*<Button title='Review' onPress={()=>{
                 this.setState({activeCard : i})
@@ -213,7 +193,29 @@ class TripsScreen extends React.Component {
                 onPress={() => this.props.navigation.navigate('TouristItinerary', {bookingId: this.props.booking.touristBookings[0].bookings[i].id})}
                 >
           </Button>*/}
+              </View>
+              <Text>
+                {"\n"}
+              </Text>
+              <View style={styles.doubleButtonContainer}>
+                <TouchableHighlight
+                  style={styles.smallAffirmativeButton}
+                  onPress={()=>{this.props.navigation.navigate('TouristItinerary', {bookingId: this.props.booking.touristBookings[0].bookings[i].id})}}
+                >
+                  <Text style={styles.smallDoubleButtonText}>Itinerary</Text>
+                </TouchableHighlight>
+                <TouchableHighlight
+                  style={styles.smallNegativeButton}
+                  onPress={ () => {
+                    this.setState({activeCard : i})
+                    this.toggleReviewModal(true)
+                  }}
+                >
+                  <Text style={styles.smallDoubleButtonText}>Review</Text>
+                </TouchableHighlight>
+              </View>
             </Card>
+              </View>
             )
           })}
         </ScrollView>
