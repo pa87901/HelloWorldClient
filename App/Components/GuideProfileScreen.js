@@ -1,9 +1,11 @@
 import React from 'react';
-import { Text, ScrollView } from 'react-native';
-import { connect } from 'react-redux';
+import { Text, ScrollView, View, Image, TouchableHighlight } from 'react-native';
 import {
   Card, List, ListItem, Button, Divider, Icon
 } from 'react-native-elements';
+import { connect } from 'react-redux';
+import Stars from 'react-native-stars-rating';
+import styles from './styles.js';
 
 class GuideProfileScreen extends React.Component {
   constructor(props) {
@@ -22,21 +24,55 @@ class GuideProfileScreen extends React.Component {
   
   render() {
     console.log('PROPS', this.props);
+    
     return (
-      <ScrollView>
-        <Card
-          title={this.props.profileSelection.selectedProfile.user.full_name}
-        >
-          <Text>
-            Selected Date: {this.props.search.date}
-          </Text>
-          <Text>
-            Start / End Time: {this.props.search.hours}
-          </Text>
-          <Text style={{marginBottom: 10}}>
-            City: {this.props.search.city}
-          </Text>
-          <Divider/>
+      <View style={{ flex: 1 }}>
+        <ScrollView>
+          <View style={styles.profileContainer}>
+            <View style={styles.profileHeaderContainer}>
+              <Text style={styles.profileHeader}>{this.props.search.city}</Text>
+              <Text style={styles.profileHeader}>{`${this.props.search.date}  ${this.props.search.fromHour}-${this.props.search.toHour}`}</Text>
+            </View>
+            <View style={styles.profileCard}>
+              <View>
+                <Text style={styles.profileName}>{this.props.profileSelection.selectedProfile.user.full_name}</Text>
+              </View>
+              <View style={{ marginTop: 8, marginBottom: 6 }}>
+                <Stars
+                  rateMax={5}
+                  rate={this.props.profileSelection.selectedProfile.avg_rating}
+                  size={25}
+                />
+              </View>
+              <Image
+                source={{ uri: this.props.profileSelection.selectedProfile.user.picture }}
+                style={styles.profileImage}
+              />
+              <View style={{ marginTop: 15 }}>
+                <Text>{this.props.profileSelection.selectedProfile.availabilities[0].intro}</Text>
+                <Text>{this.props.profileSelection.selectedProfile.availabilities[0].statement}</Text>
+              </View>
+            </View>
+          </View>
+        </ScrollView>
+        <View style={styles.doubleButtonContainer}>
+          <TouchableHighlight
+            style={styles.affirmativeButton}
+          >
+            <Text style={styles.fullWidthButtonText}>Book</Text>
+          </TouchableHighlight>
+          <TouchableHighlight
+            style={styles.negativeButton}
+          >
+            <Text style={styles.fullWidthButtonText}>Chat</Text>
+          </TouchableHighlight>
+        </View>
+      </View>
+    );
+  }
+}
+        /*
+        <Card>
           <ListItem 
             roundAvatar
             avatar={{uri : this.props.profileSelection.selectedProfile.user.avatar}}
@@ -108,33 +144,30 @@ class GuideProfileScreen extends React.Component {
             onPress={this.navigateToChatScreen}
           />
         </Card>
-      </ScrollView>
-    );
-  }
-}
+*/
 
-const styles = {
-  subheader: {
-    fontSize: 20,
-    marginTop: 10
-  },
-  intro: {
-    marginTop: 10,
-    marginBottom: 10,
-  },
-  list: {
-    borderBottomWidth: 0,
-    borderTopWidth: 0
-  },
-  listItem: {
-    borderBottomWidth: 0,
-    marginTop: 5,
-    marginBottom: 0
-  },
-  specialityTitle: {
-    marginLeft: 40
-  }
-};
+// const styles = {
+//   subheader: {
+//     fontSize: 20,
+//     marginTop: 10
+//   },
+//   intro: {
+//     marginTop: 10,
+//     marginBottom: 10,
+//   },
+//   list: {
+//     borderBottomWidth: 0,
+//     borderTopWidth: 0
+//   },
+//   listItem: {
+//     borderBottomWidth: 0,
+//     marginTop: 5,
+//     marginBottom: 0
+//   },
+//   specialityTitle: {
+//     marginLeft: 40
+//   }
+// };
 
 const mapStateToProps = state => (state);
 

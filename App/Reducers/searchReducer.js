@@ -6,7 +6,7 @@ export default function reducer(state = {
   city: "San Francisco, CA, United States",
   date: (new Date('2017-10-11')).toDateString(),
   fromHour: 13,
-  toHour:14,
+  toHour: 14,
   numTravelers: 1,
   result: [],
   filterCriteria: {

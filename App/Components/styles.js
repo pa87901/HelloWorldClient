@@ -207,5 +207,66 @@ export default StyleSheet.create({
     color: 'white',
     fontSize: 25,
     fontFamily: main.font
-  }
+  },
+  searchTextInput: {
+    fontFamily: 'Arial Rounded MT Bold'
+  },
+  profileContainer: {
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'center'
+  },
+  profileHeader: {
+    fontFamily: 'Arial Rounded MT Bold',
+    fontSize: 18,
+    color: '#FF830D'
+  },
+  profileHeaderContainer: {
+    backgroundColor: 'white',
+    height: 72,
+    alignSelf: 'stretch',
+    justifyContent: 'center',
+    paddingLeft: 20,
+    marginBottom: 20
+  },
+  profileCard: {
+    paddingTop: 20,
+    backgroundColor: 'white',
+    width: 350,
+    alignItems: 'center'
+  },
+  profileName: {
+    fontFamily: 'Arial Rounded MT Bold',
+    fontSize: 20
+  },
+  profileImage: {
+    width: 276,
+    height: 276,
+    borderRadius: 138
+  },
+  profileIntro: {
+    fontFamily: 'Arial',
+    fontSize: 15,
+  },
+  doubleButtonContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0
+  },
+  affirmativeButton: {
+    backgroundColor: '#FF830D',
+    height: 70,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexGrow: 1
+  },
+  negativeButton: {
+    backgroundColor: '#00acdb',
+    height: 70,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexGrow: 1
 });
