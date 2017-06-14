@@ -148,7 +148,6 @@ export default StyleSheet.create({
     position: 'relative'
   },
   orangeBar: {
-    borderWidth: 3, 
     backgroundColor: '#FF830D',
     zIndex: 0,
     color: 'white',
