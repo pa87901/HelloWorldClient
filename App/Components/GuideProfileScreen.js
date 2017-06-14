@@ -1,9 +1,8 @@
 import React from 'react';
 import { Text, ScrollView, View, Image, TouchableHighlight } from 'react-native';
-import {
-  Card, List, ListItem, Button, Divider, Icon
-} from 'react-native-elements';
+import { List, ListItem, Icon } from 'react-native-elements';
 import { connect } from 'react-redux';
+import Toolbar from 'react-native-toolbar';
 import Stars from 'react-native-stars-rating';
 import styles from './styles.js';
 
@@ -12,6 +11,7 @@ class GuideProfileScreen extends React.Component {
     super(props);
     this.navigateToPolicy = this.navigateToPolicy.bind(this);
     this.navigateToChatScreen = this.navigateToChatScreen.bind(this);
+    this.navigateBack = this.navigateBack.bind(this);
   }
 
   navigateToPolicy() {
@@ -21,12 +21,22 @@ class GuideProfileScreen extends React.Component {
   navigateToChatScreen() {
     this.props.navigation.navigate('NewChatScreen2');
   }
+
+  navigateBack() {
+    this.props.navigation.goBack();
+  }
   
   render() {
     console.log('PROPS', this.props);
     
     return (
       <View style={{ flex: 1, backgroundColor: 'white' }}>
+        <Toolbar
+        backgroundColor='#FF8C00'
+        ref={(toolbar) => { this.toolbar = toolbar; }}
+        presets={toolbarSetting}
+        />
+        <View style={styles.orangeBar}/>
         <ScrollView style={styles.orangeTintProfileContainer}>
           <View style={styles.profileContainer}>
             <View style={styles.profileHeaderContainer}>
@@ -108,105 +118,28 @@ class GuideProfileScreen extends React.Component {
       </View>
     );
   }
+
+  static navigationOptions = ({ navigation }) => ({
+    header: null
+  })
 }
-        /*
-        <Card>
-          <ListItem 
-            roundAvatar
-            avatar={{uri : this.props.profileSelection.selectedProfile.user.avatar}}
-            hideChevron={true}
-            title={`Rating: ${this.props.profileSelection.selectedProfile.avg_rating}/5.0 (${this.props.profileSelection.selectedProfile.rating_count})`}
-          />
-          <Text style={styles.subheader}>
-            Introduction
-          </Text>
-          <Text style={styles.intro}>
-            {this.props.profileSelection.selectedProfile.availabilities[0].intro}
-          </Text>
-          <Text style={styles.intro}>
-            {this.props.profileSelection.selectedProfile.availabilities[0].statement}
-          </Text>
-          <Divider />
-          <Text style={styles.subheader}>
-            Specialties
-          </Text>
-          <List style={styles.list}>
-            {this.props.profileSelection.selectedProfile.guideSpecialties.map((specialtyObj, i) =>
-              <ListItem
-                key = {i}
-                leftIcon={<Icon name="local-drink" />}
-                hideChevron={true}
-                containerStyle={styles.listItem}
-                titleStyle={styles.specialityTitle}
-                title={specialtyObj.specialty.specialty}
-              />
-            )}
-          </List>
-          <Divider />
-          <Text style={styles.subheader}>
-            Reviews
-          </Text>
-          <List style={styles.list}>
-            {this.props.profileSelection.selectedProfile.bookings.map((review, i)=>{
-              return (
-                <ListItem
-                  key={i}
-                  roundAvatar
-                  avatar={{uri:review.userAvatar}}
-                  hideChevron={true}
-                  containerStyle={styles.listItem}
-                  title={review.userFullName}
-                  subtitle={'Rating: ' + review.rating + '. ' + review.review}
-                />
-              ) 
-            })}
-
-
-          </List>
-          <Button
-            small
-            raised
-            icon={{name: 'check-circle'}}
-            backgroundColor='#FF8C00'
-            title='Book a trip with me!'
-            buttonStyle={{marginTop: 10}}
-            onPress={this.navigateToPolicy}
-          />
-          <Button
-            small
-            raised
-            icon={{name: 'chat'}}
-            backgroundColor='#25EDC0'
-            title='Chat with me!'
-            buttonStyle={{marginTop: 10}}
-            onPress={this.navigateToChatScreen}
-          />
-        </Card>
-*/
-
-// const styles = {
-//   subheader: {
-//     fontSize: 20,
-//     marginTop: 10
-//   },
-//   intro: {
-//     marginTop: 10,
-//     marginBottom: 10,
-//   },
-//   list: {
-//     borderBottomWidth: 0,
-//     borderTopWidth: 0
-//   },
-//   listItem: {
-//     borderBottomWidth: 0,
-//     marginTop: 5,
-//     marginBottom: 0
-//   },
-//   specialityTitle: {
-//     marginLeft: 40
-//   }
-// };
 
 const mapStateToProps = state => (state);
 
 export default connect(mapStateToProps)(GuideProfileScreen);
+
+const toolbarSetting = {
+    toolbar1: {
+      hover: false,
+      leftButton: {
+        icon: 'chevron-left',
+        iconStyle: { color: 'white', fontSize: 25 },
+        iconFontFamily: 'FontAwesome',
+        onPress: this.navigateBack,
+      },
+      title: {
+        text: 'LOCALIZE',
+        textStyle: styles.toolbarText
+      }
+  },
+};
