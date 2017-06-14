@@ -82,21 +82,21 @@ class TripsScreen extends React.Component {
 //Waiting for db methods/trips to dynamically render
   render() {
 
-    const toolbarSetting = {
-        toolbar1: {
-          hover: false,
-          leftButton: {
-            icon: 'chevron-left',
-            iconStyle: styles.toolbarIcon,
-            iconFontFamily: 'FontAwesome',
-            onPress: this.navigateBack,
-          },
-          title: {
-            text: 'LOCALIZE',
-            textStyle: styles.toolbarText
-          }
-      },
-    };
+    // const toolbarSetting = {
+    //     toolbar1: {
+    //       hover: false,
+    //       leftButton: {
+    //         icon: 'chevron-left',
+    //         iconStyle: styles.toolbarIcon,
+    //         iconFontFamily: 'FontAwesome',
+    //         onPress: this.navigateBack,
+    //       },
+    //       title: {
+    //         text: 'LOCALIZE',
+    //         textStyle: styles.toolbarText
+    //       }
+    //   },
+    // };
     
     if (this.state.touristBookings[0]) {
       return (
