@@ -101,7 +101,6 @@ class SearchScreen extends React.Component {
 
     return (
       <View style={styles.baseColor}>
-
         <View style={styles.container}>
       
           <TouchableOpacity activeOpacity={1} onPress={() => (this.setState({ display: 'none' }))}>

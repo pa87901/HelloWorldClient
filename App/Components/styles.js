@@ -126,5 +126,36 @@ export default StyleSheet.create({
   },
   searchTextInput: {
     fontFamily: 'Arial Rounded MT Bold'
+  },
+  orangeTintContainer: {
+    // borderWidth:5,
+    backgroundColor: 'rgba(255, 131, 17, 0.15)',
+    flexGrow: 1
+  },
+  orangeContainerTop:{
+    // margin: ,
+    borderTopWidth: 15, 
+    borderColor: '#FF830D',
+    backgroundColor: '#FF830D',
+    alignItems: 'center',
+    flexGrow: 1,
+    zIndex: 0,
+    color: 'white',
+    // borderRadius: 25,
+    flexWrap: 'wrap',
+    // height: 50,
+    // width: 150,
+    position: 'relative'
+  },
+  orangeBar: {
+    borderWidth: 3, 
+    backgroundColor: '#FF830D',
+    zIndex: 0,
+    color: 'white',
+    height: 80
+  },
+  headerText:{
+    color: 'white',
+    fontSize: 25
   }
 });
