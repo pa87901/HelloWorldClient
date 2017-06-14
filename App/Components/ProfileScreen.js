@@ -6,29 +6,15 @@ import {
 import { connect } from 'react-redux';
 import { authenticate } from '../Actions/authActions'; 
 import { setUserProfile } from '../Actions/userProfileActions';
-import {
-  setSightseeing, setMuseum, setFood, setNightlife, setSports, setMusic, setHistory, setPolitics
-}
-from '../Actions/specialtyActions';
 import { setRequestedGuideBookings } from '../Actions/bookingActions';
-import axios from '../axios'
+import axios from '../axios';
 
 class ProfileScreen extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      sightseeing: setSightseeing,
-      nightlife: setNightlife,
-      museum: setMuseum,
-      politics: setPolitics,
-      history: setHistory,
-      food: setFood,
-      sports: setSports
-    }
 
     this.navigateToGuideOptions = this.navigateToGuideOptions.bind(this);
     this.logout = this.logout.bind(this);
-    this.test = this.test.bind(this)
   }
 
   logout() {
@@ -111,12 +97,6 @@ class ProfileScreen extends React.Component {
             leftIcon={{name: 'flight-takeoff'}}
             title="Logout"
             onPress={this.logout}
-          />
-          <ListItem
-            hideChevron={true}
-            leftIcon={{name: 'feedback'}}
-            title="Test"
-            onPress={this.test}
           />
         </List>
       </ScrollView> 

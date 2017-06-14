@@ -18,8 +18,6 @@ class SearchScreen extends React.Component {
       display: 'none',
       citiesPrediction: [],
       query: '',
-      dateSelected: false,
-      timeSelected: false
     };
     this.checkSpecialty = this.checkSpecialty.bind(this);
     this.handleCityUpdate.bind(this);

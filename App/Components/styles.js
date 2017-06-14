@@ -207,5 +207,91 @@ export default StyleSheet.create({
     color: 'white',
     fontSize: 25,
     fontFamily: main.font
+  },
+  // selected profile
+  profileContainer: {
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'center'
+  },
+  profileHeader: {
+    fontFamily: 'Arial Rounded MT Bold',
+    fontSize: 18,
+    color: '#FF830D'
+  },
+  orangeTintProfileContainer: {
+    backgroundColor: 'rgba(255, 131, 17, 0.15)',
+    flexGrow: 1,
+    marginBottom: 66
+  },
+  profileHeaderContainer: {
+    backgroundColor: 'white',
+    height: 72,
+    alignSelf: 'stretch',
+    justifyContent: 'center',
+    paddingLeft: 20,
+    marginBottom: 20
+  },
+  profileCard: {
+    paddingTop: 20,
+    backgroundColor: 'white',
+    width: 350,
+    // alignItems: 'center'
+  },
+  profileName: {
+    fontFamily: main.font,
+    fontSize: 20
+  },
+  profileImage: {
+    width: 276,
+    height: 276,
+    borderRadius: 138
+  },
+  profileIntro: {
+    fontFamily: 'Arial',
+    fontSize: 16,
+  },
+  doubleButtonContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0
+  },
+  doubleButtonText: {
+    fontSize: 23,
+    color: 'white',
+    fontFamily: main.font
+  },
+  affirmativeButton: {
+    backgroundColor: '#FF830D',
+    height: 66,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexGrow: 1
+  },
+  negativeButton: {
+    backgroundColor: '#00acdb',
+    height: 66,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexGrow: 1
+  },
+  profileSubheader: {
+    fontFamily: main.font,
+    fontSize: 18
+  },
+  profileFlexRow: {
+    flex: 1,
+    flexDirection: 'row',
+    paddingLeft: 20,
+    marginTop: 8
+  },
+  reviewList: {
+    borderBottomWidth: 0,
+    borderTopWidth: 0,
+    marginTop: 8,
+    paddingLeft: 12
   }
 });
