@@ -75,19 +75,19 @@ class ExploreScreenEntry extends React.Component {
                           {guide.guideSpecialties.map((specialtyObj, key) =>
                             <Icon
                             name='search'
-                            fontSize={12}
+                            size={22}
                             />
                           )}
 
                         </View>
                         </View>
                       </View>
-                      <View style={styles.flexRow}>
+                      <View style={{flexGrow:1, height: 35, backgroundColor: '#FF830D'}}>
                         <TouchableOpacity
                           backgroundColor='#FF8C00'
                           onPress={() => this.handleProfileClick(key)}
                         >
-                          <Text>Get to know me!</Text>
+                          <Text style={{textAlign:'center', textAlignVertical:'center', color:"white", fontSize: 18}}>Get to know me!</Text>
                         </TouchableOpacity>
                       </View>
                     </Card>
