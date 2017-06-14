@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Image, StyleSheet, Text, TouchableHighlight, View } from 'react-native';
+import { ListItem } from 'react-native-elements';
 
 class NewConversation extends Component {
   constructor(props) {
@@ -11,34 +12,35 @@ class NewConversation extends Component {
     }
   }
 
-  componentDidMount() {
-
-  }
-
   render() {
+    console.log('this.props.conversation', this.props.conversation);
     const { navigate } = this.props.navigation;
     let nameToShow;
     let me;
     let them;
+    let avatar;
     // Where I am the user
     if (this.props.userId === this.props.conversation.user.facebook_id) {
       nameToShow = this.props.conversation.guide.user.full_name;
       me = this.props.conversation.user.facebook_id;
       them = this.props.conversation.guide.user.facebook_id;
+      avatar = this.props.conversation.guide.user.avatar
     } else {
       // Where I am the guide.
       nameToShow = this.props.conversation.user.full_name;
       me = this.props.conversation.guide.user.facebook_id;
       them = this.props.conversation.user.facebook_id;
+      avatar = this.props.conversation.user.avatar
     }
     return (
       <View>
-        <TouchableHighlight onPress={() => navigate('NewChatScreen', {me: me, them: them})}>
-          <Image
-          source={{uri: 'https://facebook.github.io/react/img/logo_og.png'}}
-          style={styles.image}/>
-        </TouchableHighlight>
-        <Text>{nameToShow}</Text>
+        <ListItem
+          roundAvatar
+          avatar={this.props.avatar}
+          title={nameToShow}
+          avatar = {avatar}
+          onPress={() => navigate('NewChatScreen', {me: me, them: them})}
+        />
       </View>
     )
   }

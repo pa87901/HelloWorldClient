@@ -1,11 +1,10 @@
-// New inbox
-
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import axios from '../axios';
 import { Text, View } from 'react-native';
 import { updateChats } from '../Actions/chatActions'
 import NewConversation from './NewConversation';
+import styles from './styles.js';
 
 class NewInboxScreen extends Component {
   constructor(props) {
@@ -66,15 +65,25 @@ class NewInboxScreen extends Component {
   render() {
     console.log('this.state in NewInbox', this.state);
     return (
-      <View>
+      <View style={styles.orangeContainer}>
         <Text>New inbox</Text>
-        {this.state.inbox.map((conversation, index) => (
-          <NewConversation
-          conversation={conversation[0]}
-          key={index}
-          userId={this.props.userProfile.profile.userId}
-          navigation={this.props.navigation}/>
-          ))}
+        {this.state.inbox.map((conversation, index) => {
+          // Choosing avatar to pass as props.
+          // let avatar;
+          // if (this.props.userProfile.profile.userId === conversation[0].guide.user.facebook_id) {
+          //   avatar = conversation.user.avatar;
+          // } else {
+          //   avatar = conversation.guide.user.avatar
+          // }
+          return (
+            <NewConversation
+            conversation={conversation[0]}
+            key={index}
+            userId={this.props.userProfile.profile.userId}
+            navigation={this.props.navigation}
+            />
+          )})
+        }
       </View>
     )
   }
