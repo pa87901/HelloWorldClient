@@ -9,6 +9,7 @@ import config from '../Config/config.js';
 import DatePicker from './SearchComponents/DatePicker';
 import TimePick from './SearchComponents/TimePick';
 import styles from './styles.js';
+import Utils from '../Utils';
 
 class SearchScreen extends React.Component {
   constructor(props) {
@@ -95,8 +96,17 @@ class SearchScreen extends React.Component {
   }
 
   render() {
-    const showDatePicker =  this.state.display === 'date'  ? <DatePicker /> : <TextInput style={styles.timeContainer} onFocus={()=>{this.setState({ display : 'date' })}} value={'  Date: ' + new Date(this.props.search.date).toDateString()} />;
-    const showTimePicker = this.state.display === 'time' ? <TimePick mode='datetime' /> : <TextInput style={styles.timeContainer} onFocus={()=>{this.setState({ display : 'time' })}} value={'  Time: ' + this.props.search.fromHour + ' - ' + this.props.search.toHour} />;
+    const showDatePicker =  this.state.display === 'date'  ? <DatePicker /> : <TextInput 
+      style={styles.timeContainer} 
+      onFocus={()=>{this.setState({ display : 'date' })}} 
+      value={'  Date: ' + Utils.time.displayDate(new Date(this.props.search.date).toDateString())} 
+    />;
+    const showTimePicker = this.state.display === 'time' ? <TimePick mode='datetime' /> : <TextInput 
+      style={styles.timeContainer} 
+      onFocus={()=>{this.setState({ display : 'time' })}} 
+      value={'  Time: ' + Utils.time.convert24ToAmPm(this.props.search.fromHour) + ' - ' + Utils.time.convert24ToAmPm(this.props.search.toHour)} 
+    />;
+    
     const filterCities = this.state.citiesPrediction.length > 0 && this.state.citiesPrediction[0].description !== this.props.search.city ? this.state.citiesPrediction : [];
 
     return (

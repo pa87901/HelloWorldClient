@@ -1,17 +1,18 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Text, View, ScrollView, Image, Button as NativeButton, TouchableOpacity } from 'react-native';
-import { Card, Button, Icon } from 'react-native-elements';
-import { getProfileResult } from '../Actions/profileSelectionActions';
-import styles from './styles.js';
+import { Text, View, ScrollView, Image, TouchableOpacity } from 'react-native';
+import { Card, Icon } from 'react-native-elements';
 import Toolbar from 'react-native-toolbar';
 import Stars from 'react-native-stars-rating';
+import { getProfileResult } from '../Actions/profileSelectionActions';
+import styles from './styles.js';
+import Utils from '../Utils';
 
-var navToSearch;
+//var navToSearch;
 
 class ExploreScreenEntry extends React.Component {
   componentDidMount(){
-    navToSearch = this.props.navigation.navigate.bind(this)
+    //navToSearch = this.props.navigation.navigate.bind(this)
   }
   handleProfileClick(searchIndex) {
     this.props.dispatch(getProfileResult(this.props.search.result[searchIndex]));
@@ -20,18 +21,22 @@ class ExploreScreenEntry extends React.Component {
 
   render() {
     return (
-      <View style={{flex:1}}>
+      <View style={{ flex: 1 }}>
       <Toolbar
-        backgroundColor = '#FF8C00' 
-        ref={(toolbar) => {this.toolbar = toolbar}} presets={toolbarSetting}/>
+        backgroundColor='#FF8C00' 
+        ref={(toolbar) => { this.toolbar = toolbar; }} presets={toolbarSetting} />
 
         <View style={styles.orangeBar} />
         <View style={styles.orangeTintContainer}>
-          <View style={{borderWidth:10, borderColor:'white'}}>
-            <Text style={styles.orangeText}>{this.props.search.city + '\n'} 
-            {new Date(this.props.search.date).toDateString()} {this.props.search.fromHour} {this.props.search.toHour}</Text>
+          <View style={{ borderWidth: 10, borderColor: 'white' }}>
+            <TouchableOpacity onPress={()=>{this.props.navigation.navigate('Search')}}>
+              <Text style={styles.orangeText}>
+                {this.props.search.city + '\n'} 
+                {Utils.time.displayDate(new Date(this.props.search.date).toDateString())}, {Utils.time.convert24ToAmPm(this.props.search.fromHour)} - {Utils.time.convert24ToAmPm(this.props.search.toHour)}
+              </Text>
+            </TouchableOpacity>
           </View>
-          <View style={{flex:1}}>
+          <View style={{ flex: 1 }}>
             <ScrollView>
               <View>
                 {this.props.search.result.map((guide, key) => {
@@ -41,18 +46,18 @@ class ExploreScreenEntry extends React.Component {
                         key={key}
                         flexDirection='column'
                       >
-                      <View style={{borderWidth:25, borderColor: 'white'}}>
-                        <Text style={{fontSize:25, textAlign: 'center'}} >{guide.user.full_name}</Text>
+                      <View style={styles.searchCardContainer}>
+                        <Text style={styles.searchCardName} >{guide.user.full_name}</Text>
                       </View>
-                      <View style={{flex:1, flexDirection:'row'}}>
+                      <View style={styles.flexRow}>
                         <Image 
-                        style={{height:125, width:125, marginRight: 20, marginBottom: 20, borderColor: 'white' }}
-                        source={{uri: guide.user.picture}}/>
-                        <Text style={{marginBottom: 10}}>
+                        style={{ height: 125, width: 125, marginRight: 20, marginBottom: 20, borderColor: 'white' }}
+                        source={{ uri: guide.user.picture }} />
+                        <Text style={{ marginBottom: 10 }}>
                           {guide.intro}
                         </Text>
-                        <View style={{flexGrow:1}}>
-                        <Text style={{marginBottom: 10}}>
+                        <View style={{ flexGrow: 1 }}>
+                        <Text style={styles.searchCardFont}>
                           Rating
                         </Text>
                         <Stars
@@ -62,27 +67,25 @@ class ExploreScreenEntry extends React.Component {
                           rate={guide.user.avg_rating}
                           size={36}
                         />
-                        <Text>
+                        <Text style={styles.searchCardFont}>
                           Specialties:
                         </Text>
-                        <View style={{flex:1, flexDirection:'row'}}>
+                        <View style={styles.flexRow}>
                           {guide.guideSpecialties.map((specialtyObj, key) =>
                             <Icon
                             name='search'
+                            fontSize={12}
                             />
                           )}
 
                         </View>
-
                         </View>
-
                       </View>
-                      <View style={{flex:1}}>
+                      <View style={styles.flexRow}>
                         <TouchableOpacity
-                          icon={{name: 'group'}}
                           backgroundColor='#FF8C00'
                           onPress={() => this.handleProfileClick(key)}
-                          >
+                        >
                           <Text>Get to know me!</Text>
                         </TouchableOpacity>
                       </View>
@@ -108,18 +111,18 @@ const mapStateToProps = state => (state);
 
 export default connect(mapStateToProps)(ExploreScreenEntry);
 
-var toolbarSetting = {
+const toolbarSetting = {
     toolbar1: {
       hover: false,
-      leftButton: {
-        icon: 'search',
-        iconStyle: {color: 'white', fontSize: 30},
-        iconFontFamily: 'FontAwesome',
-        onPress: () => {navToSearch('Search')},
-      },
+      // leftButton: {
+      //   icon: 'search',
+      //   iconStyle: {color: 'white', fontSize: 30},
+      //   iconFontFamily: 'FontAwesome',
+      //   onPress: () => {navToSearch('Search')},
+      // },
       title:{
         text: 'LOCALIZE',
-        textStyle: styles.headerText
+        textStyle: styles.toolbarText
       }
   },
 }
