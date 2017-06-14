@@ -19,7 +19,10 @@ class DatePicker extends Component {
           date={new Date(this.props.search.date)}
           mode='date'
           timeZoneOffsetInMinutes={0}
-          onDateChange={(e) => { this.props.dispatch(updateDate(`${e.getFullYear()}-${e.getMonth() + 1}-${e.getDate()}`)); }}
+          onDateChange={(e) => {
+            console.log('datepicker e', e)
+             this.props.dispatch(updateDate(e));
+              }}
         />
       </View>
     );
