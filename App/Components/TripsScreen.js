@@ -6,6 +6,7 @@ import { NavigationActions } from 'react-navigation';
 import { setTouristBookings } from '../Actions/bookingActions';
 import axios from '../axios';
 import Stars from 'react-native-stars-rating';
+import styles from './styles.js';
 
 
 class TripsScreen extends React.Component {
@@ -80,16 +81,10 @@ class TripsScreen extends React.Component {
   
 //Waiting for db methods/trips to dynamically render
   render() {
-    const styles = {
-      subheader: {
-        fontSize: 20,
-        marginTop: 10
-      },
-    };
     
     if (this.state.touristBookings[0]) {
       return (
-        <ScrollView>
+        <ScrollView style={styles.orangeContainer}>
           <View>
           <Modal
             animationType={"none"}
@@ -151,25 +146,25 @@ class TripsScreen extends React.Component {
           {this.state.touristBookings[0].bookings.map((booking, i) => {
             return (
             <Card key={i}>
-              <Text style={styles.subheader}>
+              <Text style={styles.TripCardText}>
                 City
               </Text>
               <Text>
                 {booking.city}
               </Text>
-              <Text style={styles.subheader}>
+              <Text style={styles.TripCardText}>
                 Guide
               </Text>
               <Text>
                 {booking.guide.user.full_name}
               </Text>
-              <Text style={styles.subheader}>
+              <Text style={styles.TripCardText}>
                 Date & Time
               </Text>
               <Text>
                 {new Date(booking.start_date_hr).toDateString()} | {new Date(booking.start_date_hr).getHours()}:00-{new Date(booking.end_date_hr).getHours()}:00
               </Text>
-              <Text style={styles.subheader}>
+              <Text style={styles.TripCardText}>
                 Status
               </Text>
               <Text>
@@ -206,3 +201,9 @@ class TripsScreen extends React.Component {
 const mapStateToProps = state => (state);
 
 export default connect(mapStateToProps)(TripsScreen);
+    // const styles = {
+    //   subheader: {
+    //     fontSize: 20,
+    //     marginTop: 10
+    //   },
+    // };

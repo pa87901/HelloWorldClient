@@ -8,6 +8,7 @@ import axios from '../axios';
 import Stars from 'react-native-stars-rating';
 import SwipeOut from 'react-native-swipeout';
 import GuideItineraryScreen from './GuideItineraryScreen';
+import styles from './styles.js';
 
 class GuideTripsScreen extends React.Component {
   constructor(props) {
@@ -77,7 +78,7 @@ class GuideTripsScreen extends React.Component {
 
     if (this.state.guideBookings[0]) {
       return (
-        <ScrollView>
+        <ScrollView style={styles.orangeContainer}>
           <Modal
             animationType={"none"}
             transparent={true}
@@ -113,25 +114,25 @@ class GuideTripsScreen extends React.Component {
           {this.state.guideBookings[0].bookings.map((booking, i)=>{
             return (
             <Card key={i}>
-              <Text style={styles.subheader}>
+              <Text style={styles.TripCardText}>
                 City
               </Text>
               <Text>
                 {booking.city}
               </Text>
-              <Text style={styles.subheader}>
+              <Text style={styles.TripCardText}>
                 Tourist
               </Text>
               <Text>
                 {booking.user.full_name}
               </Text>
-              <Text style={styles.subheader}>
+              <Text style={styles.TripCardText}>
                 Date & Time
               </Text>
               <Text>
                 {new Date(booking.start_date_hr).toDateString()} | {new Date(booking.start_date_hr).getHours()}:00-{new Date(booking.end_date_hr).getHours()}:00
               </Text>
-              <Text style={styles.subheader}>
+              <Text style={styles.TripCardText}>
                 Status
               </Text>
               <Text>
@@ -172,13 +173,12 @@ class GuideTripsScreen extends React.Component {
 
 }
 
-const styles = {
-  subheader: {
-    fontSize: 20,
-    marginTop: 10
-  },
-};
-
 const mapStateToProps = state => (state);
 
 export default connect(mapStateToProps)(GuideTripsScreen);
+// const styles = {
+//   subheader: {
+//     fontSize: 20,
+//     marginTop: 10
+//   },
+// };

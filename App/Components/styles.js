@@ -298,5 +298,9 @@ export default StyleSheet.create({
     borderTopWidth: 0,
     marginTop: 8,
     paddingLeft: 12
+  },
+  TripCardText: {
+    fontSize: 20,
+    marginTop: 10
   }
 });
