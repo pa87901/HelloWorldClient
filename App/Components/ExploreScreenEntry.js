@@ -51,11 +51,11 @@ class ExploreScreenEntry extends React.Component {
                       </View>
                       <View style={styles.flexRow}>
                         <Image 
-                        style={{ height: 125, width: 125, marginRight: 15, marginBottom: 20, borderColor: 'white' }}
+                        style={styles.searchResultImage}
                         source={{ uri: guide.user.picture }} />
-                        <Text style={{ marginBottom: 10 }}>
+                        {/*<Text style={{ marginBottom: 10 }}>
                           {guide.intro}
-                        </Text>
+                        </Text>*/}
                         <View style={{ flexGrow: 1 }}>
                         <Text style={styles.searchCardFont}>
                           Rating:

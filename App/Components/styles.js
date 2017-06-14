@@ -160,7 +160,7 @@ export default StyleSheet.create({
   },
   searchCardFont: {
     fontFamily: main.font,
-    marginBottom: 10
+    // marginBottom: 5
   },
   goButtonTO: {
     flexGrow: 1, 
@@ -181,7 +181,16 @@ export default StyleSheet.create({
     flex:1, 
     flexDirection:'row', 
     flexWrap: 'wrap', 
-    width:150
+    width:150,
+    marginBottom: 5,
+    marginLeft: 15
+  },
+  searchResultImage: {
+    height: 125, 
+    width: 125, 
+    marginRight: 15, 
+    marginBottom: 20, 
+    borderColor: 'white'
   },
   //SearchResultProfile
   buttonContainer: {
