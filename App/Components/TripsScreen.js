@@ -1,11 +1,13 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, ScrollView, TouchableHighlight, Modal, TextInput } from 'react-native';
+import { StyleSheet, Text, View, Button, ScrollView, TouchableHighlight, Modal, TextInput, TouchableOpacity } from 'react-native';
 import { Card } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { NavigationActions } from 'react-navigation';
 import { setTouristBookings } from '../Actions/bookingActions';
 import axios from '../axios';
 import Stars from 'react-native-stars-rating';
+import styles from './styles.js';
+import Utils from '../Utils';
 
 
 class TripsScreen extends React.Component {
@@ -80,16 +82,26 @@ class TripsScreen extends React.Component {
   
 //Waiting for db methods/trips to dynamically render
   render() {
-    const styles = {
-      subheader: {
-        fontSize: 20,
-        marginTop: 10
-      },
-    };
+
+    // const toolbarSetting = {
+    //     toolbar1: {
+    //       hover: false,
+    //       leftButton: {
+    //         icon: 'chevron-left',
+    //         iconStyle: styles.toolbarIcon,
+    //         iconFontFamily: 'FontAwesome',
+    //         onPress: this.navigateBack,
+    //       },
+    //       title: {
+    //         text: 'LOCALIZE',
+    //         textStyle: styles.toolbarText
+    //       }
+    //   },
+    // };
     
     if (this.state.touristBookings[0]) {
       return (
-        <ScrollView>
+        <ScrollView style={styles.orangeContainer}>
           <View>
           <Modal
             animationType={"none"}
@@ -150,33 +162,29 @@ class TripsScreen extends React.Component {
           <Text>Trips As A Tourist</Text> 
           {this.state.touristBookings[0].bookings.map((booking, i) => {
             return (
-            <Card key={i}>
-              <Text style={styles.subheader}>
-                City
+            <View>
+            <Card 
+              key={i}
+              flexDirection='column'
+            >
+            <View style={styles.searchCardContainer}>
+              <Text style={styles.TripCardText}>
+                {booking.city}{"\n"}
+                with{booking.guide.user.full_name}
               </Text>
-              <Text>
-                {booking.city}
+              <Text style={styles.orangeTripCardText}>
+                {new Date(booking.start_date_hr).toDateString()}, {Utils.time.convert24ToAmPm(new Date(booking.start_date_hr).getHours())} - {Utils.time.convert24ToAmPm(new Date(booking.end_date_hr).getHours())}
+                {"\n"}
               </Text>
-              <Text style={styles.subheader}>
-                Guide
-              </Text>
-              <Text>
-                {booking.guide.user.full_name}
-              </Text>
-              <Text style={styles.subheader}>
-                Date & Time
-              </Text>
-              <Text>
-                {new Date(booking.start_date_hr).toDateString()} | {new Date(booking.start_date_hr).getHours()}:00-{new Date(booking.end_date_hr).getHours()}:00
-              </Text>
-              <Text style={styles.subheader}>
+              <Text style={{fontSize: 10, fontFamily: 'Arial Rounded MT Bold'}}>
                 Status
-              </Text>
-              <Text>
+                {"\n"}
+              <Text style={styles.TripCardText}>
                 {booking.status}
               </Text>
-              <Button title='Map' onPress={()=>{this.props.navigation.navigate('MapScreen', {bookingId: this.props.booking.touristBookings[i].id})}}/>
-              <Button title='Review' onPress={()=>{
+              </Text>
+              {/*<Button title='Map' onPress={()=>{this.props.navigation.navigate('MapScreen', {bookingId: this.props.booking.touristBookings[i].id})}}/>*/}
+              {/*<Button title='Review' onPress={()=>{
                 this.setState({activeCard : i})
                 this.toggleReviewModal(true)
                 }} />
@@ -184,15 +192,37 @@ class TripsScreen extends React.Component {
                 title="Itinerary" 
                 onPress={() => this.props.navigation.navigate('TouristItinerary', {bookingId: this.props.booking.touristBookings[0].bookings[i].id})}
                 >
-          </Button>
+          </Button>*/}
+              </View>
+              <Text>
+                {"\n"}
+              </Text>
+              <View style={styles.doubleButtonContainer}>
+                <TouchableHighlight
+                  style={styles.smallAffirmativeButton}
+                  onPress={()=>{this.props.navigation.navigate('TouristItinerary', {bookingId: this.props.booking.touristBookings[0].bookings[i].id})}}
+                >
+                  <Text style={styles.smallDoubleButtonText}>Itinerary</Text>
+                </TouchableHighlight>
+                <TouchableHighlight
+                  style={styles.smallNegativeButton}
+                  onPress={ () => {
+                    this.setState({activeCard : i})
+                    this.toggleReviewModal(true)
+                  }}
+                >
+                  <Text style={styles.smallDoubleButtonText}>Review</Text>
+                </TouchableHighlight>
+              </View>
             </Card>
+              </View>
             )
           })}
         </ScrollView>
       ); 
     } else {
       return (
-        <View></View>
+        <View style={styles.orangeContainer}></View>
       ); 
     }
   }
@@ -206,3 +236,9 @@ class TripsScreen extends React.Component {
 const mapStateToProps = state => (state);
 
 export default connect(mapStateToProps)(TripsScreen);
+    // const styles = {
+    //   subheader: {
+    //     fontSize: 20,
+    //     marginTop: 10
+    //   },
+    // };

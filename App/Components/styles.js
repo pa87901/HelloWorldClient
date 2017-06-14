@@ -298,5 +298,36 @@ export default StyleSheet.create({
     borderTopWidth: 0,
     marginTop: 8,
     paddingLeft: 12
+  },
+  //Trip Views
+  TripCardText: {
+    fontSize: 15,
+    marginTop: 10,
+    fontFamily: main.font
+  },
+  orangeTripCardText: {
+    fontSize: 15,
+    marginTop: 10,
+    fontFamily: main.font,
+    color: main.color
+  },
+  smallAffirmativeButton: {
+    backgroundColor: '#FF830D',
+    height: 33,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexGrow: 1
+  },
+  smallNegativeButton: {
+    backgroundColor: '#00acdb',
+    height: 33,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexGrow: 1
+  },
+  smallDoubleButtonText: {
+    fontSize: 15,
+    color: 'white',
+    fontFamily: main.font
   }
 });
