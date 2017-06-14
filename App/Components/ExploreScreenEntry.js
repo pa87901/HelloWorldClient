@@ -11,9 +11,9 @@ import Utils from '../Utils';
 //var navToSearch;
 
 class ExploreScreenEntry extends React.Component {
-  componentDidMount(){
-    //navToSearch = this.props.navigation.navigate.bind(this)
-  }
+  // componentDidMount(){
+  //   //navToSearch = this.props.navigation.navigate.bind(this)
+  // }
   handleProfileClick(searchIndex) {
     this.props.dispatch(getProfileResult(this.props.search.result[searchIndex]));
     this.props.navigation.navigate('GuideProfile');
@@ -51,43 +51,53 @@ class ExploreScreenEntry extends React.Component {
                       </View>
                       <View style={styles.flexRow}>
                         <Image 
-                        style={{ height: 125, width: 125, marginRight: 20, marginBottom: 20, borderColor: 'white' }}
+                        style={{ height: 125, width: 125, marginRight: 15, marginBottom: 20, borderColor: 'white' }}
                         source={{ uri: guide.user.picture }} />
                         <Text style={{ marginBottom: 10 }}>
                           {guide.intro}
                         </Text>
                         <View style={{ flexGrow: 1 }}>
                         <Text style={styles.searchCardFont}>
-                          Rating
+                          Rating:
                         </Text>
                         <Stars
                           isActive={false}
                           isHalfStarEnabled={true}
                           rateMax={5}
                           isHalfStarEnabled={false}
-                          rate={guide.avg_rating}
-                          size={36}
+                          rate={Math.ceil(guide.avg_rating)}
+                          size={35}
                         />
                         <Text style={styles.searchCardFont}>
                           Specialties:
                         </Text>
-                        <View style={styles.flexRow}>
+                        <View style={styles.specialtiesContainer}>
                           {guide.guideSpecialties.map((specialtyObj, key) =>
-                            <Icon
-                            name='search'
-                            size={22}
-                            />
+                          {
+                            return (
+                              <View 
+                                key={key}
+                                style={{alignItems: 'stretch'}}>
+                                  <Icon
+                                  name='search'
+                                  size={35}
+                                  />
+                              </View>
+                            );
+                          }
                           )}
-
                         </View>
                         </View>
                       </View>
-                      <View style={{flexGrow:1, height: 35, backgroundColor: '#FF830D'}}>
+                      <View style={styles.goButtonTO}>
                         <TouchableOpacity
                           backgroundColor='#FF8C00'
                           onPress={() => this.handleProfileClick(key)}
                         >
-                          <Text style={{textAlign:'center', textAlignVertical:'center', color:"white", fontSize: 18}}>Get to know me!</Text>
+                          <View style={styles.goButtonTextView}>
+
+                            <Text style={styles.goButtonText}>Get to know me!</Text>
+                          </View>
                         </TouchableOpacity>
                       </View>
                     </Card>

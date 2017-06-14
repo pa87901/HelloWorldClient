@@ -113,7 +113,6 @@ export default StyleSheet.create({
     marginBottom: 10,
     borderColor: main.color,
     borderWidth: 2.5,
-    fontFamily: main.font
   },
   // Search Result Screen
   orangeText: {
@@ -155,11 +154,33 @@ export default StyleSheet.create({
   },
   searchCardContainer: {
     borderBottomWidth: 25, 
-    borderColor: 'white'
+    borderColor: 'white',
+    flex: 1
   },
   searchCardFont: {
     fontFamily: main.font,
     marginBottom: 10
+  },
+  goButtonTO: {
+    flexGrow: 1, 
+    height: 36, 
+    backgroundColor: '#FF830D'
+  },
+  goButtonTextView: {
+    margin: 5
+  },
+  goButtonText: {
+    textAlign:'center',
+    textAlignVertical:'center', 
+    color:"white", 
+    fontSize: 18,
+    fontFamily: main.font,
+  },
+  specialtiesContainer:{
+    flex:1, 
+    flexDirection:'row', 
+    flexWrap: 'wrap', 
+    width:150
   },
   //SearchResultProfile
   buttonContainer: {
@@ -180,7 +201,6 @@ export default StyleSheet.create({
   orangeBar: {
     backgroundColor: main.color,
     zIndex: 0,
-    color: 'white',
     height: 80
   },
   toolbarText: {
