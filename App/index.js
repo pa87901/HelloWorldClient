@@ -11,8 +11,6 @@ class HelloWorld extends React.Component {
   }
 
   render() {
-    // Console.log to see the store methods and initial state.
-    // console.log('store', this.state.store, this.state.store.getState());
     return (
       <Provider store={this.state.store}>
         <Navigator />

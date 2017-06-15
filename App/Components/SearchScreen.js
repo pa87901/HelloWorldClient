@@ -134,7 +134,7 @@ class SearchScreen extends React.Component {
           <TouchableOpacity onPress={() => this.setState({ display: 'date' })} >
             {showDatePicker}
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => (this.setState({ display: 'time' }))}>
+          <TouchableOpacity onPress={() => this.setState({ display: 'time' })}>
             {showTimePicker}
           </TouchableOpacity>
           </TouchableOpacity>

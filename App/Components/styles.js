@@ -2,6 +2,7 @@ import { StyleSheet } from 'react-native';
 
 const main = {
   color: '#FF830D',
+  colorTint: 'rgba(255, 131, 17, 0.15)',
   font: 'Arial Rounded MT Bold',
   secondFont: 'Arial'
 };
@@ -19,6 +20,10 @@ export default StyleSheet.create({
   flexRow: {
     flex: 1,
     flexDirection: 'row'
+  },
+  whiteBackground:{
+    backgroundColor:'white',
+    flex: 1,
   },
   //Search Screen
   container: {
@@ -105,6 +110,7 @@ export default StyleSheet.create({
     height: 45,
     borderColor: main.color,
     borderWidth: 2.5,
+    paddingLeft: 6,
     fontFamily: 'arial',
     color: 'black'
   },
@@ -122,7 +128,7 @@ export default StyleSheet.create({
     fontSize: 18,
   },
   orangeContainer: {
-    backgroundColor: 'rgba(255, 131, 17, 0.15)',
+    backgroundColor: main.colorTint,
     flex: 1
   },
   fullWidthButtonText: {
@@ -134,7 +140,7 @@ export default StyleSheet.create({
     fontFamily: main.font
   },
   orangeTintContainer: {
-    backgroundColor: 'rgba(255, 131, 17, 0.15)',
+    backgroundColor: main.colorTint,
     flexGrow: 1
   },
   orangeContainerTop: {
@@ -160,7 +166,7 @@ export default StyleSheet.create({
   },
   searchCardFont: {
     fontFamily: main.font,
-    marginBottom: 10
+    // marginBottom: 5
   },
   goButtonTO: {
     flexGrow: 1, 
@@ -181,7 +187,16 @@ export default StyleSheet.create({
     flex:1, 
     flexDirection:'row', 
     flexWrap: 'wrap', 
-    width:150
+    width:150,
+    marginBottom: 5,
+    marginLeft: 15
+  },
+  searchResultImage: {
+    height: 125, 
+    width: 125, 
+    marginRight: 15, 
+    marginBottom: 20, 
+    borderColor: 'white'
   },
   //SearchResultProfile
   buttonContainer: {
@@ -200,6 +215,11 @@ export default StyleSheet.create({
   },
   //Toolbar
   orangeBar: {
+    backgroundColor: main.color,
+    zIndex: 0,
+    height: 80
+  },
+  orangeTintBar: {
     backgroundColor: main.color,
     zIndex: 0,
     height: 80
@@ -226,7 +246,7 @@ export default StyleSheet.create({
     color: '#FF830D'
   },
   orangeTintProfileContainer: {
-    backgroundColor: 'rgba(255, 131, 17, 0.15)',
+    backgroundColor: main.colorTint,
     flexGrow: 1,
     marginBottom: 66
   },

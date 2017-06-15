@@ -1,25 +1,39 @@
 //guide questions here
 import React from 'react';
+import { TextInput, Text, View, TouchableOpacity, TouchableHighlight } from 'react-native';
+import Axios from 'axios';
+import Toolbar from 'react-native-toolbar';
+import Autocomplete from 'react-native-autocomplete-input';
 import { connect } from 'react-redux';
 import { becomeGuideCity } from '../Actions/BecomeAGuideActions.js';
-import { StyleSheet, Text, View, Picker, TouchableOpacity } from 'react-native';
-import { Button, FormLabel, FormInput, } from 'react-native-elements';
-import Autocomplete from 'react-native-autocomplete-input';
 import config from '../Config/config.js';
-import Axios from 'axios';
-
+import styles from './styles.js';
+import DatePicker from './BecomeAGuideComponents/DatePicker';
+import TimePick from './BecomeAGuideComponents/TimePick';
+import Utils from '../Utils';
+import { becomeGuideRate } from '../Actions/BecomeAGuideActions';
 
 class BecomeAGuideQuestions1 extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      citiesPrediction: []
-    }
-    this.navigateToNext = this.navigateToNext.bind(this);
+      citiesPrediction: [],
+      display: null
+    };
+    this.navigateToNext = this.navigateToNext.bind(this);    
+    this.navigateBack = this.navigateBack.bind(this);
+  }
+
+  navigateBack() {
+    this.props.navigation.goBack();
+  }
+
+  updateRate(rate) {
+    this.props.dispatch(becomeGuideRate(rate));
   }
 
   navigateToNext() {
-    this.props.navigation.navigate('GuideQuestions2');
+    this.props.navigation.navigate('GuideQuestions4');
   }
 
   updateCity(city) {
@@ -30,7 +44,6 @@ class BecomeAGuideQuestions1 extends React.Component {
       Axios.get(query)
       .then((res) => {
         const cities = res.data.predictions;
-        console.log('google search data', res.data.predictions)
         this.setState({ citiesPrediction: cities });
       })
       .catch((err) => {
@@ -41,12 +54,45 @@ class BecomeAGuideQuestions1 extends React.Component {
     }
   }
   render() {
-    console.log('PROPS', this.props);
     const filterCities = this.state.citiesPrediction.length > 0 && this.state.citiesPrediction[0].description !== this.props.becomeAGuide.city ? this.state.citiesPrediction : [];
+    const showDatePicker =  this.state.display === 'date'  ? <DatePicker /> : <TextInput 
+      style={styles.timeContainer} 
+      onFocus={()=>{this.setState({ display : 'date' })}} 
+      value={'Date: ' + Utils.time.displayDate(new Date(this.props.becomeAGuide.date).toDateString())} 
+    />;
+    const showTimePicker = this.state.display === 'time' ? <TimePick mode='datetime' /> : <TextInput 
+      style={styles.timeContainer} 
+      onFocus={()=>{this.setState({ display : 'time' })}} 
+      value={'Time: ' + Utils.time.convert24ToAmPm(this.props.becomeAGuide.fromHour) + ' - ' + Utils.time.convert24ToAmPm(this.props.becomeAGuide.toHour)} 
+    />;
 
+    const toolbarSetting = {
+      toolbar1: {
+        hover: false,
+        leftButton: {
+          icon: 'chevron-left',
+          iconStyle: styles.toolbarIcon,
+          iconFontFamily: 'FontAwesome',
+          onPress: this.navigateBack,
+        },
+        title: {
+          text: 'LOCALIZE',
+          textStyle: styles.toolbarText
+        }
+      },
+    };
+    
     return (
-      <View style={{marginTop: 100}}>
-        <FormLabel>What city will you be giving a tour in?</FormLabel>
+      <View style={styles.whiteBackground}>
+        <Toolbar
+        backgroundColor='#FF8C00'
+        toolbarHeight={35}
+        ref={(toolbar) => { this.toolbar = toolbar; }}
+        presets={toolbarSetting}
+        />
+        <View style={styles.orangeBar} />
+        <TouchableOpacity activeOpacity={1} onPress={() => (this.setState({ display: 'none' }))}>
+        <Text>Become a guide!</Text>
         <Autocomplete
             autoCapitalize="none"
             keyboardShouldPersistTaps={true}
@@ -65,45 +111,40 @@ class BecomeAGuideQuestions1 extends React.Component {
               </TouchableOpacity>
             )}}
           />
-        <View style={{marginTop: 10}}>
-          <Button
-            small
-            raised
-            backgroundColor='#FF8C00'
-            title='Next'
-            onPress={this.navigateToNext}
+        <TouchableOpacity onPress={() => this.setState({ display: 'date' })} >
+          {showDatePicker}
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => this.setState({ display: 'time' })}>
+          {showTimePicker}
+        </TouchableOpacity>
+        <TouchableOpacity>
+          <TextInput 
+            style={styles.timeContainer} 
+            value={this.props.becomeAGuide.hourlyRate}
+            placeholder='Enter Hourly Rate' 
+            onChangeText={(rate) => this.updateRate(rate)}
           />
+        </TouchableOpacity>
+        <TextInput style={styles.timecontainer} id="rate" onChangeText={(rate) => this.updateRate(rate)} />
+
+        </TouchableOpacity>
+        <View style={styles.buttonContainer}>
+          <TouchableHighlight
+            style={styles.fullWidthButton}
+            onPress={this.navigateToNext}
+          >
+            <Text style={styles.goToExplore}>Next</Text>
+          </TouchableHighlight>
         </View>
       </View> 
     );
   }
+  
+  static navigationOptions = ({ navigation }) => ({
+    header: null
+  })
 }
 
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: '#F5FCFF',
-    flex: 1,
-    paddingTop: 25,
-    paddingLeft: 10,
-    paddingRight: 10,
-    paddingBottom: 25,
-  },
-  autocompleteContainer: {
-    marginLeft: 10,
-    marginRight: 10,
-    height: 150
-  },
-  itemText: {
-    fontSize: 15,
-    margin: 2
-  },
-  descriptionContainer: {
-    // `backgroundColor` needs to be set otherwise the
-    // autocomplete input will disappear on text input.
-    backgroundColor: '#F5FCFF',
-    marginTop: 8
-  }
-});
 
 const mapStateToProps = state => (state);
 

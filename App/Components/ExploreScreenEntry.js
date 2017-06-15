@@ -11,9 +11,6 @@ import Utils from '../Utils';
 //var navToSearch;
 
 class ExploreScreenEntry extends React.Component {
-  // componentDidMount(){
-  //   //navToSearch = this.props.navigation.navigate.bind(this)
-  // }
   handleProfileClick(searchIndex) {
     this.props.dispatch(getProfileResult(this.props.search.result[searchIndex]));
     this.props.navigation.navigate('GuideProfile');
@@ -21,10 +18,10 @@ class ExploreScreenEntry extends React.Component {
 
   render() {
     return (
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1, backgroundColor:'white' }}>
       <Toolbar
         backgroundColor='#FF8C00' 
-        ref={(toolbar) => { this.toolbar = toolbar; }} presets={toolbarSetting} />
+        ref={(toolbar) => { this.toolbar = toolbar; }} presets={this.toolbarSetting} />
 
         <View style={styles.orangeBar} />
         <View style={styles.orangeTintContainer}>
@@ -51,11 +48,11 @@ class ExploreScreenEntry extends React.Component {
                       </View>
                       <View style={styles.flexRow}>
                         <Image 
-                        style={{ height: 125, width: 125, marginRight: 15, marginBottom: 20, borderColor: 'white' }}
+                        style={styles.searchResultImage}
                         source={{ uri: guide.user.picture }} />
-                        <Text style={{ marginBottom: 10 }}>
+                        {/*<Text style={{ marginBottom: 10 }}>
                           {guide.intro}
-                        </Text>
+                        </Text>*/}
                         <View style={{ flexGrow: 1 }}>
                         <Text style={styles.searchCardFont}>
                           Rating:
@@ -116,24 +113,18 @@ class ExploreScreenEntry extends React.Component {
     header: null
   })
 
+  toolbarSetting = {
+      toolbar1: {
+        hover: false,
+        title:{
+          text: 'LOCALIZE',
+          textStyle: styles.toolbarText
+        }
+    },
+  }
 }
 
 const mapStateToProps = state => (state);
 
 export default connect(mapStateToProps)(ExploreScreenEntry);
 
-const toolbarSetting = {
-    toolbar1: {
-      hover: false,
-      // leftButton: {
-      //   icon: 'search',
-      //   iconStyle: {color: 'white', fontSize: 30},
-      //   iconFontFamily: 'FontAwesome',
-      //   onPress: () => {navToSearch('Search')},
-      // },
-      title:{
-        text: 'LOCALIZE',
-        textStyle: styles.toolbarText
-      }
-  },
-}

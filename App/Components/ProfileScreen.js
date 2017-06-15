@@ -1,16 +1,14 @@
 import React from 'react';
-import {
-  AsyncStorage, Text, ScrollView, View, Image, Modal, TextInput, TouchableOpacity
-} from 'react-native';
-import {
-  Card, Button, List, ListItem
-} from 'react-native-elements';
+import { AsyncStorage, Text, ScrollView, View, Image, Modal, TextInput, TouchableOpacity } from 'react-native';
+import { Card, Button, List, ListItem } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { authenticate } from '../Actions/authActions'; 
 import { setUserProfile } from '../Actions/userProfileActions';
 import { setRequestedGuideBookings } from '../Actions/bookingActions';
 import axios from '../axios';
-import styles from './styles';
+import Toolbar from 'react-native-toolbar';
+import styles from './styles.js';
+
 
 class ProfileScreen extends React.Component {
   constructor(props) {
@@ -68,44 +66,64 @@ class ProfileScreen extends React.Component {
   }
 
   render() {
-    console.log('PROPS', this.props);
-
+    const toolbarSetting = {
+      toolbar1: {
+        hover: false,
+        title: {
+          text: 'Profile',
+          textStyle: styles.toolbarText
+        }
+      },
+    };
     return (
-      <ScrollView>
-        <Card
-          title={this.props.userProfile.profile.name}
-        >
-          <Image source={{uri: this.props.userProfile.profile.picture}} style={{width: 50, height: 50}} />
-          <Text style={{textAlign: 'center'}}>
-            How Are You Feeling Today?
-          </Text>
-        </Card>  
-        <List>
-          <ListItem
-            hideChevron={true}
-            leftIcon={{name: 'directions-walk'}}
-            title="Become a Guide"
-            onPress={this.navigateToGuideOptions}
-          />
-          <ListItem
-            hideChevron={true}
-            leftIcon={{name: 'help-outline'}}
-            title="Help & Support"
-            onPress={this.handleHelpClick}
-          />
-          <ListItem
-            hideChevron={true}
-            leftIcon={{name: 'feedback'}}
-            title="Provide Feedback"
-            onPress={this.handleFeedbackClick}
-          />
-          <ListItem
-            hideChevron={true}
-            leftIcon={{name: 'flight-takeoff'}}
-            title="Logout"
-            onPress={this.logout}
-          />
-        </List>
+      <View style={styles.whiteBackground}>
+        <Toolbar
+          backgroundColor='#FF8C00'
+          toolbarHeight={35}
+          ref={(toolbar) => { this.toolbar = toolbar; }}
+          presets={toolbarSetting}
+        />
+        <View style={styles.orangeBar}/>
+        <View>
+          <View style={{alignItems:'center'}}>
+            <Text style={{fontSize:40, fontFamily: 'Arial Rounded MT Bold', textAlign:'center', marginBottom: 25, marginTop: 40}}>{this.props.userProfile.profile.name}</Text>
+            <Image source={{uri: this.props.userProfile.profile.extraInfo.picture_large }} style={{width: 150, height: 150, borderRadius: 75, marginBottom:15, textAlign:'center'}} />
+            <Text style={{textAlign: 'center'}}>
+              view/edit my profile
+            </Text>
+          </View>
+          <List>
+            <ListItem
+              hideChevron={true}
+              leftIcon={{name: 'directions-walk'}}
+              title="Become a Guide"
+              onPress={this.navigateToGuideOptions}
+            />
+            <ListItem
+              hideChevron={true}
+              leftIcon={{name: 'help-outline'}}
+              title="Help & Support"
+              onPress={this.handleHelpClick}
+            />
+            <ListItem
+              hideChevron={true}
+              leftIcon={{name: 'feedback'}}
+              title="Provide Feedback"
+              onPress={this.handleFeedbackClick}
+            />
+            <ListItem
+              hideChevron={true}
+              leftIcon={{name: 'settings'}}
+              title="Settings"
+              onPress={this.handleFeedbackClick}
+            />
+            <ListItem
+              hideChevron={true}
+              leftIcon={{name: 'flight-takeoff'}}
+              title="Logout"
+              onPress={this.logout}
+            />
+          </List>
         <Modal
           animationType={'none'}
           transparent={true}
@@ -180,9 +198,14 @@ class ProfileScreen extends React.Component {
             </View>
           </View>
         </Modal>
-      </ScrollView> 
+        </View> 
+      </View>
     );
   }
+  
+  static navigationOptions = ({ navigation }) => ({
+    header: null
+  })
 }
 
 
