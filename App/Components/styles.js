@@ -351,6 +351,13 @@ export default StyleSheet.create({
     color: 'white',
     fontFamily: main.font
   },
+  tripHeader: {
+    color: 'black',
+    fontSize: 17,
+    fontFamily: main.font,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
   // Booking Confirmation
   bookingConfirmText: {
     fontSize: 22,

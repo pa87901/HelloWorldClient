@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, ScrollView, TouchableHighlight, Modal, TextInput, TouchableOpacity, NavigatorIOS } from 'react-native';
+import { StyleSheet, Text, View, Button, ScrollView, TouchableHighlight, Modal, TextInput, TouchableOpacity } from 'react-native';
 import { Card } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { NavigationActions } from 'react-navigation';
@@ -89,7 +89,7 @@ class TripsScreen extends React.Component {
 //Waiting for db methods/trips to dynamically render
   render() {
 
-    {/*const toolbarSetting = {
+    const toolbarSetting = {
         toolbar1: {
           hover: false,
           leftButton: {
@@ -98,26 +98,23 @@ class TripsScreen extends React.Component {
             iconFontFamily: 'FontAwesome',
             onPress: this.navigateBack,
           },
-          rightButton: {
-            text: 'Hey'
-          },
           title: {
             text: 'LOCALIZE',
             textStyle: styles.toolbarText
           }
       },
-    };*/}
+    };
     
     if (this.state.touristBookings[0]) {
       return (
         <View style={{ flex: 1, backgroundColor: 'white' }}>
-        {/*<Toolbar
+        <Toolbar
         backgroundColor='#FF8C00'
         toolbarHeight={35}
         ref={(toolbar) => { this.toolbar = toolbar; }}
         presets={toolbarSetting}
         />
-        <View style={styles.orangeBar}/>*/}
+        <View style={styles.orangeBar}/>
         <ScrollView style={styles.orangeContainer}>
           <View>
           <Modal
@@ -176,7 +173,9 @@ class TripsScreen extends React.Component {
             </View>
           </Modal>
           </View>
-          <Text>Trips As A Tourist</Text> 
+          <View>
+          <Text style={styles.tripHeader}>Trips As A Tourist</Text> 
+          </View>
           {this.state.touristBookings[0].bookings.map((booking, i) => {
             return (
             <View>
@@ -246,10 +245,9 @@ class TripsScreen extends React.Component {
   }
   
   static navigationOptions = ({ navigation }) => ({
-    headerLeft: <Button title='Explore' onPress={() => navigation.navigate('Explore')}/>,
-    headerRight: <Button title='Guide Trips' onPress={() => navigation.navigate('GuideTrips')}/>,
-    headerTintColor: 'black'
-    // header: null
+    // headerLeft: <Button title='Explore' onPress={() => navigation.navigate('Explore')}/>,
+    // headerRight: <Button title='Guide Trips' onPress={() => navigation.navigate('GuideTrips')}/>
+    header: null
   })
 }
 
