@@ -22,6 +22,7 @@ export default StyleSheet.create({
   },
   whiteBackground:{
     backgroundColor:'white',
+    flex:1,
   },
   //Search Screen
   container: {

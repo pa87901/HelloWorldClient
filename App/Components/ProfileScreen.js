@@ -85,9 +85,9 @@ class ProfileScreen extends React.Component {
         />
         <View style={styles.orangeBar}/>
         <View>
-          <View>
-            <Text style={{fontSize:40, fontFamily: 'Arial Rounded MT Bold', autoAlign:'center', textAlign:'center', marginBottom: 25}}>{this.props.userProfile.profile.name}</Text>
-            <Image source={{uri: this.props.userProfile.profile.picture}} style={{width: 150, height: 150, borderRadius: 75, marginBottom:15, textAlign:'center'}} />
+          <View style={{alignItems:'center'}}>
+            <Text style={{fontSize:40, fontFamily: 'Arial Rounded MT Bold', autoAlign:'center', textAlign:'center', marginBottom: 25, marginTop: 40}}>{this.props.userProfile.profile.name}</Text>
+            <Image source={{uri: this.props.userProfile.profile.extraInfo.picture_large }} style={{width: 150, height: 150, borderRadius: 75, marginBottom:15, textAlign:'center'}} />
             <Text style={{textAlign: 'center'}}>
               view/edit my profile
             </Text>
