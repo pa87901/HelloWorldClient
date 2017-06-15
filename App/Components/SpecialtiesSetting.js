@@ -1,11 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {
-  setSightseeing, setMuseum, setFood, setNightlife, setSports, setMusic, setHistory, setPolitics
-} from '../Actions/specialtyActions';
-import { StyleSheet, Text, View, Picker } from 'react-native';
-import { Button, FormLabel, FormInput, CheckBox } from 'react-native-elements';
+import { setSightseeing, setMuseum, setFood, setNightlife, setSports, setMusic, setHistory, setPolitics } from '../Actions/specialtyActions';
+import { Text, View, TouchableOpacity, TouchableHighlight } from 'react-native';
+import { Button, FormLabel } from 'react-native-elements';
 import axios from '../axios';
+import styles from './styles.js'
+import Toolbar from 'react-native-toolbar';
 
 class SpecialtiesSetting extends React.Component {
   constructor(props) {
@@ -19,6 +19,11 @@ class SpecialtiesSetting extends React.Component {
     this.setHistory = this.setHistory.bind(this);
     this.setPolitics = this.setPolitics.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.setSpecialty = this.setSpecialty.bind(this);
+  }
+  setSpecialty(spec) {
+    const setSpec = 'set' + spec.charAt(0).toUpperCase() + spec.slice(1);
+    this[setSpec]();
   }
 
   setSightseeing() {
@@ -54,6 +59,7 @@ class SpecialtiesSetting extends React.Component {
   }
 
   handleSubmit() {
+    
     Object.keys(this.props.specialty).forEach(key => {
       let options = {
         facebookId: this.props.userProfile.profile.userId,
@@ -85,87 +91,64 @@ class SpecialtiesSetting extends React.Component {
   render() {
     console.log('PROPS', this.props);
 
+    const toolbarSetting = {
+      toolbar1: {
+        hover: false,
+        leftButton: {
+          icon: 'chevron-left',
+          iconStyle: styles.toolbarIcon,
+          iconFontFamily: 'FontAwesome',
+          onPress: this.props.navigation.goBack,
+        },
+        title: {
+          text: 'Profile',
+          textStyle: styles.toolbarText
+        }
+      },
+    };
+
     return (
-      <View style={{marginTop: 10}}>
-        <FormLabel>What are your specialties?</FormLabel>
-        <View style={{marginTop: 10}}>
-          <CheckBox
-            title='Sightseeing'
-            checkedColor='#FF8C00'
-            checkedIcon='check-square-o'
-            uncheckedIcon='square-o'
-            checked={this.props.specialty.sightseeing}
-            onPress={this.setSightseeing}
-          />
-          <CheckBox
-            title='Museums'
-            checkedColor='#FF8C00'
-            checkedIcon='check-square-o'
-            uncheckedIcon='square-o'
-            checked={this.props.specialty.museum}
-            onPress={this.setMuseum}
-          />
-          <CheckBox
-            title='Food'
-            checkedColor='#FF8C00'
-            checkedIcon='check-square-o'
-            uncheckedIcon='square-o'
-            checked={this.props.specialty.food}
-            onPress={this.setFood}
-          />
-          <CheckBox
-            title='Nightlife'
-            checkedColor='#FF8C00'
-            checkedIcon='check-square-o'
-            uncheckedIcon='square-o'
-            checked={this.props.specialty.nightlife}
-            onPress={this.setNightlife}
-          />
-          <CheckBox
-            title='Sports'
-            checkedColor='#FF8C00'
-            checkedIcon='check-square-o'
-            uncheckedIcon='square-o'
-            checked={this.props.specialty.sports}
-            onPress={this.setSports}
-          />
-          <CheckBox
-            title='Music'
-            checkedColor='#FF8C00'
-            checkedIcon='check-square-o'
-            uncheckedIcon='square-o'
-            checked={this.props.specialty.music}
-            onPress={this.setMusic}
-          />
-          <CheckBox
-            title='History'
-            checkedColor='#FF8C00'
-            checkedIcon='check-square-o'
-            uncheckedIcon='square-o'
-            checked={this.props.specialty.history}
-            onPress={this.setHistory}
-          />
-          <CheckBox
-            title='Politics'
-            checkedColor='#FF8C00'
-            checkedIcon='check-square-o'
-            uncheckedIcon='square-o'
-            checked={this.props.specialty.politics}
-            onPress={this.setPolitics}
-          />
-        </View>
-        <View style={{marginTop: 10}}>
-          <Button
-            small
-            raised
+      <View style={{flex:1}}>
+        <View style={styles.whiteBackground}>
+          <Toolbar
             backgroundColor='#FF8C00'
-            title='Submit'
-            onPress={this.handleSubmit}
+            toolbarHeight={35}
+            ref={(toolbar) => { this.toolbar = toolbar; }}
+            presets={toolbarSetting}
           />
+        <View style={styles.orangeBar}/>
+        <Text style={styles.specialtySubheader}>Highlight your specialties!</Text>
+          <View style={styles.flexSwitchContainer}>
+            {Object.keys(this.props.specialty).map((spec, index) => {
+              return (            
+                <TouchableOpacity
+                  key={index}
+                  style={this.props.specialty[spec] ? styles.checkbox : styles.checkboxInactive}
+                  onPress={() => this.setSpecialty(spec)} 
+                >
+                  <View >
+                    <Text style={this.props.specialty[spec] ? styles.checkboxText : styles.checkboxTextInactive}>{spec}</Text>             
+                  </View>
+                </TouchableOpacity>
+            );
+            })}
+          </View>
+          <View style={styles.buttonContainer}>
+              <TouchableHighlight
+                style={styles.fullWidthButton}
+                onPress={() => this.handleSubmit()}
+              >
+                <Text style={styles.fullWidthButtonText}>Submit</Text>
+              </TouchableHighlight>
+          </View>
         </View>
       </View>
     );
   }
+  
+  static navigationOptions = ({ navigation }) => ({
+    header: null
+  })
 }
 
 const mapStateToProps = state => (state);

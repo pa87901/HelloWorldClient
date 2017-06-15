@@ -92,7 +92,7 @@ class BecomeAGuideQuestions1 extends React.Component {
         />
         <View style={styles.orangeBar} />
         <TouchableOpacity activeOpacity={1} onPress={() => (this.setState({ display: 'none' }))}>
-        <Text>Become a guide!</Text>
+        <Text style={styles.specialtySubheader}>Become a guide!</Text>
         <Autocomplete
             autoCapitalize="none"
             keyboardShouldPersistTaps={true}
