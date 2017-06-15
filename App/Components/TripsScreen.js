@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, ScrollView, TouchableHighlight, Modal, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Button, ScrollView, TouchableHighlight, Modal, TextInput, TouchableOpacity, NavigatorIOS } from 'react-native';
 import { Card } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { NavigationActions } from 'react-navigation';
@@ -8,6 +8,7 @@ import axios from '../axios';
 import Stars from 'react-native-stars-rating';
 import styles from './styles.js';
 import Utils from '../Utils';
+import Toolbar from 'react-native-toolbar';
 
 
 class TripsScreen extends React.Component {
@@ -28,6 +29,7 @@ class TripsScreen extends React.Component {
     this.toggleReviewModal = this.toggleReviewModal.bind(this);
     this.toggleTipsModal = this.toggleTipsModal.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.navigateBack = this.navigateBack.bind(this);
   }
 
   componentDidMount() {
@@ -50,6 +52,10 @@ class TripsScreen extends React.Component {
 
     this.props.navigation.dispatch(resetAction);
   }
+
+  navigateBack() {
+    this.props.navigation.navigate('Explore');
+  } 
 
   onSubmit(){
     axios.put(`api/bookings/guide/rrt`, {
@@ -83,24 +89,35 @@ class TripsScreen extends React.Component {
 //Waiting for db methods/trips to dynamically render
   render() {
 
-    // const toolbarSetting = {
-    //     toolbar1: {
-    //       hover: false,
-    //       leftButton: {
-    //         icon: 'chevron-left',
-    //         iconStyle: styles.toolbarIcon,
-    //         iconFontFamily: 'FontAwesome',
-    //         onPress: this.navigateBack,
-    //       },
-    //       title: {
-    //         text: 'LOCALIZE',
-    //         textStyle: styles.toolbarText
-    //       }
-    //   },
-    // };
+    {/*const toolbarSetting = {
+        toolbar1: {
+          hover: false,
+          leftButton: {
+            icon: 'chevron-left',
+            iconStyle: styles.toolbarIcon,
+            iconFontFamily: 'FontAwesome',
+            onPress: this.navigateBack,
+          },
+          rightButton: {
+            text: 'Hey'
+          },
+          title: {
+            text: 'LOCALIZE',
+            textStyle: styles.toolbarText
+          }
+      },
+    };*/}
     
     if (this.state.touristBookings[0]) {
       return (
+        <View style={{ flex: 1, backgroundColor: 'white' }}>
+        {/*<Toolbar
+        backgroundColor='#FF8C00'
+        toolbarHeight={35}
+        ref={(toolbar) => { this.toolbar = toolbar; }}
+        presets={toolbarSetting}
+        />
+        <View style={styles.orangeBar}/>*/}
         <ScrollView style={styles.orangeContainer}>
           <View>
           <Modal
@@ -170,7 +187,7 @@ class TripsScreen extends React.Component {
             <View style={styles.searchCardContainer}>
               <Text style={styles.TripCardText}>
                 {booking.city}{"\n"}
-                with{booking.guide.user.full_name}
+                with {booking.guide.user.full_name}
               </Text>
               <Text style={styles.orangeTripCardText}>
                 {new Date(booking.start_date_hr).toDateString()}, {Utils.time.convert24ToAmPm(new Date(booking.start_date_hr).getHours())} - {Utils.time.convert24ToAmPm(new Date(booking.end_date_hr).getHours())}
@@ -198,13 +215,13 @@ class TripsScreen extends React.Component {
                 {"\n"}
               </Text>
               <View style={styles.doubleButtonContainer}>
-                <TouchableHighlight
+                <TouchableOpacity
                   style={styles.smallAffirmativeButton}
                   onPress={()=>{this.props.navigation.navigate('TouristItinerary', {bookingId: this.props.booking.touristBookings[0].bookings[i].id})}}
                 >
                   <Text style={styles.smallDoubleButtonText}>Itinerary</Text>
-                </TouchableHighlight>
-                <TouchableHighlight
+                </TouchableOpacity>
+                <TouchableOpacity
                   style={styles.smallNegativeButton}
                   onPress={ () => {
                     this.setState({activeCard : i})
@@ -212,13 +229,14 @@ class TripsScreen extends React.Component {
                   }}
                 >
                   <Text style={styles.smallDoubleButtonText}>Review</Text>
-                </TouchableHighlight>
+                </TouchableOpacity>
               </View>
             </Card>
               </View>
             )
           })}
         </ScrollView>
+        </View>
       ); 
     } else {
       return (
@@ -229,7 +247,9 @@ class TripsScreen extends React.Component {
   
   static navigationOptions = ({ navigation }) => ({
     headerLeft: <Button title='Explore' onPress={() => navigation.navigate('Explore')}/>,
-    headerRight: <Button title='Guide Trips' onPress={() => navigation.navigate('GuideTrips')}/>
+    headerRight: <Button title='Guide Trips' onPress={() => navigation.navigate('GuideTrips')}/>,
+    headerTintColor: 'black'
+    // header: null
   })
 }
 
