@@ -109,6 +109,7 @@ export default StyleSheet.create({
     height: 45,
     borderColor: main.color,
     borderWidth: 2.5,
+    paddingLeft: 6,
     fontFamily: 'arial',
     color: 'black'
   },
