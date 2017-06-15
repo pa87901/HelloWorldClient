@@ -19,6 +19,7 @@ class NewConversation extends Component {
     let me;
     let them;
     let avatar;
+    let subtitle;
     // Where I am the user
     if (this.props.userId === this.props.conversation.user.facebook_id) {
       nameToShow = this.props.conversation.guide.full_name;
@@ -32,12 +33,20 @@ class NewConversation extends Component {
       them = this.props.conversation.user.facebook_id;
       avatar = this.props.conversation.user.avatar
     }
+
+    // Formatting preview message.
+    if (this.props.conversation.message.length > 40) {
+      subtitle = this.props.conversation.message.slice(0, 37) + '...';
+    } else {
+      subtitle = this.props.conversation.message;
+    }
     return (
       <View style={{backgroundColor: 'white'}}>
         <ListItem
           roundAvatar
-          avatar={this.props.avatar}
+          // avatar={this.props.avatar}
           title={nameToShow}
+          subtitle={subtitle}
           avatar = {avatar}
           onPress={() => navigate('NewChatScreen', {me: me, them: them})}
         />

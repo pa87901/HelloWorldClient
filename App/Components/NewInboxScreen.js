@@ -6,6 +6,7 @@ import { updateChats } from '../Actions/chatActions'
 import NewConversation from './NewConversation';
 import styles from './styles.js';
 import Toolbar from 'react-native-toolbar';
+import { ListItem } from 'react-native-elements';
 
 class NewInboxScreen extends Component {
   constructor(props) {
@@ -65,13 +66,51 @@ class NewInboxScreen extends Component {
   }
 
   render() {
-    console.log('this.state in NewInbox', this.state);
+    // console.log('this.state in NewInbox', this.state);
+    const dummyTourists = [{
+      userId: '1',
+      avatar: 'http://media.salon.com/2016/01/donald_trump69.jpg',
+      name: 'Donald Trump',
+      message: 'I want to tour outside New York.'
+    },
+    {
+      userId: '2',
+      avatar: 'https://pbs.twimg.com/profile_images/460312331923107840/m1Fip-Vt_400x400.jpeg',
+      name: 'Marcus Phillips',
+      message: 'I want to see more than Hack Reactor...'
+    },
+    {
+      userId: '3',
+      avatar: 'https://res.cloudinary.com/crunchbase-production/image/upload/v1448830269/gzcifut4c2xah95x0ewd.jpg',
+      name: 'Mark Zuckerberg',
+      message: 'Do you want to tour Facebook?'
+    },
+    {
+      userId: '4',
+      avatar: 'https://www.biography.com/.image/c_fill%2Ccs_srgb%2Cg_face%2Ch_300%2Cw_300/MTE1ODA0OTcxOTUyMDE0ODYx/elon-musk-20837159-1-402.png',
+      name: 'Elon Musk',
+      message: 'I want to tour Mars.'
+    }];
     return (
       <View style={styles.orangeContainer}>
         <Toolbar
           backgroundColor='#FF8C00'
           ref={(toolbar) => { this.toolbar = toolbar; }} presets={toolbarSetting} />
-        <View style={{marginTop: 80}}>
+        <View style={{marginTop: 22}}>
+          {dummyTourists.map((dummyTourist, index) => {
+            return (
+              <View style={{backgroundColor: 'white'}}>
+                <ListItem
+                  roundAvatar
+                  avatar={dummyTourist.avatar}
+                  title={dummyTourist.name}
+                  subtitle={dummyTourist.message}
+                />
+              </View>
+            )
+          })}
+        </View>
+        <View>
         {this.state.inbox.map((conversation, index) => {
           // Choosing avatar to pass as props.
           // let avatar;
@@ -82,10 +121,10 @@ class NewInboxScreen extends Component {
           // }
           return (
             <NewConversation
-            conversation={conversation[0]}
-            key={index}
-            userId={this.props.userProfile.profile.userId}
-            navigation={this.props.navigation}
+              conversation={conversation[0]}
+              key={index}
+              userId={this.props.userProfile.profile.userId}
+              navigation={this.props.navigation}
             />
           )})
         }
