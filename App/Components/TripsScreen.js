@@ -8,6 +8,7 @@ import axios from '../axios';
 import Stars from 'react-native-stars-rating';
 import styles from './styles.js';
 import Utils from '../Utils';
+import Toolbar from 'react-native-toolbar';
 
 
 class TripsScreen extends React.Component {
@@ -24,10 +25,12 @@ class TripsScreen extends React.Component {
       activeCard: null
     };
 
-    this.navigateToExplore = this.navigateToExplore.bind(this);
+    // this.navigateToExplore = this.navigateToExplore.bind(this);
     this.toggleReviewModal = this.toggleReviewModal.bind(this);
     this.toggleTipsModal = this.toggleTipsModal.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.navigateBack = this.navigateBack.bind(this);
+    this.navigateToGuideTrips = this.navigateToGuideTrips.bind(this);
   }
 
   componentDidMount() {
@@ -39,16 +42,24 @@ class TripsScreen extends React.Component {
       })
   }
 
-  navigateToExplore() {
-    const resetAction = NavigationActions.reset({
-      index: 1,
-      actions: [
-        NavigationActions.navigate({ routeName: 'Search' }),
-        NavigationActions.navigate({ routeName: 'Explore' }),
-      ]
-    });
+  // navigateToExplore() {
+  //   const resetAction = NavigationActions.reset({
+  //     index: 1,
+  //     actions: [
+  //       NavigationActions.navigate({ routeName: 'Search' }),
+  //       NavigationActions.navigate({ routeName: 'Explore' }),
+  //     ]
+  //   });
 
-    this.props.navigation.dispatch(resetAction);
+  //   this.props.navigation.dispatch(resetAction);
+  // }
+
+  navigateBack() {
+    this.props.navigation.navigate('Explore');
+  } 
+
+  navigateToGuideTrips() {
+    this.props.navigation.navigate('GuideTrips');
   }
 
   onSubmit(){
@@ -83,24 +94,40 @@ class TripsScreen extends React.Component {
 //Waiting for db methods/trips to dynamically render
   render() {
 
-    // const toolbarSetting = {
-    //     toolbar1: {
-    //       hover: false,
-    //       leftButton: {
-    //         icon: 'chevron-left',
-    //         iconStyle: styles.toolbarIcon,
-    //         iconFontFamily: 'FontAwesome',
-    //         onPress: this.navigateBack,
-    //       },
-    //       title: {
-    //         text: 'LOCALIZE',
-    //         textStyle: styles.toolbarText
-    //       }
-    //   },
-    // };
+    const toolbarSetting = {
+        toolbar1: {
+          hover: false,
+          leftButton: {
+            icon: 'chevron-left',
+            iconStyle: styles.toolbarIcon,
+            iconFontFamily: 'FontAwesome',
+            onPress: this.navigateBack,
+          },
+          rightButton: {
+            icon: 'plane',
+            iconStyle: styles.tripToolBarIcon,
+            iconFontFamily: 'FontAwesome',
+            text: 'Guide Trips',
+            textStyle: styles.tripToolbarText,
+            onPress: this.navigateToGuideTrips
+          },
+          // title: {
+          //   text: 'LOCALIZE',
+          //   textStyle: styles.toolbarText
+          // }
+      },
+    };
     
     if (this.state.touristBookings[0]) {
       return (
+        <View style={{ flex: 1, backgroundColor: 'white' }}>
+        <Toolbar
+        backgroundColor='#FF8C00'
+        toolbarHeight={35}
+        ref={(toolbar) => { this.toolbar = toolbar; }}
+        presets={toolbarSetting}
+        />
+        <View style={styles.orangeBar}/>
         <ScrollView style={styles.orangeContainer}>
           <View>
           <Modal
@@ -159,7 +186,9 @@ class TripsScreen extends React.Component {
             </View>
           </Modal>
           </View>
-          <Text>Trips As A Tourist</Text> 
+          <View>
+          <Text style={styles.tripHeader}>Trips As A Tourist</Text> 
+          </View>
           {this.state.touristBookings[0].bookings.map((booking, i) => {
             return (
             <View>
@@ -170,7 +199,7 @@ class TripsScreen extends React.Component {
             <View style={styles.searchCardContainer}>
               <Text style={styles.TripCardText}>
                 {booking.city}{"\n"}
-                with{booking.guide.user.full_name}
+                with {booking.guide.user.full_name}
               </Text>
               <Text style={styles.orangeTripCardText}>
                 {new Date(booking.start_date_hr).toDateString()}, {Utils.time.convert24ToAmPm(new Date(booking.start_date_hr).getHours())} - {Utils.time.convert24ToAmPm(new Date(booking.end_date_hr).getHours())}
@@ -198,13 +227,13 @@ class TripsScreen extends React.Component {
                 {"\n"}
               </Text>
               <View style={styles.doubleButtonContainer}>
-                <TouchableHighlight
+                <TouchableOpacity
                   style={styles.smallAffirmativeButton}
                   onPress={()=>{this.props.navigation.navigate('TouristItinerary', {bookingId: this.props.booking.touristBookings[0].bookings[i].id})}}
                 >
                   <Text style={styles.smallDoubleButtonText}>Itinerary</Text>
-                </TouchableHighlight>
-                <TouchableHighlight
+                </TouchableOpacity>
+                <TouchableOpacity
                   style={styles.smallNegativeButton}
                   onPress={ () => {
                     this.setState({activeCard : i})
@@ -212,13 +241,14 @@ class TripsScreen extends React.Component {
                   }}
                 >
                   <Text style={styles.smallDoubleButtonText}>Review</Text>
-                </TouchableHighlight>
+                </TouchableOpacity>
               </View>
             </Card>
               </View>
             )
           })}
         </ScrollView>
+        </View>
       ); 
     } else {
       return (
@@ -228,8 +258,9 @@ class TripsScreen extends React.Component {
   }
   
   static navigationOptions = ({ navigation }) => ({
-    headerLeft: <Button title='Explore' onPress={() => navigation.navigate('Explore')}/>,
-    headerRight: <Button title='Guide Trips' onPress={() => navigation.navigate('GuideTrips')}/>
+    // headerLeft: <Button title='Explore' onPress={() => navigation.navigate('Explore')}/>,
+    // headerRight: <Button title='Guide Trips' onPress={() => navigation.navigate('GuideTrips')}/>
+    header: null
   })
 }
 

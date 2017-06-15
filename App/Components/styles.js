@@ -351,6 +351,13 @@ export default StyleSheet.create({
     color: 'white',
     fontFamily: main.font
   },
+  tripHeader: {
+    color: 'black',
+    fontSize: 17,
+    fontFamily: main.font,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
   // Booking Confirmation
   bookingConfirmText: {
     fontSize: 22,
@@ -424,5 +431,16 @@ export default StyleSheet.create({
     fontSize: 20,
     color: 'white',
     fontFamily: main.font    
+  },
+  tripToolbarText: {
+    fontSize: 15,
+    fontFamily: 'Arial Rounded MT Bold',
+    marginBottom: 13,
+    color: 'white'
+  },
+  tripToolBarIcon: {
+    color: 'white',
+    fontSize: 23,
+    marginBottom: 13
   }
 });
