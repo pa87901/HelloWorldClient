@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { View, ScrollView, Button, Text, Modal, TextInput, TouchableHighlight } from 'react-native';
+import { View, ScrollView, Button, Text, Modal, TextInput, TouchableHighlight, TouchableOpacity } from 'react-native';
 import { Card } from 'react-native-elements';
 import { setGuideBookings } from '../Actions/bookingActions';
 import { NavigationActions } from 'react-navigation';
@@ -9,6 +9,8 @@ import Stars from 'react-native-stars-rating';
 import SwipeOut from 'react-native-swipeout';
 import GuideItineraryScreen from './GuideItineraryScreen';
 import styles from './styles.js';
+import Utils from '../Utils';
+import Toolbar from 'react-native-toolbar';
 
 class GuideTripsScreen extends React.Component {
   constructor(props) {
@@ -24,7 +26,9 @@ class GuideTripsScreen extends React.Component {
 
     this.navigateToExplore = this.navigateToExplore.bind(this);
     this.toggleReviewModal = this.toggleReviewModal.bind(this);
+    this.navigateBack = this.navigateBack.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.navigateToTouristTrips = this.navigateToTouristTrips.bind(this);
   }
 
   componentWillMount() {
@@ -45,6 +49,15 @@ class GuideTripsScreen extends React.Component {
 
     this.props.navigation.dispatch(resetAction);
   }
+
+  navigateBack() {
+    this.props.navigation.navigate('Explore');
+  }
+
+  navigateToTouristTrips() {
+    this.props.navigation.navigate('Trips');
+  }
+
   onSubmit(){
 
     console.log('this.props.booking.touristBookings[0].bookings[this.state.activeCard]', this.props.booking.touristBookings[0].bookings[this.state.activeCard])
@@ -69,6 +82,30 @@ class GuideTripsScreen extends React.Component {
   render() {
     // console.log('STATE', this.state);
 
+    const toolbarSetting = {
+        toolbar1: {
+          hover: false,
+          leftButton: {
+            icon: 'chevron-left',
+            iconStyle: styles.toolbarIcon,
+            iconFontFamily: 'FontAwesome',
+            onPress: this.navigateBack,
+          },
+          rightButton: {
+            icon: 'plane',
+            iconStyle: styles.tripToolBarIcon,
+            iconFontFamily: 'FontAwesome',
+            text: 'Tourist Trips',
+            textStyle: styles.tripToolbarText,
+            onPress: this.navigateToTouristTrips
+          }
+          // title: {
+          //   text: 'LOCALIZE',
+          //   textStyle: styles.toolbarText
+          // }
+      },
+    };
+
     let swipeButtons = [{
       text: 'Delete',
       backGroudColor: 'red',
@@ -78,7 +115,16 @@ class GuideTripsScreen extends React.Component {
 
     if (this.state.guideBookings[0]) {
       return (
+        <View style={{ flex: 1, backgroundColor: 'white' }}>
+        <Toolbar
+        backgroundColor='#FF8C00'
+        toolbarHeight={35}
+        ref={(toolbar) => { this.toolbar = toolbar; }}
+        presets={toolbarSetting}
+        />
+        <View style={styles.orangeBar}/>
         <ScrollView style={styles.orangeContainer}>
+          <View>
           <Modal
             animationType={"none"}
             transparent={true}
@@ -110,36 +156,33 @@ class GuideTripsScreen extends React.Component {
               </View>
             </View>
           </Modal>
-            <Text>Trips As A Guide</Text>
+            <Text style={styles.tripHeader}>Trips As A Guide</Text>
+            </View>
           {this.state.guideBookings[0].bookings.map((booking, i)=>{
             return (
-            <Card key={i}>
-              <Text style={styles.TripCardText}>
-                City
+              <View>
+            <Card 
+              key={i}
+              flexDirection='column'
+              >
+              <View style={styles.searchCardContainer}>
+                <Text style={styles.TripCardText}>
+                  {booking.city}{"\n"}
+                  with {booking.user.full_name}
               </Text>
-              <Text>
-                {booking.city}
+              <Text style={styles.orangeTripCardText}>
+                {new Date(booking.start_date_hr).toDateString()}, {Utils.time.convert24ToAmPm(new Date(booking.start_date_hr).getHours())}-{Utils.time.convert24ToAmPm(new Date(booking.end_date_hr).getHours())}
+                {"\n"}
               </Text>
-              <Text style={styles.TripCardText}>
-                Tourist
-              </Text>
-              <Text>
-                {booking.user.full_name}
-              </Text>
-              <Text style={styles.TripCardText}>
-                Date & Time
-              </Text>
-              <Text>
-                {new Date(booking.start_date_hr).toDateString()} | {new Date(booking.start_date_hr).getHours()}:00-{new Date(booking.end_date_hr).getHours()}:00
-              </Text>
-              <Text style={styles.TripCardText}>
+              <Text style={{fontSize: 10, fontFamily: 'Arial Rounded MT Bold'}}>
                 Status
-              </Text>
-              <Text>
+                {"\n"}
+              <Text style={styles.TripCardText}>
                 {booking.status}
               </Text>
+              </Text>
               {/*<Button title="Itinerary" onPress={() => this.props.navigation.navigate('ItineraryScreen', {bookingId: this.props.booking.guideBookings[0].bookings[i].id})}></Button>*/}
-              <Button title='Map' onPress={()=>{this.props.navigation.navigate('MapScreen', {bookingId: this.props.booking.guideBookings[0].bookings[i].id})}}/>   
+              {/*<Button title='Map' onPress={()=>{this.props.navigation.navigate('MapScreen', {bookingId: this.props.booking.guideBookings[0].bookings[i].id})}}/>   
               <Button title='Review' onPress={()=>{
                 this.setState({activeCard : i})
                 this.toggleReviewModal()
@@ -150,14 +193,34 @@ class GuideTripsScreen extends React.Component {
                 title="Itinerary" 
                 onPress={() => this.props.navigation.navigate('GuideItineraryScreen', {bookingId: this.props.booking.guideBookings[0].bookings[i].id})}
               >
-              </Button>
-
-
-
+              </Button>*/}
+              </View>
+              <Text>
+              {"\n"}
+              </Text>
+              <View style={styles.doubleButtonContainer}>
+                <TouchableOpacity
+                  style={styles.smallAffirmativeButton}
+                  onPress={()=>{this.props.navigation.navigate('GuideItineraryScreen', {bookingId: this.props.booking.guideBookings[0].bookings[i].id})}}
+                >
+                  <Text style={styles.smallDoubleButtonText}>Itinerary</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.smallNegativeButton}
+                  onPress={ () => {
+                    this.setState({activeCard : i})
+                    this.toggleReviewModal()
+                  }}
+                >
+                  <Text style={styles.smallDoubleButtonText}>Review</Text>
+                </TouchableOpacity>
+              </View>
             </Card>
+            </View>
             )
           })}
         </ScrollView>
+        </View>
       ); 
     } else {
       return (
@@ -167,10 +230,10 @@ class GuideTripsScreen extends React.Component {
   }
     
   static navigationOptions = ({ navigation }) => ({
-    headerLeft: <Button title='Explore' onPress={() => navigation.navigate('Explore')}/>,
-    headerRight: <Button title='Tourist Trips' onPress={() => navigation.navigate('Trips')}/>
+    // headerLeft: <Button title='Explore' onPress={() => navigation.navigate('Explore')}/>,
+    // headerRight: <Button title='Tourist Trips' onPress={() => navigation.navigate('Trips')}/>
+    header: null
   })
-
 }
 
 const mapStateToProps = state => (state);

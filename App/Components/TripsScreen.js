@@ -25,11 +25,12 @@ class TripsScreen extends React.Component {
       activeCard: null
     };
 
-    this.navigateToExplore = this.navigateToExplore.bind(this);
+    // this.navigateToExplore = this.navigateToExplore.bind(this);
     this.toggleReviewModal = this.toggleReviewModal.bind(this);
     this.toggleTipsModal = this.toggleTipsModal.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.navigateBack = this.navigateBack.bind(this);
+    this.navigateToGuideTrips = this.navigateToGuideTrips.bind(this);
   }
 
   componentDidMount() {
@@ -41,21 +42,25 @@ class TripsScreen extends React.Component {
       })
   }
 
-  navigateToExplore() {
-    const resetAction = NavigationActions.reset({
-      index: 1,
-      actions: [
-        NavigationActions.navigate({ routeName: 'Search' }),
-        NavigationActions.navigate({ routeName: 'Explore' }),
-      ]
-    });
+  // navigateToExplore() {
+  //   const resetAction = NavigationActions.reset({
+  //     index: 1,
+  //     actions: [
+  //       NavigationActions.navigate({ routeName: 'Search' }),
+  //       NavigationActions.navigate({ routeName: 'Explore' }),
+  //     ]
+  //   });
 
-    this.props.navigation.dispatch(resetAction);
-  }
+  //   this.props.navigation.dispatch(resetAction);
+  // }
 
   navigateBack() {
     this.props.navigation.navigate('Explore');
   } 
+
+  navigateToGuideTrips() {
+    this.props.navigation.navigate('GuideTrips');
+  }
 
   onSubmit(){
     axios.put(`api/bookings/guide/rrt`, {
@@ -98,10 +103,18 @@ class TripsScreen extends React.Component {
             iconFontFamily: 'FontAwesome',
             onPress: this.navigateBack,
           },
-          title: {
-            text: 'LOCALIZE',
-            textStyle: styles.toolbarText
-          }
+          rightButton: {
+            icon: 'plane',
+            iconStyle: styles.tripToolBarIcon,
+            iconFontFamily: 'FontAwesome',
+            text: 'Guide Trips',
+            textStyle: styles.tripToolbarText,
+            onPress: this.navigateToGuideTrips
+          },
+          // title: {
+          //   text: 'LOCALIZE',
+          //   textStyle: styles.toolbarText
+          // }
       },
     };
     

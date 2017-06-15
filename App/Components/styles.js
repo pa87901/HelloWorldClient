@@ -431,5 +431,16 @@ export default StyleSheet.create({
     fontSize: 20,
     color: 'white',
     fontFamily: main.font    
+  },
+  tripToolbarText: {
+    fontSize: 15,
+    fontFamily: 'Arial Rounded MT Bold',
+    marginBottom: 13,
+    color: 'white'
+  },
+  tripToolBarIcon: {
+    color: 'white',
+    fontSize: 23,
+    marginBottom: 13
   }
 });
