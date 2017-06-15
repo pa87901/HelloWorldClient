@@ -232,6 +232,7 @@ class TouristItineraryScreen extends Component {
         presets={toolbarSetting}
         />
         <View style={styles.orangeBar}/>
+        <View style={styles.orangeTintProfileContainer}>
         <View style={styles.list}>
           <Divider style={styles.swipeOut} />
           {this.state.pointsOfInterestNames.map((event, index) => {
@@ -239,19 +240,17 @@ class TouristItineraryScreen extends Component {
             <View
               key={index}
             >
-              <Text>{event}</Text>
+              <Text style={styles.TripCardText}>{"\u2022"} {event}</Text>
               <Divider
                 style={styles.swipeOut}
               />
             </View>
             )
           })}
+          </View>
         </View>
 
-
-
-
-        <View style={styles.container}>
+        <View>
           <Modal
             animationType={"slide"}
             transparent={false}
