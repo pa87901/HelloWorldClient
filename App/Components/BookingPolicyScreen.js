@@ -60,6 +60,10 @@ class BookingPolicyScreen extends React.Component {
   render() {
     console.log('PROPS', this.props);
 
+    const hourlyRate = this.props.profileSelection.selectedProfile.availabilities[0].hourly_rate;
+
+    const chargeAmt = hourlyRate * (this.props.search.toHour - this.props.search.fromHour);
+    
     const handleCardPayPress = async () => {
       try {
         this.setState({
@@ -72,7 +76,7 @@ class BookingPolicyScreen extends React.Component {
           managedAccountCurrency: 'usd',
         });
 
-        axios.post('api/payments', { stripeToken: token })
+        axios.post('api/payments', { stripeToken: token, amount: chargeAmt })
           .then(res => {
             console.log(res);
           })
@@ -111,7 +115,6 @@ class BookingPolicyScreen extends React.Component {
       },
     };
 
-    const hourlyRate = this.props.profileSelection.selectedProfile.availabilities[0].hourly_rate;
 
     return (
       <View style={{ flex: 1, backgroundColor: 'white' }}>
@@ -126,7 +129,7 @@ class BookingPolicyScreen extends React.Component {
           <View style={{ flex: 1, height: 210 }}>
             <Image
               source={require('../Utils/sanfrancisco.jpg')}
-              style={{ height: 210, width: Dimensions.get('window').width, resizeMode: 'contain', verticalAlign: 'text-top' }}
+              style={{ height: 210, width: Dimensions.get('window').width, resizeMode: 'contain' }}
             />
           </View>
           <View style={styles.bookingConfirmDetails}>
@@ -143,7 +146,7 @@ class BookingPolicyScreen extends React.Component {
               <Text style={{ fontFamily: 'Arial', fontSize: 12 }}>Payment will be made when trip is confirmed</Text>
             </View>
             <View>
-              <Text style={styles.profileSubheader}>{`$${hourlyRate * (this.props.search.toHour - this.props.search.fromHour)}`}</Text>
+              <Text style={styles.profileSubheader}>{`$${chargeAmt}`}</Text>
             </View>
           </View>
           <View style={styles.termsConditions}>
