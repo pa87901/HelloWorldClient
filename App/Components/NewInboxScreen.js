@@ -5,6 +5,7 @@ import { Text, View } from 'react-native';
 import { updateChats } from '../Actions/chatActions'
 import NewConversation from './NewConversation';
 import styles from './styles.js';
+import Toolbar from 'react-native-toolbar';
 
 class NewInboxScreen extends Component {
   constructor(props) {
@@ -18,7 +19,6 @@ class NewInboxScreen extends Component {
   componentDidMount() {
     axios.get(`/api/chats/all/${this.props.userProfile.profile.userId}`)
     .then(chats => {
-      // console.log('chats in NewInbox', chats);
       chats = chats.data
       this.props.dispatch(updateChats(chats));
       this.setState({
@@ -68,7 +68,10 @@ class NewInboxScreen extends Component {
     console.log('this.state in NewInbox', this.state);
     return (
       <View style={styles.orangeContainer}>
-        <Text>New inbox</Text>
+        <Toolbar
+          backgroundColor='#FF8C00'
+          ref={(toolbar) => { this.toolbar = toolbar; }} presets={toolbarSetting} />
+        <View style={{marginTop: 80}}>
         {this.state.inbox.map((conversation, index) => {
           // Choosing avatar to pass as props.
           // let avatar;
@@ -86,11 +89,31 @@ class NewInboxScreen extends Component {
             />
           )})
         }
+        </View>
       </View>
     )
   }
+  static navigationOptions = ({ navigation }) => ({
+    header: null
+  });  
 }
 
 const mapStateToProps = state => state;
 
 export default connect(mapStateToProps)(NewInboxScreen);
+
+const toolbarSetting = {
+    toolbar1: {
+      hover: false,
+      // leftButton: {
+      //   icon: 'search',
+      //   iconStyle: {color: 'white', fontSize: 30},
+      //   iconFontFamily: 'FontAwesome',
+      //   onPress: () => {navToSearch('Search')},
+      // },
+      title:{
+        text: 'LOCALIZE',
+        textStyle: styles.toolbarText
+      }
+  },
+}

@@ -33,7 +33,7 @@ class NewConversation extends Component {
       avatar = this.props.conversation.user.avatar
     }
     return (
-      <View>
+      <View style={{backgroundColor: 'white'}}>
         <ListItem
           roundAvatar
           avatar={this.props.avatar}
