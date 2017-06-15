@@ -451,4 +451,5 @@ export default StyleSheet.create({
     marginTop: 15,
     marginBottom: 15
   }
+  //Map Modal
 });
