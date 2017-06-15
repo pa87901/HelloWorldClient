@@ -2,7 +2,8 @@ import { StyleSheet } from 'react-native';
 
 const main = {
   color: '#FF830D',
-  font: 'Arial Rounded MT Bold'
+  font: 'Arial Rounded MT Bold',
+  secondFont: 'Arial'
 };
 
 export default StyleSheet.create({
@@ -329,5 +330,46 @@ export default StyleSheet.create({
     fontSize: 15,
     color: 'white',
     fontFamily: main.font
+  },
+  // Booking Confirmation
+  bookingConfirmText: {
+    fontSize: 22,
+    color: 'white',
+    fontFamily: main.font    
+  },
+  placeImage: {
+    height: 220,
+  },
+  bookingConfirmDetails: {
+    paddingLeft: 35,
+    paddingRight: 35,
+    paddingTop: 25,
+    paddingBottom: 25,
+    flexGrow: 1,
+    backgroundColor:
+    'white',
+    flexWrap: 'wrap'
+  },
+  bookingConfirmDates: {
+    fontFamily: main.font,
+    fontSize: 18,
+    color: main.color
+  },
+  termsConditions: {
+    marginTop: 20,
+    paddingLeft: 35,
+    paddingRight: 35,
+    paddingTop: 25,
+    paddingBottom: 25,
+    flexGrow: 1,
+    backgroundColor:
+    'white',
+    flexWrap: 'wrap'
+  },
+  // Booking Confirmation
+  goToExplore: {
+    fontSize: 18,
+    color: 'white',
+    fontFamily: main.font    
   }
 });

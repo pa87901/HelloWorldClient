@@ -4,6 +4,7 @@ import { List, ListItem, Icon } from 'react-native-elements';
 import { connect } from 'react-redux';
 import Toolbar from 'react-native-toolbar';
 import Stars from 'react-native-stars-rating';
+import Utils from '../Utils';
 import styles from './styles.js';
 
 class GuideProfileScreen extends React.Component {
@@ -58,7 +59,7 @@ class GuideProfileScreen extends React.Component {
           <View style={styles.profileContainer}>
             <View style={styles.profileHeaderContainer}>
               <Text style={styles.profileHeader}>{this.props.search.city}</Text>
-              <Text style={styles.profileHeader}>{`${this.props.search.date}  ${this.props.search.fromHour}-${this.props.search.toHour}`}</Text>
+              <Text style={styles.profileHeader}>{Utils.time.displayDate(new Date(this.props.search.date).toDateString())}, {Utils.time.convert24ToAmPm(this.props.search.fromHour)} - {Utils.time.convert24ToAmPm(this.props.search.toHour)}</Text>
             </View>
             <View style={styles.profileCard}>
               <View style={{ flex: 1, alignItems: 'center' }}>
