@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  AsyncStorage, Text, ScrollView, View, Image, Modal, TouchableOpacity
+  AsyncStorage, Text, ScrollView, View, Image, Modal, TextInput, TouchableOpacity
 } from 'react-native';
 import {
   Card, Button, List, ListItem
@@ -17,7 +17,8 @@ class ProfileScreen extends React.Component {
     super(props);
     this.state={
       helpVisible: false,
-      feedbackVisible: false
+      feedbackVisible: false,
+      helpInquiry: '\n'
     };
     this.navigateToGuideOptions = this.navigateToGuideOptions.bind(this);
     this.logout = this.logout.bind(this);
@@ -103,24 +104,36 @@ class ProfileScreen extends React.Component {
           transparent={true}
           visible={this.state.helpVisible}
         >
-          <View style={styles.modal}>
-            <Card
-              title='How can we help?'
-              titleStyle={{ fontFamily: 'Arial Rounded MT Bold' }}
-              containerStyle={{ width: 350 }}
-            >
-              <View>
-                <Text style={{ fontFamily: 'Arial', fontSize: 12 }}>Enter inquiry</Text>
+          <View style={styles.modalContainer}>
+            <View style={styles.modal}>
+              <View style={{ alignItems: 'center', marginBottom: 20 }}>
+                <Text style={styles.profileSubheader}>How can we help?</Text>
               </View>
-              <View style={styles.buttonContainer}>
-                <TouchableOpacity
-                  style={styles.fullWidthButton}
-                  onPress={this.handleHelpClick}
-                >
-                  <Text>Submit Inquiry</Text>
-                </TouchableOpacity>
+              <View style={{ paddingLeft: 20, marginBottom: 5 }}>
+                <Text style={{ fontFamily: 'Arial', fontSize: 14 }}>Ask us anything:</Text>
               </View>
-            </Card>
+              <View style={styles.textInputContainer}>
+                <TextInput
+                  style={{ height: 50, fontFamily: 'Arial', fontSize: 14, textAlign: 'justify' }}
+                  multiline={true}
+                  value={this.state.helpInquiry}
+                  onChange={(text) => this.setState({ helpInquiry: text })}
+                  placeholder={'\n I would like to get help on...'}
+                  placeholderTextColor='grey'
+                />
+              </View>
+              <View style={{ paddingLeft: 20, paddingRight: 20 }}>
+                <Text style={{ height: 50, fontFamily: 'Arial', fontSize: 14 }}>Localize Customer Happiness will be in touch within the next 24 hours!</Text>
+              </View>
+            </View>
+            <View>
+              <TouchableOpacity
+                style={styles.inquirySubmitButton}
+                onPress={this.handleHelpClick}
+              >
+                <Text style={styles.inquirySubmitText}>Submit help inquiry</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </Modal>
       </ScrollView> 
