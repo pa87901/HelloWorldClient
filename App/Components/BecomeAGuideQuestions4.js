@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { becomeGuideIntro } from '../Actions/BecomeAGuideActions';
+import { becomeGuideIntro, becomeGuideStatement } from '../Actions/BecomeAGuideActions';
 import { StyleSheet, Text, View, TouchableHighlight } from 'react-native';
 import { Button, FormLabel, FormInput } from 'react-native-elements';
 import styles from './styles.js';

@@ -113,6 +113,12 @@ class ProfileScreen extends React.Component {
             />
             <ListItem
               hideChevron={true}
+              leftIcon={{name: 'settings'}}
+              title="Settings"
+              onPress={this.handleFeedbackClick}
+            />
+            <ListItem
+              hideChevron={true}
               leftIcon={{name: 'flight-takeoff'}}
               title="Logout"
               onPress={this.logout}

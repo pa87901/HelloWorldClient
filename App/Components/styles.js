@@ -2,6 +2,7 @@ import { StyleSheet } from 'react-native';
 
 const main = {
   color: '#FF830D',
+  colorTint: 'rgba(255, 131, 17, 0.15)',
   font: 'Arial Rounded MT Bold',
   secondFont: 'Arial'
 };
@@ -22,7 +23,7 @@ export default StyleSheet.create({
   },
   whiteBackground:{
     backgroundColor:'white',
-    flex:1,
+    flex: 1,
   },
   //Search Screen
   container: {
@@ -127,7 +128,7 @@ export default StyleSheet.create({
     fontSize: 18,
   },
   orangeContainer: {
-    backgroundColor: 'rgba(255, 131, 17, 0.15)',
+    backgroundColor: main.colorTint,
     flex: 1
   },
   fullWidthButtonText: {
@@ -139,7 +140,7 @@ export default StyleSheet.create({
     fontFamily: main.font
   },
   orangeTintContainer: {
-    backgroundColor: 'rgba(255, 131, 17, 0.15)',
+    backgroundColor: main.colorTint,
     flexGrow: 1
   },
   orangeContainerTop: {
@@ -218,6 +219,11 @@ export default StyleSheet.create({
     zIndex: 0,
     height: 80
   },
+  orangeTintBar: {
+    backgroundColor: main.color,
+    zIndex: 0,
+    height: 80
+  },
   toolbarText: {
     color: 'white',
     fontSize: 40,
@@ -240,7 +246,7 @@ export default StyleSheet.create({
     color: '#FF830D'
   },
   orangeTintProfileContainer: {
-    backgroundColor: 'rgba(255, 131, 17, 0.15)',
+    backgroundColor: main.colorTint,
     flexGrow: 1,
     marginBottom: 66
   },
