@@ -1,5 +1,7 @@
 import React from 'react';
-import { AsyncStorage, StyleSheet, Text, ScrollView, Image } from 'react-native';
+import {
+  AsyncStorage, Text, ScrollView, View, Image, Modal, TouchableOpacity
+} from 'react-native';
 import {
   Card, Button, List, ListItem
 } from 'react-native-elements';
@@ -8,13 +10,18 @@ import { authenticate } from '../Actions/authActions';
 import { setUserProfile } from '../Actions/userProfileActions';
 import { setRequestedGuideBookings } from '../Actions/bookingActions';
 import axios from '../axios';
+import styles from './styles';
 
 class ProfileScreen extends React.Component {
   constructor(props) {
     super(props);
-
+    this.state={
+      helpVisible: false,
+      feedbackVisible: false
+    };
     this.navigateToGuideOptions = this.navigateToGuideOptions.bind(this);
     this.logout = this.logout.bind(this);
+    this.handleHelpClick = this.handleHelpClick.bind(this);
   }
 
   logout() {
@@ -24,28 +31,13 @@ class ProfileScreen extends React.Component {
     this.props.dispatch(setUserProfile(false));
   }
 
-  test() {
-    // Alex's test
-    // console.log(this.props.userProfile.profile)
-    // axios.post('api/users', this.props.userProfile.profile)
-    // .then((res) => {
-    //   console.log(res);
-    // })
-    // .catch((err) => {
-    //   console.log(err);
-    // });
-
-    // Charles's test
-    this.props.navigation.navigate('CardFormScreen');
-  }
-
   navigateToGuideOptions() {
     this.props.navigation.navigate('GuideOptions');
 
     axios.get(`api/specialties/${this.props.userProfile.profile.userId}`)
     .then(res => {
       res.data[0].guideSpecialties.forEach(specialtyObj => {
-        var specialtyItem = specialtyObj.specialty.specialty;
+        const specialtyItem = specialtyObj.specialty.specialty;
         this.props.dispatch(this.state[specialtyItem](true));
       });
     })
@@ -59,6 +51,12 @@ class ProfileScreen extends React.Component {
     })
     .catch(err => {
       console.log(err);
+    });
+  }
+
+  handleHelpClick() {
+    this.setState({
+      helpVisible: !this.state.helpVisible
     });
   }
 
@@ -86,6 +84,7 @@ class ProfileScreen extends React.Component {
             hideChevron={true}
             leftIcon={{name: 'help-outline'}}
             title="Help & Support"
+            onPress={this.handleHelpClick}
           />
           <ListItem
             hideChevron={true}
@@ -99,6 +98,31 @@ class ProfileScreen extends React.Component {
             onPress={this.logout}
           />
         </List>
+        <Modal
+          animationType={'none'}
+          transparent={true}
+          visible={this.state.helpVisible}
+        >
+          <View style={styles.modal}>
+            <Card
+              title='How can we help?'
+              titleStyle={{ fontFamily: 'Arial Rounded MT Bold' }}
+              containerStyle={{ width: 350 }}
+            >
+              <View>
+                <Text style={{ fontFamily: 'Arial', fontSize: 12 }}>Enter inquiry</Text>
+              </View>
+              <View style={styles.buttonContainer}>
+                <TouchableOpacity
+                  style={styles.fullWidthButton}
+                  onPress={this.handleHelpClick}
+                >
+                  <Text>Submit Inquiry</Text>
+                </TouchableOpacity>
+              </View>
+            </Card>
+          </View>
+        </Modal>
       </ScrollView> 
     );
   }

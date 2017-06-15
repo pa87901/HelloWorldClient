@@ -1,7 +1,6 @@
 import React from 'react';
 import { Text, ScrollView, View, TouchableHighlight, Dimensions, Image } from 'react-native';
 import { connect } from 'react-redux';
-import { Card, Button, Divider } from 'react-native-elements';
 import { NavigationActions } from 'react-navigation';
 import Toolbar from 'react-native-toolbar';
 import Utils from '../Utils';

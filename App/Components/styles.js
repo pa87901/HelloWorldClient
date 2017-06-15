@@ -371,5 +371,12 @@ export default StyleSheet.create({
     fontSize: 18,
     color: 'white',
     fontFamily: main.font    
-  }
+  },
+  // Profile Modals
+  modal: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: 'rgba(120, 125, 127, 0.4)'
+  },
 });
