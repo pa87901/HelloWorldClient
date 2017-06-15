@@ -478,5 +478,10 @@ export default StyleSheet.create({
     top: 0,
     bottom: 0,
     position: 'absolute' 
+  },
+  mapDoubleButtonText: {
+    fontSize: 15,
+    color: 'white',
+    fontFamily: main.font
   }
 });

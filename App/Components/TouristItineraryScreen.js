@@ -8,6 +8,7 @@ import config from '../Config/config';
 import Autocomplete from 'react-native-autocomplete-input';
 import axios from '../axios';
 import styles from './styles.js';
+import Toolbar from 'react-native-toolbar';
 
 Geocoder.setApiKey(config.GOOGLE_MAPS_API_KEY)
 
@@ -50,9 +51,14 @@ class TouristItineraryScreen extends Component {
     this.updatePointOfInterest = this.updatePointOfInterest.bind(this); //working
     this.addPointsOfInterest = this.addPointsOfInterest.bind(this); //working
     this.setAutocompleteModalVisible = this.setAutocompleteModalVisible.bind(this);
+    this.navigateBack = this.navigateBack.bind(this);
 
   }
 
+  static navigationOptions = ({ navigation }) => ({
+      header: null
+  })
+  
   watchID: ?number = null
 
   componentDidMount() {
@@ -114,6 +120,10 @@ class TouristItineraryScreen extends Component {
 
   componentWillUnmount() {
     navigator.geolocation.clearWatch(this.watchID);
+  }
+
+  navigateBack() {
+    this.props.navigation.goBack();
   }
 
   fitAllMarkers() {
@@ -195,13 +205,33 @@ class TouristItineraryScreen extends Component {
 
 
   render() {
-    const filterPOIs = this.state.pointOfInterestPredictions.length > 0 ? this.state.pointOfInterestPredictions : [];
-    return (
-      <View>
-        <View style={styles.header}>
-          <Text style={styles.title}>Itinerary</Text>
-        </View>
 
+    const filterPOIs = this.state.pointOfInterestPredictions.length > 0 ? this.state.pointOfInterestPredictions : [];
+    const toolbarSetting = {
+        toolbar1: {
+          hover: false,
+          leftButton: {
+            icon: 'chevron-left',
+            iconStyle: styles.toolbarIcon,
+            iconFontFamily: 'FontAwesome',
+            onPress: this.navigateBack,
+          },
+          title: {
+            text: 'Itinerary',
+            textStyle: styles.toolbarText
+          }
+      },
+    };
+
+    return (
+      <View style={{ flex: 1, backgroundColor: 'white' }}>
+      <Toolbar
+        backgroundColor='#FF8C00'
+        toolbarHeight={35}
+        ref={(toolbar) => { this.toolbar = toolbar; }}
+        presets={toolbarSetting}
+        />
+        <View style={styles.orangeBar}/>
         <View style={styles.list}>
           <Divider style={styles.swipeOut} />
           {this.state.pointsOfInterestNames.map((event, index) => {
@@ -218,54 +248,6 @@ class TouristItineraryScreen extends Component {
           })}
         </View>
 
-        <View style={{marginTop: 22}}>
-          <Modal
-            animationType={"slide"}
-            transparent={false}
-            visible={this.state.autocompleteModalVisible}
-            onRequestClose={() => {alert("Modal has been closed.")}}
-          >
-            <FormLabel>Event to add</FormLabel>
-            <Autocomplete
-              autoCapitalize="none"
-              keyboardShouldPersistTaps='always'
-              autoCorrect={false}
-              containerStyle={styles.autocompleteContainer}
-              data={filterPOIs}
-              defaultValue={this.state.pointOfInterestDescription}
-              onChangeText={text => this.updatePointOfInterest({ query: text })}
-              placeholder="Enter Point Of Interest"
-              renderItem={({ description }) => {
-                return (
-                <TouchableHighlight
-                  onPress={() => this.updatePointOfInterest({ query: description })}
-                >
-                  <Text style={styles.itemText}>
-                    {description}
-                  </Text>
-                </TouchableHighlight>
-              )}}
-            />
-            <View style={{position: 'absolute', left: 0, right: 0, bottom: 70}}>
-              <Button
-                small
-                raised
-                backgroundColor='#4B0082'
-                title='Add'
-                onPress={() => this.addPointsOfInterest(this.state.pointOfInterestDescription)}
-              />
-            </View>
-            <View style={{position: 'absolute', left: 0, right: 0, bottom: 10}}>
-              <Button
-                small
-                raised
-                backgroundColor='#32CD32'
-                title='Back to Itinerary'
-                onPress={() => this.setAutocompleteModalVisible(!this.state.autocompleteModalVisible)}
-              />
-            </View>
-          </Modal>
-        </View>
 
 
 
@@ -297,26 +279,21 @@ class TouristItineraryScreen extends Component {
                   );
                 })}
             </MapView>
-            <View style={{position: 'absolute', left: 0, right: 0, bottom: 0}}>
-              <Button
-                small
-                raised
-                backgroundColor='#FF8C00'
-                title='Points of Interest'
+            <View style={styles.doubleButtonContainer}>
+              <TouchableOpacity
+                style={styles.affirmativeButton}
+                onPress={()=>this.setModalVisible(!this.state.modalVisible)}
+              >
+                <Text style={styles.mapDoubleButtonText}>  View Itinerary  </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.negativeButton}
                 onPress={()=>this.fitAllMarkers()}
-                // onPress={()=>this.getCoordsFromLocation()}
-              />
-              <Button
-                small
-                raised
-                backgroundColor='#32CD32'
-                title='Back to Itinerary'
-                onPress={() => this.setModalVisible(!this.state.modalVisible)}
-              />
+              >
+                <Text style={styles.mapDoubleButtonText}>Points of Interest</Text>
+              </TouchableOpacity>
             </View>
           </Modal>
-
-          
         </View>
           <View style={styles.buttonContainer}>
               <TouchableOpacity
@@ -397,3 +374,20 @@ class TouristItineraryScreen extends Component {
 const mapStateToProps = state => state;
 
 export default connect(mapStateToProps)(TouristItineraryScreen);
+            // <View style={{position: 'absolute', left: 0, right: 0, bottom: 0}}>
+            //   <Button
+            //     small
+            //     raised
+            //     backgroundColor='#FF8C00'
+            //     title='Points of Interest'
+            //     onPress={()=>this.fitAllMarkers()}
+            //     // onPress={()=>this.getCoordsFromLocation()}
+            //   />
+            //   <Button
+            //     small
+            //     raised
+            //     backgroundColor='#32CD32'
+            //     title='Back to Itinerary'
+            //     onPress={() => this.setModalVisible(!this.state.modalVisible)}
+            //   />
+            // </View>
