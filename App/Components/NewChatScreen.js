@@ -9,7 +9,8 @@ class NewChatScreen extends Component {
     this.state = {
       messages: [],
     }
-    this.socket = SocketIOClient('https://localizetravel-staging.herokuapp.com/', {query: {userId: this.props.navigation.state.params.me, guideId: this.props.navigation.state.params.them}})
+    // this.socket = SocketIOClient('https://localizetravel-staging.herokuapp.com/', {query: {userId: this.props.navigation.state.params.me, guideId: this.props.navigation.state.params.them}})
+    this.socket = SocketIOClient('http://localhost:3000/', {query: {userId: this.props.navigation.state.params.me, guideId: this.props.navigation.state.params.them}})
     this.onSend = this.onSend.bind(this);
   }
 
@@ -31,7 +32,7 @@ class NewChatScreen extends Component {
               _id: chatObject.user.facebook_id,
               // name: chatObject.user.full_name,
               // _id: chatObject.guide.id,
-              name: chatObject.guide.user.full_name,
+              name: chatObject.guide.full_name,
             },
             createdAt: chatObject.created_at,
             _id: chatObject.id
@@ -42,7 +43,7 @@ class NewChatScreen extends Component {
             text: chatObject.message,
             user: {
               _id: chatObject.guide.id,
-              // name: chatObject.guide.user.full_name,
+              // name: chatObject.guide.full_name,
               // _id: chatObject.user.facebook_id,
               name: chatObject.user.full_name,
             },
