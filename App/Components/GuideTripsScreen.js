@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { View, ScrollView, Button, Text, Modal, TextInput, TouchableHighlight, TouchableOpacity } from 'react-native';
 import { Card } from 'react-native-elements';
-import { setGuideBookings } from '../Actions/bookingActions';
+import { setGuideBookings, setRequestedGuideBookings, setSelectedRequestedBooking } from '../Actions/bookingActions';
 import { NavigationActions } from 'react-navigation';
 import axios from '../axios';
 import Stars from 'react-native-stars-rating';
@@ -29,6 +29,7 @@ class GuideTripsScreen extends React.Component {
     this.navigateBack = this.navigateBack.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.navigateToTouristTrips = this.navigateToTouristTrips.bind(this);
+    this.navigateToGuideRequestedTrip = this.navigateToGuideRequestedTrip.bind(this);
   }
 
   componentWillMount() {
@@ -37,6 +38,18 @@ class GuideTripsScreen extends React.Component {
         this.props.dispatch(setGuideBookings(res.data))
         this.setState({guideBookings: res.data})
       })
+    axios.get(`api/bookings/requested/guide/${this.props.userProfile.profile.userId}`)
+    .then(res => {
+      this.props.dispatch(setRequestedGuideBookings(res.data[0].bookings));
+    })
+    .catch(err => {
+      console.log(err);
+    });
+  }
+
+  navigateToGuideRequestedTrip(index) {
+    this.props.dispatch(setSelectedRequestedBooking(this.props.booking.guideBookings[0].bookings[index]));
+    this.props.navigation.navigate('GuideRequestedTripScreen');
   }
 
   navigateToExplore() {
@@ -80,7 +93,6 @@ class GuideTripsScreen extends React.Component {
   }
 
   render() {
-    // console.log('STATE', this.state);
 
     const toolbarSetting = {
         toolbar1: {
@@ -219,6 +231,12 @@ class GuideTripsScreen extends React.Component {
                 >
                   <Text style={styles.smallDoubleButtonText}>Review</Text>
                 </TouchableOpacity>
+                {this.props.booking.guideBookings[0].bookings[i].status === 'requested' ?<TouchableOpacity
+                  style={styles.smallNegativeButton}
+                  onPress={()=>{this.navigateToGuideRequestedTrip(i)}}
+                >
+                  <Text style={styles.smallDoubleButtonText}>Confirm</Text>
+                </TouchableOpacity>:<View />}
               </View>
             </Card>
             </View>

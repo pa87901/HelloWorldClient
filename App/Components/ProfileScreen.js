@@ -4,7 +4,6 @@ import { Card, Button, List, ListItem } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { authenticate } from '../Actions/authActions'; 
 import { setUserProfile } from '../Actions/userProfileActions';
-import { setRequestedGuideBookings } from '../Actions/bookingActions';
 import axios from '../axios';
 import Toolbar from 'react-native-toolbar';
 import styles from './styles.js';
@@ -44,14 +43,8 @@ class ProfileScreen extends React.Component {
     .catch(err => {
       console.log(err);
     });
+    console.log('this.props.userProfile.profile.userId', this.props.userProfile.profile.userId)
 
-    axios.get(`api/bookings/requested/guide/${this.props.userProfile.profile.userId}`)
-    .then(res => {
-      this.props.dispatch(setRequestedGuideBookings(res.data[0].bookings));
-    })
-    .catch(err => {
-      console.log(err);
-    });
   }
 
   navigateToSpecialties() {
@@ -119,8 +112,9 @@ class ProfileScreen extends React.Component {
               hideChevron={true}
               leftIcon={{name: 'feedback'}}
               title="Provide Feedback"
-              onPress={this.handleFeedbackClick}
+              onPress={()=>{this.props.navigation.navigate('GuideRequestedTrips')}}
             />
+              {/*onPress={this.handleFeedbackClick}*/}
             <ListItem
               hideChevron={true}
               leftIcon={{name: 'flight-takeoff'}}

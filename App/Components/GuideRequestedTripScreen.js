@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { ScrollView, Text, View, Modal } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import { Button, Card, Divider, List, ListItem } from 'react-native-elements';
-import { setRequestedGuideBookings } from '../Actions/bookingActions';
+import { setRequestedGuideBookings, setSelectedRequestedBooking } from '../Actions/bookingActions';
 import axios from '../axios';
 
 class GuideRequestedTripScreen extends React.Component {
@@ -30,7 +30,7 @@ class GuideRequestedTripScreen extends React.Component {
 
   handleAcceptConfirm() {
     let selectedIndex = this.props.booking.selectedRequestedBooking;
-    let selectedBooking = this.props.booking.requestedGuideBookings[selectedIndex];
+    let selectedBooking = this.props.booking.selectedRequestedBooking;
     let bookingId = selectedBooking.id;
 
     axios.put('api/bookings', {bookingId: bookingId, status: 'confirmed'})
@@ -58,7 +58,7 @@ class GuideRequestedTripScreen extends React.Component {
 
   handleDeclineConfirm() {
     let selectedIndex = this.props.booking.selectedRequestedBooking;
-    let selectedBooking = this.props.booking.requestedGuideBookings[selectedIndex];
+    let selectedBooking =  this.props.booking.selectedRequestedBooking;
     let bookingId = selectedBooking.id;
 
     axios.put('api/bookings', {bookingId: bookingId, status: 'declined'})
@@ -94,8 +94,8 @@ class GuideRequestedTripScreen extends React.Component {
 
   render() {
     let selectedIndex = this.props.booking.selectedRequestedBooking;
-    let selectedBooking = this.props.booking.requestedGuideBookings[selectedIndex];
-    let reqDate = new Date(selectedBooking.date);
+    let selectedBooking = this.props.booking.selectedRequestedBooking;
+    let reqDate = new Date();
     let reqDateFormatted = `${reqDate.getMonth() + 1}/${reqDate.getDate()}/${reqDate.getFullYear()}`
     let adjustTime = time =>
       time < 12 ? `${time} AM` : time === 12 ? `12 PM` : `${time - 12} PM`;
@@ -122,28 +122,13 @@ class GuideRequestedTripScreen extends React.Component {
             Reviews
           </Text>
           <List style={styles.list}>
+              {/*avatar={require('./JONSNOW.png')}*/}
             <ListItem
               roundAvatar
-              avatar={require('./JONSNOW.png')}
               hideChevron={true}
               containerStyle={styles.listItem}
               title='guide1'
               subtitle='Rating: 4. The User was great!'
-            />
-            <ListItem
-              roundAvatar
-              avatar={require('./JONSNOW.png')}
-              hideChevron={true}
-              containerStyle={styles.listItem}
-              title='guide2'
-              subtitle='Rating: 3. Meh'
-            /><ListItem
-              roundAvatar
-              avatar={require('./JONSNOW.png')}
-              hideChevron={true}
-              containerStyle={styles.listItem}
-              title='guide3'
-              subtitle='Rating: 1. I hated the experience.'
             />
           </List>
           <Button
