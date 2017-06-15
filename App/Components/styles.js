@@ -20,6 +20,9 @@ export default StyleSheet.create({
     flex: 1,
     flexDirection: 'row'
   },
+  whiteBackground:{
+    backgroundColor:'white',
+  },
   //Search Screen
   container: {
     flex: 1,
