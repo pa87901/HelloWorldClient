@@ -371,5 +371,38 @@ export default StyleSheet.create({
     fontSize: 18,
     color: 'white',
     fontFamily: main.font    
+  },
+  // Profile Modals
+  modalContainer: {
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'center',
+    backgroundColor: 'rgba(120, 125, 127, 0.4)'
+  },
+  modal: {
+    width: 350,
+    backgroundColor: 'white',
+    marginTop: 200,
+    paddingTop: 20
+  },
+  textInputContainer: {
+    marginLeft: 20,
+    marginRight: 20,
+    marginBottom: 15,
+    borderBottomWidth: 0.5,
+    borderBottomColor: main.color,
+    flexWrap: 'wrap'
+  },
+  inquirySubmitButton: {
+    backgroundColor: main.color,
+    height: 50,
+    width: 350,
+    justifyContent: 'center',
+    alignItems: 'center'    
+  },
+  inquirySubmitText: {
+    fontSize: 20,
+    color: 'white',
+    fontFamily: main.font    
   }
 });
