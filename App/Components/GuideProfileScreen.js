@@ -10,6 +10,18 @@ import styles from './styles.js';
 class GuideProfileScreen extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      icons: {
+        sightseeing: 'panorama',
+        food: 'local-dining',
+        sports: 'directions-bike',
+        nightlife: 'local-bar',
+        music: 'music-note',
+        museum: 'account-balance',
+        history: 'history',
+        politics: 'gavel'
+      }
+    };
     this.navigateToPolicy = this.navigateToPolicy.bind(this);
     this.navigateToChatScreen = this.navigateToChatScreen.bind(this);
     this.navigateBack = this.navigateBack.bind(this);
@@ -87,12 +99,13 @@ class GuideProfileScreen extends React.Component {
               </View>
               <View>
                 <View style={styles.profileFlexRow}>
-                  {this.props.profileSelection.selectedProfile.guideSpecialties.map((specialty, i) =>
+                  {this.props.profileSelection.selectedProfile.guideSpecialties.map((specialtyObj, i) =>
                     <View style={{ marginRight: 10 }}>
                       <Icon
                         key={i}
-                        name='search'
+                        name={this.state.icons[specialtyObj.specialty.specialty]}
                         size={22}
+                        color='#373535'
                       />
                     </View>
                   )}

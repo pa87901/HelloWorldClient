@@ -14,7 +14,7 @@ export default {
     displayDate: (dateString) => {
       dateString = dateString.split(' ');
       dateString[0] = dateString[0] + ',';
-      dateString[2] = dateString[2] + ',';
+      dateString[2] = dateString[2];
       dateString = dateString.join(' ');
       return dateString;
     }

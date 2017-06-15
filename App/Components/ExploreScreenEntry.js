@@ -11,6 +11,22 @@ import Utils from '../Utils';
 //var navToSearch;
 
 class ExploreScreenEntry extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      icons: {
+        sightseeing: 'panorama',
+        food: 'local-dining',
+        sports: 'directions-bike',
+        nightlife: 'local-bar',
+        music: 'music-note',
+        museum: 'account-balance',
+        history: 'history',
+        politics: 'gavel'
+      }
+    };
+  }
+
   handleProfileClick(searchIndex) {
     this.props.dispatch(getProfileResult(this.props.search.result[searchIndex]));
     this.props.navigation.navigate('GuideProfile');
@@ -69,16 +85,17 @@ class ExploreScreenEntry extends React.Component {
                           Specialties:
                         </Text>
                         <View style={styles.specialtiesContainer}>
-                          {guide.guideSpecialties.map((specialtyObj, key) =>
-                          {
+                          {guide.guideSpecialties.map((specialtyObj, key) => {
                             return (
                               <View 
                                 key={key}
-                                style={{alignItems: 'stretch'}}>
-                                  <Icon
-                                  name='search'
-                                  size={35}
-                                  />
+                                style={{ alignItems: 'stretch' }}
+                              >
+                                <Icon
+                                  name={this.state.icons[specialtyObj.specialty.specialty]}
+                                  size={33}
+                                  color='#373535'
+                                />
                               </View>
                             );
                           }
