@@ -19,6 +19,7 @@ class ProfileScreen extends React.Component {
     };
     this.navigateToGuideOptions = this.navigateToGuideOptions.bind(this);
     this.logout = this.logout.bind(this);
+    this.navigateToSpecialties = this.navigateToSpecialties.bind(this);
     this.handleHelpClick = this.handleHelpClick.bind(this);
     this.handleFeedbackClick = this.handleFeedbackClick.bind(this);
   }
@@ -31,7 +32,7 @@ class ProfileScreen extends React.Component {
   }
 
   navigateToGuideOptions() {
-    this.props.navigation.navigate('GuideOptions');
+    this.props.navigation.navigate('GuideQuestions1');
 
     axios.get(`api/specialties/${this.props.userProfile.profile.userId}`)
     .then(res => {
@@ -53,6 +54,9 @@ class ProfileScreen extends React.Component {
     });
   }
 
+  navigateToSpecialties() {
+    this.props.navigation.navigate('SpecialtiesSetting');
+  }
   handleHelpClick() {
     this.setState({
       helpVisible: !this.state.helpVisible
@@ -101,6 +105,12 @@ class ProfileScreen extends React.Component {
             />
             <ListItem
               hideChevron={true}
+              leftIcon={{name: 'settings'}}
+              title="Set Guide Specialites"
+              onPress={this.navigateToSpecialties}
+            />
+            <ListItem
+              hideChevron={true}
               leftIcon={{name: 'help-outline'}}
               title="Help & Support"
               onPress={this.handleHelpClick}
@@ -109,12 +119,6 @@ class ProfileScreen extends React.Component {
               hideChevron={true}
               leftIcon={{name: 'feedback'}}
               title="Provide Feedback"
-              onPress={this.handleFeedbackClick}
-            />
-            <ListItem
-              hideChevron={true}
-              leftIcon={{name: 'settings'}}
-              title="Settings"
               onPress={this.handleFeedbackClick}
             />
             <ListItem

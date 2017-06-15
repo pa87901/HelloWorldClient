@@ -442,5 +442,13 @@ export default StyleSheet.create({
     color: 'white',
     fontSize: 23,
     marginBottom: 13
+  },
+  //Specialties Page
+  specialtySubheader: {
+    fontFamily: main.font,
+    fontSize: 24,
+    textAlign: 'center',
+    marginTop: 15,
+    marginBottom: 15
   }
 });
