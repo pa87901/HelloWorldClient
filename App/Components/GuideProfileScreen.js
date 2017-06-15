@@ -68,7 +68,7 @@ class GuideProfileScreen extends React.Component {
               <View style={{ flex: 1, marginTop: 8, marginBottom: 6, alignItems: 'center' }}>
                 <Stars
                   rateMax={5}
-                  rate={this.props.profileSelection.selectedProfile.avg_rating}
+                  rate={Math.ceil(this.props.profileSelection.selectedProfile.avg_rating)}
                   size={25}
                 />
               </View>

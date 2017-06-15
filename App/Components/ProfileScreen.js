@@ -18,11 +18,11 @@ class ProfileScreen extends React.Component {
     this.state={
       helpVisible: false,
       feedbackVisible: false,
-      helpInquiry: '\n'
     };
     this.navigateToGuideOptions = this.navigateToGuideOptions.bind(this);
     this.logout = this.logout.bind(this);
     this.handleHelpClick = this.handleHelpClick.bind(this);
+    this.handleFeedbackClick = this.handleFeedbackClick.bind(this);
   }
 
   logout() {
@@ -61,6 +61,12 @@ class ProfileScreen extends React.Component {
     });
   }
 
+  handleFeedbackClick() {
+    this.setState({
+      feedbackVisible: !this.state.feedbackVisible
+    });
+  }
+
   render() {
     console.log('PROPS', this.props);
 
@@ -91,6 +97,7 @@ class ProfileScreen extends React.Component {
             hideChevron={true}
             leftIcon={{name: 'feedback'}}
             title="Provide Feedback"
+            onPress={this.handleFeedbackClick}
           />
           <ListItem
             hideChevron={true}
@@ -132,6 +139,43 @@ class ProfileScreen extends React.Component {
                 onPress={this.handleHelpClick}
               >
                 <Text style={styles.inquirySubmitText}>Submit help inquiry</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
+        <Modal
+          animationType={'none'}
+          transparent={true}
+          visible={this.state.feedbackVisible}
+        >
+          <View style={styles.modalContainer}>
+            <View style={styles.modal}>
+              <View style={{ alignItems: 'center', marginBottom: 20 }}>
+                <Text style={styles.profileSubheader}>How are we doing?</Text>
+              </View>
+              <View style={{ paddingLeft: 20, marginBottom: 5 }}>
+                <Text style={{ fontFamily: 'Arial', fontSize: 14 }}>Tell us anything:</Text>
+              </View>
+              <View style={styles.textInputContainer}>
+                <TextInput
+                  style={{ height: 50, fontFamily: 'Arial', fontSize: 14, textAlign: 'justify' }}
+                  multiline={true}
+                  value={this.state.helpInquiry}
+                  onChange={(text) => this.setState({ helpInquiry: text })}
+                  placeholder={'\n I would like Localize to...'}
+                  placeholderTextColor='grey'
+                />
+              </View>
+              <View style={{ paddingLeft: 20, paddingRight: 20, paddingBottom: 20 }}>
+                <Text style={{ height: 50, fontFamily: 'Arial', fontSize: 14 }}>We want to hear what you love and what you think we can do better. We won't be able to respond to every piece of feedback individually.</Text>
+              </View>
+            </View>
+            <View>
+              <TouchableOpacity
+                style={styles.inquirySubmitButton}
+                onPress={this.handleFeedbackClick}
+              >
+                <Text style={styles.inquirySubmitText}>Submit feedback</Text>
               </TouchableOpacity>
             </View>
           </View>
