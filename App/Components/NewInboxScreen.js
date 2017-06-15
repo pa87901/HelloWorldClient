@@ -40,13 +40,14 @@ class NewInboxScreen extends Component {
         // console.log('PREDA', chatsToSlice, chat);
         // Shift first chat in chats[].
         let user1 = chat.user.facebook_id;
-        let user2 = chat.guide.user.facebook_id;
-        // console.log('users', user1, user2);
+        let user2 = chat.guide.facebook_id;
+        console.log('users', user1, user2);
         // Iterate through rest of chats to pick out chats where this combination of 2 users is met.
         // let i = 0;
         // console.log('chatsToSlice', chatsToSlice);
         for (let i = 0; i < chatsToSlice.length; i++) {
-          if ((chatsToSlice[i].user.facebook_id === user1 && chatsToSlice[i].guide.user.facebook_id === user2) || (chatsToSlice[i].user.facebook_id === user2 && chatsToSlice[i].guide.user.facebook_id === user1)) {
+          // console.log('chatsToSlice[i]', chatsToSlice[i]);
+          if ((chatsToSlice[i].user.facebook_id === user1 && chatsToSlice[i].guide.facebook_id === user2) || (chatsToSlice[i].user.facebook_id === user2 && chatsToSlice[i].guide.facebook_id === user1)) {
             conversation.push(chatsToSlice[i]);
             chatsToSlice.splice(i, 1);
             i--;
@@ -54,6 +55,7 @@ class NewInboxScreen extends Component {
         }
         inbox.push(conversation);
       }
+      // console.log('inbox', inbox);
       this.setState({
         inbox: inbox
       })

@@ -21,14 +21,14 @@ class NewConversation extends Component {
     let avatar;
     // Where I am the user
     if (this.props.userId === this.props.conversation.user.facebook_id) {
-      nameToShow = this.props.conversation.guide.user.full_name;
+      nameToShow = this.props.conversation.guide.full_name;
       me = this.props.conversation.user.facebook_id;
-      them = this.props.conversation.guide.user.facebook_id;
-      avatar = this.props.conversation.guide.user.avatar
+      them = this.props.conversation.guide.facebook_id;
+      avatar = this.props.conversation.guide.avatar
     } else {
       // Where I am the guide.
       nameToShow = this.props.conversation.user.full_name;
-      me = this.props.conversation.guide.user.facebook_id;
+      me = this.props.conversation.guide.facebook_id;
       them = this.props.conversation.user.facebook_id;
       avatar = this.props.conversation.user.avatar
     }

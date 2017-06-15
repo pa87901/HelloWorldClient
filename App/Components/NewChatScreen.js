@@ -32,7 +32,7 @@ class NewChatScreen extends Component {
               _id: chatObject.user.facebook_id,
               // name: chatObject.user.full_name,
               // _id: chatObject.guide.id,
-              name: chatObject.guide.user.full_name,
+              name: chatObject.guide.full_name,
             },
             createdAt: chatObject.created_at,
             _id: chatObject.id
@@ -43,7 +43,7 @@ class NewChatScreen extends Component {
             text: chatObject.message,
             user: {
               _id: chatObject.guide.id,
-              // name: chatObject.guide.user.full_name,
+              // name: chatObject.guide.full_name,
               // _id: chatObject.user.facebook_id,
               name: chatObject.user.full_name,
             },
