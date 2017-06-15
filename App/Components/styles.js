@@ -2,7 +2,8 @@ import { StyleSheet } from 'react-native';
 
 const main = {
   color: '#FF830D',
-  font: 'Arial Rounded MT Bold'
+  font: 'Arial Rounded MT Bold',
+  secondFont: 'Arial'
 };
 
 export default StyleSheet.create({
@@ -364,5 +365,11 @@ export default StyleSheet.create({
     backgroundColor:
     'white',
     flexWrap: 'wrap'
+  },
+  // Booking Confirmation
+  goToExplore: {
+    fontSize: 18,
+    color: 'white',
+    fontFamily: main.font    
   }
 });

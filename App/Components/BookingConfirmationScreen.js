@@ -1,10 +1,11 @@
 import React from 'react';
-import { Text, ScrollView } from 'react-native';
+import { Text, ScrollView, View, TouchableHighlight, Dimensions, Image } from 'react-native';
 import { connect } from 'react-redux';
-import {
-  Card, Button, Divider
-} from 'react-native-elements';
+import { Card, Button, Divider } from 'react-native-elements';
 import { NavigationActions } from 'react-navigation';
+import Toolbar from 'react-native-toolbar';
+import Utils from '../Utils';
+import styles from './styles';
 
 
 class BookingConfirmationScreen extends React.Component {
@@ -28,57 +29,71 @@ class BookingConfirmationScreen extends React.Component {
   render() {
     console.log('PROPS', this.props);
 
+    const toolbarSetting = {
+        toolbar1: {
+          hover: false,
+          title: {
+            text: 'LOCALIZE',
+            textStyle: styles.toolbarText
+          }
+      },
+    };
+
+    const hourlyRate = this.props.profileSelection.selectedProfile.availabilities[0].hourly_rate;
+
     return (
-      <ScrollView>
-        <Card
-          title='We Contacted the Guide!'
-        >
-        <Text style={{marginBottom: 10}}>
-          Please wait up to 24 hours for the Guide to review and acknowledge your request. We will send you a confirmation message as soon as the guide accepts or declines your request.
-        </Text>
-        <Divider />
-          <Text style={styles.subheader}>
-            Guide
-          </Text>
-          <Text>
-            {this.props.profileSelection.selectedProfile.user.facebook_id}
-          </Text>
-          <Text style={styles.subheader}>
-            City
-          </Text>
-          <Text>
-            {this.props.search.city}
-          </Text>
-          <Text style={styles.subheader}>
-            Date & Time
-          </Text>
-          <Text>
-            {this.props.search.date}
-          </Text>
-          <Text style={{marginBottom: 10}}>
-            {this.props.search.fromHour} / {this.props.search.toHour}
-          </Text>
-          <Button
-            small
-            raised
-            backgroundColor='#FF8C00'
-            title='Sounds Good! Take Me Back to Explore'
-            fontSize={14}
-            buttonStyle={{marginTop: 10}}
+      <View style={{ flex: 1, backgroundColor: 'white' }}>
+        <Toolbar
+        backgroundColor='#FF8C00'
+        toolbarHeight={35}
+        ref={(toolbar) => { this.toolbar = toolbar; }}
+        presets={toolbarSetting}
+        />
+        <View style={styles.orangeBar} />
+        <ScrollView style={styles.orangeTintProfileContainer}>
+          <View style={{ flex: 1, height: 210 }}>
+            <Image
+              source={require('../Utils/sanfrancisco.jpg')}
+              style={{ height: 210, width: Dimensions.get('window').width, resizeMode: 'contain', verticalAlign: 'text-top' }}
+            />
+          </View>
+          <View style={styles.bookingConfirmDetails}>
+            <View style={{ marginBottom: 20 }}>
+              <Text style={styles.profileSubheader}>We contacted the Guide!</Text>
+            </View>
+            <View>
+              <Text style={{ fontFamily: 'Arial', fontSize: 12 }}>Please wait up to 24 hours for the Guide to review and acknowledge your request. We will send you a confirmation message as soon as the guide accepts or declines your request.</Text>
+            </View>
+          </View>
+          <View style={styles.termsConditions}>
+            <View style={{ marginBottom: 20 }}>
+              <Text style={styles.profileSubheader}>Tour in {this.props.search.city.replace(/,.*/, '')}</Text>
+              <Text style={styles.profileSubheader}>with {this.props.profileSelection.selectedProfile.user.full_name}</Text>
+            </View>
+            <View style={{ marginBottom: 20 }}>
+              <Text style={styles.bookingConfirmDates}>{Utils.time.displayDate(new Date(this.props.search.date).toDateString())}, {Utils.time.convert24ToAmPm(this.props.search.fromHour)} - {Utils.time.convert24ToAmPm(this.props.search.toHour)}</Text>
+            </View>
+            <View>
+              <Text style={styles.profileSubheader}>{`$${hourlyRate * (this.props.search.toHour - this.props.search.fromHour)}`}</Text>
+            </View>
+          </View>
+        </ScrollView>
+        <View style={styles.buttonContainer}>
+          <TouchableHighlight
+            style={styles.fullWidthButton}
             onPress={this.navigateToExplore}
-          />
-        </Card>
-      </ScrollView>
+          >
+            <Text style={styles.goToExplore}>Sounds Good! Take Me Back to Explore</Text>
+          </TouchableHighlight>
+        </View>
+      </View>
     );
   }
-}
 
-const styles = {
-  subheader: {
-    fontSize: 20,
-    marginTop: 10
-  },
-};
+  static navigationOptions = ({ navigation }) => ({
+    header: null
+  })  
+}
 
 const mapStateToProps = state => (state);
 

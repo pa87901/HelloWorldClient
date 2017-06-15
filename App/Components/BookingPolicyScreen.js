@@ -1,7 +1,6 @@
 import React from 'react';
 import { Text, ScrollView, View, TouchableHighlight, Image, Dimensions } from 'react-native';
 import { connect } from 'react-redux';
-import { PricingCard, Card } from 'react-native-elements';
 import Toolbar from 'react-native-toolbar';
 import stripe from 'tipsi-stripe';
 import axios from '../axios.js';
@@ -132,7 +131,8 @@ class BookingPolicyScreen extends React.Component {
           </View>
           <View style={styles.bookingConfirmDetails}>
             <View style={{ marginBottom: 20 }}>
-              <Text style={styles.profileSubheader}>Tour in {this.props.search.city}</Text>
+              <Text style={styles.profileSubheader}>Tour in {this.props.search.city.replace(/,.*/, '')}</Text>
+              <Text style={styles.profileSubheader}>with {this.props.profileSelection.selectedProfile.user.full_name}</Text>
             </View>
             <View style={{ marginBottom: 20 }}>
               <Text style={styles.bookingConfirmDates}>{Utils.time.displayDate(new Date(this.props.search.date).toDateString())}, {Utils.time.convert24ToAmPm(this.props.search.fromHour)} - {Utils.time.convert24ToAmPm(this.props.search.toHour)}</Text>
@@ -175,14 +175,3 @@ class BookingPolicyScreen extends React.Component {
 const mapStateToProps = state => (state);
 
 export default connect(mapStateToProps)(BookingPolicyScreen);
-          
-
-          // <Button
-          //   small
-          //   raised
-          //   icon={{ name: 'check-circle' }}
-          //   backgroundColor='#FF8C00'
-          //   title='Confirm and Request a Tour!'
-          //   buttonStyle={{ marginTop: 10 }}
-          //   onPress={this.navigateToConfirmation}
-          // />
