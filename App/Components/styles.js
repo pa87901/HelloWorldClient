@@ -442,5 +442,31 @@ export default StyleSheet.create({
     color: 'white',
     fontSize: 23,
     marginBottom: 13
+  },
+  smallSubmitButton: {
+    // flex: 1,
+    backgroundColor: '#FF830D',
+    height: 33,
+    // width: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
+    // flexGrow: 1,
+    // marginLeft: 110
+  },
+  reviewModalContainer: {
+    // marginTop: 230,
+    // flexDirection: 'column',
+    // alignItems: 'center',
+    flex: 1,
+    // flexDirection: 'column',
+    alignItems: 'center',
+    backgroundColor: 'rgba(120, 125, 127, 0.4)'
+  },
+  reviewSubmitButton: {
+    backgroundColor: main.color,
+    height: 50,
+    width: 344,
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 });

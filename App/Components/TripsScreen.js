@@ -117,6 +117,22 @@ class TripsScreen extends React.Component {
           // }
       },
     };
+
+    const reviewToolbarSetting = {
+      toolbar1: {
+        hover: false,
+        // leftButton: {
+        //   icon: 'search',
+        //   iconStyle: {color: 'white', fontSize: 30},
+        //   iconFontFamily: 'FontAwesome',
+        //   onPress: () => {navToSearch('Search')},
+        // },
+        title:{
+          text: 'LOCALIZE',
+          textStyle: styles.toolbarText
+        }
+      }
+    }
     
     if (this.state.touristBookings[0]) {
       return (
@@ -130,58 +146,36 @@ class TripsScreen extends React.Component {
         <View style={styles.orangeBar}/>
         <ScrollView style={styles.orangeContainer}>
           <View>
-          <Modal
-            animationType={"none"}
-            transparent={false}
-            visible={this.state.reviewModalVisible}
-            onRequestClose={() => {alert("Modal has been closed.")}}
-            >
-            <View style={{marginTop: 22}}>
-              <View>
-                <Text>Review Your Guide!</Text>
-                <Stars
-                  isActive={true}
-                  rateMax={5}
-                  isHalfStarEnabled={false}
-                  onStarPress={(rating) => {this.setState({rating: rating})}}
-                  rate={0}
-                  size={60}
-                />
-                <TextInput
-                  style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-                  onChangeText={(review) => this.setState({review: review})}
-                  value={this.state.review}
-                />
-                <TouchableHighlight
-                  onPress={()=>{this.toggleTipsModal(true)}}
-                >
-                  <Text>Next!</Text>
-                </TouchableHighlight>
-
-              </View>
-            </View>
-          </Modal>
+          
           {/*Tip Modal */}
           <Modal
             animationType={"none"}
             transparent={false}
             visible={this.state.tipsModalVisible}
             >
-            <View style={{marginTop: 22}}>
-              <View>
-                <Text>Tip Your Guide!</Text>
-                <TextInput
-                  style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-                  onChangeText={(tips) => this.setState({tips: tips})}
-                  keyboardType='numeric'
-                  value={this.state.tips}
-                />
-                <TouchableHighlight
-                  onPress={this.onSubmit}
-                >
-                  <Text>Submit</Text>
-                </TouchableHighlight>
+            <View>
+              <Toolbar
+                backgroundColor='#FF8C00'
+                toolbarHeight={35}
+                ref={(toolbar) => { this.toolbar = toolbar; }}
+                presets={reviewToolbarSetting}
+              />
+              <View style={{marginTop: 22}}>
+                <View>
+                  <Text>Tip Your Guide!</Text>
+                  <TextInput
+                    style={{height: 40, borderColor: 'gray', borderWidth: 1}}
+                    onChangeText={(tips) => this.setState({tips: tips})}
+                    keyboardType='numeric'
+                    value={this.state.tips}
+                  />
+                  <TouchableHighlight
+                    onPress={this.onSubmit}
+                  >
+                    <Text>Submit</Text>
+                  </TouchableHighlight>
 
+                </View>
               </View>
             </View>
           </Modal>
@@ -196,6 +190,42 @@ class TripsScreen extends React.Component {
               key={i}
               flexDirection='column'
             >
+              <Modal
+                animationType={"slide"}
+                transparent={true}
+                visible={this.state.reviewModalVisible}
+                onRequestClose={() => {alert("Modal has been closed.")}}
+                >
+                <View style={styles.reviewModalContainer}>
+                  <View style={{marginTop: 200, backgroundColor: 'white'}}>
+                    <View style={{margin: 22}}>
+                    <Text style={styles.profileSubheader}>Review Your Guide!</Text>
+                    <View style={{marginTop: 22, marginBottom: 22}}>
+                      <Stars
+                        isActive={true}
+                        rateMax={5}
+                        isHalfStarEnabled={false}
+                        onStarPress={(rating) => {this.setState({rating: rating})}}
+                        rate={0}
+                        size={60}
+                      />
+                    </View>
+                    <TextInput
+                      style={{height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 20, paddingLeft: 10}}
+                      onChangeText={(review) => this.setState({review: review})}
+                      value={this.state.review}
+                      placeholder={'Comments and suggestions'}
+                    />
+                    </View>
+                  </View>
+                    <TouchableHighlight
+                      style={styles.reviewSubmitButton}
+                      onPress={()=>{this.toggleTipsModal(true)}}
+                    >
+                      <Text style={styles.inquirySubmitText}>Next!</Text>
+                    </TouchableHighlight>
+                </View>
+              </Modal>
             <View style={styles.searchCardContainer}>
               <Text style={styles.TripCardText}>
                 {booking.city}{"\n"}
