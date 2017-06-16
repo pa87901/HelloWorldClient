@@ -465,8 +465,53 @@ export default StyleSheet.create({
   reviewSubmitButton: {
     backgroundColor: main.color,
     height: 50,
-    width: 344,
+    width: 345,
     justifyContent: 'center',
     alignItems: 'center'
-  }
+  },
+  tipbox: {
+    margin: 5,
+    borderWidth: 2.5,
+    borderColor: main.color,
+    backgroundColor: main.color,
+    alignItems: 'center',
+    zIndex: 0,
+    color: 'white',
+    borderRadius: 25,
+    height: 44,
+    width: 75,
+  },
+  tipboxInactive: {
+    margin: 5,
+    borderWidth: 2.5, 
+    borderColor: main.color,
+    backgroundColor: '#FFFFFF',
+    alignItems: 'center',
+    borderRadius: 25,
+    height: 44,
+    width: 75,
+  },
+  tipboxText: {
+    marginTop: 8,
+    textAlign: 'center',
+    fontFamily: main.font,
+    fontSize: 18,
+    fontWeight: '900',
+    color: 'white',
+  },
+  tipboxTextInactive: {
+    marginTop: 8,
+    textAlign: 'center',
+    fontFamily: main.font,
+    fontSize: 18,
+    fontWeight: '900',
+    color: main.color
+  },
+  tipFlexSwitchContainer: {
+    marginTop: 20,
+    marginLeft: 20,
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap'
+  },
 });

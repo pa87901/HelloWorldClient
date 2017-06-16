@@ -21,7 +21,7 @@ class TripsScreen extends React.Component {
       tipsModalVisible: false,
       rating: 0,
       review: '',
-      tips: '0',
+      tips: 0,
       activeCard: null
     };
 
@@ -31,6 +31,7 @@ class TripsScreen extends React.Component {
     this.onSubmit = this.onSubmit.bind(this);
     this.navigateBack = this.navigateBack.bind(this);
     this.navigateToGuideTrips = this.navigateToGuideTrips.bind(this);
+    this.updateTip = this.updateTip.bind(this);
   }
 
   componentDidMount() {
@@ -90,6 +91,10 @@ class TripsScreen extends React.Component {
     this.toggleReviewModal(false);
   }
 
+  updateTip(amount) {
+    this.state.tips === amount ? this.setState({ tips: 0}) : this.setState({ tips: amount});
+  }
+
   
 //Waiting for db methods/trips to dynamically render
   render() {
@@ -133,6 +138,8 @@ class TripsScreen extends React.Component {
         }
       }
     }
+
+    const tips = [10, 20, 40, 60, 80, 100];
     
     if (this.state.touristBookings[0]) {
       return (
@@ -145,53 +152,19 @@ class TripsScreen extends React.Component {
         />
         <View style={styles.orangeBar}/>
         <ScrollView style={styles.orangeContainer}>
-          <View>
-          
-          {/*Tip Modal */}
-          <Modal
-            animationType={"none"}
-            transparent={false}
-            visible={this.state.tipsModalVisible}
-            >
-            <View>
-              <Toolbar
-                backgroundColor='#FF8C00'
-                toolbarHeight={35}
-                ref={(toolbar) => { this.toolbar = toolbar; }}
-                presets={reviewToolbarSetting}
-              />
-              <View style={{marginTop: 22}}>
-                <View>
-                  <Text>Tip Your Guide!</Text>
-                  <TextInput
-                    style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-                    onChangeText={(tips) => this.setState({tips: tips})}
-                    keyboardType='numeric'
-                    value={this.state.tips}
-                  />
-                  <TouchableHighlight
-                    onPress={this.onSubmit}
-                  >
-                    <Text>Submit</Text>
-                  </TouchableHighlight>
 
-                </View>
-              </View>
-            </View>
-          </Modal>
-          </View>
           <View>
           <Text style={styles.tripHeader}>Trips As A Tourist</Text> 
           </View>
           {this.state.touristBookings[0].bookings.map((booking, i) => {
             return (
             <View>
-            <Card 
-              key={i}
-              flexDirection='column'
-            >
+              <Card 
+                key={i}
+                flexDirection='column'
+              >
               <Modal
-                animationType={"slide"}
+                animationType={"none"}
                 transparent={true}
                 visible={this.state.reviewModalVisible}
                 onRequestClose={() => {alert("Modal has been closed.")}}
@@ -226,6 +199,60 @@ class TripsScreen extends React.Component {
                     </TouchableHighlight>
                 </View>
               </Modal>
+
+            <View>
+          {/*Tip Modal */}
+              <Modal
+                animationType={"none"}
+                transparent={true}
+                visible={this.state.tipsModalVisible}
+                >
+                <View style={{backgroundColor: 'rgba(120, 125, 127, 0.4)', flex: 1}}>
+                  <View style={{margin: 15}}>
+                    <View style={{marginTop: 185, backgroundColor: 'white'}}>
+                      <View style={{margin: 22}}>
+                        <Text style={styles.profileSubheader}>Tip Your Guide!</Text>
+                          <View style={{marginTop: 22, marginBottom: 22}}>
+                            <TextInput
+                              style={{height: 40, borderColor: 'gray', borderWidth: 1, paddingLeft: 10}}
+                              onChangeText={(tips) => this.setState({tips: tips})}
+                              keyboardType='numeric'
+                              value={this.state.tips}
+                              placeholder={'Amount here'}
+                            />
+                            <View style={styles.tipFlexSwitchContainer}>
+                              {tips.map((tip, index) => {
+                                return (
+                                  <TouchableOpacity
+                                    key={index}
+                                    style={this.state.tips === tip ? styles.tipbox : styles.tipboxInactive}
+                                    onPress={() => this.updateTip(tip)}
+                                  >
+                                  <View>
+                                    <Text style={this.state.tips === tip ? styles.tipboxText : styles.tipboxTextInactive}>${tip}</Text>
+                                  </View>
+                                  </TouchableOpacity>
+                                )
+                              })}
+                            </View>
+
+
+                          </View>
+
+                        </View>
+                          <TouchableHighlight
+                            style={styles.reviewSubmitButton}
+                            onPress={this.onSubmit}
+                          >
+                          <Text style={styles.inquirySubmitText}>Submit</Text>
+                          </TouchableHighlight>
+                      </View>
+                    </View>
+                  </View>
+              </Modal>
+            </View>
+
+
             <View style={styles.searchCardContainer}>
               <Text style={styles.TripCardText}>
                 {booking.city}{"\n"}
