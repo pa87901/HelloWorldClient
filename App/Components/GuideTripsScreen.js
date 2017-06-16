@@ -70,7 +70,27 @@ class GuideTripsScreen extends React.Component {
   navigateToTouristTrips() {
     this.props.navigation.navigate('Trips');
   }
+  
+  handleCompletedConfirm(index) {
+    let selectedBooking = this.props.booking.guideBookings[0].bookings[index];
+    
+    let bookingId = selectedBooking.id;
 
+    axios.put('api/bookings', {bookingId: bookingId, status: newStatus})
+    .then(res => {
+      axios.get(`api/bookings/requested/guide/${this.props.userProfile.profile.userId}`)
+      .then(res => {
+        this.props.dispatch(setRequestedGuideBookings(res.data[0].bookings));
+      })
+    })
+    .catch(err => {
+      console.log(err);
+    })
+
+    this.setState({
+      acceptModalVisible: !this.state.acceptModalVisible,
+    })
+  }
   onSubmit(){
 
     console.log('this.props.booking.touristBookings[0].bookings[this.state.activeCard]', this.props.booking.touristBookings[0].bookings[this.state.activeCard])
@@ -237,6 +257,12 @@ class GuideTripsScreen extends React.Component {
                 >
                   <Text style={styles.smallDoubleButtonText}>Confirm</Text>
                 </TouchableOpacity>:<View />}
+                {(this.props.booking.guideBookings[0].bookings[i].status === 'completed' || this.props.booking.guideBookings[0].bookings[i].status === 'user_closed') && this.state.showCompleted?<TouchableOpacity
+                  style={styles.smallNegativeButton}
+                  onPress={()=>{this.handleCompletedConfirm(i)}}
+                >
+                  <Text style={styles.smallDoubleButtonText}>Confirm</Text>
+                </TouchableOpacity>:<View />}
               </View>
             </Card>
             </View>
@@ -262,9 +288,3 @@ class GuideTripsScreen extends React.Component {
 const mapStateToProps = state => (state);
 
 export default connect(mapStateToProps)(GuideTripsScreen);
-// const styles = {
-//   subheader: {
-//     fontSize: 20,
-//     marginTop: 10
-//   },
-// };
