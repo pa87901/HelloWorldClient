@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Text, View, TouchableHighlight, TextInput } from 'react-native';
+import { Text, View, ScrollView, TouchableHighlight, TextInput } from 'react-native';
 import Toolbar from 'react-native-toolbar';
 import styles from './styles.js';
 import { becomeGuideIntro, becomeGuideStatement } from '../Actions/BecomeAGuideActions';
@@ -18,7 +18,7 @@ class BecomeAGuideQuestions4 extends React.Component {
     this.updateStatement = this.updateStatement.bind(this);
   }
 
-  navigateBack() {
+  navigateBack(){
     this.props.navigation.goBack();
   }
 
@@ -28,7 +28,7 @@ class BecomeAGuideQuestions4 extends React.Component {
       intro: intro
     });
     console.log('INTRO', intro);
-    console.log(this.state.intro)
+    console.log(this.state.intro);
   } 
 
   updateStatement(statement) {
@@ -70,35 +70,39 @@ class BecomeAGuideQuestions4 extends React.Component {
         presets={toolbarSetting}
         />
         <View style={styles.orangeBar} />
-        <View>
-          <Text style={styles.specialtySubheader}>Introduce Yourself</Text>
-        </View>
-        <View style={{ marginLeft: 20, marginTop: 20 }}>
-          <Text style={styles.becomeAGuideSubtitle}>Provide a brief introduction to our tourists!</Text>
-        </View>
-        <View style={styles.textInputContainer}>
-          <TextInput
-            style={{ height: 50, fontFamily: 'Arial', fontSize: 14, textAlign: 'justify' }}
-            multiline={true}
-            value={this.state.intro}
-            onChangeText={(intro) => this.updateIntro(intro)}
-            placeholder={'\n Hello, my name is Localize...'}
-            placeholderTextColor='grey'
-          />
-        </View>
-        <View style={{ marginLeft: 20, marginTop: 20 }}>
-          <Text style={styles.becomeAGuideSubtitle}>Any extra sauce?</Text>
-        </View>
-        <View style={styles.textInputContainer}>
-          <TextInput
-            style={{ height: 50, fontFamily: 'Arial', fontSize: 14, textAlign: 'justify' }}
-            multiline={true}
-            value={this.state.statement}
-            onChangeText={(statement) => this.updateStatement(statement)}
-            placeholder={'\n Your blogs, past tours, profiles, etc.'}
-            placeholderTextColor='grey'
-          />
-        </View>
+        <ScrollView
+          scrollEnabled={false}
+        >
+          <View>
+            <Text style={styles.specialtySubheader}>Introduce Yourself</Text>
+          </View>
+          <View style={{ marginLeft: 20, marginTop: 20 }}>
+            <Text style={styles.becomeAGuideSubtitle}>Provide a brief introduction to our tourists!</Text>
+          </View>
+          <View style={styles.textInputContainer}>
+            <TextInput
+              style={{ height: 50, fontFamily: 'Arial', fontSize: 14, textAlign: 'justify' }}
+              multiline={true}
+              value={this.state.intro}
+              onChangeText={(intro) => this.updateIntro(intro)}
+              placeholder={'\n Hello, my name is Localize...'}
+              placeholderTextColor='grey'
+            />
+          </View>
+          <View style={{ marginLeft: 20, marginTop: 20 }}>
+            <Text style={styles.becomeAGuideSubtitle}>Any extra sauce?</Text>
+          </View>
+          <View style={styles.textInputContainer}>
+            <TextInput
+              style={{ height: 50, fontFamily: 'Arial', fontSize: 14, textAlign: 'justify' }}
+              multiline={true}
+              value={this.state.statement}
+              onChangeText={(statement) => this.updateStatement(statement)}
+              placeholder={'\n Your blogs, past tours, profiles, etc.'}
+              placeholderTextColor='grey'
+            />
+          </View>
+        </ScrollView>
         <View style={styles.buttonContainer}>
           <TouchableHighlight
             style={styles.fullWidthButton}

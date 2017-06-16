@@ -358,6 +358,13 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
+  requestTripModal: {
+    height: 350,
+    width: 350,
+    backgroundColor: 'white',
+    marginTop: 100,
+    paddingTop: 20,
+  },
   // Booking Confirmation
   bookingConfirmText: {
     fontSize: 22,
@@ -413,8 +420,8 @@ export default StyleSheet.create({
   modal: {
     width: 350,
     backgroundColor: 'white',
-    marginTop: 200,
-    paddingTop: 20
+    marginTop: 100,
+    paddingTop: 20,
   },
   textInputContainer: {
     marginLeft: 20,

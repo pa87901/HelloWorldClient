@@ -1,18 +1,18 @@
 import React from 'react';
 import { AsyncStorage, Text, ScrollView, View, Image, Modal, TextInput, TouchableOpacity } from 'react-native';
-import { Card, Button, List, ListItem } from 'react-native-elements';
+import { List, ListItem } from 'react-native-elements';
 import { connect } from 'react-redux';
+import Toolbar from 'react-native-toolbar';
 import { authenticate } from '../Actions/authActions'; 
 import { setUserProfile } from '../Actions/userProfileActions';
 import axios from '../axios';
-import Toolbar from 'react-native-toolbar';
 import styles from './styles.js';
 
 
 class ProfileScreen extends React.Component {
   constructor(props) {
     super(props);
-    this.state={
+    this.state = {
       helpVisible: false,
       feedbackVisible: false,
     };
@@ -112,9 +112,8 @@ class ProfileScreen extends React.Component {
               hideChevron={true}
               leftIcon={{name: 'feedback'}}
               title="Provide Feedback"
-              onPress={()=>{this.props.navigation.navigate('GuideRequestedTrips')}}
+              onPress={this.handleFeedbackClick}
             />
-              {/*onPress={this.handleFeedbackClick}*/}
             <ListItem
               hideChevron={true}
               leftIcon={{name: 'flight-takeoff'}}

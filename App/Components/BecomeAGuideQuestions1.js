@@ -1,6 +1,6 @@
 //guide questions here
 import React from 'react';
-import { TextInput, Text, View, TouchableOpacity, TouchableHighlight } from 'react-native';
+import { TextInput, Text, View, ScrollView, TouchableOpacity, TouchableHighlight } from 'react-native';
 import Axios from 'axios';
 import Toolbar from 'react-native-toolbar';
 import Autocomplete from 'react-native-autocomplete-input';
@@ -91,43 +91,50 @@ class BecomeAGuideQuestions1 extends React.Component {
         presets={toolbarSetting}
         />
         <View style={styles.orangeBar} />
-        <TouchableOpacity activeOpacity={1} onPress={() => (this.setState({ display: 'none' }))}>
-        <Text style={styles.specialtySubheader}>Become a guide!</Text>
-        <Autocomplete
-            autoCapitalize="none"
-            keyboardShouldPersistTaps={true}
-            autoCorrect={false}
-            containerStyle={styles.autocompleteContainer}
-            data={filterCities}
-            defaultValue={this.props.becomeAGuide.city}
-            onChangeText={text => this.updateCity({ query: text })}
-            placeholder="Enter Destination"
-            renderItem={({ description }) => {
-              return (
-              <TouchableOpacity onPress={() => this.updateCity({ query: description })}>
-                <Text style={styles.itemText}>
-                  {description}
-                </Text>
-              </TouchableOpacity>
-            )}}
-          />
-        <TouchableOpacity onPress={() => this.setState({ display: 'date' })} >
-          {showDatePicker}
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => this.setState({ display: 'time' })}>
-          {showTimePicker}
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <TextInput 
-            style={styles.timeContainer} 
-            value={this.props.becomeAGuide.hourlyRate}
-            placeholder='Enter Hourly Rate' 
+        <ScrollView>
+          <TouchableOpacity activeOpacity={1} onPress={() => (this.setState({ display: 'none' }))}>
+          <Text style={styles.specialtySubheader}>Become a guide!</Text>
+          <Autocomplete
+              autoCapitalize="none"
+              keyboardShouldPersistTaps={true}
+              autoCorrect={false}
+              containerStyle={styles.autocompleteContainer}
+              data={filterCities}
+              defaultValue={this.props.becomeAGuide.city}
+              onChangeText={text => this.updateCity({ query: text })}
+              placeholder="Enter Destination"
+              renderItem={({ description }) => {
+                return (
+                <TouchableOpacity onPress={() => this.updateCity({ query: description })}>
+                  <Text style={styles.itemText}>
+                    {description}
+                  </Text>
+                </TouchableOpacity>
+              )}}
+            />
+          <TouchableOpacity onPress={() => this.setState({ display: 'date' })} >
+            {showDatePicker}
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => this.setState({ display: 'time' })}>
+            {showTimePicker}
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <TextInput 
+              style={styles.timeContainer} 
+              value={this.props.becomeAGuide.hourlyRate}
+              placeholder='Enter Hourly Rate' 
+              onChangeText={(rate) => this.updateRate(rate)}
+            />
+          </TouchableOpacity>
+          <TextInput
+            style={styles.timecontainer}
+            id="rate"
             onChangeText={(rate) => this.updateRate(rate)}
+            onFocus={() => this.setState({ display: 'null' })}
           />
-        </TouchableOpacity>
-        <TextInput style={styles.timecontainer} id="rate" onChangeText={(rate) => this.updateRate(rate)} />
 
-        </TouchableOpacity>
+          </TouchableOpacity>
+        </ScrollView>
         <View style={styles.buttonContainer}>
           <TouchableHighlight
             style={styles.fullWidthButton}

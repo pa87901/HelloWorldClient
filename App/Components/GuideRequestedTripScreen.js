@@ -216,8 +216,8 @@ class GuideRequestedTripScreen extends React.Component {
               </View>
               <View style={styles.textInputContainer}>
               </View>
-              <View style={{ paddingLeft: 20, paddingRight: 20 }}>
-                <Text style={{ height: 50, fontFamily: 'Arial', fontSize: 14 }}>We are excited you are about to accept the request! In order to protect both you and customer's experiences, we are offering allowance of up to two weeks prior to scheduled trip during which you can cancel / decline the trip without any penalties. Thereafter, you will be charged per Localize's late cancelation fee schedule set forth in our policies.</Text>
+              <View style={{ paddingLeft: 20, paddingRight: 20, marginBottom: 20 }}>
+                <Text style={{ fontFamily: 'Arial', fontSize: 14 }}>We are excited you are about to accept the request! In order to protect both you and customer's experiences, we are offering allowance of up to two weeks prior to scheduled trip during which you can cancel / decline the trip without any penalties. Thereafter, you will be charged per Localize's late cancelation fee schedule set forth in our policies.</Text>
               </View>
             </View>
             <View>
