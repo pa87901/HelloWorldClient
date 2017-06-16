@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, Text, ScrollView, StyleSheet, View, Dimensions, Modal, TouchableHighlight } from 'react-native';
+import { Card, Text, ScrollView, StyleSheet, View, Dimensions, Modal, TouchableHighlight, TouchableOpacity } from 'react-native';
 import { Button, Divider, FormLabel, FormInput} from 'react-native-elements';
 import { connect } from 'react-redux';
 import SwipeOut from 'react-native-swipeout';
@@ -8,6 +8,8 @@ import MapView from 'react-native-maps';
 import Geocoder from 'react-native-geocoding';
 import config from '../Config/config';
 import Autocomplete from 'react-native-autocomplete-input';
+import Toolbar from 'react-native-toolbar';
+import styles from './styles.js';
 
 Geocoder.setApiKey(config.GOOGLE_MAPS_API_KEY)
 
@@ -51,7 +53,13 @@ class GuideItineraryScreen extends Component {
     this.updatePointOfInterest = this.updatePointOfInterest.bind(this); //working
     this.addPointsOfInterest = this.addPointsOfInterest.bind(this); //working
     this.setAutocompleteModalVisible = this.setAutocompleteModalVisible.bind(this);
+    this.navigateBack = this.navigateBack.bind(this);
+  
   }
+
+  static navigationOptions = ({ navigation }) => ({
+      header: null
+  })
 
   watchID: ?number = null
 
@@ -82,6 +90,10 @@ class GuideItineraryScreen extends Component {
     .catch(error => {
       console.error('error', error)
     })
+  }
+
+  navigateBack() {
+    this.props.navigation.goBack();
   }
 
   initialisePosition() {
@@ -236,13 +248,26 @@ class GuideItineraryScreen extends Component {
 
 
   render() {
-    console.log('this.props ITINERARY SCREEN', this.props.navigation.state.params);
+    // console.log('this.props ITINERARY SCREEN', this.props.navigation.state.params);
     const filterPOIs = this.state.pointOfInterestPredictions.length > 0 ? this.state.pointOfInterestPredictions : [];
+    const toolbarSetting = {
+        toolbar1: {
+          hover: false,
+          leftButton: {
+            icon: 'chevron-left',
+            iconStyle: styles.toolbarIcon,
+            iconFontFamily: 'FontAwesome',
+            onPress: this.navigateBack,
+          },
+          title: {
+            text: 'Itinerary',
+            textStyle: styles.toolbarText
+          }
+      },
+    };
+
     return (
-      <View>
-        <View style={styles.header}>
-          <Text style={styles.title}>Itinerary</Text>
-        </View>
+      <View style={{ flex: 1, backgroundColor: 'white' }}>
 
         <View style={styles.list}>
           <Divider style={styles.swipeOut} />
@@ -360,93 +385,96 @@ class GuideItineraryScreen extends Component {
                   );
                 })}
             </MapView>
-            <View style={{position: 'absolute', left: 0, right: 0, bottom: 0}}>
-              <Button
-                small
-                raised
-                backgroundColor='#FF8C00'
-                title='Points of Interest'
+            <View style={styles.doubleButtonContainer}>
+              <TouchableOpacity
+                style={styles.affirmativeButton}
+                onPress={()=>this.setModalVisible(!this.state.modalVisible)}
+              >
+                <Text style={styles.mapDoubleButtonText}>  View Itinerary  </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.negativeButton}
                 onPress={()=>this.fitAllMarkers()}
-              />
-              <Button
-                small
-                raised
-                backgroundColor='#32CD32'
-                title='Back to Itinerary'
-                onPress={() => this.setModalVisible(!this.state.modalVisible)}
-              />
+              >
+                <Text style={styles.mapDoubleButtonText}>Points of Interest</Text>
+              </TouchableOpacity>
             </View>
           </Modal>
-          <View style={{position: 'absolute', left: 0, right: 0, bottom: 0}}>
-            <Button
-              large
-              raised
-              backgroundColor='#FF8C00'
-              title='Map'
-              onPress={() => this.setModalVisible(true)}
-            />
-          </View>
+          <View style={styles.doubleButtonContainer}>
+              <TouchableOpacity
+                style={styles.affirmativeButton}
+                onPress={()=>this.setModalVisible(!this.state.modalVisible)}
+              >
+                <Text style={styles.mapDoubleButtonText}>Map</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.negativeButton}
+                onPress={()=>console.log('GIVE ME A FUNCTION PLEASE!')}
+              >
+                <Text style={styles.mapDoubleButtonText}>Add</Text>
+              </TouchableOpacity>
+            </View>
         </View>
       </View>
     )
   }
 }
 
-const styles = StyleSheet.create({
-  header: {
-    alignItems: 'center'
-  },
-  title: {
-    fontSize: 15
-  },
-  list: {
-    height: 475
-  },
-  swipeOut: {
-    height: 20,
-    borderBottomColor: '#000',
-    borderBottomWidth: StyleSheet.hairlineWidth
-  },
-  radius: {
-    height: 40,
-    width: 40,
-    borderRadius: 40/2,
-    overflow: 'hidden',
-    backgroundColor: 'rgba(0, 122, 255, 0.1)',
-    borderWidth: 1,
-    borderColor: 'rgba(0, 122, 255, 0.3)',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  marker: {
-    height: 15,
-    width: 15,
-    borderWidth: 1,
-    borderColor: 'white',
-    borderRadius: 15/2,
-    overflow: 'hidden',
-    backgroundColor: 'rgba(0, 122, 255, 0.3)'
-  },
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF'
-  },
-  map: {
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: 0,
-    position: 'absolute' 
-  },
-  button: {
-    position: 'absolute',
-    right: 0,
-    left: 0,
-    bottom: 0
-  }
-});
+// const styles = StyleSheet.create({
+//   header: {
+//     alignItems: 'center'
+//   },
+//   title: {
+//     fontSize: 15
+//   },
+//   list: {
+//     height: 475
+//   },
+//   swipeOut: {
+//     height: 20,
+//     borderBottomColor: '#000',
+//     borderBottomWidth: StyleSheet.hairlineWidth
+//   },
+//   radius: {
+//     height: 40,
+//     width: 40,
+//     borderRadius: 40/2,
+//     overflow: 'hidden',
+//     backgroundColor: 'rgba(0, 122, 255, 0.1)',
+//     borderWidth: 1,
+//     borderColor: 'rgba(0, 122, 255, 0.3)',
+//     alignItems: 'center',
+//     justifyContent: 'center'
+//   },
+//   marker: {
+//     height: 15,
+//     width: 15,
+//     borderWidth: 1,
+//     borderColor: 'white',
+//     borderRadius: 15/2,
+//     overflow: 'hidden',
+//     backgroundColor: 'rgba(0, 122, 255, 0.3)'
+//   },
+//   container: {
+//     flex: 1,
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//     backgroundColor: '#F5FCFF'
+//   },
+//   map: {
+//     left: 0,
+//     right: 0,
+//     top: 0,
+//     bottom: 0,
+//     position: 'absolute' 
+//   },
+//   button: {
+//     position: 'absolute',
+//     right: 0,
+//     left: 0,
+//     bottom: 0
+//   }
+// });
 
 const mapStateToProps = state => state;
 

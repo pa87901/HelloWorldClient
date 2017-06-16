@@ -84,6 +84,10 @@ class TouristItineraryScreen extends Component {
     })
   }
 
+  navigateBack() {
+    this.props.navigation.goBack();
+  }
+  
   initialisePosition() {
     navigator.geolocation.getCurrentPosition((position) =>{
       let lat = parseFloat(position.coords.latitude);
@@ -122,9 +126,6 @@ class TouristItineraryScreen extends Component {
     navigator.geolocation.clearWatch(this.watchID);
   }
 
-  navigateBack() {
-    this.props.navigation.goBack();
-  }
 
   fitAllMarkers() {
     this.map.fitToCoordinates(this.state.pointsOfInterest, {
@@ -234,16 +235,13 @@ class TouristItineraryScreen extends Component {
         <View style={styles.orangeBar}/>
         <View style={styles.orangeTintProfileContainer}>
         <View style={styles.list}>
-          <Divider style={styles.swipeOut} />
           {this.state.pointsOfInterestNames.map((event, index) => {
             return (
             <View
               key={index}
             >
               <Text style={styles.TripCardText}>{"\u2022"} {event}</Text>
-              <Divider
-                style={styles.swipeOut}
-              />
+              <Divider/>
             </View>
             )
           })}
