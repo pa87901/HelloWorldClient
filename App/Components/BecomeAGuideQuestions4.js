@@ -1,16 +1,21 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { becomeGuideIntro, becomeGuideStatement } from '../Actions/BecomeAGuideActions';
-import { StyleSheet, Text, View, TouchableHighlight } from 'react-native';
-import { Button, FormLabel, FormInput } from 'react-native-elements';
-import styles from './styles.js';
+import { Text, View, TouchableHighlight, TextInput } from 'react-native';
 import Toolbar from 'react-native-toolbar';
+import styles from './styles.js';
+import { becomeGuideIntro, becomeGuideStatement } from '../Actions/BecomeAGuideActions';
 
 class BecomeAGuideQuestions4 extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      intro: '',
+      statement: ''
+    };
     this.navigateToNext = this.navigateToNext.bind(this);
     this.navigateBack = this.navigateBack.bind(this);
+    this.updateIntro = this.updateIntro.bind(this);
+    this.updateStatement = this.updateStatement.bind(this);
   }
 
   navigateBack() {
@@ -19,10 +24,18 @@ class BecomeAGuideQuestions4 extends React.Component {
 
   updateIntro(intro) {
     this.props.dispatch(becomeGuideIntro(intro));
+    this.setState({
+      intro: intro
+    });
+    console.log('INTRO', intro);
+    console.log(this.state.intro)
   } 
 
   updateStatement(statement) {
     this.props.dispatch(becomeGuideStatement(statement));
+    this.setState({
+      statement: statement
+    });
   } 
 
   navigateToNext() {
@@ -57,22 +70,35 @@ class BecomeAGuideQuestions4 extends React.Component {
         presets={toolbarSetting}
         />
         <View style={styles.orangeBar} />
-        <FormLabel>Introduce Yourself</FormLabel>
-        <FormLabel>Provide a brief introduction to our tourists!</FormLabel>
-        <FormInput
-          id="intro"
-          placeholder="Hello, my name is Localize..."
-          onChangeText={(intro) => this.updateIntro(intro)}
-        />
-        <View style={{marginTop: 10}}>
+        <View>
+          <Text style={styles.specialtySubheader}>Introduce Yourself</Text>
         </View>
-        <FormLabel>Any Extra Sauce?</FormLabel>
-        <FormLabel>Feel free to provide any other information here!</FormLabel>
-        <FormInput
-          id="statement"
-          placeholder="Your blogs, past tours, profiles, etc"
-          onChangeText={(statement) => this.updateStatement(statement)}
-        />
+        <View style={{ marginLeft: 20, marginTop: 20 }}>
+          <Text style={styles.becomeAGuideSubtitle}>Provide a brief introduction to our tourists!</Text>
+        </View>
+        <View style={styles.textInputContainer}>
+          <TextInput
+            style={{ height: 50, fontFamily: 'Arial', fontSize: 14, textAlign: 'justify' }}
+            multiline={true}
+            value={this.state.intro}
+            onChangeText={(intro) => this.updateIntro(intro)}
+            placeholder={'\n Hello, my name is Localize...'}
+            placeholderTextColor='grey'
+          />
+        </View>
+        <View style={{ marginLeft: 20, marginTop: 20 }}>
+          <Text style={styles.becomeAGuideSubtitle}>Any extra sauce?</Text>
+        </View>
+        <View style={styles.textInputContainer}>
+          <TextInput
+            style={{ height: 50, fontFamily: 'Arial', fontSize: 14, textAlign: 'justify' }}
+            multiline={true}
+            value={this.state.statement}
+            onChangeText={(statement) => this.updateStatement(statement)}
+            placeholder={'\n Your blogs, past tours, profiles, etc.'}
+            placeholderTextColor='grey'
+          />
+        </View>
         <View style={styles.buttonContainer}>
           <TouchableHighlight
             style={styles.fullWidthButton}

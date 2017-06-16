@@ -1,10 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { View, Text, ScrollView, TouchableHighlight } from 'react-native';
-import { Card, Button } from 'react-native-elements';
+import { View, Text, ScrollView, TouchableHighlight, Image, Dimensions } from 'react-native';
+import Toolbar from 'react-native-toolbar';
 import axios from '../axios';
 import styles from './styles.js';
-import Toolbar from 'react-native-toolbar';
 import Utils from '../Utils';
 
 class BecomeAGuideQuestionsPolicies extends React.Component {
@@ -66,41 +65,39 @@ class BecomeAGuideQuestionsPolicies extends React.Component {
         presets={toolbarSetting}
         />
         <View style={styles.orangeBar} />
-        <View style={styles.orangeTintContainer}>
-          <View style={{flexGrow:1}}>
-            <ScrollView>
-              <Card title='Terms & Conditions'>
-                <Text style={{ marginBottom: 10 }}>
-                  HelloWorld enforces terms to protect both tourists and guides alike. Guide(s) or Tourist(s) may cancel and review any penalties by viewing their travel plans and then clicking ‘Cancel’ on the appropriate reservation.
-                </Text>
-              </Card>
-              <Card title='You have been posted!'>
-                <Text style={{marginBottom: 10}}>
-                  Your profile has been posted on Localize! We will notify you when tourist(s) reach out to you via chat and/or request to have a tour with you.
-                </Text>
-                <Text style={styles.subheader}>Name</Text>
-                <Text>{this.props.userProfile.profile.name}</Text>
-                <Text style={styles.subheader}>City</Text>
-                <Text>{this.props.becomeAGuide.city}</Text>
-                <Text style={styles.subheader}>Date & Time</Text>
-                <Text>{Utils.time.displayDate(new Date(this.props.becomeAGuide.date).toDateString())}</Text>
-                <Text>{this.props.becomeAGuide.start} / {this.props.becomeAGuide.end}</Text>
-                <Text style={styles.subheader}>Hourly Rate</Text>
-                <Text>USD  {this.props.becomeAGuide.hourlyRate}</Text>
-                <Text style={styles.subheader}>Introduction</Text>
-                <Text>{this.props.becomeAGuide.intro}</Text>
-                <Text style={styles.subheader}>Other Info</Text>
-                <Text style={{marginBottom: 10}}>]{this.props.becomeAGuide.statement}</Text>
-              </Card>
-            </ScrollView>
+        <ScrollView style={styles.orangeTintProfileContainer}>
+          <View style={{ flex: 1, height: 210 }}>
+            <Image
+              source={require('../Utils/sanfrancisco.jpg')}
+              style={{ height: 210, width: Dimensions.get('window').width, resizeMode: 'contain' }}
+            />
           </View>
-        </View>
+          <View style={styles.bookingConfirmDetails}>
+            <View style={{ marginBottom: 20 }}>
+              <Text style={styles.profileSubheader}>Tour in {this.props.becomeAGuide.city.replace(/,.*/, '')}</Text>
+            </View>
+            <View style={{ marginBottom: 20 }}>
+              <Text style={styles.bookingConfirmDates}>{Utils.time.displayDate(new Date(this.props.becomeAGuide.date).toDateString())}, {Utils.time.convert24ToAmPm(this.props.becomeAGuide.fromHour)} - {Utils.time.convert24ToAmPm(this.props.becomeAGuide.toHour)}</Text>
+            </View>
+            <View>
+              <Text style={styles.profileSubheader}>{`$${this.props.becomeAGuide.hourlyRate} Per Hour`}</Text>
+            </View>
+          </View>
+          <View style={styles.termsConditions}>
+            <View style={{ flex: 1, alignItems: 'center', marginBottom: 20 }}>
+              <Text style={{ fontFamily: 'Arial', fontSize: 14, fontWeight: 'bold' }}>Terms & Conditions</Text>
+            </View>
+            <View>
+              <Text style={{ fontFamily: 'Arial', fontSize: 12 }}>Localize enforces terms to protect both tourists and guides alike. Guide(s) or Tourist(s) may cancel and review any penalties by viewing their travel plans and then clicking ‘Cancel’ on the appropriate reservation.</Text>
+            </View>
+          </View>
+        </ScrollView>
         <View style={styles.buttonContainer}>
           <TouchableHighlight
             style={styles.fullWidthButton}
             onPress={this.navigateToConfirmation}
           >
-            <Text style={styles.goToExplore}>Next</Text>
+            <Text style={styles.goToExplore}>Create Posting</Text>
           </TouchableHighlight>
         </View>
       </View>
