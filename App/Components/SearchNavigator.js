@@ -11,7 +11,6 @@ import BecomeAGuideQuestions4 from './BecomeAGuideQuestions4';
 import BecomeAGuideQuestionsPolicies from './BecomeAGuideQuestionsPolicies';
 import BecomeAGuideQuestionsConfirmation from './BecomeAGuideQuestionsConfirmation';
 import SpecialtiesSetting from './SpecialtiesSetting';
-import GuideRequestedTrips from './GuideRequestedTrips';
 import ChatScreen from './ChatScreen';
 import GuideRequestedTripScreen from './GuideRequestedTripScreen';
 import GuideTripsScreen from './GuideTripsScreen';
@@ -41,15 +40,14 @@ const SearchNavigator = StackNavigator({
   BookingPolicy: { screen: BookingPolicyScreen },
   BookingConfirmation: { screen: BookingConfirmationScreen },
   GuideOptions: { screen: BecomeAGuideOptions },
+  SpecialtiesSetting: { screen: SpecialtiesSetting },
   GuideQuestions1: { screen: BecomeAGuideQuestions1 },
   GuideQuestions2p1: { screen: BecomeAGuideQuestions2p1 },
+  GuideRequestedTripScreen: { screen: GuideRequestedTripScreen },
   GuideQuestions4: { screen: BecomeAGuideQuestions4 },
-  SpecialtiesSetting: { screen: SpecialtiesSetting },
   GuideQuestionsPolicies: { screen: BecomeAGuideQuestionsPolicies },
   GuideQuestionsConfirmation: { screen: BecomeAGuideQuestionsConfirmation },
   Chat: { screen: ChatScreen },
-  GuideRequestedTrips: { screen: GuideRequestedTrips },
-  GuideRequestedTripScreen: { screen: GuideRequestedTripScreen },
   GuideTrips: { screen: GuideTripsScreen },
   ProfileScreen: { screen: ProfileScreen },
   GuideInbox: { screen: GuideInboxScreen },

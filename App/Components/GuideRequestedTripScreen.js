@@ -1,19 +1,23 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { ScrollView, Text, View, Modal } from 'react-native';
+import { Image, TouchableOpacity, TouchableHighlight, ScrollView, Text, View, Modal } from 'react-native';
 import { NavigationActions } from 'react-navigation';
-import { Button, Card, Divider, List, ListItem } from 'react-native-elements';
+import { Button, Card, TextInput, List, ListItem } from 'react-native-elements';
+import Toolbar from 'react-native-toolbar';
 import { setRequestedGuideBookings } from '../Actions/bookingActions';
 import axios from '../axios';
+import Utils from '../Utils';
+import Stars from 'react-native-stars-rating';
+import styles from './styles.js';
+
+
 
 class GuideRequestedTripScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       acceptModalVisible: false,
-      declineModalVisible: false,
       acceptConfirmVisible: false,
-      declineConfirmVisible: false
     }
     this.handleAcceptButton = this.handleAcceptButton.bind(this);
     this.handleAcceptConfirm = this.handleAcceptConfirm.bind(this);
@@ -29,8 +33,8 @@ class GuideRequestedTripScreen extends React.Component {
   }
 
   handleAcceptConfirm() {
-    let selectedIndex = this.props.booking.selectedRequestedBooking;
-    let selectedBooking = this.props.booking.requestedGuideBookings[selectedIndex];
+    this.props.navigation.navigate('GuideTrips');
+    let selectedBooking = this.props.booking.selectedRequestedBooking;
     let bookingId = selectedBooking.id;
 
     axios.put('api/bookings', {bookingId: bookingId, status: 'confirmed'})
@@ -45,6 +49,7 @@ class GuideRequestedTripScreen extends React.Component {
     })
 
     this.setState({
+      acceptReviewModal: !this.state.acceptModalVisible,
       acceptModalVisible: !this.state.acceptModalVisible,
       acceptConfirmVisible: !this.state.acceptConfirmVisible
     })
@@ -57,8 +62,7 @@ class GuideRequestedTripScreen extends React.Component {
   }
 
   handleDeclineConfirm() {
-    let selectedIndex = this.props.booking.selectedRequestedBooking;
-    let selectedBooking = this.props.booking.requestedGuideBookings[selectedIndex];
+    let selectedBooking =  this.props.booking.selectedRequestedBooking;
     let bookingId = selectedBooking.id;
 
     axios.put('api/bookings', {bookingId: bookingId, status: 'declined'})
@@ -72,10 +76,8 @@ class GuideRequestedTripScreen extends React.Component {
       console.log(err);
     })
 
-    this.setState({
-      declineModalVisible: !this.state.declineModalVisible,
-      declineConfirmVisible: !this.state.declineConfirmVisible
-    })
+    this.props.navigation.navigate('GuideTrips');
+
   }
 
   navigateToGuideOptions() {
@@ -93,215 +95,165 @@ class GuideRequestedTripScreen extends React.Component {
   }
 
   render() {
-    let selectedIndex = this.props.booking.selectedRequestedBooking;
-    let selectedBooking = this.props.booking.requestedGuideBookings[selectedIndex];
-    let reqDate = new Date(selectedBooking.date);
+
+    const toolbarSetting = {
+      toolbar1: {
+        hover: false,
+        leftButton: {
+          icon: 'chevron-left',
+          iconStyle: styles.toolbarIcon,
+          iconFontFamily: 'FontAwesome',
+          onPress: this.navigateBack,
+        },
+        title: {
+          text: 'LOCALIZE',
+          textStyle: styles.toolbarText
+        }
+      },
+    };
+    
+    //let selectedBooking = this.props.booking.selectedRequestedBooking;
+    let reqDate = new Date();
     let reqDateFormatted = `${reqDate.getMonth() + 1}/${reqDate.getDate()}/${reqDate.getFullYear()}`
     let adjustTime = time =>
       time < 12 ? `${time} AM` : time === 12 ? `12 PM` : `${time - 12} PM`;
-
-    console.log('NAVIGATION PROPS', this.props.navigation.navigate);
-
+    let selectedBooking= {
+        "id": 62,
+        "user_id": 16,
+        "guide_id": 6,
+        "city": "San Francisco, CA, United States",
+        "start_date_hr": "2017-10-10T20:00:00.000Z",
+        "end_date_hr": "2017-10-10T21:00:00.000Z",
+        "status": "requested",
+        "cancelled_by": null,
+        "cancelled_at": null,
+        "confirmed_at": null,
+        "completed_at": null,
+        "base_fee": null,
+        "tips": "0.00",
+        "user_rating": null,
+        "user_review": null,
+        "guide_rating": "0.00",
+        "guide_review": "",
+        "created_at": "2017-06-15T21:55:31.601Z",
+        "updated_at": "2017-06-15T21:55:31.601Z",
+        "user": {
+          "id": 16,
+          "facebook_id": "facebook|10207309921705383",
+          "full_name": "Alex Liang",
+          "guide": false,
+          "email": "0parallel@gmail.com",
+          "avatar": "https://scontent.xx.fbcdn.net/v/t1.0-1/p50x50/13528706_10205105740442229_8619736897622577090_n.jpg?oh=93f960089e18618fc8de089c0199f97b&oe=59D2E7CD",
+          "picture": "https://scontent.xx.fbcdn.net/v/t31.0-1/13502823_10205105740442229_8619736897622577090_o.jpg?oh=395ddb46ca0b9ae2ffde6bfc04085890&oe=59E1173F",
+          "avg_rating": "0.00",
+          "rating_count": 0,
+          "created_at": "2017-06-15T02:04:15.213Z",
+          "updated_at": "2017-06-15T02:04:15.213Z"
+        }}
+      
     return (
-      <ScrollView>
-        <Card
-          title={`${selectedBooking.user.full_name} (${selectedBooking.user.avg_rating})`}
-          image={{uri: selectedBooking.user.picture}}
-        >
-          <Text>
-            Requested Date: {reqDateFormatted}
-          </Text>
-          <Text>
-            Requested Start / End Time: {adjustTime(selectedBooking.start_hr)} / {adjustTime(selectedBooking.end_hr)}
-          </Text>
-          <Text style={{marginBottom: 10}}>
-            Requested City: {selectedBooking.city}
-          </Text>
-          <Divider />
-          <Text style={styles.subheader}>
-            Reviews
-          </Text>
-          <List style={styles.list}>
-            <ListItem
-              roundAvatar
-              avatar={require('./JONSNOW.png')}
-              hideChevron={true}
-              containerStyle={styles.listItem}
-              title='guide1'
-              subtitle='Rating: 4. The User was great!'
-            />
-            <ListItem
-              roundAvatar
-              avatar={require('./JONSNOW.png')}
-              hideChevron={true}
-              containerStyle={styles.listItem}
-              title='guide2'
-              subtitle='Rating: 3. Meh'
-            /><ListItem
-              roundAvatar
-              avatar={require('./JONSNOW.png')}
-              hideChevron={true}
-              containerStyle={styles.listItem}
-              title='guide3'
-              subtitle='Rating: 1. I hated the experience.'
-            />
-          </List>
-          <Button
-            small
-            raised
-            icon={{name: 'thumb-up'}}
-            backgroundColor='#5AAF5A'
-            title='Accept Request'
-            buttonStyle={{marginTop: 10}}
-            onPress={this.handleAcceptButton}
-          />
-          <Button
-            small
-            raised
-            icon={{name: 'thumb-down'}}
-            backgroundColor='#D1686D'
-            title='Decline Request'
-            buttonStyle={{marginTop: 10}}
-            onPress={this.handleDeclineButton}
-          />
-        </Card>
+      <View style={{ flex: 1, backgroundColor: 'white' }}>
+        <Toolbar
+        backgroundColor='#FF8C00'
+        toolbarHeight={35}
+        ref={(toolbar) => { this.toolbar = toolbar; }}
+        presets={toolbarSetting}
+        />
+        <View style={styles.orangeBar}/>
+        <ScrollView style={styles.orangeTintProfileContainer}>
+          <View style={styles.profileContainer}>
+            <View style={styles.profileHeaderContainer}>
+              <Text style={styles.profileHeader}>{selectedBooking.city}</Text>
+              <Text style={styles.profileHeader}>{Utils.time.displayDate(new Date(selectedBooking.start_date_hr).toDateString())}, {Utils.time.convert24ToAmPm(this.props.search.fromHour)} - {Utils.time.convert24ToAmPm(selectedBooking.end_date_hr)}</Text>
+            </View>
+            <View style={styles.profileCard}>
+              <View style={{ flex: 1, alignItems: 'center' }}>
+                <Text style={styles.profileName}>{selectedBooking.user.full_name}</Text>
+              </View>
+              <View style={{ flex: 1, marginTop: 8, marginBottom: 6, alignItems: 'center' }}>
+                <Stars
+                  rateMax={5}
+                  rate={Math.ceil(selectedBooking.user.avg_rating)}
+                  size={25}
+                />
+              </View>
+              <View style={{ flex: 1, alignItems: 'center' }}>
+                <Image
+                  source={{ uri: selectedBooking.user.picture }}
+                  style={styles.profileImage}
+                />
+              </View>
+              <View style={{ flex: 1, paddingLeft: 20, marginTop: 10 }}>
+                <Text style={styles.profileSubheader}>Reviews</Text>
+              </View>
+              <View>
+                <List style={styles.reviewList}>
+                  {this.props.profileSelection.selectedProfile.bookings.map((review, i) =>
+                      <ListItem
+                        key={i}
+                        roundAvatar
+                        avatar={{ uri: review.userAvatar }}
+                        hideChevron={true}
+                        containerStyle={styles.listItem}
+                        title={review.userFullName}
+                        subtitle={`Rating: ${Math.floor(review.rating)}. ${review.review}`}
+                      />
+                  )}
+                </List>
+              </View>
+            </View>
+          </View>
+        </ScrollView>
         <Modal
           animationType={'none'}
           transparent={true}
           visible={this.state.acceptModalVisible}
-          onRequestClose={this.handleAcceptButton}
         >
-          <View style={styles.modal}>
-            <Card
-              title='Please Read'
-            >
-              <Text>
-                We are excited you are about to accept the request! In order to protect both you and customer's experiences, we are offering allowance of up to two weeks prior to scheduled trip during which you can cancel / decline the trip without any penalties. Thereafter, you will be charged per Localize's late cancelation fee schedule set forth in our policies.
-              </Text>
-              <Button
-                small
-                raised
-                icon={{name: 'sentiment-very-satisfied'}}
-                backgroundColor='#5AAF5A'
-                title='Confirm and Accept'
-                buttonStyle={{marginTop: 10}}
+          <View style={styles.modalContainer}>
+            <View style={styles.modal}>
+              <View style={{ alignItems: 'center', marginBottom: 20 }}>
+                <Text style={styles.profileSubheader}>'Please Read'</Text>
+              </View>
+              <View style={styles.textInputContainer}>
+              </View>
+              <View style={{ paddingLeft: 20, paddingRight: 20 }}>
+                <Text style={{ height: 50, fontFamily: 'Arial', fontSize: 14 }}>We are excited you are about to accept the request! In order to protect both you and customer's experiences, we are offering allowance of up to two weeks prior to scheduled trip during which you can cancel / decline the trip without any penalties. Thereafter, you will be charged per Localize's late cancelation fee schedule set forth in our policies.</Text>
+              </View>
+            </View>
+            <View>
+              <TouchableOpacity
+                style={styles.inquirySubmitButton}
                 onPress={this.handleAcceptConfirm}
-              />
-              <Button
-                small
-                raised
-                icon={{name: 'exit-to-app'}}
-                backgroundColor='#787D7F'
-                title='Go Back'
-                buttonStyle={{marginTop: 10}}
-                onPress={this.handleAcceptButton}
-              />
-            </Card>
+              >
+                <Text style={styles.inquirySubmitText}>Confirm Booking!</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </Modal>
-        <Modal
-          animationType={'none'}
-          transparent={true}
-          visible={this.state.declineModalVisible}
-          onRequestClose={this.handleDeclineButton}
-        >
-          <View style={styles.modal}>
-            <Card
-              title='Are You Sure?'
-            >
-              <Text>
-                We are sad to see that you are about to decline this request :( Are you sure you would like to decline this request? You will not be able to view this request any further.
-              </Text>
-              <Button
-                small
-                raised
-                icon={{name: 'sentiment-very-dissatisfied'}}
-                backgroundColor='#D1686D'
-                title='Confirm and Decline'
-                buttonStyle={{marginTop: 10}}
-                onPress={this.handleDeclineConfirm}
-              />
-              <Button
-                small
-                raised
-                icon={{name: 'exit-to-app'}}
-                backgroundColor='#787D7F'
-                title='Go Back'
-                buttonStyle={{marginTop: 10}}
-                onPress={this.handleDeclineButton}
-              />
-            </Card>
-          </View>
-        </Modal>
-        <Modal
-          animationType={'none'}
-          transparent={true}
-          visible={this.state.acceptConfirmVisible}
-        >
-          <View style={styles.modal}>
-            <Card
-              title='Confirmation'
-            >
-              <Text>
-                {selectedBooking.user.full_name} has been notified on your acceptance! This trip is now confirmed and moved to the Trips tab.
-              </Text>
-              <Button
-                small
-                raised
-                icon={{name: 'exit-to-app'}}
-                backgroundColor='#787D7F'
-                title='Go to Guide Menu'
-                buttonStyle={{marginTop: 10}}
-                onPress={this.navigateToGuideOptions}
-              />
-            </Card>
-          </View>
-        </Modal>
-        <Modal
-          animationType={'none'}
-          transparent={true}
-          visible={this.state.declineConfirmVisible}
-        >
-          <View style={styles.modal}>
-            <Card
-              title='The Request Has Been Declined'
-            >
-              <Text>
-                {selectedBooking.user.full_name} has been notified! This trip is now declined and will no longer be visible.
-              </Text>
-              <Button
-                small
-                raised
-                icon={{name: 'exit-to-app'}}
-                backgroundColor='#787D7F'
-                title='Go to Guide Menu'
-                buttonStyle={{marginTop: 10}}
-                onPress={this.navigateToGuideOptions}
-              />
-            </Card>
-          </View>
-        </Modal>
-      </ScrollView>
+        <View style={styles.doubleButtonContainer}>
+          <TouchableHighlight
+            style={styles.affirmativeButton}
+            onPress={this.handleAcceptButton}
+          >
+            <Text style={styles.doubleButtonText}>Confirm</Text>
+          </TouchableHighlight>
+          <TouchableHighlight
+            style={styles.negativeButton}
+            onPress={this.handleDeclineConfirm}
+          >
+            <Text style={styles.doubleButtonText}>Decline</Text>
+          </TouchableHighlight>
+        </View>
+      </View>
     )
   }
+    
+  static navigationOptions = ({ navigation }) => ({
+    header: null
+  })
 }
 
-const styles = {
-  subheader: {
-    fontSize: 20,
-    marginTop: 10
-  },
-  list: {
-    borderBottomWidth: 0,
-    borderTopWidth: 0
-  },
-  modal: {
-    flex: 1,
-    backgroundColor: 'rgba(120, 125, 127, 0.4)',
-    flexDirection: 'row',
-    alignItems: 'center'
-  },
-}
+
 
 const mapStateToProps = state => (state);
 

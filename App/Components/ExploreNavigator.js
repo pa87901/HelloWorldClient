@@ -4,9 +4,7 @@ import { Icon } from 'react-native-elements';
 import { Button } from 'react-native'
 import ExploreScreenEntry from './ExploreScreenEntry';
 import TripsScreen from './TripsScreen';
-import InboxScreen from './InboxScreen';
 import ProfileScreen from './ProfileScreen';
-import PreInboxScreen from './PreInboxScreen';
 import NewInboxScreen from './NewInboxScreen';
 
 const SearchNavigator = TabNavigator({
