@@ -272,32 +272,35 @@ class GuideItineraryScreen extends Component {
 
     return (
       <View style={{ flex: 1, backgroundColor: 'white' }}>
-      <Toolbar
-        backgroundColor='#FF8C00'
-        toolbarHeight={35}
-        ref={(toolbar) => { this.toolbar = toolbar; }}
-        presets={toolbarSetting}
+        <Toolbar
+          backgroundColor='#FF8C00'
+          toolbarHeight={35}
+          ref={(toolbar) => { this.toolbar = toolbar; }}
+          presets={toolbarSetting}
         />
         <View style={styles.orangeBar}/>
-            <FormLabel>Event to add</FormLabel>
-            <Autocomplete
-              autoCapitalize="none"
-              keyboardShouldPersistTaps='always'
-              autoCorrect={false}
-              containerStyle={styles.autocompleteContainer}
-              data={filterPOIs}
-              defaultValue={this.state.pointOfInterestDescription}
-              onChangeText={text => this.updatePointOfInterest({ query: text })}
-              placeholder="Enter Point Of Interest"
-              renderItem={({ description }) => {
-                return (
-                <TouchableHighlight
+        <View style={styles.orangeTintProfileContainer}>
+        <View>
+        <Text style={styles.tripHeader}>Add a new point of interest!{"\n"}</Text>
+        </View>
+          <Autocomplete
+            autoCapitalize="none"
+            keyboardShouldPersistTaps='always'
+            autoCorrect={false}
+            containerStyle={styles.autocompleteContainer}
+            data={filterPOIs}
+            defaultValue={this.state.pointOfInterestDescription}
+            onChangeText={text => this.updatePointOfInterest({ query: text })}
+            placeholder="Enter Point Of Interest"
+            renderItem={({ description }) => {
+              return (
+                <TouchableOpacity
                   onPress={() => this.updatePointOfInterest({ query: description })}
                 >
-                  <Text style={styles.itemText}>
-                    {description}
-                  </Text>
-                </TouchableHighlight>
+                <Text style={styles.itemText}>
+                  {description}
+                </Text>
+              </TouchableOpacity>
               )}}
             />
         <View style={styles.list}>
@@ -317,7 +320,7 @@ class GuideItineraryScreen extends Component {
               >
                 <View>
                   <View>
-                    <Text>{event}</Text>
+                    <Text style={styles.TripCardText}>{"\u2022"} {event}</Text>
                     <Divider style={styles.swipeOut} />
                   </View>
                 </View>
@@ -326,37 +329,6 @@ class GuideItineraryScreen extends Component {
           })}
         </View>
 
-        <View style={{marginTop: 22}}>
-          <Modal
-            animationType={"slide"}
-            transparent={false}
-            visible={this.state.autocompleteModalVisible}
-            onRequestClose={() => {alert("Modal has been closed.")}}
-          >
-            <View style={{position: 'absolute', left: 0, right: 0, bottom: 70}}>
-              <Button
-                small
-                raised
-                backgroundColor='#4B0082'
-                title='Add'
-                onPress={() => this.addPointsOfInterest(this.state.pointOfInterestDescription)}
-              />
-            </View>
-            <View style={{position: 'absolute', left: 0, right: 0, bottom: 10}}>
-              <Button
-                small
-                raised
-                backgroundColor='#32CD32'
-                title='Back to Itinerary'
-                onPress={() => this.setAutocompleteModalVisible(!this.state.autocompleteModalVisible)}
-              />
-            </View>
-          </Modal>
-        </View>
-
-
-
-        <View style={styles.container}>
           <Modal
             animationType={"slide"}
             transparent={false}
@@ -374,7 +346,7 @@ class GuideItineraryScreen extends Component {
                   </View>
               </MapView.Marker>
                 {this.state.pointsOfInterest.map((point, index) => {
-                  console.log('---point---', point.coordinates)
+                  // console.log('---point---', point.coordinates)
                   return (
                     <MapView.Marker
                       key={index}
@@ -400,6 +372,7 @@ class GuideItineraryScreen extends Component {
               </TouchableOpacity>
             </View>
           </Modal>
+            </View>
           <View style={styles.doubleButtonContainer}>
               <TouchableOpacity
                 style={styles.affirmativeButton}
@@ -415,7 +388,6 @@ class GuideItineraryScreen extends Component {
               </TouchableOpacity>
             </View>
         </View>
-      </View>
     )
   }
 }
