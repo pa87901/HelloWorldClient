@@ -226,24 +226,28 @@ class GuideItineraryScreen extends Component {
   }
 
   addPointsOfInterest(pointOfInterest) {
-    let poi = this.state.pointsOfInterestNames;
-    poi.push(pointOfInterest)
-    this.setState({
-      pointsOfInterestNames: poi
-    });
-    console.log('this.state.pointsOfInterestNames', this.state.pointsOfInterestNames);
-    // Axios post method to include event for booking.
-    let options = {
-      bookingId: this.props.navigation.state.params.bookingId,
-      eventName: pointOfInterest
+    if(pointOfInterest.length > 0) {
+      let poi = this.state.pointsOfInterestNames;
+      poi.push(pointOfInterest)
+      this.setState({
+        pointsOfInterestNames: poi
+      });
+      console.log('this.state.pointsOfInterestNames', this.state.pointsOfInterestNames);
+      // Axios post method to include event for booking.
+      let options = {
+        bookingId: this.props.navigation.state.params.bookingId,
+        eventName: pointOfInterest
+      }
+      axios.post('/api/events/add', options)
+      .then(response => {
+        console.log('Saved point of interest successfully.');
+      })
+      .catch(err => {
+        console.error('Error adding event.');
+      });
+    } else {
+      alert('Please add a point of interest!');
     }
-    axios.post('/api/events/add', options)
-    .then(response => {
-      console.log('Saved point of interest successfully.');
-    })
-    .catch(err => {
-      console.error('Error adding event.');
-    });
   }
 
 
@@ -268,9 +272,38 @@ class GuideItineraryScreen extends Component {
 
     return (
       <View style={{ flex: 1, backgroundColor: 'white' }}>
-
+        <Toolbar
+          backgroundColor='#FF8C00'
+          toolbarHeight={35}
+          ref={(toolbar) => { this.toolbar = toolbar; }}
+          presets={toolbarSetting}
+        />
+        <View style={styles.orangeBar}/>
+        <View style={styles.orangeTintProfileContainer}>
+        <View>
+        <Text style={styles.tripHeader}>Add a new point of interest!{"\n"}</Text>
+        </View>
+          <Autocomplete
+            autoCapitalize="none"
+            keyboardShouldPersistTaps='always'
+            autoCorrect={false}
+            containerStyle={styles.autocompleteContainer}
+            data={filterPOIs}
+            defaultValue={this.state.pointOfInterestDescription}
+            onChangeText={text => this.updatePointOfInterest({ query: text })}
+            placeholder="Enter Point Of Interest"
+            renderItem={({ description }) => {
+              return (
+                <TouchableOpacity
+                  onPress={() => this.updatePointOfInterest({ query: description })}
+                >
+                <Text style={styles.itemText}>
+                  {description}
+                </Text>
+              </TouchableOpacity>
+              )}}
+            />
         <View style={styles.list}>
-          <Divider style={styles.swipeOut} />
           {this.state.pointsOfInterestNames.map((event, index) => {
             let swipeButtons = [{
               text: 'Delete',
@@ -287,7 +320,7 @@ class GuideItineraryScreen extends Component {
               >
                 <View>
                   <View>
-                    <Text>{event}</Text>
+                    <Text style={styles.TripCardText}>{"\u2022"} {event}</Text>
                     <Divider style={styles.swipeOut} />
                   </View>
                 </View>
@@ -296,67 +329,6 @@ class GuideItineraryScreen extends Component {
           })}
         </View>
 
-        <View style={{marginTop: 22}}>
-          <Modal
-            animationType={"slide"}
-            transparent={false}
-            visible={this.state.autocompleteModalVisible}
-            onRequestClose={() => {alert("Modal has been closed.")}}
-          >
-            <FormLabel>Event to add</FormLabel>
-            <Autocomplete
-              autoCapitalize="none"
-              keyboardShouldPersistTaps='always'
-              autoCorrect={false}
-              containerStyle={styles.autocompleteContainer}
-              data={filterPOIs}
-              defaultValue={this.state.pointOfInterestDescription}
-              onChangeText={text => this.updatePointOfInterest({ query: text })}
-              placeholder="Enter Point Of Interest"
-              renderItem={({ description }) => {
-                return (
-                <TouchableHighlight
-                  onPress={() => this.updatePointOfInterest({ query: description })}
-                >
-                  <Text style={styles.itemText}>
-                    {description}
-                  </Text>
-                </TouchableHighlight>
-              )}}
-            />
-            <View style={{position: 'absolute', left: 0, right: 0, bottom: 70}}>
-              <Button
-                small
-                raised
-                backgroundColor='#4B0082'
-                title='Add'
-                onPress={() => this.addPointsOfInterest(this.state.pointOfInterestDescription)}
-              />
-            </View>
-            <View style={{position: 'absolute', left: 0, right: 0, bottom: 10}}>
-              <Button
-                small
-                raised
-                backgroundColor='#32CD32'
-                title='Back to Itinerary'
-                onPress={() => this.setAutocompleteModalVisible(!this.state.autocompleteModalVisible)}
-              />
-            </View>
-          </Modal>
-          <View style={{position: 'absolute', left: 0, right: 0, bottom: 70}}>
-            <Button
-              large
-              raised
-              backgroundColor='#0000FF'
-              title='Add event'
-              onPress={() => this.setAutocompleteModalVisible(true)}
-            />
-          </View>
-        </View>
-
-
-
-        <View style={styles.container}>
           <Modal
             animationType={"slide"}
             transparent={false}
@@ -374,7 +346,7 @@ class GuideItineraryScreen extends Component {
                   </View>
               </MapView.Marker>
                 {this.state.pointsOfInterest.map((point, index) => {
-                  console.log('---point---', point.coordinates)
+                  // console.log('---point---', point.coordinates)
                   return (
                     <MapView.Marker
                       key={index}
@@ -400,6 +372,7 @@ class GuideItineraryScreen extends Component {
               </TouchableOpacity>
             </View>
           </Modal>
+            </View>
           <View style={styles.doubleButtonContainer}>
               <TouchableOpacity
                 style={styles.affirmativeButton}
@@ -409,13 +382,12 @@ class GuideItineraryScreen extends Component {
               </TouchableOpacity>
               <TouchableOpacity
                 style={styles.negativeButton}
-                onPress={()=>console.log('GIVE ME A FUNCTION PLEASE!')}
+               onPress={() => this.addPointsOfInterest(this.state.pointOfInterestDescription)}
               >
                 <Text style={styles.mapDoubleButtonText}>Add</Text>
               </TouchableOpacity>
             </View>
         </View>
-      </View>
     )
   }
 }
