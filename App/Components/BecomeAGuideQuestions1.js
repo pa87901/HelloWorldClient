@@ -33,7 +33,7 @@ class BecomeAGuideQuestions1 extends React.Component {
   }
 
   navigateToNext() {
-    this.props.navigation.navigate('GuideQuestions4');
+    this.props.navigation.navigate('GuideQuestions2p1');
   }
 
   updateCity(city) {
