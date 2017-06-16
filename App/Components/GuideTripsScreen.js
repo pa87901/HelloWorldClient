@@ -146,11 +146,11 @@ class GuideTripsScreen extends React.Component {
             text: 'Tourist Trips',
             textStyle: styles.tripToolbarText,
             onPress: this.navigateToTouristTrips
+          },
+          title: {
+            text: 'Trips',
+            textStyle: styles.toolbarText
           }
-          // title: {
-          //   text: 'LOCALIZE',
-          //   textStyle: styles.toolbarText
-          // }
       },
     };
 
@@ -237,7 +237,7 @@ class GuideTripsScreen extends React.Component {
                     </TouchableHighlight>
                 </View>
               </Modal>
-            <Text style={styles.tripHeader}>Trips As A Guide</Text>
+            {/*<Text style={styles.tripHeader}>Trips As A Guide</Text>*/}
             </View>
           {this.state.guideBookings[0].bookings.map((booking, i)=>{
             return (
