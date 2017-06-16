@@ -300,9 +300,7 @@ class GuideItineraryScreen extends Component {
         />
         <View style={styles.orangeBar}/>
         <View style={styles.orangeTintProfileContainer}>
-        <View>
-        <Text style={styles.tripHeader}>Add a new point of interest!{"\n"}</Text>
-        </View>
+        <View style={{marginTop: 22}} />
           <Autocomplete
             autoCapitalize="none"
             keyboardShouldPersistTaps='always'
@@ -311,7 +309,7 @@ class GuideItineraryScreen extends Component {
             data={filterPOIs}
             defaultValue={this.state.pointOfInterestDescription}
             onChangeText={text => this.updatePointOfInterest({ query: text })}
-            placeholder="Enter Point Of Interest"
+            placeholder="Add Point Of Interest"
             renderItem={({ structured_formatting }) => {
               return (
                 <TouchableOpacity

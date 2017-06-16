@@ -234,13 +234,14 @@ class TouristItineraryScreen extends Component {
         />
         <View style={styles.orangeBar}/>
         <View style={styles.orangeTintProfileContainer}>
-        <View style={styles.list}>
+        <View style={{marginTop: 22, flex: 1, flexDirection: 'column', borderWidth: 10, borderColor: 'white' }}>
           {this.state.pointsOfInterestNames.map((event, index) => {
             return (
             <View
               key={index}
+              style={{borderWidth: 1, borderColor: 'grey', margin: -0.5, padding: 4}}
             >
-              <Text style={styles.TripCardText}>{"\u2022"} {event}</Text>
+              <Text style={styles.TripCardText}>{event}</Text>
               <Divider/>
             </View>
             )
