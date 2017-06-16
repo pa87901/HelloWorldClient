@@ -21,7 +21,7 @@ class TripsScreen extends React.Component {
       tipsModalVisible: false,
       rating: 0,
       review: '',
-      tips: 0,
+      tips: '',
       activeCard: null
     };
 
@@ -217,7 +217,7 @@ class TripsScreen extends React.Component {
                               style={{height: 40, borderColor: 'gray', borderWidth: 1, paddingLeft: 10}}
                               onChangeText={(tips) => this.setState({tips: tips})}
                               keyboardType='numeric'
-                              value={this.state.tips}
+                              value={this.state.tips.toString()}
                               placeholder={'Amount here'}
                             />
                             <View style={styles.tipFlexSwitchContainer}>
