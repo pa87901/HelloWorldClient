@@ -268,9 +268,35 @@ class GuideItineraryScreen extends Component {
 
     return (
       <View style={{ flex: 1, backgroundColor: 'white' }}>
-
+      <Toolbar
+        backgroundColor='#FF8C00'
+        toolbarHeight={35}
+        ref={(toolbar) => { this.toolbar = toolbar; }}
+        presets={toolbarSetting}
+        />
+        <View style={styles.orangeBar}/>
+            <FormLabel>Event to add</FormLabel>
+            <Autocomplete
+              autoCapitalize="none"
+              keyboardShouldPersistTaps='always'
+              autoCorrect={false}
+              containerStyle={styles.autocompleteContainer}
+              data={filterPOIs}
+              defaultValue={this.state.pointOfInterestDescription}
+              onChangeText={text => this.updatePointOfInterest({ query: text })}
+              placeholder="Enter Point Of Interest"
+              renderItem={({ description }) => {
+                return (
+                <TouchableHighlight
+                  onPress={() => this.updatePointOfInterest({ query: description })}
+                >
+                  <Text style={styles.itemText}>
+                    {description}
+                  </Text>
+                </TouchableHighlight>
+              )}}
+            />
         <View style={styles.list}>
-          <Divider style={styles.swipeOut} />
           {this.state.pointsOfInterestNames.map((event, index) => {
             let swipeButtons = [{
               text: 'Delete',
@@ -303,27 +329,6 @@ class GuideItineraryScreen extends Component {
             visible={this.state.autocompleteModalVisible}
             onRequestClose={() => {alert("Modal has been closed.")}}
           >
-            <FormLabel>Event to add</FormLabel>
-            <Autocomplete
-              autoCapitalize="none"
-              keyboardShouldPersistTaps='always'
-              autoCorrect={false}
-              containerStyle={styles.autocompleteContainer}
-              data={filterPOIs}
-              defaultValue={this.state.pointOfInterestDescription}
-              onChangeText={text => this.updatePointOfInterest({ query: text })}
-              placeholder="Enter Point Of Interest"
-              renderItem={({ description }) => {
-                return (
-                <TouchableHighlight
-                  onPress={() => this.updatePointOfInterest({ query: description })}
-                >
-                  <Text style={styles.itemText}>
-                    {description}
-                  </Text>
-                </TouchableHighlight>
-              )}}
-            />
             <View style={{position: 'absolute', left: 0, right: 0, bottom: 70}}>
               <Button
                 small
@@ -343,15 +348,6 @@ class GuideItineraryScreen extends Component {
               />
             </View>
           </Modal>
-          <View style={{position: 'absolute', left: 0, right: 0, bottom: 70}}>
-            <Button
-              large
-              raised
-              backgroundColor='#0000FF'
-              title='Add event'
-              onPress={() => this.setAutocompleteModalVisible(true)}
-            />
-          </View>
         </View>
 
 
@@ -409,7 +405,7 @@ class GuideItineraryScreen extends Component {
               </TouchableOpacity>
               <TouchableOpacity
                 style={styles.negativeButton}
-                onPress={()=>console.log('GIVE ME A FUNCTION PLEASE!')}
+               onPress={() => this.addPointsOfInterest(this.state.pointOfInterestDescription)}
               >
                 <Text style={styles.mapDoubleButtonText}>Add</Text>
               </TouchableOpacity>
