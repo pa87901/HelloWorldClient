@@ -3,15 +3,15 @@ import { connect } from 'react-redux';
 import { StyleSheet, Text, View, TouchableOpacity, TouchableHighlight } from 'react-native';
 import { Button, FormLabel, FormInput, Divider} from 'react-native-elements';
 import Autocomplete from 'react-native-autocomplete-input';
+import Swipeout from 'react-native-swipeout';
 import { becomeGuidePointsOfInterest } from '../Actions/BecomeAGuideActions';
 import config from '../Config/config';
 import axios from '../axios';
-import Swipeout from 'react-native-swipeout';
 import Toolbar from 'react-native-toolbar';
 import styles from './styles';
 
 class BecomeAGuideQuestions2p1 extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       pointsOfInterest: [],
@@ -27,12 +27,12 @@ class BecomeAGuideQuestions2p1 extends React.Component {
 
   updatePointOfInterest(pointOfInterest) {
     // Update local state.
-    pointOfInterest = pointOfInterest.query
+    pointOfInterest = pointOfInterest.query;
     this.setState({
       pointOfInterestDescription: pointOfInterest
-    })
+    });
     if (pointOfInterest.length > 3) {
-      let query = `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${pointOfInterest}&key=${config.GOOGLE_PLACES_API_KEY}`;
+      const query = `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${pointOfInterest}&key=${config.GOOGLE_PLACES_API_KEY}`;
 
       axios.get(query)
       .then(res => {
@@ -44,7 +44,7 @@ class BecomeAGuideQuestions2p1 extends React.Component {
       })
       .catch(err => {
         console.error(err);
-      })
+      });
     } else {
       this.setState({
         pointOfInterestPredictions: [],
@@ -55,11 +55,11 @@ class BecomeAGuideQuestions2p1 extends React.Component {
   }
 
   deletePointOfInterest(pointOfDisinterest) {
-    let newPOIs = this.state.pointsOfInterest.slice();
+    const newPOIs = this.state.pointsOfInterest.slice();
     newPOIs.splice(pointOfDisinterest, 1);
     this.setState({
       pointsOfInterest: newPOIs
-    })
+    });
   }
 
   addPointsOfInterest(pointOfInterest) {

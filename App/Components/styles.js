@@ -554,5 +554,10 @@ export default StyleSheet.create({
     fontSize: 15,
     color: 'white',
     fontFamily: main.font
+  },
+  // Become A Guide
+  becomeAGuideSubtitle: {
+    fontFamily: main.font,
+    fontSize: 12
   }
 });
