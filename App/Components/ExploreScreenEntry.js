@@ -35,20 +35,25 @@ class ExploreScreenEntry extends React.Component {
   render() {
     return (
       <View style={{ flex: 1, backgroundColor:'white' }}>
-      <Toolbar
-        backgroundColor='#FF8C00' 
-        ref={(toolbar) => { this.toolbar = toolbar; }} presets={this.toolbarSetting} />
+        <Toolbar
+          backgroundColor='#FF8C00' 
+          ref={(toolbar) => { this.toolbar = toolbar; }} presets={this.toolbarSetting} />
 
         <View style={styles.orangeBar} />
         <View style={styles.orangeTintContainer}>
-          <View style={{ borderWidth: 10, borderColor: 'white' }}>
             <TouchableOpacity onPress={()=>{this.props.navigation.navigate('Search')}}>
-              <Text style={styles.orangeText}>
-                {this.props.search.city + '\n'} 
-                {Utils.time.displayDate(new Date(this.props.search.date).toDateString())}, {Utils.time.convert24ToAmPm(this.props.search.fromHour)} - {Utils.time.convert24ToAmPm(this.props.search.toHour)}
-              </Text>
-            </TouchableOpacity>
+          <View style={{ borderWidth: 10, borderColor: 'white' }}>
+                {/*<Icon
+                name='search'
+                size={50}
+                color='#FF830D'
+                />*/}
+                <Text style={styles.orangeText}>
+                  {this.props.search.city + '\n'} 
+                  {Utils.time.displayDate(new Date(this.props.search.date).toDateString())} {Utils.time.convert24ToAmPm(this.props.search.fromHour)} - {Utils.time.convert24ToAmPm(this.props.search.toHour)}
+                </Text>
           </View>
+            </TouchableOpacity>
           <View style={{ flex: 1 }}>
             <ScrollView>
               <View>
@@ -85,7 +90,7 @@ class ExploreScreenEntry extends React.Component {
                           Specialties:
                         </Text>
                         <View style={styles.specialtiesContainer}>
-                          {guide.guideSpecialties.map((specialtyObj, key) => {
+                          {guide.guideSpecialties.map((specialtyObj, key) =>{
                             return (
                               <View 
                                 key={key}
@@ -109,7 +114,6 @@ class ExploreScreenEntry extends React.Component {
                           onPress={() => this.handleProfileClick(key)}
                         >
                           <View style={styles.goButtonTextView}>
-
                             <Text style={styles.goButtonText}>Get to know me!</Text>
                           </View>
                         </TouchableOpacity>

@@ -514,4 +514,45 @@ export default StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap'
   },
+  //Specialties Page
+  specialtySubheader: {
+    fontFamily: main.font,
+    fontSize: 24,
+    textAlign: 'center',
+    marginTop: 15,
+    marginBottom: 15
+  },
+  //Map Modal
+  radius: {
+    height: 40,
+    width: 40,
+    borderRadius: 40/2,
+    overflow: 'hidden',
+    backgroundColor: 'rgba(0, 122, 255, 0.1)',
+    borderWidth: 1,
+    borderColor: 'rgba(0, 122, 255, 0.3)',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  marker: {
+    height: 15,
+    width: 15,
+    borderWidth: 1,
+    borderColor: 'white',
+    borderRadius: 15/2,
+    overflow: 'hidden',
+    backgroundColor: 'rgba(0, 122, 255, 0.3)'
+  },
+  map: {
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    position: 'absolute' 
+  },
+  mapDoubleButtonText: {
+    fontSize: 15,
+    color: 'white',
+    fontFamily: main.font
+  }
 });
