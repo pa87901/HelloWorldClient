@@ -69,7 +69,7 @@ class NewInboxScreen extends Component {
     // console.log('this.state in NewInbox', this.state);
     const dummyTourists = [{
       userId: '1',
-      avatar: 'http://media.salon.com/2016/01/donald_trump69.jpg',
+      avatar: 'https://cdn.theatlantic.com/assets/media/img/mt/2015/11/trumpy-1/lead_960.jpg?1447982563',
       name: 'Donald Trump',
       message: 'I want to tour outside New York.'
     },
@@ -96,21 +96,7 @@ class NewInboxScreen extends Component {
         <Toolbar
           backgroundColor='#FF8C00'
           ref={(toolbar) => { this.toolbar = toolbar; }} presets={toolbarSetting} />
-        <View style={{marginTop: 22}}>
-          {dummyTourists.map((dummyTourist, index) => {
-            return (
-              <View style={{backgroundColor: 'white'}}>
-                <ListItem
-                  roundAvatar
-                  avatar={dummyTourist.avatar}
-                  title={dummyTourist.name}
-                  subtitle={dummyTourist.message}
-                />
-              </View>
-            )
-          })}
-        </View>
-        <View>
+        <View style={{marginTop: 80}}>
         {this.state.inbox.map((conversation, index) => {
           // Choosing avatar to pass as props.
           // let avatar;
@@ -128,6 +114,20 @@ class NewInboxScreen extends Component {
             />
           )})
         }
+        </View>
+        <View>
+          {dummyTourists.map((dummyTourist, index) => {
+            return (
+              <View style={{backgroundColor: 'white'}}>
+                <ListItem
+                  roundAvatar
+                  avatar={dummyTourist.avatar}
+                  title={dummyTourist.name}
+                  subtitle={dummyTourist.message}
+                />
+              </View>
+            )
+          })}
         </View>
       </View>
     )
