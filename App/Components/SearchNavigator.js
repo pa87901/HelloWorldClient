@@ -25,7 +25,6 @@ import TouristItineraryScreen from './TouristItineraryScreen';
 
 
 const SearchNavigator = StackNavigator({
-  GuideRequestedTripScreen: { screen: GuideRequestedTripScreen },
   Search: {
     screen: SearchScreen,
     navigationOptions: {
@@ -44,6 +43,7 @@ const SearchNavigator = StackNavigator({
   SpecialtiesSetting: { screen: SpecialtiesSetting },
   GuideQuestions1: { screen: BecomeAGuideQuestions1 },
   GuideQuestions2p1: { screen: BecomeAGuideQuestions2p1 },
+  GuideRequestedTripScreen: { screen: GuideRequestedTripScreen },
   GuideQuestions4: { screen: BecomeAGuideQuestions4 },
   GuideQuestionsPolicies: { screen: BecomeAGuideQuestionsPolicies },
   GuideQuestionsConfirmation: { screen: BecomeAGuideQuestionsConfirmation },
