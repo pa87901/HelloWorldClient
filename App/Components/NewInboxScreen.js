@@ -4,9 +4,9 @@ import axios from '../axios';
 import { Text, View } from 'react-native';
 import { updateChats } from '../Actions/chatActions'
 import NewConversation from './NewConversation';
-import styles from './styles.js';
 import Toolbar from 'react-native-toolbar';
 import { ListItem } from 'react-native-elements';
+import styles from './styles';
 
 class NewInboxScreen extends Component {
   constructor(props) {
@@ -92,6 +92,7 @@ class NewInboxScreen extends Component {
       message: 'I want to tour Mars.'
     }];
     return (
+      <View style={styles.whiteBackground}>
       <View style={styles.orangeContainer}>
         <Toolbar
           backgroundColor='#FF8C00'
@@ -129,6 +130,7 @@ class NewInboxScreen extends Component {
             )
           })}
         </View>
+      </View>
       </View>
     )
   }
