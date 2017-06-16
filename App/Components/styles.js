@@ -246,7 +246,7 @@ export default StyleSheet.create({
     color: '#FF830D'
   },
   orangeTintProfileContainer: {
-    backgroundColor: main.colorTint,
+    backgroundColor: 'white',
     flexGrow: 1,
     marginBottom: 66
   },

@@ -67,7 +67,8 @@ class BecomeAGuideQuestions2p1 extends React.Component {
     poi.push(pointOfInterest.main_text + '\n' + pointOfInterest.secondary_text)
     this.setState({
       pointsOfInterest: poi,
-      pointOfInterestPredictions: []
+      pointOfInterestPredictions: [],
+      pointOfInterestDescription: ''
     });
     console.log('pointsOfInterestDescription', pointOfInterest, this.state.pointOfInterestDescription);
   }

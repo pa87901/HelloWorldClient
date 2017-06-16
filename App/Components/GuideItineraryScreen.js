@@ -226,28 +226,48 @@ class GuideItineraryScreen extends Component {
   }
 
   addPointsOfInterest(pointOfInterest) {
-    if(pointOfInterest.length > 0) {
-      let poi = this.state.pointsOfInterestNames;
-      poi.push(pointOfInterest)
-      this.setState({
-        pointsOfInterestNames: poi
-      });
-      console.log('this.state.pointsOfInterestNames', this.state.pointsOfInterestNames);
-      // Axios post method to include event for booking.
-      let options = {
+    console.log('pointOfInterest', pointOfInterest.main_text + '\n' + pointOfInterest.secondary_text);
+    let poi = this.state.pointsOfInterestNames;
+    poi.push(pointOfInterest.main_text + '\n' + pointOfInterest.secondary_text);
+    this.setState({
+      pointsOfInterestNames: poi,
+      pointOfInterestPredictions: [],
+      pointOfInterestDescription: ''
+    });
+    // Axios post method to include event for booking.
+    let options = {
         bookingId: this.props.navigation.state.params.bookingId,
-        eventName: pointOfInterest
-      }
-      axios.post('/api/events/add', options)
-      .then(response => {
-        console.log('Saved point of interest successfully.');
-      })
-      .catch(err => {
-        console.error('Error adding event.');
-      });
-    } else {
-      alert('Please add a point of interest!');
-    }
+        eventName: pointOfInterest.main_text + '\n' + pointOfInterest.secondary_text
+      };
+    axios.post('/api/events/add', options)
+    .then(response => {
+      console.log('Saved point of interest successfully.');
+    })
+    .catch(err => {
+      console.error('Error adding event.');
+    });
+    // if(pointOfInterest.length > 0) {
+    //   let poi = this.state.pointsOfInterestNames;
+    //   poi.push(pointOfInterest)
+    //   this.setState({
+    //     pointsOfInterestNames: poi
+    //   });
+    //   console.log('this.state.pointsOfInterestNames', this.state.pointsOfInterestNames);
+    //   // Axios post method to include event for booking.
+    //   let options = {
+    //     bookingId: this.props.navigation.state.params.bookingId,
+    //     eventName: pointOfInterest
+    //   }
+    //   axios.post('/api/events/add', options)
+    //   .then(response => {
+    //     console.log('Saved point of interest successfully.');
+    //   })
+    //   .catch(err => {
+    //     console.error('Error adding event.');
+    //   });
+    // } else {
+    //   alert('Please add a point of interest!');
+    // }
   }
 
 
@@ -271,7 +291,7 @@ class GuideItineraryScreen extends Component {
     };
 
     return (
-      <View style={{ flex: 1, backgroundColor: 'white' }}>
+      <View style={styles.whiteBackground}>
         <Toolbar
           backgroundColor='#FF8C00'
           toolbarHeight={35}
@@ -292,18 +312,19 @@ class GuideItineraryScreen extends Component {
             defaultValue={this.state.pointOfInterestDescription}
             onChangeText={text => this.updatePointOfInterest({ query: text })}
             placeholder="Enter Point Of Interest"
-            renderItem={({ description }) => {
+            renderItem={({ structured_formatting }) => {
               return (
                 <TouchableOpacity
-                  onPress={() => this.updatePointOfInterest({ query: description })}
+                  onPress={() => this.addPointsOfInterest(structured_formatting)}
                 >
                 <Text style={styles.itemText}>
-                  {description}
+                  {structured_formatting.main_text} {', '}
+                  {structured_formatting.secondary_text}
                 </Text>
               </TouchableOpacity>
               )}}
             />
-        <View style={styles.list}>
+        <View style={{ flex: 1, flexDirection: 'column', borderWidth: 10, borderColor: 'white' }}>
           {this.state.pointsOfInterestNames.map((event, index) => {
             let swipeButtons = [{
               text: 'Delete',
@@ -312,6 +333,7 @@ class GuideItineraryScreen extends Component {
               onPress: () => this.deleteEvent(index)
             }];
             return (
+              <View style={{borderWidth: 1, borderColor: 'grey', margin: -0.5, padding: 4}}>
               <SwipeOut
                 right={swipeButtons}
                 autoClose={true}
@@ -320,11 +342,12 @@ class GuideItineraryScreen extends Component {
               >
                 <View>
                   <View>
-                    <Text style={styles.TripCardText}>{"\u2022"} {event}</Text>
+                    <Text style={{fontFamily: 'Arial', fontSize: 14, fontWeight: '900', textAlign: 'center'}}>{event}</Text>
                     <Divider style={styles.swipeOut} />
                   </View>
                 </View>
               </SwipeOut>
+              </View>
             )
           })}
         </View>
@@ -380,12 +403,12 @@ class GuideItineraryScreen extends Component {
               >
                 <Text style={styles.mapDoubleButtonText}>Map</Text>
               </TouchableOpacity>
-              <TouchableOpacity
+              {/*<TouchableOpacity
                 style={styles.negativeButton}
                onPress={() => this.addPointsOfInterest(this.state.pointOfInterestDescription)}
               >
                 <Text style={styles.mapDoubleButtonText}>Add</Text>
-              </TouchableOpacity>
+              </TouchableOpacity>*/}
             </View>
         </View>
     )

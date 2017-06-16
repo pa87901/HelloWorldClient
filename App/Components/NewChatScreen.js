@@ -9,8 +9,8 @@ class NewChatScreen extends Component {
     this.state = {
       messages: [],
     }
-    this.socket = SocketIOClient('https://localizetravel-staging.herokuapp.com/', {query: {userId: this.props.navigation.state.params.me, guideId: this.props.navigation.state.params.them}})
-    // this.socket = SocketIOClient('http://localhost:3000/', {query: {userId: this.props.navigation.state.params.me, guideId: this.props.navigation.state.params.them}})
+    // this.socket = SocketIOClient('https://localizetravel-staging.herokuapp.com/', {query: {userId: this.props.navigation.state.params.me, guideId: this.props.navigation.state.params.them}})
+    this.socket = SocketIOClient('http://localhost:3000/', {query: {userId: this.props.navigation.state.params.me, guideId: this.props.navigation.state.params.them}})
     this.onSend = this.onSend.bind(this);
   }
 
