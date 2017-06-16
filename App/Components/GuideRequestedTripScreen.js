@@ -33,6 +33,7 @@ class GuideRequestedTripScreen extends React.Component {
   }
 
   handleAcceptConfirm() {
+    this.props.navigation.navigate('GuideTrips');
     let selectedBooking = this.props.booking.selectedRequestedBooking;
     let bookingId = selectedBooking.id;
 
@@ -48,6 +49,7 @@ class GuideRequestedTripScreen extends React.Component {
     })
 
     this.setState({
+      acceptReviewModal: !this.state.acceptModalVisible,
       acceptModalVisible: !this.state.acceptModalVisible,
       acceptConfirmVisible: !this.state.acceptConfirmVisible
     })

@@ -35,7 +35,6 @@ class TripsScreen extends React.Component {
   }
 
   componentDidMount() {
-    // console.log('HEY FROM THE TRIPSCREEN', this.props.userProfile.profile.userId);
     axios.get(`api/bookings/all/user/${this.props.userProfile.profile.userId}`)
       .then(res => {
         this.props.dispatch(setTouristBookings(res.data))
@@ -43,17 +42,6 @@ class TripsScreen extends React.Component {
       })
   }
 
-  // navigateToExplore() {
-  //   const resetAction = NavigationActions.reset({
-  //     index: 1,
-  //     actions: [
-  //       NavigationActions.navigate({ routeName: 'Search' }),
-  //       NavigationActions.navigate({ routeName: 'Explore' }),
-  //     ]
-  //   });
-
-  //   this.props.navigation.dispatch(resetAction);
-  // }
 
   navigateBack() {
     this.props.navigation.navigate('Explore');
@@ -64,13 +52,21 @@ class TripsScreen extends React.Component {
   }
 
   onSubmit(){
+    newStatus  = this.props.booking.touristBookings[0].bookings[this.state.activeCard].status ==='completed'?'user_reviewed':'closed';
     axios.put(`api/bookings/guide/rrt`, {
         bookingId: this.props.booking.touristBookings[0].bookings[this.state.activeCard].id, 
         guide_review: this.state.review,
         guide_rating: this.state.rating,
-        tips: this.state.tips
+        tips: this.state.tips,
+        status: newStatus
       })
-      .then(res => {})
+      .then(res => {
+      axios.get(`api/bookings/all/user/${this.props.userProfile.profile.userId}`)
+      .then(res => {
+        this.props.dispatch(setTouristBookings(res.data))
+        this.setState({touristBookings: res.data})
+      })
+      })
       .catch(err => {
         console.log(err);
       })
@@ -269,28 +265,19 @@ class TripsScreen extends React.Component {
                 {booking.status}
               </Text>
               </Text>
-              {/*<Button title='Map' onPress={()=>{this.props.navigation.navigate('MapScreen', {bookingId: this.props.booking.touristBookings[i].id})}}/>*/}
-              {/*<Button title='Review' onPress={()=>{
-                this.setState({activeCard : i})
-                this.toggleReviewModal(true)
-                }} />
-                <Button
-                title="Itinerary" 
-                onPress={() => this.props.navigation.navigate('TouristItinerary', {bookingId: this.props.booking.touristBookings[0].bookings[i].id})}
-                >
-          </Button>*/}
               </View>
               <Text>
                 {"\n"}
               </Text>
               <View style={styles.doubleButtonContainer}>
+              {booking.status !== 'declined'?
                 <TouchableOpacity
                   style={styles.smallAffirmativeButton}
                   onPress={()=>{this.props.navigation.navigate('TouristItinerary', {bookingId: this.props.booking.touristBookings[0].bookings[i].id})}}
                 >
                   <Text style={styles.smallDoubleButtonText}>Itinerary</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
+                </TouchableOpacity>:<View />}
+                {booking.status === 'completed' || booking.status === 'guide_reviewed'?<TouchableOpacity
                   style={styles.smallNegativeButton}
                   onPress={ () => {
                     this.setState({activeCard : i})
@@ -298,7 +285,7 @@ class TripsScreen extends React.Component {
                   }}
                 >
                   <Text style={styles.smallDoubleButtonText}>Review</Text>
-                </TouchableOpacity>
+                </TouchableOpacity>:<View />}
               </View>
             </Card>
               </View>

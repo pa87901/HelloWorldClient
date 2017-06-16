@@ -73,15 +73,12 @@ class GuideTripsScreen extends React.Component {
   }
   
   handleCompletedConfirm(index) {
-    var context = this;
     let selectedBooking = this.props.booking.guideBookings[0].bookings[index];
     let bookingId = selectedBooking.id;
     let newStatus;
 
-    console.log('newstatus', newStatus, selectedBooking)
     axios.put('api/bookings', {bookingId: bookingId, status: 'completed'})
     .then(res => {
-      context.setState({showComplete: false})
       axios.get(`api/bookings/all/guide/${this.props.userProfile.profile.userId}`)
         .then(res => {
           this.props.dispatch(setGuideBookings(res.data))
@@ -99,16 +96,29 @@ class GuideTripsScreen extends React.Component {
     })
   }
   onSubmit(){
-
-    axios.put(`api/bookings/guide/rrt`, {
-        bookingId: this.props.booking.guideBookings[0].bookings[index].id, 
+    let newStatus = this.props.booking.guideBookings[0].bookings[this.state.activeCard].status === 'completed'?'guide_reviewed':'closed'
+    let bookingId = this.props.booking.guideBookings[0].bookings[this.state.activeCard].id
+    
+    console.log(bookingId, this.state.review, this.state.rating, newStatus)
+    axios.put(`api/bookings/user/rr`, {
+        bookingId: this.props.booking.guideBookings[0].bookings[this.state.activeCard].id, 
         user_review: this.state.review,
-        user_rating: this.state.rating
+        user_rating: this.state.rating,
+        status: newStatus
       })
-      .then(res => {})
-      .catch(err => {
-        console.log(err);
+    .then(res => {
+      console.log('response', res)
+      axios.get(`api/bookings/all/guide/${this.props.userProfile.profile.userId}`)
+      .then(res => {
+        this.props.dispatch(setGuideBookings(res.data))
+        this.setState({guideBookings: res.data})
+      }).catch(err=>{
+        console.log(err)
       })
+    })
+    .catch(err => {
+      console.log(err);
+    })
    this.toggleReviewModal();
   }
 
@@ -235,15 +245,6 @@ class GuideTripsScreen extends React.Component {
                 >
                   <Text style={styles.smallDoubleButtonText}>Itinerary</Text>
                 </TouchableOpacity>
-                {/*<TouchableOpacity
-                  style={styles.smallNegativeButton}
-                  onPress={ () => {
-                    this.setState({activeCard : i})
-                    this.toggleReviewModal()
-                  }}
-                >
-                  <Text style={styles.smallDoubleButtonText}>Review</Text>
-                </TouchableOpacity>*/}
                 {this.props.booking.guideBookings[0].bookings[i].status === 'requested' ?<TouchableOpacity
                   style={styles.smallNegativeButton}
                   onPress={()=>{this.navigateToGuideRequestedTrip(i)}}
@@ -256,10 +257,11 @@ class GuideTripsScreen extends React.Component {
                 >
                   <Text style={styles.smallDoubleButtonText}>Complete Trip</Text>
                 </TouchableOpacity>:<View />}
-                {(this.props.booking.guideBookings[0].bookings[i].status === 'completed' || this.props.booking.guideBookings[0].bookings[i].status === 'user_closed') && this.state.showReview?<TouchableOpacity
+                {this.props.booking.guideBookings[0].bookings[i].status === 'completed' || this.props.booking.guideBookings[0].bookings[i].status === 'user_reviewed'?<TouchableOpacity
                   style={styles.smallNegativeButton}
-                  onPress={()=>{this.toggleReviewModal(i)}}
-                >
+                  onPress={ () => {
+                    this.setState({activeCard : i})
+                    this.toggleReviewModal() }}>
                   <Text style={styles.smallDoubleButtonText}>Review</Text>
                 </TouchableOpacity>:<View />}
               </View>
