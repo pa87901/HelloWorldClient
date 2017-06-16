@@ -112,10 +112,10 @@ class TripsScreen extends React.Component {
             textStyle: styles.tripToolbarText,
             onPress: this.navigateToGuideTrips
           },
-          // title: {
-          //   text: 'LOCALIZE',
-          //   textStyle: styles.toolbarText
-          // }
+          title: {
+            text: 'Trips',
+            textStyle: styles.toolbarText
+          }
       },
     };
 
@@ -149,9 +149,9 @@ class TripsScreen extends React.Component {
         <View style={styles.orangeBar}/>
         <ScrollView style={styles.orangeContainer}>
 
-          <View>
+          {/*<View>
           <Text style={styles.tripHeader}>Trips As A Tourist</Text> 
-          </View>
+          </View>*/}
           {this.state.touristBookings[0].bookings.map((booking, i) => {
             return (
             <View>

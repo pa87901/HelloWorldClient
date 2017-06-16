@@ -146,11 +146,11 @@ class GuideTripsScreen extends React.Component {
             text: 'Tourist Trips',
             textStyle: styles.tripToolbarText,
             onPress: this.navigateToTouristTrips
+          },
+          title: {
+            text: 'Trips',
+            textStyle: styles.toolbarText
           }
-          // title: {
-          //   text: 'LOCALIZE',
-          //   textStyle: styles.toolbarText
-          // }
       },
     };
 
@@ -160,6 +160,34 @@ class GuideTripsScreen extends React.Component {
       underlayColor: 'rgba(0, 0, 0, 1, 0.6)',
       onPress: () => this.deletePointOfInterest(index)
     }];
+
+    // let button = null;
+    // let buttons = this.state.guideBookings[0].bookings.map((booking, index) => {
+    //   if (booking.status === 'confirmed') {
+    //     return (
+    //       <TouchableOpacity
+    //         style={styles.smallNegativeButton}
+    //         onPress={ () => {
+    //           this.setState({activeCard : i})
+    //           this.toggleReviewModal()
+    //         }}
+    //       >
+    //         <Text style={styles.smallDoubleButtonText}>Review</Text>
+    //       </TouchableOpacity>
+    //     )
+    //   } else {
+    //     return (
+    //       <TouchableOpacity
+    //         style={styles.smallNegativeButton}
+    //         onPress={ () => {
+    //          console.log('confirm/decline');
+    //         }}
+    //       >
+    //         <Text style={styles.smallDoubleButtonText}>Confirm/Decline</Text>
+    //       </TouchableOpacity>
+    //     )
+    //   }
+    // })
 
     if (this.state.guideBookings[0]) {
       return (
@@ -209,7 +237,7 @@ class GuideTripsScreen extends React.Component {
                     </TouchableHighlight>
                 </View>
               </Modal>
-            <Text style={styles.tripHeader}>Trips As A Guide</Text>
+            {/*<Text style={styles.tripHeader}>Trips As A Guide</Text>*/}
             </View>
           {this.state.guideBookings[0].bookings.map((booking, i)=>{
             return (
