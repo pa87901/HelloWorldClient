@@ -92,7 +92,6 @@ class BecomeAGuideQuestions2p1 extends React.Component {
               <Text style={styles.itemText}>
                 {description}
               </Text>
-
             </TouchableOpacity>
           )}}
         />

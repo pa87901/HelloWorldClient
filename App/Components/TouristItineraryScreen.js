@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, Text, ScrollView, StyleSheet, View, Dimensions, Modal, TouchableHighlight } from 'react-native';
+import { Card, Text, ScrollView, StyleSheet, View, Dimensions, Modal, TouchableHighlight, TouchableOpacity } from 'react-native';
 import { Button, Divider, FormLabel, FormInput} from 'react-native-elements';
 import { connect } from 'react-redux';
 import MapView from 'react-native-maps';
@@ -7,6 +7,8 @@ import Geocoder from 'react-native-geocoding';
 import config from '../Config/config';
 import Autocomplete from 'react-native-autocomplete-input';
 import axios from '../axios';
+import styles from './styles.js';
+import Toolbar from 'react-native-toolbar';
 
 Geocoder.setApiKey(config.GOOGLE_MAPS_API_KEY)
 
@@ -49,9 +51,14 @@ class TouristItineraryScreen extends Component {
     this.updatePointOfInterest = this.updatePointOfInterest.bind(this); //working
     this.addPointsOfInterest = this.addPointsOfInterest.bind(this); //working
     this.setAutocompleteModalVisible = this.setAutocompleteModalVisible.bind(this);
+    this.navigateBack = this.navigateBack.bind(this);
 
   }
 
+  static navigationOptions = ({ navigation }) => ({
+      header: null
+  })
+  
   watchID: ?number = null
 
   componentDidMount() {
@@ -77,6 +84,10 @@ class TouristItineraryScreen extends Component {
     })
   }
 
+  navigateBack() {
+    this.props.navigation.goBack();
+  }
+  
   initialisePosition() {
     navigator.geolocation.getCurrentPosition((position) =>{
       let lat = parseFloat(position.coords.latitude);
@@ -114,6 +125,7 @@ class TouristItineraryScreen extends Component {
   componentWillUnmount() {
     navigator.geolocation.clearWatch(this.watchID);
   }
+
 
   fitAllMarkers() {
     this.map.fitToCoordinates(this.state.pointsOfInterest, {
@@ -194,81 +206,49 @@ class TouristItineraryScreen extends Component {
 
 
   render() {
-    const filterPOIs = this.state.pointOfInterestPredictions.length > 0 ? this.state.pointOfInterestPredictions : [];
-    return (
-      <View>
-        <View style={styles.header}>
-          <Text style={styles.title}>Itinerary</Text>
-        </View>
 
+    const filterPOIs = this.state.pointOfInterestPredictions.length > 0 ? this.state.pointOfInterestPredictions : [];
+    const toolbarSetting = {
+        toolbar1: {
+          hover: false,
+          leftButton: {
+            icon: 'chevron-left',
+            iconStyle: styles.toolbarIcon,
+            iconFontFamily: 'FontAwesome',
+            onPress: this.navigateBack,
+          },
+          title: {
+            text: 'Itinerary',
+            textStyle: styles.toolbarText
+          }
+      },
+    };
+
+    return (
+      <View style={{ flex: 1, backgroundColor: 'white' }}>
+      <Toolbar
+        backgroundColor='#FF8C00'
+        toolbarHeight={35}
+        ref={(toolbar) => { this.toolbar = toolbar; }}
+        presets={toolbarSetting}
+        />
+        <View style={styles.orangeBar}/>
+        <View style={styles.orangeTintProfileContainer}>
         <View style={styles.list}>
-          <Divider style={styles.swipeOut} />
           {this.state.pointsOfInterestNames.map((event, index) => {
             return (
             <View
               key={index}
             >
-              <Text>{event}</Text>
-              <Divider
-                style={styles.swipeOut}
-              />
+              <Text style={styles.TripCardText}>{"\u2022"} {event}</Text>
+              <Divider/>
             </View>
             )
           })}
+          </View>
         </View>
 
-        <View style={{marginTop: 22}}>
-          <Modal
-            animationType={"slide"}
-            transparent={false}
-            visible={this.state.autocompleteModalVisible}
-            onRequestClose={() => {alert("Modal has been closed.")}}
-          >
-            <FormLabel>Event to add</FormLabel>
-            <Autocomplete
-              autoCapitalize="none"
-              keyboardShouldPersistTaps='always'
-              autoCorrect={false}
-              containerStyle={styles.autocompleteContainer}
-              data={filterPOIs}
-              defaultValue={this.state.pointOfInterestDescription}
-              onChangeText={text => this.updatePointOfInterest({ query: text })}
-              placeholder="Enter Point Of Interest"
-              renderItem={({ description }) => {
-                return (
-                <TouchableHighlight
-                  onPress={() => this.updatePointOfInterest({ query: description })}
-                >
-                  <Text style={styles.itemText}>
-                    {description}
-                  </Text>
-                </TouchableHighlight>
-              )}}
-            />
-            <View style={{position: 'absolute', left: 0, right: 0, bottom: 70}}>
-              <Button
-                small
-                raised
-                backgroundColor='#4B0082'
-                title='Add'
-                onPress={() => this.addPointsOfInterest(this.state.pointOfInterestDescription)}
-              />
-            </View>
-            <View style={{position: 'absolute', left: 0, right: 0, bottom: 10}}>
-              <Button
-                small
-                raised
-                backgroundColor='#32CD32'
-                title='Back to Itinerary'
-                onPress={() => this.setAutocompleteModalVisible(!this.state.autocompleteModalVisible)}
-              />
-            </View>
-          </Modal>
-        </View>
-
-
-
-        <View style={styles.container}>
+        <View>
           <Modal
             animationType={"slide"}
             transparent={false}
@@ -296,96 +276,115 @@ class TouristItineraryScreen extends Component {
                   );
                 })}
             </MapView>
-            <View style={{position: 'absolute', left: 0, right: 0, bottom: 0}}>
-              <Button
-                small
-                raised
-                backgroundColor='#FF8C00'
-                title='Points of Interest'
+            <View style={styles.doubleButtonContainer}>
+              <TouchableOpacity
+                style={styles.affirmativeButton}
+                onPress={()=>this.setModalVisible(!this.state.modalVisible)}
+              >
+                <Text style={styles.mapDoubleButtonText}>  View Itinerary  </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.negativeButton}
                 onPress={()=>this.fitAllMarkers()}
-                // onPress={()=>this.getCoordsFromLocation()}
-              />
-              <Button
-                small
-                raised
-                backgroundColor='#32CD32'
-                title='Back to Itinerary'
-                onPress={() => this.setModalVisible(!this.state.modalVisible)}
-              />
+              >
+                <Text style={styles.mapDoubleButtonText}>Points of Interest</Text>
+              </TouchableOpacity>
             </View>
           </Modal>
-          <View style={{position: 'absolute', left: 0, right: 0, bottom: 0}}>
-            <Button
-              large
-              raised
-              backgroundColor='#FF8C00'
-              title='Map'
-              onPress={() => this.setModalVisible(true)}
-            />
-          </View>
-          
         </View>
+          <View style={styles.buttonContainer}>
+              <TouchableOpacity
+                style={styles.fullWidthButton}
+                onPress={() => this.setModalVisible(true)}
+              >
+                <Text style={styles.fullWidthButtonText}>Map</Text>
+              </TouchableOpacity>
+          </View>
       </View>
     )
   }
 }
+            // <Button
+            //   large
+            //   raised
+            //   backgroundColor='#FF8C00'
+            //   title='Map'
+            //   onPress={() => this.setModalVisible(true)}
+            // />
 
-const styles = StyleSheet.create({
-  header: {
-    alignItems: 'center'
-  },
-  title: {
-    fontSize: 15
-  },
-  list: {
-    height: 475
-  },
-  swipeOut: {
-    height: 20,
-    borderBottomColor: '#000',
-    borderBottomWidth: StyleSheet.hairlineWidth
-  },
-  radius: {
-    height: 40,
-    width: 40,
-    borderRadius: 40/2,
-    overflow: 'hidden',
-    backgroundColor: 'rgba(0, 122, 255, 0.1)',
-    borderWidth: 1,
-    borderColor: 'rgba(0, 122, 255, 0.3)',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  marker: {
-    height: 15,
-    width: 15,
-    borderWidth: 1,
-    borderColor: 'white',
-    borderRadius: 15/2,
-    overflow: 'hidden',
-    backgroundColor: 'rgba(0, 122, 255, 0.3)'
-  },
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF'
-  },
-  map: {
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: 0,
-    position: 'absolute' 
-  },
-  button: {
-    position: 'absolute',
-    right: 0,
-    left: 0,
-    bottom: 0
-  }
-});
+// const styles = StyleSheet.create({
+//   header: {
+//     alignItems: 'center'
+//   },
+//   title: {
+//     fontSize: 15
+//   },
+//   list: {
+//     height: 475
+//   },
+//   swipeOut: {
+//     height: 20,
+//     borderBottomColor: '#000',
+//     borderBottomWidth: StyleSheet.hairlineWidth
+//   },
+//   radius: {
+//     height: 40,
+//     width: 40,
+//     borderRadius: 40/2,
+//     overflow: 'hidden',
+//     backgroundColor: 'rgba(0, 122, 255, 0.1)',
+//     borderWidth: 1,
+//     borderColor: 'rgba(0, 122, 255, 0.3)',
+//     alignItems: 'center',
+//     justifyContent: 'center'
+//   },
+//   marker: {
+//     height: 15,
+//     width: 15,
+//     borderWidth: 1,
+//     borderColor: 'white',
+//     borderRadius: 15/2,
+//     overflow: 'hidden',
+//     backgroundColor: 'rgba(0, 122, 255, 0.3)'
+//   },
+//   container: {
+//     flex: 1,
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//     backgroundColor: '#F5FCFF'
+//   },
+//   map: {
+//     left: 0,
+//     right: 0,
+//     top: 0,
+//     bottom: 0,
+//     position: 'absolute' 
+//   },
+//   button: {
+//     position: 'absolute',
+//     right: 0,
+//     left: 0,
+//     bottom: 0
+//   }
+// });
 
 const mapStateToProps = state => state;
 
 export default connect(mapStateToProps)(TouristItineraryScreen);
+            // <View style={{position: 'absolute', left: 0, right: 0, bottom: 0}}>
+            //   <Button
+            //     small
+            //     raised
+            //     backgroundColor='#FF8C00'
+            //     title='Points of Interest'
+            //     onPress={()=>this.fitAllMarkers()}
+            //     // onPress={()=>this.getCoordsFromLocation()}
+            //   />
+            //   <Button
+            //     small
+            //     raised
+            //     backgroundColor='#32CD32'
+            //     title='Back to Itinerary'
+            //     onPress={() => this.setModalVisible(!this.state.modalVisible)}
+            //   />
+            // </View>
