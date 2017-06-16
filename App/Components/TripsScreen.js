@@ -21,7 +21,7 @@ class TripsScreen extends React.Component {
       tipsModalVisible: false,
       rating: 0,
       review: '',
-      tips: '0',
+      tips: 0,
       activeCard: null
     };
 
@@ -31,6 +31,7 @@ class TripsScreen extends React.Component {
     this.onSubmit = this.onSubmit.bind(this);
     this.navigateBack = this.navigateBack.bind(this);
     this.navigateToGuideTrips = this.navigateToGuideTrips.bind(this);
+    this.updateTip = this.updateTip.bind(this);
   }
 
   componentDidMount() {
@@ -90,6 +91,10 @@ class TripsScreen extends React.Component {
     this.toggleReviewModal(false);
   }
 
+  updateTip(amount) {
+    this.state.tips === amount ? this.setState({ tips: 0}) : this.setState({ tips: amount});
+  }
+
   
 //Waiting for db methods/trips to dynamically render
   render() {
@@ -117,6 +122,24 @@ class TripsScreen extends React.Component {
           // }
       },
     };
+
+    const reviewToolbarSetting = {
+      toolbar1: {
+        hover: false,
+        // leftButton: {
+        //   icon: 'search',
+        //   iconStyle: {color: 'white', fontSize: 30},
+        //   iconFontFamily: 'FontAwesome',
+        //   onPress: () => {navToSearch('Search')},
+        // },
+        title:{
+          text: 'LOCALIZE',
+          textStyle: styles.toolbarText
+        }
+      }
+    }
+
+    const tips = [10, 20, 40, 60, 80, 100];
     
     if (this.state.touristBookings[0]) {
       return (
@@ -129,73 +152,107 @@ class TripsScreen extends React.Component {
         />
         <View style={styles.orangeBar}/>
         <ScrollView style={styles.orangeContainer}>
-          <View>
-          <Modal
-            animationType={"none"}
-            transparent={false}
-            visible={this.state.reviewModalVisible}
-            onRequestClose={() => {alert("Modal has been closed.")}}
-            >
-            <View style={{marginTop: 22}}>
-              <View>
-                <Text>Review Your Guide!</Text>
-                <Stars
-                  isActive={true}
-                  rateMax={5}
-                  isHalfStarEnabled={false}
-                  onStarPress={(rating) => {this.setState({rating: rating})}}
-                  rate={0}
-                  size={60}
-                />
-                <TextInput
-                  style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-                  onChangeText={(review) => this.setState({review: review})}
-                  value={this.state.review}
-                />
-                <TouchableHighlight
-                  onPress={()=>{this.toggleTipsModal(true)}}
-                >
-                  <Text>Next!</Text>
-                </TouchableHighlight>
 
-              </View>
-            </View>
-          </Modal>
-          {/*Tip Modal */}
-          <Modal
-            animationType={"none"}
-            transparent={false}
-            visible={this.state.tipsModalVisible}
-            >
-            <View style={{marginTop: 22}}>
-              <View>
-                <Text>Tip Your Guide!</Text>
-                <TextInput
-                  style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-                  onChangeText={(tips) => this.setState({tips: tips})}
-                  keyboardType='numeric'
-                  value={this.state.tips}
-                />
-                <TouchableHighlight
-                  onPress={this.onSubmit}
-                >
-                  <Text>Submit</Text>
-                </TouchableHighlight>
-
-              </View>
-            </View>
-          </Modal>
-          </View>
           <View>
           <Text style={styles.tripHeader}>Trips As A Tourist</Text> 
           </View>
           {this.state.touristBookings[0].bookings.map((booking, i) => {
             return (
             <View>
-            <Card 
-              key={i}
-              flexDirection='column'
-            >
+              <Card 
+                key={i}
+                flexDirection='column'
+              >
+              <Modal
+                animationType={"none"}
+                transparent={true}
+                visible={this.state.reviewModalVisible}
+                onRequestClose={() => {alert("Modal has been closed.")}}
+                >
+                <View style={styles.reviewModalContainer}>
+                  <View style={{marginTop: 200, backgroundColor: 'white'}}>
+                    <View style={{margin: 22}}>
+                    <Text style={styles.profileSubheader}>Review Your Guide!</Text>
+                    <View style={{marginTop: 22, marginBottom: 22}}>
+                      <Stars
+                        isActive={true}
+                        rateMax={5}
+                        isHalfStarEnabled={false}
+                        onStarPress={(rating) => {this.setState({rating: rating})}}
+                        rate={0}
+                        size={60}
+                      />
+                    </View>
+                    <TextInput
+                      style={{height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 20, paddingLeft: 10}}
+                      onChangeText={(review) => this.setState({review: review})}
+                      value={this.state.review}
+                      placeholder={'Comments and suggestions'}
+                    />
+                    </View>
+                  </View>
+                    <TouchableHighlight
+                      style={styles.reviewSubmitButton}
+                      onPress={()=>{this.toggleTipsModal(true)}}
+                    >
+                      <Text style={styles.inquirySubmitText}>Next!</Text>
+                    </TouchableHighlight>
+                </View>
+              </Modal>
+
+            <View>
+          {/*Tip Modal */}
+              <Modal
+                animationType={"none"}
+                transparent={true}
+                visible={this.state.tipsModalVisible}
+                >
+                <View style={{backgroundColor: 'rgba(120, 125, 127, 0.4)', flex: 1}}>
+                  <View style={{margin: 15}}>
+                    <View style={{marginTop: 185, backgroundColor: 'white'}}>
+                      <View style={{margin: 22}}>
+                        <Text style={styles.profileSubheader}>Tip Your Guide!</Text>
+                          <View style={{marginTop: 22, marginBottom: 22}}>
+                            <TextInput
+                              style={{height: 40, borderColor: 'gray', borderWidth: 1, paddingLeft: 10}}
+                              onChangeText={(tips) => this.setState({tips: tips})}
+                              keyboardType='numeric'
+                              value={this.state.tips}
+                              placeholder={'Amount here'}
+                            />
+                            <View style={styles.tipFlexSwitchContainer}>
+                              {tips.map((tip, index) => {
+                                return (
+                                  <TouchableOpacity
+                                    key={index}
+                                    style={this.state.tips === tip ? styles.tipbox : styles.tipboxInactive}
+                                    onPress={() => this.updateTip(tip)}
+                                  >
+                                  <View>
+                                    <Text style={this.state.tips === tip ? styles.tipboxText : styles.tipboxTextInactive}>${tip}</Text>
+                                  </View>
+                                  </TouchableOpacity>
+                                )
+                              })}
+                            </View>
+
+
+                          </View>
+
+                        </View>
+                          <TouchableHighlight
+                            style={styles.reviewSubmitButton}
+                            onPress={this.onSubmit}
+                          >
+                          <Text style={styles.inquirySubmitText}>Submit</Text>
+                          </TouchableHighlight>
+                      </View>
+                    </View>
+                  </View>
+              </Modal>
+            </View>
+
+
             <View style={styles.searchCardContainer}>
               <Text style={styles.TripCardText}>
                 {booking.city}{"\n"}
