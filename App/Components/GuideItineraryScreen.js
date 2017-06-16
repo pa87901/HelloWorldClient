@@ -226,24 +226,28 @@ class GuideItineraryScreen extends Component {
   }
 
   addPointsOfInterest(pointOfInterest) {
-    let poi = this.state.pointsOfInterestNames;
-    poi.push(pointOfInterest)
-    this.setState({
-      pointsOfInterestNames: poi
-    });
-    console.log('this.state.pointsOfInterestNames', this.state.pointsOfInterestNames);
-    // Axios post method to include event for booking.
-    let options = {
-      bookingId: this.props.navigation.state.params.bookingId,
-      eventName: pointOfInterest
+    if(pointOfInterest.length > 0) {
+      let poi = this.state.pointsOfInterestNames;
+      poi.push(pointOfInterest)
+      this.setState({
+        pointsOfInterestNames: poi
+      });
+      console.log('this.state.pointsOfInterestNames', this.state.pointsOfInterestNames);
+      // Axios post method to include event for booking.
+      let options = {
+        bookingId: this.props.navigation.state.params.bookingId,
+        eventName: pointOfInterest
+      }
+      axios.post('/api/events/add', options)
+      .then(response => {
+        console.log('Saved point of interest successfully.');
+      })
+      .catch(err => {
+        console.error('Error adding event.');
+      });
+    } else {
+      alert('Please add a point of interest!');
     }
-    axios.post('/api/events/add', options)
-    .then(response => {
-      console.log('Saved point of interest successfully.');
-    })
-    .catch(err => {
-      console.error('Error adding event.');
-    });
   }
 
 
