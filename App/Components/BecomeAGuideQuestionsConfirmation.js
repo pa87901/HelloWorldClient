@@ -1,10 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { View, Text, TouchableHighlight } from 'react-native';
-import { Card } from 'react-native-elements';
+import {
+  Text, ScrollView, View, TouchableHighlight, Dimensions, Image
+} from 'react-native';
 import { NavigationActions } from 'react-navigation';
-import styles from './styles.js';
 import Toolbar from 'react-native-toolbar';
+import styles from './styles.js';
 import Utils from '../Utils';
 
 class BecomeAGuideQuestionsConfirmation extends React.Component {
@@ -33,12 +34,6 @@ class BecomeAGuideQuestionsConfirmation extends React.Component {
     const toolbarSetting = {
       toolbar1: {
         hover: false,
-        leftButton: {
-          icon: 'chevron-left',
-          iconStyle: styles.toolbarIcon,
-          iconFontFamily: 'FontAwesome',
-          onPress: this.navigateBack,
-        },
         title: {
           text: 'LOCALIZE',
           textStyle: styles.toolbarText
@@ -55,27 +50,40 @@ class BecomeAGuideQuestionsConfirmation extends React.Component {
         presets={toolbarSetting}
         />
         <View style={styles.orangeBar} />
-      <View style={styles.orangeTintContainer}>
-        <View style={{flexGrow:1}}>
-            <Card title='You have been posted!'>
-              <Text style={{marginBottom: 10}}>
-                Your profile has been posted on Localize! We will notify you when tourist(s) reach out to you via chat and/or request to have a tour with you.
-              </Text>
-              <Text style={styles.subheader}>Name</Text>
-              <Text>{this.props.userProfile.profile.name}</Text>
-              <Text style={styles.subheader}>City</Text>
-              <Text>{this.props.becomeAGuide.city}</Text>
-              <Text style={styles.subheader}>Date & Time</Text>
-              <Text>{Utils.time.displayDate(new Date(this.props.becomeAGuide.date).toDateString())}</Text>
-              <Text>{this.props.becomeAGuide.start} / {this.props.becomeAGuide.end}</Text>
-              <Text style={styles.subheader}>Hourly Rate</Text>
-              <Text>USD  {this.props.becomeAGuide.hourlyRate}</Text>
-              <Text style={styles.subheader}>Introduction</Text>
-              <Text>{this.props.becomeAGuide.intro}</Text>
-              <Text style={styles.subheader}>Other Info</Text>
-              <Text style={{marginBottom: 10}}>]{this.props.becomeAGuide.statement}</Text>
-            </Card>
-        </View>
+        <ScrollView style={styles.orangeTintProfileContainer}>
+          <View style={{ flex: 1, height: 210 }}>
+            <Image
+              source={require('../Utils/sanfrancisco.jpg')}
+              style={{ height: 210, width: Dimensions.get('window').width, resizeMode: 'contain', verticalAlign: 'text-top' }}
+            />
+          </View>
+          <View style={styles.bookingConfirmDetails}>
+            <View style={{ marginBottom: 20 }}>
+              <Text style={styles.profileSubheader}>You have been posted!</Text>
+            </View>
+            <View>
+              <Text style={styles.bookingConfirmSubtext}>Your profile has been posted on Localize! We will notify you when tourist(s) reach out to you via chat and/or request to have a tour with you.</Text>
+            </View>
+          </View>
+          <View style={styles.termsConditions}>
+            <View style={{ marginBottom: 20 }}>
+              <Text style={styles.profileSubheader}>Tour in {this.props.becomeAGuide.city.replace(/,.*/, '')}</Text>
+            </View>
+            <View style={{ marginBottom: 20 }}>
+              <Text style={styles.bookingConfirmDates}>{Utils.time.displayDate(new Date(this.props.becomeAGuide.date).toDateString())}, {Utils.time.convert24ToAmPm(this.props.becomeAGuide.fromHour)} - {Utils.time.convert24ToAmPm(this.props.becomeAGuide.toHour)}</Text>
+            </View>
+            <View style={{ marginBottom: 20 }}>
+              <Text style={styles.profileSubheader}>{`$${this.props.becomeAGuide.hourlyRate} Per Hour`}</Text>
+            </View>
+            <View style={{ marginBottom: 10 }}>
+              <Text style={styles.profileSubheader}>Intro and Statement</Text>
+            </View>
+            <View>
+              <Text style={styles.bookingConfirmSubtext}>{this.props.becomeAGuide.intro}</Text>
+              <Text style={styles.bookingConfirmSubtext}>{this.props.becomeAGuide.statement}</Text>
+            </View>
+          </View>
+        </ScrollView>
         <View style={styles.buttonContainer}>
           <TouchableHighlight
             style={styles.fullWidthButton}
@@ -84,7 +92,6 @@ class BecomeAGuideQuestionsConfirmation extends React.Component {
             <Text style={styles.goToExplore}>Done</Text>
           </TouchableHighlight>
         </View>
-      </View>
       </View>
     );
   }

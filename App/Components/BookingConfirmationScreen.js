@@ -1,5 +1,7 @@
 import React from 'react';
-import { Text, ScrollView, View, TouchableHighlight, Dimensions, Image } from 'react-native';
+import {
+  Text, ScrollView, View, TouchableHighlight, Dimensions, Image
+} from 'react-native';
 import { connect } from 'react-redux';
 import { NavigationActions } from 'react-navigation';
 import Toolbar from 'react-native-toolbar';
@@ -41,7 +43,7 @@ class BookingConfirmationScreen extends React.Component {
     const hourlyRate = this.props.profileSelection.selectedProfile.availabilities[0].hourly_rate;
 
     return (
-      <View style={{ flex: 1, backgroundColor: 'white' }}>
+      <View style={styles.whiteBackground}>
         <Toolbar
         backgroundColor='#FF8C00'
         toolbarHeight={35}

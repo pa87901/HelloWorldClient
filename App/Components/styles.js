@@ -21,8 +21,8 @@ export default StyleSheet.create({
     flex: 1,
     flexDirection: 'row'
   },
-  whiteBackground:{
-    backgroundColor:'white',
+  whiteBackground: {
+    backgroundColor: 'white',
     flex: 1,
   },
   //Search Screen
@@ -363,6 +363,10 @@ export default StyleSheet.create({
     fontSize: 22,
     color: 'white',
     fontFamily: main.font    
+  },
+  bookingConfirmSubtext: {
+    fontFamily: 'Arial',
+    fontSize: 12
   },
   placeImage: {
     height: 220,

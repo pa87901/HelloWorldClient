@@ -117,7 +117,7 @@ class BookingPolicyScreen extends React.Component {
 
 
     return (
-      <View style={{ flex: 1, backgroundColor: 'white' }}>
+      <View style={styles.whiteBackground}>
         <Toolbar
         backgroundColor='#FF8C00'
         toolbarHeight={35}
