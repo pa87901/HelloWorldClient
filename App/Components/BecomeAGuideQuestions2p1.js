@@ -108,6 +108,7 @@ class BecomeAGuideQuestions2p1 extends React.Component {
           ref={(toolbar) => { this.toolbar = toolbar; }}
           presets={toolbarSetting}
         />
+
         <View style={styles.orangeBar} />
           <FormLabel>What events are you searching for?</FormLabel>
           <Autocomplete
